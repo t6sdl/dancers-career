@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>プロフィール登録｜ダンサーズキャリア</title>
+</head>
+<body>
+<header th:replace="common/header :: header"></header>
+<form th:action="@{/signup/profile}" method="post" th:object="${profileForm}">
+<h1>プロフィール登録</h1>
+<div>
+<p>氏名（漢字）</p>
+<div>
+<label for="last_name">姓</label>
+<input type="text" th:field="*{last_name}" th:errorclass="error">
+<label for="first_name">名</label>
+<input type="text" th:field="*{first_name}" th:errorclass="error">
+<p th:if="${#fields.hasErrors('last_name')}" th:errors="*{last_name}"></p>
+</div>
+</div>
+<p>氏名（カナ）</p>
+<div>
+<label for="kana_last_name">セイ</label>
+<input type="text" th:field="*{kana_last_name}" th:errorclass="error">
+<label for="kana_first_name">メイ</label>
+<input type="text" th:field="*{kana_first_name}" th:errorclass="error">
+</div>
+<div><!-- この項目は未完成です -->
+<p>生年月日</p>
+<div>
+<select th:field="*{birth_year}">
+<option value="1997">1997</option>
+<option value="1998">1998</option>
+</select>
+<label for="birth_year">年</label>
+<select th:field="*{birth_month}">
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+</select>
+<label for="birth_month">月</label>
+<select th:field="*{birth_day}">
+<option value="23">23</option>
+<option value="24">24</option>
+<option value="25">25</option>
+</select>
+<label for="birth_day">日</label>
+</div>
+</div>
+<div>
+<p>性別</p>
+<div>
+<input type="radio" th:field="*{sex}" value="male">
+<label th:for="${#ids.prev('sex')}">男性</label>
+<input type="radio" th:field="*{sex}" value="female">
+<label th:for="${#ids.prev('sex')}">女性</label>
+</div>
+</div>
+<div>
+<label for="phone_number">電話番号</label>
+<input type="tel" th:field="*{phone_number}" th:errorclass="error">
+</div>
+<div>
+<p>文理</p>
+<div>
+<input type="radio" th:field="*{major}" value="humanities">
+<label th:for="${#ids.prev('major')}">文系</label>
+<input type="radio" th:field="*{major}" value="sciences">
+<label th:for="${#ids.prev('major')}">理系</label>
+</div>
+</div>
+<div><!-- この項目は未完成です -->
+<p>学部・学科</p>
+<div>
+<div>
+<label for="place">大学所在地</label>
+<select name="place" id="place">
+<option value="1">北海道</option>
+<option value="2">東京</option>
+</select>
+</div>
+<div>
+<label for="university">大学</label>
+<select th:field="*{university}">
+<option value="1">東大</option>
+<option value="2">慶応</option>
+<option value="3">早稲田</option>
+</select>
+</div>
+<div>
+<label for="faculty">学部</label>
+<select th:field="*{faculty}">
+<option value="1">工学部</option>
+<option value="2">理学部</option>
+<option value="3">法学部</option>
+</select>
+</div>
+<div>
+<label for="department">学科</label>
+<select th:field="*{department}">
+<option value="1">学科１</option>
+<option value="2">学科２</option>
+</select>
+</div>
+</div>
+</div>
+<div><!-- この項目は未完成です -->
+<p>卒業年度</p>
+<div>
+<select th:field="*{graduation_year}">
+<option value="2020">2020</option>
+<option value="2021">2021</option>
+</select>
+<label for="graduation_year">年</label>
+<select th:field="*{graduation_month}">
+<option value="3">3</option>
+<option value="9">9</option>
+</select>
+<label for="graduation_month">月</label>
+<span>卒業予定</span>
+</div>
+</div>
+<div>
+<p>学位</p>
+<div>
+<input type="radio" th:field="*{academic_degree}" value="bachelor">
+<label th:for="${#ids.prev('academic_degree')}">学部卒</label>
+<input type="radio" th:field="*{academic_degree}" value="master">
+<label th:for="${#ids.prev('academic_degree')}">修士卒</label>
+<input type="radio" th:field="*{academic_degree}" value="doctor">
+<label th:for="${#ids.prev('academic_degree')}">博士卒</label>
+</div>
+</div>
+<div><!-- この項目は未完成です -->
+<p>サークルなどでの役職・役割（複数選択可）</p>
+<div>
+<input type="checkbox" th:field="*{position}" value="leader">
+<label th:for="${#ids.prev('position')}">代表</label>
+<input type="checkbox" th:field="*{position}" value="assistant">
+<label th:for="${#ids.prev('position')}">副代表</label>
+<input type="checkbox" th:field="*{position}" value="dancer">
+<label th:for="${#ids.prev('position')}">プレイヤー</label>
+<input type="checkbox" th:field="*{position}" value="none">
+<label th:for="${#ids.prev('position')}">特になし</label>
+</div>
+</div>
+<div>
+<input type="hidden" th:field="*{email}" th:value="${email}">
+<input type="hidden" th:field="*{password}" th:value="${password}">
+<input type="submit" value="登録を完了する">
+</div>
+</form>
+<footer th:replace="common/footer :: footer"></footer>
+</body>
+</html>
