@@ -1,8 +1,14 @@
 package tokyo.t6sdl.dancerscareer2019.service;
 
+import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,10 +22,12 @@ import tokyo.t6sdl.dancerscareer2019.repository.AccountRepository;
 public class AccountService implements UserDetailsService {
 	private final AccountRepository accountRepository;
 	private final PasswordEncoder passwordEncoder;
+	private final JavaMailSender mailSender;
 	
-	public AccountService(AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
+	public AccountService(AccountRepository accountRepository, PasswordEncoder passwordEncoder, JavaMailSender mailSender) {
 		this.accountRepository = accountRepository;
 		this.passwordEncoder = passwordEncoder;
+		this.mailSender = mailSender;
 	}
 	
 	public void create(Account newAccount, String rawPassword) {
@@ -32,35 +40,45 @@ public class AccountService implements UserDetailsService {
 		accountRepository.delete(email);
 	}
 	
-	public void changeEmail(String loggedInUsername, String newEmail) {
-		accountRepository.updateEmail(loggedInUsername, newEmail);
+	public void changeEmail(String loggedInEmail, String newEmail) {
+		accountRepository.updateEmail(loggedInEmail, newEmail);
 	}
 	
-	public void changePassword(String loggedInUsername, String newPassword) {
-		accountRepository.updatePassword(loggedInUsername, newPassword);
+	public void changePassword(String loggedInEmail, String newPassword) {
+		accountRepository.updatePassword(loggedInEmail, newPassword);
 	}
 	
-	public void changeEnabled(String loggedInUsername, boolean isEnabled) {
-		accountRepository.updateEnabled(loggedInUsername, isEnabled);
+	public void changeValidEmail(String loggedInEmail, boolean validEmail) {
+		accountRepository.updateValidEmail(loggedInEmail, validEmail);
 	}
 	
-	public String createEmailToken(String loggedInUsername) throws NoSuchAlgorithmException {
-		String emailToken = createAccountToken();
-		if (emailToken == "") {
-			return "";
-		} else {
-			accountRepository.recordEmailToken(loggedInUsername, emailToken);
-			return emailToken;
+	public String createEmailToken(String loggedInEmail) {
+		String emailToken;
+		try {
+			emailToken = createAccountToken();
+			if (emailToken == "") {
+				return "";
+			} else {
+				accountRepository.recordEmailToken(loggedInEmail, emailToken);
+				return emailToken;
+			}
+		} catch (NoSuchAlgorithmException e) {
+			return null;
 		}
 	}
 	
-	public String createPasswordToken(String loggedInUsername) throws NoSuchAlgorithmException {
-		String passwordToken = createAccountToken();
-		if (passwordToken == "") {
-			return "";
-		} else {
-			accountRepository.recordPasswordToken(loggedInUsername, passwordToken);
-			return passwordToken;
+	public String createPasswordToken(String loggedInEmail) {
+		String passwordToken;
+		try {
+			passwordToken = createAccountToken();
+			if (passwordToken == "") {
+				return "";
+			} else {
+				accountRepository.recordPasswordToken(loggedInEmail, passwordToken);
+				return passwordToken;
+			}
+		} catch (NoSuchAlgorithmException e) {
+			return null;
 		}
 	}
 	
@@ -118,4 +136,20 @@ public class AccountService implements UserDetailsService {
 		return account;
 	}
 	
+	public void sendMail(String to, String subject, String content) {
+		try {
+			MimeMessage mail = mailSender.createMimeMessage();
+			mail.setHeader("Content-type", "text/html");
+			MimeMessageHelper helper = new MimeMessageHelper(mail, false, "UTF-8");
+			helper.setFrom("test_dancerscareer@t6sdl.tokyo", "（テスト）ダンサーズキャリア事務局");
+			helper.setTo(to);
+			helper.setSubject(subject);
+			helper.setText(content, true);
+			mailSender.send(mail);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+	}
 }

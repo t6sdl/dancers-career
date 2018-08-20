@@ -25,7 +25,7 @@ public class JdbcAccountRepository implements AccountRepository {
 					account.setEmail(resultSet.getString("email"));
 					account.setPassword(resultSet.getString("password"));
 					account.setAuthority(resultSet.getString("authority"));
-					account.setEnabled(resultSet.getBoolean("enabled"));
+					account.setValid_email(resultSet.getBoolean("valid_email"));
 					account.setUpdated_at(resultSet.getTimestamp("updated_at"));
 					account.setCreated_at(resultSet.getTimestamp("created_at"));
 					account.setEmail_token(resultSet.getString("email_token"));
@@ -43,7 +43,7 @@ public class JdbcAccountRepository implements AccountRepository {
 						account.setEmail(resultSet.getString("email"));
 						account.setPassword(resultSet.getString("password"));
 						account.setAuthority(resultSet.getString("authority"));
-						account.setEnabled(resultSet.getBoolean("enabled"));
+						account.setValid_email(resultSet.getBoolean("valid_email"));
 						account.setUpdated_at(resultSet.getTimestamp("updated_at"));
 						account.setCreated_at(resultSet.getTimestamp("created_at"));
 						account.setEmail_token(resultSet.getString("email_token"));
@@ -64,7 +64,7 @@ public class JdbcAccountRepository implements AccountRepository {
 						account.setEmail(resultSet.getString("email"));
 						account.setPassword(resultSet.getString("password"));
 						account.setAuthority(resultSet.getString("authority"));
-						account.setEnabled(resultSet.getBoolean("enabled"));
+						account.setValid_email(resultSet.getBoolean("valid_email"));
 						account.setUpdated_at(resultSet.getTimestamp("updated_at"));
 						account.setCreated_at(resultSet.getTimestamp("created_at"));
 						account.setEmail_token(resultSet.getString("email_token"));
@@ -85,7 +85,7 @@ public class JdbcAccountRepository implements AccountRepository {
 						account.setEmail(resultSet.getString("email"));
 						account.setPassword(resultSet.getString("password"));
 						account.setAuthority(resultSet.getString("authority"));
-						account.setEnabled(resultSet.getBoolean("enabled"));
+						account.setValid_email(resultSet.getBoolean("valid_email"));
 						account.setUpdated_at(resultSet.getTimestamp("updated_at"));
 						account.setCreated_at(resultSet.getTimestamp("created_at"));
 						account.setEmail_token(resultSet.getString("email_token"));
@@ -126,16 +126,16 @@ public class JdbcAccountRepository implements AccountRepository {
 	}
 
 	@Override
-	public void updateEnabled(String loggedInEmail, boolean isEnabled) {
+	public void updateValidEmail(String loggedInEmail, boolean validEmail) {
 		jdbcTemplate.update(
-				"UPDATE accounts SET enabled = ?, updated_at = CURRENT_TIMESTAMP WHERE email = ?",
-				isEnabled, loggedInEmail);
+				"UPDATE accounts SET valid_email = ?, updated_at = CURRENT_TIMESTAMP WHERE email = ?",
+				validEmail, loggedInEmail);
 	}
 
 	@Override
 	public void recordEmailToken(String loggedInEmail, String emailToken) {
 		jdbcTemplate.update(
-				"UPDATE accounts SET email_token = ? WHERE email = ?",
+				"UPDATE accounts SET email_token = ?, updated_at = CURRENT_TIMESTAMP WHERE email = ?",
 				emailToken, loggedInEmail);
 	}
 
@@ -149,7 +149,7 @@ public class JdbcAccountRepository implements AccountRepository {
 	@Override
 	public void recordPasswordToken(String loggedInEmail, String passwordToken) {
 		jdbcTemplate.update(
-				"UPDATE accounts SET password_token = ? WHERE email = ?",
+				"UPDATE accounts SET password_token = ?, updated_at = CURRENT_TIMESTAMP WHERE email = ?",
 				passwordToken, loggedInEmail);
 	}
 

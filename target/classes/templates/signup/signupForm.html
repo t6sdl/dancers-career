@@ -13,19 +13,19 @@
 <div>
 <label for="email">メールアドレス</label>
 <!-- th:errorclassの値は入力値が不正の場合に付与するクラスなので、この場合エラー時にinputタグにerrorクラスが付きます -->
-<input type="email" th:field="*{email}" th:errorclass="error">
+<input type="email" th:field="*{email}" th:errorclass="error" required>
 <!-- エラーの内容を表示する部分で、エラーの数だけpタグが生成されます、ので、pタグじゃない方が良ければ変更します -->
 <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
 </div>
 <div>
 <label for="password">パスワード<span>〈半角英数字・記号〉</span></label>
-<input type="password" th:field="*{password}" th:errorclass="error">
+<input type="password" th:field="*{password}" th:errorclass="error" required>
 <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
 </div>
 <div>
 <label for="confirmPassword">パスワード(確認)</label>
-<input type="password" th:field="*{confirmPassword}" th:errorclass="error">
-<p th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></p>
+<input type="password" th:field="*{confirmPassword}" th:errorclass="error" required>
+<p th:if="${#fields.hasGlobalErrors()}" th:errors="*{global}"></p>
 </div>
 <div>
 <p>アカウントを作成すると、ダンサーズキャリアの<a th:href="@{/about/terms}">利用規約</a>および<a th:href="@{/about/privacy}">プライバシーポリシー</a>に同意したことになります。また、ご指定のメールアドレスに送られたメールからメールアドレスの確認を行い、登録を完了させてください。</p>

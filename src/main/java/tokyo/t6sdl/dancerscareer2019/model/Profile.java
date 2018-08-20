@@ -1,11 +1,13 @@
 package tokyo.t6sdl.dancerscareer2019.model;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
 @Data
 public class Profile {
+	private String email;
 	private String last_name;
 	private String first_name;
 	private String kana_last_name;
@@ -17,7 +19,7 @@ public class Profile {
 	private String university;
 	private String faculty;
 	private String department;
-	private Date graduation;
+	private String graduation;
 	private String academic_degree;
-	private String position;
+	private List<String> position;
 }

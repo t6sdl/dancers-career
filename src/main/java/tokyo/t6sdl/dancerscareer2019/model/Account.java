@@ -10,16 +10,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.Data;
-import lombok.Setter;
 
 @Data
 @SuppressWarnings("serial")
 public class Account implements UserDetails {
-	@Setter
 	private String email;
 	private String password;
 	private String authority;
-	private boolean enabled;
+	private boolean valid_email;
 	private Date updated_at;
 	private Date created_at;
 	private String email_token;
@@ -49,6 +47,11 @@ public class Account implements UserDetails {
 
 	@Override
 	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
 		return true;
 	}
 }

@@ -9,126 +9,175 @@
 <form th:action="@{/signup/profile}" method="post" th:object="${profileForm}">
 <h1>プロフィール登録</h1>
 <div>
-<p>氏名（漢字）</p>
+<p>氏名</p>
 <div>
 <label for="last_name">姓</label>
-<input type="text" th:field="*{last_name}" th:errorclass="error">
+<input type="text" th:field="*{last_name}" th:errorclass="error" required>
 <label for="first_name">名</label>
-<input type="text" th:field="*{first_name}" th:errorclass="error">
-<p th:if="${#fields.hasErrors('last_name')}" th:errors="*{last_name}"></p>
+<input type="text" th:field="*{first_name}" th:errorclass="error" required>
+<p th:if="${#fields.hasErrors('last_name') || #fields.hasErrors('first_name')}">入力してください</p>
 </div>
 </div>
 <p>氏名（カナ）</p>
 <div>
 <label for="kana_last_name">セイ</label>
-<input type="text" th:field="*{kana_last_name}" th:errorclass="error">
+<input type="text" th:field="*{kana_last_name}" th:errorclass="error" required>
 <label for="kana_first_name">メイ</label>
-<input type="text" th:field="*{kana_first_name}" th:errorclass="error">
+<input type="text" th:field="*{kana_first_name}" th:errorclass="error" required>
+<p th:if="${#fields.hasErrors('kana_last_name') || #fields.hasErrors('kana_first_name')}">カタカナで入力してください</p>
 </div>
 <div><!-- この項目は未完成です -->
 <p>生年月日</p>
 <div>
-<select th:field="*{birth_year}">
+<select th:field="*{birth_year}" required>
+<option value="default">選択してください</option>
+<option value="1990">1990</option>
+<option value="1991">1991</option>
+<option value="1992">1992</option>
+<option value="1993">1993</option>
+<option value="1994">1994</option>
+<option value="1995">1995</option>
+<option value="1996">1996</option>
 <option value="1997">1997</option>
 <option value="1998">1998</option>
+<option value="1999">1999</option>
 </select>
 <label for="birth_year">年</label>
-<select th:field="*{birth_month}">
-<option value="1">1</option>
-<option value="2">2</option>
-<option value="3">3</option>
+<select th:field="*{birth_month}" required>
+<option value="default">選択してください</option>
+<option value="01">1</option>
+<option value="02">2</option>
+<option value="03">3</option>
+<option value="04">4</option>
+<option value="05">5</option>
+<option value="06">6</option>
+<option value="07">7</option>
+<option value="08">8</option>
+<option value="09">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
 </select>
 <label for="birth_month">月</label>
-<select th:field="*{birth_day}">
+<select th:field="*{birth_day}" required>
+<option value="default">選択してください</option>
 <option value="23">23</option>
 <option value="24">24</option>
 <option value="25">25</option>
 </select>
 <label for="birth_day">日</label>
+<p th:if="${#fields.hasErrors('birth_year') || #fields.hasErrors('birth_month') || #fields.hasErrors('birth_day')}">必須項目です</p>
 </div>
 </div>
 <div>
 <p>性別</p>
 <div>
-<input type="radio" th:field="*{sex}" value="male">
+<input type="radio" th:field="*{sex}" value="male" required>
 <label th:for="${#ids.prev('sex')}">男性</label>
 <input type="radio" th:field="*{sex}" value="female">
 <label th:for="${#ids.prev('sex')}">女性</label>
+<p th:if="${#fields.hasErrors('sex')}">必須項目です</p>
 </div>
 </div>
 <div>
 <label for="phone_number">電話番号</label>
-<input type="tel" th:field="*{phone_number}" th:errorclass="error">
+<input type="tel" th:field="*{phone_number}" th:errorclass="error" required>
+<p th:if="${#fields.hasErrors('phone_number')}">ハイフンなしの電話番号を入力してください</p>
 </div>
 <div>
 <p>文理</p>
 <div>
-<input type="radio" th:field="*{major}" value="humanities">
+<input type="radio" th:field="*{major}" value="humanities" required>
 <label th:for="${#ids.prev('major')}">文系</label>
 <input type="radio" th:field="*{major}" value="sciences">
 <label th:for="${#ids.prev('major')}">理系</label>
+<p th:if="${#fields.hasErrors('major')}">必須項目です</p>
 </div>
 </div>
 <div><!-- この項目は未完成です -->
 <p>学部・学科</p>
 <div>
 <div>
-<label for="place">大学所在地</label>
-<select name="place" id="place">
+<label for="prefecture">大学所在地</label>
+<select th:field="*{prefecture}" required>
+<option value="default">選択してください</option>
 <option value="1">北海道</option>
 <option value="2">東京</option>
 </select>
+<p th:if="${#fields.hasErrors('prefecture')}">必須項目です</p>
 </div>
 <div>
 <label for="university">大学</label>
-<select th:field="*{university}">
+<select th:field="*{university}" required>
+<option value="default">選択してください</option>
 <option value="1">東大</option>
 <option value="2">慶応</option>
 <option value="3">早稲田</option>
 </select>
+<p th:if="${#fields.hasErrors('university')}">必須項目です</p>
 </div>
 <div>
 <label for="faculty">学部</label>
-<select th:field="*{faculty}">
+<select th:field="*{faculty}" required>
+<option value="default">選択してください</option>
 <option value="1">工学部</option>
 <option value="2">理学部</option>
 <option value="3">法学部</option>
 </select>
+<p th:if="${#fields.hasErrors('faculty')}">必須項目です</p>
 </div>
 <div>
 <label for="department">学科</label>
-<select th:field="*{department}">
+<select th:field="*{department}" required>
+<option value="default">選択してください</option>
 <option value="1">学科１</option>
 <option value="2">学科２</option>
 </select>
+<p th:if="${#fields.hasErrors('department')}">必須項目です</p>
 </div>
 </div>
 </div>
 <div><!-- この項目は未完成です -->
 <p>卒業年度</p>
 <div>
-<select th:field="*{graduation_year}">
+<select th:field="*{graduation_year}" required>
+<option value="default">選択してください</option>
+<option value="2019">2019</option>
 <option value="2020">2020</option>
 <option value="2021">2021</option>
+<option value="2022">2022</option>
 </select>
 <label for="graduation_year">年</label>
-<select th:field="*{graduation_month}">
-<option value="3">3</option>
-<option value="9">9</option>
+<select th:field="*{graduation_month}" required>
+<option value="default">選択してください</option>
+<option value="01">1</option>
+<option value="02">2</option>
+<option value="03">3</option>
+<option value="04">4</option>
+<option value="05">5</option>
+<option value="06">6</option>
+<option value="07">7</option>
+<option value="08">8</option>
+<option value="09">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
 </select>
 <label for="graduation_month">月</label>
 <span>卒業予定</span>
+<p th:if="${#fields.hasErrors('graduation_year') || #fields.hasErrors('graduation_month')}">必須項目です</p>
 </div>
 </div>
 <div>
 <p>学位</p>
 <div>
-<input type="radio" th:field="*{academic_degree}" value="bachelor">
+<input type="radio" th:field="*{academic_degree}" value="bachelor" required>
 <label th:for="${#ids.prev('academic_degree')}">学部卒</label>
 <input type="radio" th:field="*{academic_degree}" value="master">
 <label th:for="${#ids.prev('academic_degree')}">修士卒</label>
 <input type="radio" th:field="*{academic_degree}" value="doctor">
 <label th:for="${#ids.prev('academic_degree')}">博士卒</label>
+<p th:if="${#fields.hasErrors('academic_degree')}">必須項目です</p>
 </div>
 </div>
 <div><!-- この項目は未完成です -->
@@ -142,11 +191,10 @@
 <label th:for="${#ids.prev('position')}">プレイヤー</label>
 <input type="checkbox" th:field="*{position}" value="none">
 <label th:for="${#ids.prev('position')}">特になし</label>
+<p th:if="${#fields.hasErrors('position')}">１つ以上選択してください</p>
 </div>
 </div>
 <div>
-<input type="hidden" th:field="*{email}" th:value="${email}">
-<input type="hidden" th:field="*{password}" th:value="${password}">
 <input type="submit" value="登録を完了する">
 </div>
 </form>
