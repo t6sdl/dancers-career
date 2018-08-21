@@ -16,8 +16,8 @@ import tokyo.t6sdl.dancerscareer2019.model.Account;
 import tokyo.t6sdl.dancerscareer2019.model.Profile;
 import tokyo.t6sdl.dancerscareer2019.model.ProfileForm;
 import tokyo.t6sdl.dancerscareer2019.model.SignupForm;
-import tokyo.t6sdl.dancerscareer2019.repository.ProfileRepository;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
+import tokyo.t6sdl.dancerscareer2019.service.ProfileService;
 import tokyo.t6sdl.dancerscareer2019.service.SecurityService;
 
 @Controller
@@ -25,12 +25,12 @@ import tokyo.t6sdl.dancerscareer2019.service.SecurityService;
 public class SignupController {
 	private final AccountService accountService;
 	private final SecurityService securityService;
-	private final ProfileRepository profileRepository;
+	private final ProfileService profileService;
 	
-	public SignupController(AccountService accountService, SecurityService securityService, ProfileRepository profileRepository) {
+	public SignupController(AccountService accountService, SecurityService securityService, ProfileService profileService) {
 		this.accountService = accountService;
 		this.securityService = securityService;
-		this.profileRepository = profileRepository;
+		this.profileService = profileService;
 	}
 	
 	@GetMapping
@@ -66,7 +66,6 @@ public class SignupController {
 		Date date_of_birth = stringToDate("yyyy/MM/dd", form.getBirth_year() + "/" + form.getBirth_month() + "/" + form.getBirth_day());
 		String graduation = form.getGraduation_year() + "/" + form.getGraduation_month();
 		Profile newProfile = new Profile();
-		newProfile.setEmail(securityService.findLoggedInEmail());
 		newProfile.setLast_name(form.getLast_name());
 		newProfile.setFirst_name(form.getFirst_name());
 		newProfile.setKana_last_name(form.getKana_last_name());
@@ -81,7 +80,7 @@ public class SignupController {
 		newProfile.setGraduation(graduation);
 		newProfile.setAcademic_degree(form.getAcademic_degree());
 		newProfile.setPosition(form.getPosition());
-		profileRepository.insert(newProfile);
+		profileService.register(newProfile, securityService.findLoggedInEmail());
 		return "redirect:/";
 	}
 	

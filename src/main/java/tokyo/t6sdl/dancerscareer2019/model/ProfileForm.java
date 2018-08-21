@@ -38,12 +38,16 @@ public class ProfileForm {
 	@NotEmpty
 	private String major;
 	@NotEmpty
+	@Pattern(regexp="^(?!default)$")
 	private String prefecture;
 	@NotEmpty
+	@Pattern(regexp="^(?!default)$")
 	private String university;
 	@NotEmpty
+	@Pattern(regexp="^(?!default)$")
 	private String faculty;
 	@NotEmpty
+	@Pattern(regexp="^(?!default)$")
 	private String department;
 	@NotEmpty
 	@Pattern(regexp="^[0-9]+$")

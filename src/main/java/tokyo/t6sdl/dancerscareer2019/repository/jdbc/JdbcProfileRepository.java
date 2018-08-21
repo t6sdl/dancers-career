@@ -219,7 +219,6 @@ public class JdbcProfileRepository implements ProfileRepository {
 	@Override
 	public void insert(Profile newProfile) {
 		String positions = listToString(newProfile.getPosition());
-		System.out.println(newProfile.getEmail() + ", " + newProfile.getLast_name() + ", " + newProfile.getFirst_name() + ", " + newProfile.getKana_last_name() + ", " + newProfile.getKana_first_name() + ", " + newProfile.getDate_of_birth() + ", " + newProfile.getSex() + ", " + newProfile.getPhone_number() + ", " + newProfile.getMajor() + ", " + newProfile.getUniversity() + ", " + newProfile.getFaculty() + ", " + newProfile.getDepartment() + ", " + newProfile.getGraduation() + ", " + newProfile.getAcademic_degree() + ", " + positions);
 		jdbcTemplate.update(
 				"INSERT INTO profiles VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				newProfile.getEmail(), newProfile.getLast_name(), newProfile.getFirst_name(), newProfile.getKana_last_name(), newProfile.getKana_first_name(),
