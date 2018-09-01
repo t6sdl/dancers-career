@@ -24,6 +24,10 @@ public class AccountService implements UserDetailsService {
 		this.passwordEncoder = passwordEncoder;
 	}
 	
+	public Account getAccountByEmail(String email) {
+		return accountRepository.findOneByEmail(email);
+	}
+	
 	public void create(Account newAccount, String rawPassword) {
 		String encodedPassword = passwordEncoder.encode(rawPassword);
 		newAccount.setPassword(encodedPassword);

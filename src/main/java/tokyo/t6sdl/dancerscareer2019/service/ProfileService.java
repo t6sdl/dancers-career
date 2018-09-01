@@ -26,4 +26,8 @@ public class ProfileService {
 		profile.setEmail(loggedInEmail);
 		profileRepository.updateAny(profile);
 	}
+	
+	public Profile getProfileByEmail(String email) {
+		return profileRepository.findOneByEmail(email);
+	}
 }

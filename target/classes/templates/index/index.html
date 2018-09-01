@@ -7,11 +7,16 @@
 <body>
 <header th:replace="common/header :: header"></header>
 <div><a th:href="@{/logout}">ログアウト</a></div>
+<div><a th:href="@{/user}">マイページ</a></div>
 <main>
+<section>
 <!-- このsection内でスライドショーします多分 -->
-<section>スライドショー</section>
+スライドショー
+</section>
+<section>
 <!-- このsection内にピックアップしたES/体験記を載せます多分 -->
-<section>ES/体験記</section>
+ES/体験記
+</section>
 </main>
 <footer th:replace="common/footer :: footer"></footer>
 </body>

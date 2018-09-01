@@ -2,24 +2,15 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
-<title>アカウント｜ダンサーズキャリア</title>
+<title>診断結果｜ダンサーズキャリア</title>
 </head>
 <body>
 <header th:replace="common/header :: header"></header>
 <main>
-<h1>アカウント</h1>
+<h1>診断結果</h1>
+<div><p>診断結果がありません</p></div>
 <article>
-<!-- アカウント情報 -->
-<table>
-<tr>
-<th align="right">メールアドレス：</th>
-<td th:text="${email}"></td>
-</tr>
-<tr>
-<th align="right">パスワード：</th>
-<td>非表示</td>
-</tr>
-</table>
+<!-- 診断結果 -->
 </article>
 <aside th:replace="user/common/tab :: tab"></aside>
 </main>
