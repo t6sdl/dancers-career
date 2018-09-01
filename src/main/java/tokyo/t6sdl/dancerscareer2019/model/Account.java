@@ -1,8 +1,8 @@
 package tokyo.t6sdl.dancerscareer2019.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -18,8 +18,8 @@ public class Account implements UserDetails {
 	private String password;
 	private String authority;
 	private boolean valid_email;
-	private Date updated_at;
-	private Date created_at;
+	private LocalDateTime updated_at;
+	private LocalDateTime created_at;
 	private String email_token;
 	private String password_token;
 	

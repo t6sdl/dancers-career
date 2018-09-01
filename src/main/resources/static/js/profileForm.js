@@ -1,11 +1,5 @@
 $(function () {
-	const contextPath = $('#contextPath').val(),
-	prefectures = ['北海道', '青森県', '岩手県', '秋田県', '宮城県', '山形県', '福島県', 
-		'茨城県', '栃木県', '群馬県', '埼玉県', '東京都', '千葉県', '神奈川県', 
-		'新潟県', '長野県', '山梨県', '静岡県', '愛知県', '岐阜県', '富山県', '石川県', '福井県', 
-		'滋賀県', '三重県', '京都府', '奈良県', '和歌山県', '大阪府', '兵庫県', 
-		'岡山県', '鳥取県', '島根県', '広島県', '愛媛県', '香川県', '徳島県', '高知県', 
-		'福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'];
+	const contextPath = $('#contextPath').val();
 	const $birthYear = $('#birth_year'),
 	$birthMonth = $('#birth_month'),
 	$birthDay = $('#birth_day'),
@@ -110,13 +104,13 @@ $(function () {
 			autoSetDate(31, $birthDay);
 		}
 	}
+	setBirthMonth();
+	setBirthDay();
 	prepJSON();
 	console.log(json);
-	$birthMonth.prop('disabled', true);
-	$birthDay.prop('disabled', true);
-	$university.prop('disabled', true);
-	$faculty.prop('disabled', true);
-	$department.prop('disabled', true);
+	setUniversity();
+	setFaculty();
+	setDepartment();
 	$birthYear.on('input', function (event) {
 		event.preventDefault();
 		setBirthMonth();

@@ -10,6 +10,7 @@
 <!-- formタグ外は色々いじってくれて大丈夫です、formタグ内もdivタグ追加したりとかしてくれて大丈夫です -->
 <form th:action="@{/signup}" method="post" th:object="${signupForm}">
 <h1>アカウント作成</h1>
+<p th:if="${param.error}">アカウントの作成に失敗しました<br>もう一度お試しください</p>
 <div>
 <label for="email">メールアドレス</label>
 <!-- th:errorclassの値は入力値が不正の場合に付与するクラスなので、この場合エラー時にinputタグにerrorクラスが付きます -->
