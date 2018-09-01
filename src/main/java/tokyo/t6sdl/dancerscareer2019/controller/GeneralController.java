@@ -10,9 +10,4 @@ public class GeneralController {
 	public String index(Model model) {
 		return "index/index";
 	}
-	
-	@RequestMapping("/(?!(css|img|js|favicon))**")
-	public String badUrl() {
-		return "redirect:/";
-	}
 }

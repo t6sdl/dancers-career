@@ -2,14 +2,14 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
-<title>パスワードの再設定</title>
+<title>パスワードの再設定｜ダンサーズキャリア</title>
 </head>
 <body>
 <header th:replace="common/header :: header"></header>
 <main>
 <form th:action="@{/signin/forget-pwd}" method="post" th:object="${emailForm}">
 <h1>パスワードの再設定</h1>
-<p>メールを送信しました<br>10分以上経ってもメールが届かない場合は再度送信ボタンを押してください</p>
+<p>メールを送信しました<br>再設定用のURLの有効期限は30分です<br>10分以上経ってもメールが届かない場合は再度送信ボタンを押してください</p>
 <input type="hidden" th:field="*{email}">
 <input type="submit" value="再度送信する">
 </form>

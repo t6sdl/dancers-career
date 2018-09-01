@@ -1,6 +1,6 @@
 package tokyo.t6sdl.dancerscareer2019.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import lombok.Data;
@@ -12,7 +12,7 @@ public class Profile {
 	private String first_name;
 	private String kana_last_name;
 	private String kana_first_name;
-	private Date date_of_birth;
+	private LocalDate date_of_birth;
 	private String sex;
 	private String phone_number;
 	private String major;

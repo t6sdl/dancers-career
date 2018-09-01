@@ -9,17 +9,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import tokyo.t6sdl.dancerscareer2019.httpresponse.NotFound404;
 import tokyo.t6sdl.dancerscareer2019.model.EmailForm;
 import tokyo.t6sdl.dancerscareer2019.model.PasswordForm;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
+import tokyo.t6sdl.dancerscareer2019.service.MailService;
+import tokyo.t6sdl.dancerscareer2019.service.SecurityService;
 
 @Controller
 @RequestMapping("/signin")
 public class SigninController {
 	private final AccountService accountService;
+	private final SecurityService securityService;
+	private final MailService mailService;
 	
-	public SigninController(AccountService accountService) {
+	public SigninController(AccountService accountService, SecurityService securityService, MailService mailService) {
 		this.accountService = accountService;
+		this.securityService = securityService;
+		this.mailService = mailService;
 	}
 	
 	@GetMapping
@@ -37,10 +44,13 @@ public class SigninController {
 		if (token == "" || token == null) {
 			model.addAttribute(new EmailForm());
 			return "signin/forgetPassword";
+		} else if (accountService.isValidPasswordToken(token)) {
+			model.addAttribute(new PasswordForm());
+			model.addAttribute("token", token);
+			return "signin/resetPassword";
+		} else {
+			throw new NotFound404();
 		}
-		model.addAttribute(new PasswordForm());
-		model.addAttribute("token", token);
-		return "signin/resetPassword";
 	}
 	
 	@PostMapping("/forget-pwd")
@@ -48,6 +58,8 @@ public class SigninController {
 		if (result.hasErrors()) {
 			return "signin/forgetPassword";
 		}
+		String passwordToken = accountService.createPasswordToken(form.getEmail());
+		mailService.sendMailWithUrl(form.getEmail(), MailService.SUB_RESET_PWD, MailService.CONTEXT_PATH + "/signin/forget-pwd?token=" + passwordToken);
 		return "signin/sentEmail";
 	}
 		
@@ -57,11 +69,8 @@ public class SigninController {
 			model.addAttribute("token", token);
 			return "signin/resetPassword";
 		}
-		return "redirect:/signin/reset-pwd-completed";
-	}
-	
-	@RequestMapping("/reset-pwd-completed")
-	public String completeResetPassword() {
+		String email = accountService.completeResetPassword(token);
+		accountService.changePassword(email, form.getPassword());
 		return "signin/completeResetPassword";
 	}
 }

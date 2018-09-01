@@ -1,14 +1,10 @@
 package tokyo.t6sdl.dancerscareer2019.service;
 
-import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.time.LocalDateTime;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,12 +18,10 @@ import tokyo.t6sdl.dancerscareer2019.repository.AccountRepository;
 public class AccountService implements UserDetailsService {
 	private final AccountRepository accountRepository;
 	private final PasswordEncoder passwordEncoder;
-	private final JavaMailSender mailSender;
 	
-	public AccountService(AccountRepository accountRepository, PasswordEncoder passwordEncoder, JavaMailSender mailSender) {
+	public AccountService(AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
 		this.accountRepository = accountRepository;
 		this.passwordEncoder = passwordEncoder;
-		this.mailSender = mailSender;
 	}
 	
 	public void create(Account newAccount, String rawPassword) {
@@ -45,7 +39,8 @@ public class AccountService implements UserDetailsService {
 	}
 	
 	public void changePassword(String loggedInEmail, String newPassword) {
-		accountRepository.updatePassword(loggedInEmail, newPassword);
+		String newEncodedPassword = passwordEncoder.encode(newPassword);
+		accountRepository.updatePassword(loggedInEmail, newEncodedPassword);
 	}
 	
 	public void changeValidEmail(String loggedInEmail, boolean validEmail) {
@@ -54,59 +49,60 @@ public class AccountService implements UserDetailsService {
 	
 	public String createEmailToken(String loggedInEmail) {
 		String emailToken;
-		try {
-			emailToken = createAccountToken();
-			if (emailToken == "") {
-				return "";
-			} else {
-				accountRepository.recordEmailToken(loggedInEmail, emailToken);
-				return emailToken;
-			}
-		} catch (NoSuchAlgorithmException e) {
-			return null;
+		emailToken = createAccountToken();
+		if (emailToken == "") {
+			return "";
+		} else {
+			accountRepository.recordEmailToken(loggedInEmail, emailToken);
+			return emailToken;
 		}
 	}
 	
 	public String createPasswordToken(String loggedInEmail) {
 		String passwordToken;
-		try {
-			passwordToken = createAccountToken();
-			if (passwordToken == "") {
-				return "";
-			} else {
-				accountRepository.recordPasswordToken(loggedInEmail, passwordToken);
-				return passwordToken;
-			}
-		} catch (NoSuchAlgorithmException e) {
-			return null;
+		passwordToken = createAccountToken();
+		if (passwordToken == "") {
+			return "";
+		} else {
+			accountRepository.recordPasswordToken(loggedInEmail, passwordToken);
+			return passwordToken;
 		}
 	}
 	
 	public boolean isValidEmailToken(String emailToken) {
-		boolean result;
 		Account account = accountRepository.findOneByEmailToken(emailToken);
-		if (account != null) {
-			result = true;
-			accountRepository.refreshEmailToken(account.getEmail());
-		} else {
-			result = false;
+		if (account == null) {
+			return false;
 		}
-		return result;
+		accountRepository.refreshEmailToken(account.getEmail());
+		accountRepository.updateValidEmail(account.getEmail(), true);
+		return true;
 	}
 	
 	public boolean isValidPasswordToken(String passwordToken) {
-		boolean result;
 		Account account = accountRepository.findOneByPasswordToken(passwordToken);
-		if (account != null) {
-			result = true;
-			accountRepository.refreshPasswordToken(account.getEmail());
-		} else {
-			result = false;
+		if (account == null) {
+			return false;
 		}
-		return result;
+		LocalDateTime expiration = account.getUpdated_at().plusMinutes(30);
+		LocalDateTime now = LocalDateTime.now();
+		if (now.isAfter(expiration)) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
-	public String createAccountToken() throws NoSuchAlgorithmException {
+	public String completeResetPassword(String passwordToken) {
+		Account account = accountRepository.findOneByPasswordToken(passwordToken);
+		if (account == null) {
+			return "";
+		}
+		accountRepository.refreshPasswordToken(account.getEmail());
+		return account.getEmail();
+	}
+	
+	private String createAccountToken() {
 		try {
 			SecureRandom random = SecureRandom.getInstanceStrong();
 			byte[] bytes = new byte[20];
@@ -134,22 +130,5 @@ public class AccountService implements UserDetailsService {
 			throw new UsernameNotFoundException("このユーザーは存在しません");
 		}
 		return account;
-	}
-	
-	public void sendMail(String to, String subject, String content) {
-		try {
-			MimeMessage mail = mailSender.createMimeMessage();
-			mail.setHeader("Content-type", "text/html");
-			MimeMessageHelper helper = new MimeMessageHelper(mail, false, "UTF-8");
-			helper.setFrom("test_dancerscareer@t6sdl.tokyo", "（テスト）ダンサーズキャリア事務局");
-			helper.setTo(to);
-			helper.setSubject(subject);
-			helper.setText(content, true);
-			mailSender.send(mail);
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
 	}
 }
