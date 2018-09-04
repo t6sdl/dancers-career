@@ -1,7 +1,5 @@
 package tokyo.t6sdl.dancerscareer2019.controller;
 
-import java.time.LocalDate;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -63,31 +61,19 @@ public class SignupController {
 	
 	@GetMapping("/profile")
 	public String getSignupProfile(Model model) {
-		model.addAttribute("profileForm", new ProfileForm());
+		model.addAttribute(new ProfileForm());
 		return "signup/profileForm";
 	}
 	
 	@PostMapping("/profile")
-	public String postSignupProfile(@Validated ProfileForm form, BindingResult result) {
+	public String postSignupProfile(@Validated ProfileForm form, BindingResult result, Model model) {
 		if (result.hasErrors()) {
+			model.addAttribute("hiddenUniv", form.getUniversity());
+			model.addAttribute("hiddenFac", form.getFaculty());
+			model.addAttribute("hiddenDep", form.getDepartment());
 			return "signup/profileForm";
 		}
-		String graduation = form.getGraduation_year() + "/" + form.getGraduation_month();
-		Profile newProfile = new Profile();
-		newProfile.setLast_name(form.getLast_name());
-		newProfile.setFirst_name(form.getFirst_name());
-		newProfile.setKana_last_name(form.getKana_last_name());
-		newProfile.setKana_first_name(form.getKana_first_name());
-		newProfile.setDate_of_birth(LocalDate.of(Integer.parseInt(form.getBirth_year()), Integer.parseInt(form.getBirth_month()), Integer.parseInt(form.getBirth_day())));
-		newProfile.setSex(form.getSex());
-		newProfile.setPhone_number(form.getPhone_number());
-		newProfile.setMajor(form.getMajor());
-		newProfile.setUniversity(form.getUniversity());
-		newProfile.setFaculty(form.getFaculty());
-		newProfile.setDepartment(form.getDepartment());
-		newProfile.setGraduation(graduation);
-		newProfile.setAcademic_degree(form.getAcademic_degree());
-		newProfile.setPosition(form.getPosition());
+		Profile newProfile = profileService.convertProfileFormIntoProfile(form);
 		profileService.register(newProfile, securityService.findLoggedInEmail());
 		return "redirect:/";
 	}

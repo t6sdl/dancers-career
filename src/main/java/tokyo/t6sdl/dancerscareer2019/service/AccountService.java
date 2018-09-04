@@ -42,8 +42,8 @@ public class AccountService implements UserDetailsService {
 		accountRepository.updateEmail(loggedInEmail, newEmail);
 	}
 	
-	public void changePassword(String loggedInEmail, String newPassword) {
-		String newEncodedPassword = passwordEncoder.encode(newPassword);
+	public void changePassword(String loggedInEmail, String newRawPassword) {
+		String newEncodedPassword = passwordEncoder.encode(newRawPassword);
 		accountRepository.updatePassword(loggedInEmail, newEncodedPassword);
 	}
 	

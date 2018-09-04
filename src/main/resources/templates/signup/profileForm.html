@@ -6,6 +6,7 @@
 </head>
 <body>
 <header th:replace="common/header :: header"></header>
+<main>
 <form th:action="@{/signup/profile}" method="post" th:object="${profileForm}">
 <h1>プロフィール登録</h1>
 <div>
@@ -26,7 +27,7 @@
 <input type="text" th:field="*{kana_first_name}" th:errorclass="error" required>
 <p th:if="${#fields.hasErrors('kana_last_name') || #fields.hasErrors('kana_first_name')}">カタカナで入力してください</p>
 </div>
-<div><!-- この項目は未完成です -->
+<div>
 <p>生年月日</p>
 <div>
 <select th:field="*{birth_year}" required>
@@ -45,10 +46,53 @@
 <label for="birth_year">年</label>
 <select th:field="*{birth_month}" required>
 <option value="default">選択してください</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
 </select>
 <label for="birth_month">月</label>
 <select th:field="*{birth_day}" required>
 <option value="default">選択してください</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+<option value="12">12</option>
+<option value="13">13</option>
+<option value="14">14</option>
+<option value="15">15</option>
+<option value="16">16</option>
+<option value="17">17</option>
+<option value="18">18</option>
+<option value="19">19</option>
+<option value="20">20</option>
+<option value="21">21</option>
+<option value="22">22</option>
+<option value="23">23</option>
+<option value="24">24</option>
+<option value="25">25</option>
+<option value="26">26</option>
+<option value="27">27</option>
+<option value="28">28</option>
+<option value="29">29</option>
+<option value="30">30</option>
+<option value="31">31</option>
 </select>
 <label for="birth_day">日</label>
 <p th:if="${#fields.hasErrors('birth_year') || #fields.hasErrors('birth_month') || #fields.hasErrors('birth_day')}">必須項目です</p>
@@ -86,10 +130,10 @@
 <label for="prefecture">大学所在地</label>
 <select th:field="*{prefecture}" required>
 <option value="default">選択してください</option>
-<option value="都">と</option>
-<option value="道">どう</option>
-<option value="府">ふ</option>
-<option value="県">けん</option>
+<option value="都">都</option>
+<option value="道">道</option>
+<option value="府">府</option>
+<option value="県">県</option>
 </select>
 <p th:if="${#fields.hasErrors('prefecture')}">必須項目です</p>
 </div>
@@ -98,6 +142,7 @@
 <select th:field="*{university}" required>
 <option value="default">選択してください</option>
 </select>
+<input type="hidden" id="hiddenUniv" th:value="${hiddenUniv == null ? '' : hiddenUniv}">
 <p th:if="${#fields.hasErrors('university')}">必須項目です</p>
 </div>
 <div>
@@ -105,6 +150,7 @@
 <select th:field="*{faculty}" required>
 <option value="default">選択してください</option>
 </select>
+<input type="hidden" id="hiddenFac" th:value="${hiddenFac == null ? '' : hiddenFac}">
 <p th:if="${#fields.hasErrors('faculty')}">必須項目です</p>
 </div>
 <div>
@@ -112,11 +158,12 @@
 <select th:field="*{department}" required>
 <option value="default">選択してください</option>
 </select>
+<input type="hidden" id="hiddenDep" th:value="${hiddenDep == null ? '' : hiddenDep}">
 <p th:if="${#fields.hasErrors('department')}">必須項目です</p>
 </div>
 </div>
 </div>
-<div><!-- この項目は未完成です -->
+<div>
 <p>卒業年度</p>
 <div>
 <select th:field="*{graduation_year}" required>
@@ -129,15 +176,15 @@
 <label for="graduation_year">年</label>
 <select th:field="*{graduation_month}" required>
 <option value="default">選択してください</option>
-<option value="01">1</option>
-<option value="02">2</option>
-<option value="03">3</option>
-<option value="04">4</option>
-<option value="05">5</option>
-<option value="06">6</option>
-<option value="07">7</option>
-<option value="08">8</option>
-<option value="09">9</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
 <option value="10">10</option>
 <option value="11">11</option>
 <option value="12">12</option>
@@ -178,6 +225,7 @@
 <input type="hidden" id="contextPath" th:value="@{/}">
 </div>
 </form>
+</main>
 <footer th:replace="common/footer :: footer"></footer>
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"

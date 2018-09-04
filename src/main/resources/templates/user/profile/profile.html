@@ -52,6 +52,7 @@
 <td><span th:each="pos : *{position}" th:text="|${pos} |"></span></td>
 </tr>
 </table>
+<div><a th:href="@{/user/profile/verify}"><button>修正する</button></a></div>
 </article>
 <aside th:replace="user/common/tab :: tab"></aside>
 </main>

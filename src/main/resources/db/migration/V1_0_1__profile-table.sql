@@ -8,6 +8,7 @@ CREATE TABLE profiles (
   sex ENUM('男性', '女性') NOT NULL,
   phone_number VARCHAR(15) NOT NULL,
   major ENUM('文系', '理系') NOT NULL,
+  prefecture VARCHAR(255) NOT NULL,
   university VARCHAR(255) NOT NULL,
   faculty VARCHAR(255) NOT NULL,
   department VARCHAR(255) NOT NULL,

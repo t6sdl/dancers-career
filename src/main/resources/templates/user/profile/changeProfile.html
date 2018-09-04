@@ -2,13 +2,13 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
-<title>プロフィール登録｜ダンサーズキャリア</title>
+<title>プロフィールの修正｜ダンサーズキャリア</title>
 </head>
 <body>
 <header th:replace="common/header :: header"></header>
 <main>
-<form th:action="@{/signup/profile}" method="post" th:object="${profileForm}">
-<h1>プロフィール登録</h1>
+<form th:action="@{/user/profile/changed}" method="post" th:object="${profileForm}">
+<h1>プロフィールの修正</h1>
 <div>
 <p>氏名</p>
 <div>
@@ -221,10 +221,11 @@
 </div>
 </div>
 <div>
-<input type="submit" value="登録を完了する">
+<input type="submit" value="修正する">
 <input type="hidden" id="contextPath" th:value="@{/}">
 </div>
 </form>
+<aside th:replace="user/common/tab :: tab"></aside>
 </main>
 <footer th:replace="common/footer :: footer"></footer>
 <script
