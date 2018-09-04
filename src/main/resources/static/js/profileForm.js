@@ -123,7 +123,6 @@ $(function () {
 	setBirthMonth();
 	setBirthDay();
 	prepJSON();
-	console.log(json);
 	initUniversity();
 	initFaculty();
 	initDepartment();
