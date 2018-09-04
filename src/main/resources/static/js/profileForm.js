@@ -6,7 +6,10 @@ $(function () {
 	$prefecture = $('#prefecture'),
 	$university = $('#university'),
 	$faculty = $('#faculty'),
-	$department = $('#department');
+	$department = $('#department'),
+	$hiddenUniv = $('#hiddenUniv'),
+	$hiddenFac = $('#hiddenFac'),
+	$hiddenDep = $('#hiddenDep');
 	let json;
 	const prepJSON = function () {
 		$.ajaxSetup({async: false});
@@ -57,22 +60,39 @@ $(function () {
 		$department.prop('disabled', false);
 		for (let i = 0; i < json[$prefecture.val()][$university.val()][$faculty.val()].length; i++) {
 			let dep = json[$prefecture.val()][$university.val()][$faculty.val()][i];
-			console.log(i);
-			console.log(dep);
 			let options = '<option value="' + dep + '">' + dep + '</option>';
 			$department.append(options);
 		}
 	}
+	const initUniversity = function () {
+		setUniversity();
+		if ($hiddenUniv !== '') {
+			$university.children('[value="' + $hiddenUniv.val() + '"]').prop('selected', true);
+		}
+	}
+	const initFaculty = function () {
+		setFaculty();
+		if ($hiddenFac !== '') {
+			$faculty.children('[value="' + $hiddenFac.val() + '"]').prop('selected', true);
+		}
+	}
+	const initDepartment = function () {
+		setDepartment();
+		if ($hiddenDep !== '') {
+			$department.children('[value="' + $hiddenDep.val() + '"]').prop('selected', true);
+		}
+	}
 	const autoSetDate = function (max, $object) {
-		for (let i = 1; i <= max; i++) {
-			let j;
-			if (i < 10) {
-				j = '0' + i;
-			} else {
-				j = i;
+		for (let i = 1; i <= 31; i++) {
+			if (!($object.children('[value="' + i + '"]').length)) {
+				let options = '<option value="' + i + '">' + i + '</option>';
+				$object.append(options);
 			}
-			let options = '<option value="' + j + '">' + i + '</option>';
-			$object.append(options);
+		}
+		if (max < 31) {
+			for (let i = 31; i > max; i--) {
+				$object.children('[value="' + i + '"]').remove();
+			}
 		}
 	}
 	const setBirthMonth = function () {
@@ -83,9 +103,6 @@ $(function () {
 		}
 		$birthMonth.prop('disabled', false);
 		$birthDay.prop('disabled', true);
-		$birthMonth.children('[value!="default"]').remove();
-		$birthDay.children('[value!="default"]').remove();
-		autoSetDate(12, $birthMonth);
 	}
 	const setBirthDay = function() {
 		if ($birthMonth.val() === 'default') {
@@ -93,12 +110,11 @@ $(function () {
 			return;
 		}
 		$birthDay.prop('disabled', false);
-		$birthDay.children('[value!="default"]').remove();
-		if (($birthYear.val() === '1992' || $birthYear.val() === '1996') && $birthMonth.val() === '02') {
+		if (($birthYear.val() === '1992' || $birthYear.val() === '1996') && $birthMonth.val() === '2') {
 			autoSetDate(29, $birthDay);
-		} else if ($birthMonth.val() === '02') {
+		} else if ($birthMonth.val() === '2') {
 			autoSetDate(28, $birthDay);
-		} else if ($birthMonth.val() === '04' || $birthMonth.val() === '06' || $birthMonth.val() === '09' || $birthMonth.val() === '11') {
+		} else if ($birthMonth.val() === '4' || $birthMonth.val() === '6' || $birthMonth.val() === '9' || $birthMonth.val() === '11') {
 			autoSetDate(30, $birthDay);
 		} else {
 			autoSetDate(31, $birthDay);
@@ -108,9 +124,9 @@ $(function () {
 	setBirthDay();
 	prepJSON();
 	console.log(json);
-	setUniversity();
-	setFaculty();
-	setDepartment();
+	initUniversity();
+	initFaculty();
+	initDepartment();
 	$birthYear.on('input', function (event) {
 		event.preventDefault();
 		setBirthMonth();

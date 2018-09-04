@@ -14,18 +14,15 @@ import tokyo.t6sdl.dancerscareer2019.model.EmailForm;
 import tokyo.t6sdl.dancerscareer2019.model.PasswordForm;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 import tokyo.t6sdl.dancerscareer2019.service.MailService;
-import tokyo.t6sdl.dancerscareer2019.service.SecurityService;
 
 @Controller
 @RequestMapping("/signin")
 public class SigninController {
 	private final AccountService accountService;
-	private final SecurityService securityService;
 	private final MailService mailService;
 	
-	public SigninController(AccountService accountService, SecurityService securityService, MailService mailService) {
+	public SigninController(AccountService accountService, MailService mailService) {
 		this.accountService = accountService;
-		this.securityService = securityService;
 		this.mailService = mailService;
 	}
 	

@@ -1,5 +1,7 @@
 package tokyo.t6sdl.dancerscareer2019.repository.jdbc;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -45,22 +47,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 		return jdbcTemplate.query(
 				"SELECT * FROM profiles ORDER BY email", (resultSet, i) -> {
 					Profile profile = new Profile();
-					profile.setEmail(resultSet.getString("email"));
-					profile.setLast_name(resultSet.getString("last_name"));
-					profile.setFirst_name(resultSet.getString("first_name"));
-					profile.setKana_last_name(resultSet.getString("kana_last_name"));
-					profile.setKana_first_name(resultSet.getString("kana_first_name"));
-					Date dateOfBirth = resultSet.getTimestamp("date_of_birth");
-					profile.setDate_of_birth(LocalDate.ofInstant(dateOfBirth.toInstant(), ZoneId.systemDefault()));
-					profile.setSex(resultSet.getString("sex"));
-					profile.setPhone_number(resultSet.getString("phone_number"));
-					profile.setMajor(resultSet.getString("major"));
-					profile.setUniversity(resultSet.getString("university"));
-					profile.setFaculty(resultSet.getString("faculty"));
-					profile.setDepartment(resultSet.getString("department"));
-					profile.setGraduation(resultSet.getString("graduation"));
-					profile.setAcademic_degree(resultSet.getString("academic_degree"));
-					profile.setPosition(stringToList(resultSet.getString("position")));
+					this.adjustDataToProfile(profile, resultSet);
 					return profile;
 				});
 	}
@@ -71,22 +58,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 				return jdbcTemplate.queryForObject(
 						"SELECT * FROM profiles WHERE email = ?", (resultSet, i) -> {
 							Profile profile = new Profile();
-							profile.setEmail(resultSet.getString("email"));
-							profile.setLast_name(resultSet.getString("last_name"));
-							profile.setFirst_name(resultSet.getString("first_name"));
-							profile.setKana_last_name(resultSet.getString("kana_last_name"));
-							profile.setKana_first_name(resultSet.getString("kana_first_name"));
-							Date dateOfBirth = resultSet.getTimestamp("date_of_birth");
-							profile.setDate_of_birth(LocalDate.ofInstant(dateOfBirth.toInstant(), ZoneId.systemDefault()));
-							profile.setSex(resultSet.getString("sex"));
-							profile.setPhone_number(resultSet.getString("phone_number"));
-							profile.setMajor(resultSet.getString("major"));
-							profile.setUniversity(resultSet.getString("university"));
-							profile.setFaculty(resultSet.getString("faculty"));
-							profile.setDepartment(resultSet.getString("department"));
-							profile.setGraduation(resultSet.getString("graduation"));
-							profile.setAcademic_degree(resultSet.getString("academic_degree"));
-							profile.setPosition(stringToList(resultSet.getString("position")));
+							this.adjustDataToProfile(profile, resultSet);
 							return profile;
 						}, email);
 		 } catch (EmptyResultDataAccessException e) {
@@ -99,22 +71,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 		return jdbcTemplate.query(
 				"SELECT * FROM profiles WHERE university = ? ORDER BY email", (resultSet, i) -> {
 					Profile profile = new Profile();
-					profile.setEmail(resultSet.getString("email"));
-					profile.setLast_name(resultSet.getString("last_name"));
-					profile.setFirst_name(resultSet.getString("first_name"));
-					profile.setKana_last_name(resultSet.getString("kana_last_name"));
-					profile.setKana_first_name(resultSet.getString("kana_first_name"));
-					Date dateOfBirth = resultSet.getTimestamp("date_of_birth");
-					profile.setDate_of_birth(LocalDate.ofInstant(dateOfBirth.toInstant(), ZoneId.systemDefault()));
-					profile.setSex(resultSet.getString("sex"));
-					profile.setPhone_number(resultSet.getString("phone_number"));
-					profile.setMajor(resultSet.getString("major"));
-					profile.setUniversity(resultSet.getString("university"));
-					profile.setFaculty(resultSet.getString("faculty"));
-					profile.setDepartment(resultSet.getString("department"));
-					profile.setGraduation(resultSet.getString("graduation"));
-					profile.setAcademic_degree(resultSet.getString("academic_degree"));
-					profile.setPosition(stringToList(resultSet.getString("position")));
+					this.adjustDataToProfile(profile, resultSet);
 					return profile;
 				}, university);
 	}
@@ -124,22 +81,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 		return jdbcTemplate.query(
 				"SELECT * FROM profiles WHERE university = ? AND faculty = ? ORDER BY email", (resultSet, i) -> {
 					Profile profile = new Profile();
-					profile.setEmail(resultSet.getString("email"));
-					profile.setLast_name(resultSet.getString("last_name"));
-					profile.setFirst_name(resultSet.getString("first_name"));
-					profile.setKana_last_name(resultSet.getString("kana_last_name"));
-					profile.setKana_first_name(resultSet.getString("kana_first_name"));
-					Date dateOfBirth = resultSet.getTimestamp("date_of_birth");
-					profile.setDate_of_birth(LocalDate.ofInstant(dateOfBirth.toInstant(), ZoneId.systemDefault()));
-					profile.setSex(resultSet.getString("sex"));
-					profile.setPhone_number(resultSet.getString("phone_number"));
-					profile.setMajor(resultSet.getString("major"));
-					profile.setUniversity(resultSet.getString("university"));
-					profile.setFaculty(resultSet.getString("faculty"));
-					profile.setDepartment(resultSet.getString("department"));
-					profile.setGraduation(resultSet.getString("graduation"));
-					profile.setAcademic_degree(resultSet.getString("academic_degree"));
-					profile.setPosition(stringToList(resultSet.getString("position")));
+					this.adjustDataToProfile(profile, resultSet);
 					return profile;
 				}, university, faculty);
 	}
@@ -149,22 +91,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 		return jdbcTemplate.query(
 				"SELECT * FROM profiles WHERE university = ? AND faculty = ? AND department = ? ORDER BY email", (resultSet, i) -> {
 					Profile profile = new Profile();
-					profile.setEmail(resultSet.getString("email"));
-					profile.setLast_name(resultSet.getString("last_name"));
-					profile.setFirst_name(resultSet.getString("first_name"));
-					profile.setKana_last_name(resultSet.getString("kana_last_name"));
-					profile.setKana_first_name(resultSet.getString("kana_first_name"));
-					Date dateOfBirth = resultSet.getTimestamp("date_of_birth");
-					profile.setDate_of_birth(LocalDate.ofInstant(dateOfBirth.toInstant(), ZoneId.systemDefault()));
-					profile.setSex(resultSet.getString("sex"));
-					profile.setPhone_number(resultSet.getString("phone_number"));
-					profile.setMajor(resultSet.getString("major"));
-					profile.setUniversity(resultSet.getString("university"));
-					profile.setFaculty(resultSet.getString("faculty"));
-					profile.setDepartment(resultSet.getString("department"));
-					profile.setGraduation(resultSet.getString("graduation"));
-					profile.setAcademic_degree(resultSet.getString("academic_degree"));
-					profile.setPosition(stringToList(resultSet.getString("position")));
+					this.adjustDataToProfile(profile, resultSet);
 					return profile;
 				}, university, faculty, department);
 	}
@@ -174,22 +101,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 		return jdbcTemplate.query(
 				"SELECT * FROM profiles WHERE faculty = ? ORDER BY email", (resultSet, i) -> {
 					Profile profile = new Profile();
-					profile.setEmail(resultSet.getString("email"));
-					profile.setLast_name(resultSet.getString("last_name"));
-					profile.setFirst_name(resultSet.getString("first_name"));
-					profile.setKana_last_name(resultSet.getString("kana_last_name"));
-					profile.setKana_first_name(resultSet.getString("kana_first_name"));
-					Date dateOfBirth = resultSet.getTimestamp("date_of_birth");
-					profile.setDate_of_birth(LocalDate.ofInstant(dateOfBirth.toInstant(), ZoneId.systemDefault()));
-					profile.setSex(resultSet.getString("sex"));
-					profile.setPhone_number(resultSet.getString("phone_number"));
-					profile.setMajor(resultSet.getString("major"));
-					profile.setUniversity(resultSet.getString("university"));
-					profile.setFaculty(resultSet.getString("faculty"));
-					profile.setDepartment(resultSet.getString("department"));
-					profile.setGraduation(resultSet.getString("graduation"));
-					profile.setAcademic_degree(resultSet.getString("academic_degree"));
-					profile.setPosition(stringToList(resultSet.getString("position")));
+					this.adjustDataToProfile(profile, resultSet);
 					return profile;
 				}, faculty);
 	}
@@ -206,22 +118,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 		return jdbcTemplate.query(
 				"SELECT * FROM profiles WHERE " + like + " ORDER BY email", (resultSet, i) -> {
 					Profile profile = new Profile();
-					profile.setEmail(resultSet.getString("email"));
-					profile.setLast_name(resultSet.getString("last_name"));
-					profile.setFirst_name(resultSet.getString("first_name"));
-					profile.setKana_last_name(resultSet.getString("kana_last_name"));
-					profile.setKana_first_name(resultSet.getString("kana_first_name"));
-					Date dateOfBirth = resultSet.getTimestamp("date_of_birth");
-					profile.setDate_of_birth(LocalDate.ofInstant(dateOfBirth.toInstant(), ZoneId.systemDefault()));
-					profile.setSex(resultSet.getString("sex"));
-					profile.setPhone_number(resultSet.getString("phone_number"));
-					profile.setMajor(resultSet.getString("major"));
-					profile.setUniversity(resultSet.getString("university"));
-					profile.setFaculty(resultSet.getString("faculty"));
-					profile.setDepartment(resultSet.getString("department"));
-					profile.setGraduation(resultSet.getString("graduation"));
-					profile.setAcademic_degree(resultSet.getString("academic_degree"));
-					profile.setPosition(stringToList(resultSet.getString("position")));
+					this.adjustDataToProfile(profile, resultSet);
 					return profile;
 				});
 	}
@@ -229,11 +126,11 @@ public class JdbcProfileRepository implements ProfileRepository {
 	@Override
 	public void insert(Profile newProfile) {
 		String positions = listToString(newProfile.getPosition());
-		Date date_of_birth = Date.from(newProfile.getDate_of_birth().atStartOfDay(ZoneId.systemDefault()).toInstant());
+		Date date_of_birth = Date.from(newProfile.getDate_of_birth_for_calc().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		jdbcTemplate.update(
-				"INSERT INTO profiles VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				"INSERT INTO profiles VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				newProfile.getEmail(), newProfile.getLast_name(), newProfile.getFirst_name(), newProfile.getKana_last_name(), newProfile.getKana_first_name(),
-				date_of_birth, newProfile.getSex(), newProfile.getPhone_number(), newProfile.getMajor(), newProfile.getUniversity(),
+				date_of_birth, newProfile.getSex(), newProfile.getPhone_number(), newProfile.getMajor(), newProfile.getPrefecture(), newProfile.getUniversity(),
 				newProfile.getFaculty(), newProfile.getDepartment(), newProfile.getGraduation(), newProfile.getAcademic_degree(), positions);
 	}
 
@@ -247,13 +144,32 @@ public class JdbcProfileRepository implements ProfileRepository {
 	@Override
 	public void updateAny(Profile profile) {
 		String positions = listToString(profile.getPosition());
-		Date date_of_birth = Date.from(profile.getDate_of_birth().atStartOfDay(ZoneId.systemDefault()).toInstant());
+		Date date_of_birth = Date.from(profile.getDate_of_birth_for_calc().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		jdbcTemplate.update(
 				"UPDATE profiles SET last_name = ?, first_name = ?, kana_last_name = ?, kana_first_name = ?, date_of_birth = ?, sex = ?, phone_number = ?, "
-				+ "major = ?, university = ?, faculty = ?, department = ?, graduation = ?, academic_degree = ?, position = ? WHERE email = ?",
+				+ "major = ?, prefecture = ?, university = ?, faculty = ?, department = ?, graduation = ?, academic_degree = ?, position = ? WHERE email = ?",
 				profile.getLast_name(), profile.getFirst_name(), profile.getKana_last_name(), profile.getKana_first_name(),
-				date_of_birth, profile.getSex(), profile.getPhone_number(), profile.getMajor(), profile.getUniversity(),
+				date_of_birth, profile.getSex(), profile.getPhone_number(), profile.getMajor(), profile.getPrefecture(), profile.getUniversity(),
 				profile.getFaculty(), profile.getDepartment(), profile.getGraduation(), profile.getAcademic_degree(), positions, profile.getEmail());
 	}
-
+	
+	private void adjustDataToProfile(Profile profile, ResultSet resultSet) throws SQLException {
+		profile.setEmail(resultSet.getString("email"));
+		profile.setLast_name(resultSet.getString("last_name"));
+		profile.setFirst_name(resultSet.getString("first_name"));
+		profile.setKana_last_name(resultSet.getString("kana_last_name"));
+		profile.setKana_first_name(resultSet.getString("kana_first_name"));
+		Date dateOfBirth = resultSet.getTimestamp("date_of_birth");
+		profile.setDate_of_birth_for_calc(LocalDate.ofInstant(dateOfBirth.toInstant(), ZoneId.systemDefault()));
+		profile.setSex(resultSet.getString("sex"));
+		profile.setPhone_number(resultSet.getString("phone_number"));
+		profile.setMajor(resultSet.getString("major"));
+		profile.setPrefecture(resultSet.getString("prefecture"));
+		profile.setUniversity(resultSet.getString("university"));
+		profile.setFaculty(resultSet.getString("faculty"));
+		profile.setDepartment(resultSet.getString("department"));
+		profile.setGraduation(resultSet.getString("graduation"));
+		profile.setAcademic_degree(resultSet.getString("academic_degree"));
+		profile.setPosition(stringToList(resultSet.getString("position")));
+	}
 }
