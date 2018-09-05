@@ -54,7 +54,7 @@ public class SignupController {
 			accountService.delete(form.getEmail());
 			return "redirect:/signup?error";
 		}
-		mailService.sendMailWithUrl(form.getEmail(), MailService.SUB_VERIFY_EMAIL, MailService.CONTEXT_PATH + "/signup/verify-email?token=" + emailToken);
+//		mailService.sendMailWithUrl(form.getEmail(), MailService.SUB_VERIFY_EMAIL, MailService.CONTEXT_PATH + "/signup/verify-email?token=" + emailToken);
 		securityService.autoLogin(form.getEmail(), form.getPassword());
 		return "redirect:/signup/profile";
 	}
