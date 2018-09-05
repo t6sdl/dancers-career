@@ -213,8 +213,20 @@
 <label th:for="${#ids.prev('position')}">代表</label>
 <input type="checkbox" th:field="*{position}" value="副代表">
 <label th:for="${#ids.prev('position')}">副代表</label>
+<input type="checkbox" th:field="*{position}" value="イベント係">
+<label th:for="${#ids.prev('position')}">イベント係</label>
+<input type="checkbox" th:field="*{position}" value="広報">
+<label th:for="${#ids.prev('position')}">広報</label>
+<input type="checkbox" th:field="*{position}" value="渉外">
+<label th:for="${#ids.prev('position')}">渉外</label>
+<input type="checkbox" th:field="*{position}" value="舞台製作係">
+<label th:for="${#ids.prev('position')}">舞台製作係</label>
+<input type="checkbox" th:field="*{position}" value="ジャンルリーダー・振付師">
+<label th:for="${#ids.prev('position')}">ジャンルリーダー・振付師</label>
 <input type="checkbox" th:field="*{position}" value="プレイヤー">
 <label th:for="${#ids.prev('position')}">プレイヤー</label>
+<input type="checkbox" th:field="*{position}" value="その他">
+<label th:for="${#ids.prev('position')}">その他</label>
 <input type="checkbox" th:field="*{position}" value="特になし">
 <label th:for="${#ids.prev('position')}">特になし</label>
 <p th:if="${#fields.hasErrors('position')}">１つ以上選択してください</p>
