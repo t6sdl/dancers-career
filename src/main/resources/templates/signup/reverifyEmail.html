@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>メールアドレスの確認｜ダンサーズキャリア</title>
+</head>
+<body>
+<header th:replace="common/header :: header"></header>
+<main>
+<form th:action="@{/signup/reverify-email}" method="post" th:object="${emailForm}">
+<h1>メールアドレスの確認</h1>
+<p>入力されたメールアドレス宛にメールアドレスの確認のためのURLを再送信します</p>
+<div>
+<label for="email">メールアドレス</label>
+<input type="email" th:field="*{email}">
+<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+</div>
+<div>
+<input type="submit" value="送信する">
+</div>
+</form>
+</main>
+<footer th:replace="common/footer :: footer"></footer>
+</body>
+</html>

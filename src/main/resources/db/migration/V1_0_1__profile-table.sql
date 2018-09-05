@@ -1,0 +1,22 @@
+CREATE TABLE profiles (
+  email VARCHAR(255) NOT NULL COLLATE utf8_bin,
+  last_name VARCHAR(255) NOT NULL,
+  first_name VARCHAR(255) NOT NULL,
+  kana_last_name VARCHAR(255) NOT NULL,
+  kana_first_name VARCHAR(255) NOT NULL,
+  date_of_birth DATE NOT NULL,
+  sex ENUM('男性', '女性') NOT NULL,
+  phone_number VARCHAR(15) NOT NULL,
+  major ENUM('文系', '理系') NOT NULL,
+  prefecture VARCHAR(255) NOT NULL,
+  university VARCHAR(255) NOT NULL,
+  faculty VARCHAR(255) NOT NULL,
+  department VARCHAR(255) NOT NULL,
+  graduation CHAR(7) NOT NULL,
+  academic_degree VARCHAR(50) NOT NULL,
+  position VARCHAR(255) NOT NULL,
+  PRIMARY KEY (email),
+  KEY ix_univ (university, faculty),
+  KEY ix_pos (position),
+  FOREIGN KEY (email) REFERENCES accounts (email) ON DELETE CASCADE ON UPDATE CASCADE
+);

@@ -2,6 +2,8 @@ package tokyo.t6sdl.dancerscareer2019.service;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.time.LocalDateTime;
+
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,6 +24,10 @@ public class AccountService implements UserDetailsService {
 		this.passwordEncoder = passwordEncoder;
 	}
 	
+	public Account getAccountByEmail(String email) {
+		return accountRepository.findOneByEmail(email);
+	}
+	
 	public void create(Account newAccount, String rawPassword) {
 		String encodedPassword = passwordEncoder.encode(rawPassword);
 		newAccount.setPassword(encodedPassword);
@@ -32,63 +38,75 @@ public class AccountService implements UserDetailsService {
 		accountRepository.delete(email);
 	}
 	
-	public void changeEmail(String loggedInUsername, String newEmail) {
-		accountRepository.updateEmail(loggedInUsername, newEmail);
+	public void changeEmail(String loggedInEmail, String newEmail) {
+		accountRepository.updateEmail(loggedInEmail, newEmail);
 	}
 	
-	public void changePassword(String loggedInUsername, String newPassword) {
-		accountRepository.updatePassword(loggedInUsername, newPassword);
+	public void changePassword(String loggedInEmail, String newRawPassword) {
+		String newEncodedPassword = passwordEncoder.encode(newRawPassword);
+		accountRepository.updatePassword(loggedInEmail, newEncodedPassword);
 	}
 	
-	public void changeEnabled(String loggedInUsername, boolean isEnabled) {
-		accountRepository.updateEnabled(loggedInUsername, isEnabled);
+	public void changeValidEmail(String loggedInEmail, boolean validEmail) {
+		accountRepository.updateValidEmail(loggedInEmail, validEmail);
 	}
 	
-	public String createEmailToken(String loggedInUsername) throws NoSuchAlgorithmException {
-		String emailToken = createAccountToken();
+	public String createEmailToken(String loggedInEmail) {
+		String emailToken;
+		emailToken = createAccountToken();
 		if (emailToken == "") {
 			return "";
 		} else {
-			accountRepository.recordEmailToken(loggedInUsername, emailToken);
+			accountRepository.recordEmailToken(loggedInEmail, emailToken);
 			return emailToken;
 		}
 	}
 	
-	public String createPasswordToken(String loggedInUsername) throws NoSuchAlgorithmException {
-		String passwordToken = createAccountToken();
+	public String createPasswordToken(String loggedInEmail) {
+		String passwordToken;
+		passwordToken = createAccountToken();
 		if (passwordToken == "") {
 			return "";
 		} else {
-			accountRepository.recordPasswordToken(loggedInUsername, passwordToken);
+			accountRepository.recordPasswordToken(loggedInEmail, passwordToken);
 			return passwordToken;
 		}
 	}
 	
 	public boolean isValidEmailToken(String emailToken) {
-		boolean result;
 		Account account = accountRepository.findOneByEmailToken(emailToken);
-		if (account != null) {
-			result = true;
-			accountRepository.refreshEmailToken(account.getEmail());
-		} else {
-			result = false;
+		if (account == null) {
+			return false;
 		}
-		return result;
+		accountRepository.refreshEmailToken(account.getEmail());
+		accountRepository.updateValidEmail(account.getEmail(), true);
+		return true;
 	}
 	
 	public boolean isValidPasswordToken(String passwordToken) {
-		boolean result;
 		Account account = accountRepository.findOneByPasswordToken(passwordToken);
-		if (account != null) {
-			result = true;
-			accountRepository.refreshPasswordToken(account.getEmail());
-		} else {
-			result = false;
+		if (account == null) {
+			return false;
 		}
-		return result;
+		LocalDateTime expiration = account.getUpdated_at().plusMinutes(30);
+		LocalDateTime now = LocalDateTime.now();
+		if (now.isAfter(expiration)) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 	
-	public String createAccountToken() throws NoSuchAlgorithmException {
+	public String completeResetPassword(String passwordToken) {
+		Account account = accountRepository.findOneByPasswordToken(passwordToken);
+		if (account == null) {
+			return "";
+		}
+		accountRepository.refreshPasswordToken(account.getEmail());
+		return account.getEmail();
+	}
+	
+	private String createAccountToken() {
 		try {
 			SecureRandom random = SecureRandom.getInstanceStrong();
 			byte[] bytes = new byte[20];
@@ -117,5 +135,4 @@ public class AccountService implements UserDetailsService {
 		}
 		return account;
 	}
-	
 }

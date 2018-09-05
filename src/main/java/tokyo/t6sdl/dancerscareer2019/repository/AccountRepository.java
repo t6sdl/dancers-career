@@ -13,7 +13,7 @@ public interface AccountRepository {
 	void delete(String email);
 	void updateEmail(String loggedInEmail, String newEmail);
 	void updatePassword(String loggedInEmail, String newPassword);
-	void updateEnabled(String loggedInEmail, boolean isEnabled);
+	void updateValidEmail(String loggedInEmail, boolean validEmail);
 	void recordEmailToken(String loggedEmail, String emailToken);
 	void refreshEmailToken(String loggedInEmail);
 	void recordPasswordToken(String loggedInEmail, String passwordToken);

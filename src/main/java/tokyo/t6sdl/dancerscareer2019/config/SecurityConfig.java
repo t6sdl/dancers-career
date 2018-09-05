@@ -32,15 +32,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/favicon.ico", "/css**", "/img**", "/js**");
+		web.ignoring().antMatchers("/favicon.ico", "/css/**", "/img/**", "/js/**");
 	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/signin/**", "/signup/**", "/confirm-email", "/reset-pwd").permitAll()
-			.antMatchers("/admin**").hasRole("ADMIN")
-			.antMatchers("/user**").hasRole("USER")
+			.antMatchers("/signup/profile").authenticated()
+			.antMatchers("/signin/**", "/signup/**").permitAll()
+			.antMatchers("/admin/**").hasRole("ADMIN")
+			.antMatchers("/user/**").hasRole("USER")
 			.anyRequest().authenticated()
 		.and()
 			.formLogin()

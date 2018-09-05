@@ -1,8 +1,8 @@
 package tokyo.t6sdl.dancerscareer2019.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -10,18 +10,16 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.Data;
-import lombok.Setter;
 
 @Data
 @SuppressWarnings("serial")
 public class Account implements UserDetails {
-	@Setter
 	private String email;
 	private String password;
 	private String authority;
-	private boolean enabled;
-	private Date updated_at;
-	private Date created_at;
+	private boolean valid_email;
+	private LocalDateTime updated_at;
+	private LocalDateTime created_at;
 	private String email_token;
 	private String password_token;
 	
@@ -49,6 +47,11 @@ public class Account implements UserDetails {
 
 	@Override
 	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
 		return true;
 	}
 }

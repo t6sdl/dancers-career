@@ -1,5 +1,8 @@
 package tokyo.t6sdl.dancerscareer2019.repository.jdbc;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -25,9 +28,11 @@ public class JdbcAccountRepository implements AccountRepository {
 					account.setEmail(resultSet.getString("email"));
 					account.setPassword(resultSet.getString("password"));
 					account.setAuthority(resultSet.getString("authority"));
-					account.setEnabled(resultSet.getBoolean("enabled"));
-					account.setUpdated_at(resultSet.getTimestamp("updated_at"));
-					account.setCreated_at(resultSet.getTimestamp("created_at"));
+					account.setValid_email(resultSet.getBoolean("valid_email"));
+					Date updatedAt = resultSet.getTimestamp("updated_at");
+					account.setUpdated_at(LocalDateTime.ofInstant(updatedAt.toInstant(), ZoneId.systemDefault()));
+					Date createdAt = resultSet.getTimestamp("created_at");
+					account.setCreated_at(LocalDateTime.ofInstant(createdAt.toInstant(), ZoneId.systemDefault()));
 					account.setEmail_token(resultSet.getString("email_token"));
 					account.setPassword_token(resultSet.getString("password_token"));
 					return account;
@@ -43,9 +48,11 @@ public class JdbcAccountRepository implements AccountRepository {
 						account.setEmail(resultSet.getString("email"));
 						account.setPassword(resultSet.getString("password"));
 						account.setAuthority(resultSet.getString("authority"));
-						account.setEnabled(resultSet.getBoolean("enabled"));
-						account.setUpdated_at(resultSet.getTimestamp("updated_at"));
-						account.setCreated_at(resultSet.getTimestamp("created_at"));
+						account.setValid_email(resultSet.getBoolean("valid_email"));
+						Date updatedAt = resultSet.getTimestamp("updated_at");
+						account.setUpdated_at(LocalDateTime.ofInstant(updatedAt.toInstant(), ZoneId.systemDefault()));
+						Date createdAt = resultSet.getTimestamp("created_at");
+						account.setCreated_at(LocalDateTime.ofInstant(createdAt.toInstant(), ZoneId.systemDefault()));
 						account.setEmail_token(resultSet.getString("email_token"));
 						account.setPassword_token(resultSet.getString("password_token"));
 						return account;
@@ -64,9 +71,11 @@ public class JdbcAccountRepository implements AccountRepository {
 						account.setEmail(resultSet.getString("email"));
 						account.setPassword(resultSet.getString("password"));
 						account.setAuthority(resultSet.getString("authority"));
-						account.setEnabled(resultSet.getBoolean("enabled"));
-						account.setUpdated_at(resultSet.getTimestamp("updated_at"));
-						account.setCreated_at(resultSet.getTimestamp("created_at"));
+						account.setValid_email(resultSet.getBoolean("valid_email"));
+						Date updatedAt = resultSet.getTimestamp("updated_at");
+						account.setUpdated_at(LocalDateTime.ofInstant(updatedAt.toInstant(), ZoneId.systemDefault()));
+						Date createdAt = resultSet.getTimestamp("created_at");
+						account.setCreated_at(LocalDateTime.ofInstant(createdAt.toInstant(), ZoneId.systemDefault()));
 						account.setEmail_token(resultSet.getString("email_token"));
 						account.setPassword_token(resultSet.getString("password_token"));
 						return account;
@@ -85,9 +94,11 @@ public class JdbcAccountRepository implements AccountRepository {
 						account.setEmail(resultSet.getString("email"));
 						account.setPassword(resultSet.getString("password"));
 						account.setAuthority(resultSet.getString("authority"));
-						account.setEnabled(resultSet.getBoolean("enabled"));
-						account.setUpdated_at(resultSet.getTimestamp("updated_at"));
-						account.setCreated_at(resultSet.getTimestamp("created_at"));
+						account.setValid_email(resultSet.getBoolean("valid_email"));
+						Date updatedAt = resultSet.getTimestamp("updated_at");
+						account.setUpdated_at(LocalDateTime.ofInstant(updatedAt.toInstant(), ZoneId.systemDefault()));
+						Date createdAt = resultSet.getTimestamp("created_at");
+						account.setCreated_at(LocalDateTime.ofInstant(createdAt.toInstant(), ZoneId.systemDefault()));
 						account.setEmail_token(resultSet.getString("email_token"));
 						account.setPassword_token(resultSet.getString("password_token"));
 						return account;
@@ -126,16 +137,16 @@ public class JdbcAccountRepository implements AccountRepository {
 	}
 
 	@Override
-	public void updateEnabled(String loggedInEmail, boolean isEnabled) {
+	public void updateValidEmail(String loggedInEmail, boolean validEmail) {
 		jdbcTemplate.update(
-				"UPDATE accounts SET enabled = ?, updated_at = CURRENT_TIMESTAMP WHERE email = ?",
-				isEnabled, loggedInEmail);
+				"UPDATE accounts SET valid_email = ?, updated_at = CURRENT_TIMESTAMP WHERE email = ?",
+				validEmail, loggedInEmail);
 	}
 
 	@Override
 	public void recordEmailToken(String loggedInEmail, String emailToken) {
 		jdbcTemplate.update(
-				"UPDATE accounts SET email_token = ? WHERE email = ?",
+				"UPDATE accounts SET email_token = ?, updated_at = CURRENT_TIMESTAMP WHERE email = ?",
 				emailToken, loggedInEmail);
 	}
 
@@ -149,7 +160,7 @@ public class JdbcAccountRepository implements AccountRepository {
 	@Override
 	public void recordPasswordToken(String loggedInEmail, String passwordToken) {
 		jdbcTemplate.update(
-				"UPDATE accounts SET password_token = ? WHERE email = ?",
+				"UPDATE accounts SET password_token = ?, updated_at = CURRENT_TIMESTAMP WHERE email = ?",
 				passwordToken, loggedInEmail);
 	}
 
