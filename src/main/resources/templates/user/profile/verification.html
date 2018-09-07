@@ -5,11 +5,11 @@
 <title>パスワード確認｜ダンサーズキャリア</title>
 </head>
 <body>
-<header th:replace="common/header :: header"></header>
+<header th:replace="common/header :: for-user"></header>
 <main>
 <h1>パスワード確認</h1>
 <p th:if="${param.error}">パスワードが異なります</p>
-<form th:action="@{/user/profile/change}" method="post" th:object="${verification}">
+<form th:action="@{/user/profile/change}" method="post" th:object="${verificationForm}">
 <div>
 <label for="password">パスワード</label>
 <input type="password" th:field="*{password}">

@@ -5,7 +5,7 @@
 <title>プロフィールの修正｜ダンサーズキャリア</title>
 </head>
 <body>
-<header th:replace="common/header :: header"></header>
+<header th:replace="common/header :: for-user"></header>
 <main>
 <form th:action="@{/user/profile/changed}" method="post" th:object="${profileForm}">
 <h1>プロフィールの修正</h1>

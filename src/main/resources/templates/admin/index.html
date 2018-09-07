@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>管理者ページ｜ダンサーズキャリア</title>
+</head>
+<body>
+<header th:replace="common/header :: for-admin"></header>
+<main>
+<h1>管理者ページ</h1>
+<ul>
+<li><a th:href="@{/admin/search}">学生検索</a></li>
+<li><a th:href="@{/experiences}">ES/体験談</a></li>
+<li><a th:href="@{/logout}">ログアウト</a></li>
+</ul>
+<footer th:replace="common/footer :: footer"></footer>
+</main>
+</body>
+</html>

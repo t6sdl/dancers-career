@@ -1,4 +1,4 @@
-package tokyo.t6sdl.dancerscareer2019.model;
+package tokyo.t6sdl.dancerscareer2019.model.form;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -11,12 +11,11 @@ import tokyo.t6sdl.dancerscareer2019.validation.UniqueEmail;
 
 @Data
 @SamePassword
-public class AccountForm {
+public class SignupForm {
 	@NotEmpty
 	@Email
 	@UniqueEmail
 	private String email;
-	private String hiddenPassword;
 	@Size(min=8)
 	@Pattern(message="半角英数字と記号（.-+_のうち少なくとも１つ）を必ず含めてください", regexp="^(?=[a-zA-Z0-9]*(\\.|\\-|\\+|_))(?=([a-zA-Z]|\\.|\\-|\\+|_)*[0-9])(?=([0-9]|\\.|\\-|\\+|_)*[a-zA-Z])(\\w|\\.|\\-|\\+|_)*$")
 	private String password;
