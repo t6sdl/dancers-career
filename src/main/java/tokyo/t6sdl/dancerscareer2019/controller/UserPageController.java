@@ -1,5 +1,11 @@
 package tokyo.t6sdl.dancerscareer2019.controller;
 
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,10 +16,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
-import tokyo.t6sdl.dancerscareer2019.model.AccountForm;
+import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.model.Profile;
-import tokyo.t6sdl.dancerscareer2019.model.ProfileForm;
-import tokyo.t6sdl.dancerscareer2019.model.Verification;
+import tokyo.t6sdl.dancerscareer2019.model.form.AccountForm;
+import tokyo.t6sdl.dancerscareer2019.model.form.EmailForm;
+import tokyo.t6sdl.dancerscareer2019.model.form.ProfileForm;
+import tokyo.t6sdl.dancerscareer2019.model.form.VerificationForm;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 import tokyo.t6sdl.dancerscareer2019.service.MailService;
 import tokyo.t6sdl.dancerscareer2019.service.ProfileService;
@@ -28,10 +36,16 @@ public class UserPageController {
 	private final ProfileService profileService;
 	private final MailService mailService;
 	private final PasswordEncoder passwordEncoder;
-	
+	private final HttpSession session;
+		
 	@GetMapping("")
 	public String getMypage() {
 		return "user/user";
+	}
+	
+	@RequestMapping("/error")
+	public String getError() {
+		return "user/error";
 	}
 	
 	@GetMapping("/personality")
@@ -43,22 +57,29 @@ public class UserPageController {
 	public String getAccountInfo(Model model) {
 		String loggedInEmail = securityService.findLoggedInEmail();
 		model.addAttribute("email", loggedInEmail);
+		boolean validEmail = securityService.findLoggedInValidEmail();
+		if (validEmail == false) {
+			EmailForm form = new EmailForm();
+			form.setEmail(loggedInEmail);
+			model.addAttribute(form);
+		}
+		model.addAttribute("validEmail", validEmail);
 		return "user/account/account";
 	}
 	
 	@GetMapping("/account/verify")
 	public String getVerificationToChangeAccount(Model model) {
-		model.addAttribute(new Verification());
+		model.addAttribute(new VerificationForm());
 		return "user/account/verification";
 	}
 	
 	@PostMapping("/account/change")
-	public String postVerificationToChangeAccount(Verification form, Model model) {
+	public String postVerificationToChangeAccount(VerificationForm form, Model model) {
 		if (passwordEncoder.matches(form.getPassword(), securityService.findLoggedInPassword())) {
+			session.setAttribute("rawPassword", form.getPassword());
 			model.addAttribute(new AccountForm());
 			model.addAttribute("emailError", false);
 			model.addAttribute("passwordError", false);
-			model.addAttribute("hiddenPassword", form.getPassword());
 			return "user/account/changeAccount";
 		} else {
 			return "redirect:/user/account/verify?error";
@@ -84,8 +105,9 @@ public class UserPageController {
 			accountService.changeEmail(form.getEmail(), loggedInEmail);
 			return "redirect:/user/error";
 		}
-		mailService.sendMailWithUrl(form.getEmail(), MailService.SUB_VERIFY_EMAIL, MailService.CONTEXT_PATH + "/signup/verify-email?token=" + emailToken);
-		securityService.autoLogin(form.getEmail(), form.getHiddenPassword());
+//		mailService.sendMailWithUrl(form.getEmail(), Mail.SUB_VERIFY_EMAIL, Mail.CONTEXT_PATH + "/signup/verify-email?token=" + emailToken);
+		String loggedInRawPassword = session.getAttribute("rawPassword").toString();
+		securityService.autoLogin(form.getEmail(), loggedInRawPassword);
 		return "redirect:/user/account";
 	}
 	
@@ -99,6 +121,7 @@ public class UserPageController {
 		String loggedInEmail = securityService.findLoggedInEmail();
 		accountService.changePassword(loggedInEmail, form.getPassword());
 		securityService.autoLogin(loggedInEmail, form.getPassword());
+		session.invalidate();
 		return "redirect:/user/account";
 	}
 	
@@ -106,20 +129,36 @@ public class UserPageController {
 	public String getProfileInfo(Model model) {
 		String loggedInEmail = securityService.findLoggedInEmail();
 		Profile profile = profileService.getProfileByEmail(loggedInEmail);
-		profile.convertForDisplay();
+		if (profile.getEmail() == null) {
+			for (Field field: profile.getClass().getDeclaredFields()) {
+				try {
+					field.setAccessible(true);
+					if (field.getType() == String.class) {
+						field.set(profile, "");
+					} else if (field.getType() == List.class) {
+						String[] arr = {""};
+						List<String> pos = Arrays.asList(arr);
+						field.set(profile, pos);
+					}
+				} catch (IllegalAccessException e) {
+				}
+			}
+		} else {
+			profile.convertForDisplay();
+		}
 		model.addAttribute("profile", profile);
 		return "user/profile/profile";
 	}
 	
 	@GetMapping("/profile/verify")
 	public String getVerificationToChangeProfile(Model model) {
-		model.addAttribute(new Verification());
+		model.addAttribute(new VerificationForm());
 		return "user/profile/verification";
 	}
 	
 	@PostMapping("/profile/change")
-	public String postVerificationToChangeProfile(Verification verification, Model model) {
-		if (passwordEncoder.matches(verification.getPassword(), securityService.findLoggedInPassword())) {
+	public String postVerificationToChangeProfile(VerificationForm verificationForm, Model model) {
+		if (passwordEncoder.matches(verificationForm.getPassword(), securityService.findLoggedInPassword())) {
 			ProfileForm form = profileService.convertProfileIntoProfileForm(profileService.getProfileByEmail(securityService.findLoggedInEmail()));
 			model.addAttribute(form);
 			model.addAttribute("hiddenUniv", form.getUniversity());

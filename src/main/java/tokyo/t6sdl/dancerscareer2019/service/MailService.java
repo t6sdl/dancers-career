@@ -9,17 +9,14 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
+import tokyo.t6sdl.dancerscareer2019.model.Mail;
+
+@RequiredArgsConstructor
 @Service
 public class MailService {
 	private final JavaMailSender mailSender;
-	public static final String CONTEXT_PATH = "http://localhost:8080";
-	public static final String SUB_VERIFY_EMAIL = "メールアドレスの確認";
-	public static final String SUB_RESET_PWD = "パスワードの再設定";
-	
-	public MailService(JavaMailSender mailSender) {
-		this.mailSender = mailSender;
-	}
-	
+		
 	public void sendMailWithUrl(String to, String subject, String url) {
 		try {
 			String content = this.createContent(subject, url);
@@ -62,10 +59,10 @@ public class MailService {
 		draft.append("<!DOCTYPE html><html><body>");
 		if (url != "") {
 			switch (subject) {
-			case MailService.SUB_VERIFY_EMAIL:
+			case Mail.SUB_VERIFY_EMAIL:
 				draft.append("<a href='" + url + "'><button>メールアドレスの確認</button></a>");
 				break;
-			case MailService.SUB_RESET_PWD:
+			case Mail.SUB_RESET_PWD:
 				draft.append("<a href='" + url + "'><button>パスワードの再設定</button></a>");
 			default:
 				break;

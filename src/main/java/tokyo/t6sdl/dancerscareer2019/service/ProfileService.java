@@ -1,20 +1,19 @@
 package tokyo.t6sdl.dancerscareer2019.service;
 
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.model.Profile;
-import tokyo.t6sdl.dancerscareer2019.model.ProfileForm;
+import tokyo.t6sdl.dancerscareer2019.model.form.ProfileForm;
 import tokyo.t6sdl.dancerscareer2019.repository.ProfileRepository;
 
+@RequiredArgsConstructor
 @Service
 public class ProfileService {
 	private final ProfileRepository profileRepository;
-	
-	public ProfileService(ProfileRepository profileRepository) {
-		this.profileRepository = profileRepository;
-	}
 	
 	public void register(Profile newProfile, String loggedInEmail) {
 		newProfile.setEmail(loggedInEmail);
@@ -31,6 +30,9 @@ public class ProfileService {
 	}
 	
 	public Profile getProfileByEmail(String email) {
+		if (profileRepository.findOneByEmail(email) == null) {
+			return new Profile();
+		}
 		return profileRepository.findOneByEmail(email);
 	}
 	
@@ -60,6 +62,13 @@ public class ProfileService {
 	}
 	
 	public ProfileForm convertProfileIntoProfileForm(Profile profile) {
+		if (profile.getEmail() == null) {
+			ProfileForm form = new ProfileForm();
+			form.setUniversity("");
+			form.setFaculty("");
+			form.setDepartment("");
+			return form;
+		}
 		ProfileForm form = new ProfileForm();
 		String[] split = profile.getGraduation().split("/");
 		if (split[1].charAt(0) == '0') {
@@ -84,5 +93,20 @@ public class ProfileService {
 		form.setAcademic_degree(profile.getAcademic_degree());
 		form.setPosition(profile.getPosition());
 		return form;
+	}
+	
+	public boolean isCompleteProfile(Profile profile) {
+		ProfileForm form = this.convertProfileIntoProfileForm(profile);
+		for (Field field: form.getClass().getDeclaredFields()) {
+			try {
+				field.setAccessible(true);
+				if (field.get(form) == null) {
+					return false;
+				}
+			} catch (IllegalAccessException e) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

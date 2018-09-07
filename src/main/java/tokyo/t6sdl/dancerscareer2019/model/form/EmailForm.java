@@ -1,4 +1,4 @@
-package tokyo.t6sdl.dancerscareer2019.model;
+package tokyo.t6sdl.dancerscareer2019.model.form;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;

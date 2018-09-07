@@ -6,7 +6,7 @@
 </head>
 <body>
 <!-- ヘッダーは共通モジュール(header.html)を挿入します -->
-<header th:replace="common/header :: header"></header>
+<header th:replace="common/header :: for-stranger"></header>
 <!-- formタグ外は色々いじってくれて大丈夫です、formタグ内もdivタグ追加したりとかしてくれて大丈夫です -->
 <form th:action="@{/signup}" method="post" th:object="${signupForm}">
 <h1>アカウント作成</h1>

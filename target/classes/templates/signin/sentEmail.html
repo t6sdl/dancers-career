@@ -5,7 +5,7 @@
 <title>パスワードの再設定｜ダンサーズキャリア</title>
 </head>
 <body>
-<header th:replace="common/header :: header"></header>
+<header th:replace="common/header :: for-stranger"></header>
 <main>
 <form th:action="@{/signin/forget-pwd}" method="post" th:object="${emailForm}">
 <h1>パスワードの再設定</h1>
