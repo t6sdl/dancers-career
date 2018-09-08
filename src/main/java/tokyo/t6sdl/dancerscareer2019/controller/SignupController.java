@@ -1,5 +1,7 @@
 package tokyo.t6sdl.dancerscareer2019.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,17 +11,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.httpresponse.NotFound404;
 import tokyo.t6sdl.dancerscareer2019.model.Account;
-import tokyo.t6sdl.dancerscareer2019.model.EmailForm;
+import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.model.Profile;
-import tokyo.t6sdl.dancerscareer2019.model.ProfileForm;
-import tokyo.t6sdl.dancerscareer2019.model.SignupForm;
+import tokyo.t6sdl.dancerscareer2019.model.form.EmailForm;
+import tokyo.t6sdl.dancerscareer2019.model.form.ProfileForm;
+import tokyo.t6sdl.dancerscareer2019.model.form.SignupForm;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 import tokyo.t6sdl.dancerscareer2019.service.MailService;
 import tokyo.t6sdl.dancerscareer2019.service.ProfileService;
 import tokyo.t6sdl.dancerscareer2019.service.SecurityService;
 
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/signup")
 public class SignupController {
@@ -27,13 +32,7 @@ public class SignupController {
 	private final SecurityService securityService;
 	private final ProfileService profileService;
 	private final MailService mailService;
-	
-	public SignupController(AccountService accountService, SecurityService securityService, ProfileService profileService, MailService mailService) {
-		this.accountService = accountService;
-		this.securityService = securityService;
-		this.profileService = profileService;
-		this.mailService = mailService;
-	}
+	private final HttpSession session;
 	
 	@GetMapping
 	public String getSignup(Model model) {
@@ -54,7 +53,8 @@ public class SignupController {
 			accountService.delete(form.getEmail());
 			return "redirect:/signup?error";
 		}
-//		mailService.sendMailWithUrl(form.getEmail(), MailService.SUB_VERIFY_EMAIL, MailService.CONTEXT_PATH + "/signup/verify-email?token=" + emailToken);
+		mailService.sendMailWithUrl(form.getEmail(), Mail.SUB_VERIFY_EMAIL, Mail.CONTEXT_PATH + "/signup/verify-email?token=" + emailToken);
+		session.setAttribute("rawPassword", form.getPassword());
 		securityService.autoLogin(form.getEmail(), form.getPassword());
 		return "redirect:/signup/profile";
 	}
@@ -79,26 +79,25 @@ public class SignupController {
 	}
 	
 	@GetMapping("/verify-email")
-	public String getConfirmEmail(@RequestParam("token") String token, Model model) {
+	public String getVerifyEmail(@RequestParam("token") String token, Model model) {
 		if (accountService.isValidEmailToken(token)) {
+			String loggedInEmail = securityService.findLoggedInEmail();
+			String loggedInRawPassword = session.getAttribute("rawPassword").toString();
+			securityService.autoLogin(loggedInEmail, loggedInRawPassword);
+			session.invalidate();
 			return "signup/verifyEmail";
 		} else {
 			throw new NotFound404();
 		}
 	}
 	
-	@PostMapping("/reverify-email")
-	public String postReverifyEmail(@Validated EmailForm form, BindingResult result) {
-		if (result.hasErrors()) {
-			return "signup/reverifyEmail";
-		} else {
-			return "signup/sentEmail";
+	@PostMapping("/verify-email")
+	public String postVerifyEmail(@Validated EmailForm form, BindingResult result) {
+		String emailToken = accountService.createEmailToken(form.getEmail());
+		if (emailToken == "") {
+			return "redirect:/user/account?error";
 		}
-	}
-	
-	@GetMapping("/reverify-email")
-	public String getReverifyEmail(Model model) {
-		model.addAttribute(new EmailForm());
-		return "signup/reverifyEmail";
+		mailService.sendMailWithUrl(form.getEmail(), Mail.SUB_VERIFY_EMAIL, Mail.CONTEXT_PATH + "/signup/verify-email?token=" + emailToken);
+		return "redirect:/user/account?success";
 	}
 }

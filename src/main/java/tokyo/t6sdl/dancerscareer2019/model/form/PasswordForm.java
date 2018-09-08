@@ -1,4 +1,4 @@
-package tokyo.t6sdl.dancerscareer2019.model;
+package tokyo.t6sdl.dancerscareer2019.model.form;
 
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;

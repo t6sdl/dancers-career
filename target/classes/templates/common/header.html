@@ -5,9 +5,8 @@
 </head>
 <body>
 <!-- 自由にいじっちゃってください -->
-<header th:fragment="header">
-<!-- ロゴ兼トップページへのリンク -->
-<a th:href="@{/}"><img alt="ロゴ"></a>
+<header th:fragment="for-user"><!-- 普通のユーザー用のヘッダー -->
+<a th:href="@{/}"><img alt="ロゴ"></a><!-- ロゴ兼トップページへのリンク -->
 <div>
 <ul>
 <li><a th:href="@{/}">人気のES/体験談</a></li>
@@ -15,6 +14,12 @@
 <li><a th:href="@{/user}">マイページ</a></li>
 </ul>
 </div>
+</header>
+<header th:fragment="for-admin"><!-- 管理者アカウント用のヘッダー -->
+<a th:href="@{/}"><img alt="ロゴ"></a><!-- ロゴ兼トップページへのリンク -->
+</header>
+<header th:fragment="for-stranger"><!-- ログインしていない人用のヘッダー -->
+<a th:href="@{/}"><img alt="ロゴ"></a><!-- ロゴ兼トップページへのリンク -->
 </header>
 </body>
 </html>
