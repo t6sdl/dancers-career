@@ -22,8 +22,9 @@ public class MailService {
 			String content = this.createContent(subject, url);
 			MimeMessage mail = mailSender.createMimeMessage();
 			mail.setHeader("Content-type", "text/html");
+			mail.setHeader("Errors-To", Mail.TO_ERROR);
 			MimeMessageHelper helper = new MimeMessageHelper(mail, false, "UTF-8");
-			helper.setFrom("test_dancerscareer@t6sdl.tokyo", "（テスト）ダンサーズキャリア事務局");
+			helper.setFrom(Mail.TO_SUPPORT, Mail.NAME_OF_SUPPORT);
 			helper.setTo(to);
 			helper.setSubject(subject);
 			helper.setText(content, true);
@@ -40,8 +41,9 @@ public class MailService {
 			String content = this.createContent(subject, "");
 			MimeMessage mail = mailSender.createMimeMessage();
 			mail.setHeader("Content-type", "text/html");
+			mail.setHeader("Errors-To", Mail.TO_ERROR);
 			MimeMessageHelper helper = new MimeMessageHelper(mail, false, "UTF-8");
-			helper.setFrom("test_dancerscareer@t6sdl.tokyo", "（テスト）ダンサーズキャリア事務局");
+			helper.setFrom(Mail.TO_SUPPORT, Mail.NAME_OF_SUPPORT);
 			helper.setTo(to);
 			helper.setSubject(subject);
 			helper.setText(content, true);
@@ -69,12 +71,32 @@ public class MailService {
 			}
 		} else {
 			switch (subject) {
-				default:
-					break;
+			case Mail.SUB_REPLY_TO_CONTACT:
+				draft.append("<h1>お問い合わせありがとうございます<h1><p>後ほどダンサーズキャリア事務局からご連絡いたします。ご連絡には数日程度かかる場合がございます。ご了承ください。</p>");
+			default:
+				break;
 			}
 		}
 		draft.append("</body></html>");
 		content = draft.toString();
 		return content;
+	}
+	
+	public void receiveMail(String to, String subject, String content) {
+		try {
+			MimeMessage mail = mailSender.createMimeMessage();
+			mail.setHeader("Content-type", "text/html");
+			mail.setHeader("Errors-To", Mail.TO_ERROR);
+			MimeMessageHelper helper = new MimeMessageHelper(mail, false, "UTF-8");
+			helper.setFrom(Mail.TO_SUPPORT, Mail.NAME_OF_SUPPORT);
+			helper.setTo(to);
+			helper.setSubject(subject);
+			helper.setText(content, false);
+			mailSender.send(mail);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 }
