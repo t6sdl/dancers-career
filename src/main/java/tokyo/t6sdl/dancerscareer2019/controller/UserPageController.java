@@ -110,6 +110,7 @@ public class UserPageController {
 			accountService.changeEmail(form.getEmail(), loggedInEmail);
 			return "redirect:/user/error";
 		}
+		accountService.changeValidEmail(form.getEmail(), false);
 		mailService.sendMailWithUrl(form.getEmail(), Mail.SUB_VERIFY_EMAIL, Mail.CONTEXT_PATH + "/signup/verify-email?token=" + emailToken);
 		String loggedInRawPassword = session.getAttribute("rawPassword").toString();
 		securityService.autoLogin(form.getEmail(), loggedInRawPassword);
@@ -125,8 +126,8 @@ public class UserPageController {
 		}
 		String loggedInEmail = securityService.findLoggedInEmail();
 		accountService.changePassword(loggedInEmail, form.getPassword());
+		session.setAttribute("rawPassword", form.getPassword());
 		securityService.autoLogin(loggedInEmail, form.getPassword());
-		session.invalidate();
 		return "redirect:/user/account";
 	}
 	
