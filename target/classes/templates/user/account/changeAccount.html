@@ -7,6 +7,7 @@
 <body>
 <header th:replace="common/header :: for-user"></header>
 <main>
+<article>
 <h1>アカウントの修正</h1>
 <form th:action="@{/user/account/changed}" method="post" th:object="${accountForm}">
 <div>
@@ -37,6 +38,7 @@
 </div>
 </div>
 </form>
+</article>
 <aside th:replace="user/common/tab :: tab"></aside>
 </main>
 <footer th:replace="common/footer :: footer"></footer>

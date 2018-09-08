@@ -12,6 +12,7 @@
 <li><a th:href="@{/}">人気のES/体験談</a></li>
 <li><a th:href="@{/experiences}">ES/体験談を探す</a></li>
 <li><a th:href="@{/user}">マイページ</a></li>
+<li><a th:href="@{/logout}">ログアウト</a></li>
 </ul>
 </div>
 </header>
@@ -19,7 +20,7 @@
 <a th:href="@{/}"><img alt="ロゴ"></a><!-- ロゴ兼トップページへのリンク -->
 </header>
 <header th:fragment="for-stranger"><!-- ログインしていない人用のヘッダー -->
-<a th:href="@{/}"><img alt="ロゴ"></a><!-- ロゴ兼トップページへのリンク -->
+<span><img alt="ロゴ"></span><!-- ロゴ兼トップページへのリンク -->
 </header>
 </body>
 </html>

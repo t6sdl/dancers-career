@@ -7,10 +7,10 @@
 <body>
 <header th:replace="common/header :: for-user"></header>
 <main>
+<article>
 <h1>プロフィール</h1>
-<article th:object="${profile}">
 <!-- プロフィール情報 -->
-<table>
+<table th:object="${profile}">
 <tr>
 <th align="right">氏名：</th>
 <td th:text="|*{last_name} *{first_name}|"></td>

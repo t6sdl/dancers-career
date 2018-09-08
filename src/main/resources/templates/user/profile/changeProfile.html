@@ -7,6 +7,7 @@
 <body>
 <header th:replace="common/header :: for-user"></header>
 <main>
+<article>
 <form th:action="@{/user/profile/changed}" method="post" th:object="${profileForm}">
 <h1>プロフィールの修正</h1>
 <div>
@@ -280,6 +281,7 @@
 <input type="hidden" id="contextPath" th:value="@{/}">
 </div>
 </form>
+</article>
 <aside th:replace="user/common/tab :: tab"></aside>
 </main>
 <footer th:replace="common/footer :: footer"></footer>

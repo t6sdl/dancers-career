@@ -38,7 +38,7 @@ public class UserPageController {
 	private final PasswordEncoder passwordEncoder;
 	private final HttpSession session;
 		
-	@GetMapping("")
+	@RequestMapping()
 	public String getMypage() {
 		return "user/user";
 	}
@@ -48,12 +48,12 @@ public class UserPageController {
 		return "user/error";
 	}
 	
-	@GetMapping("/personality")
+	@RequestMapping("/personality")
 	public String getPesonality() {
 		return "user/personality/result";
 	}
 	
-	@GetMapping("/account")
+	@RequestMapping("/account")
 	public String getAccountInfo(Model model) {
 		String loggedInEmail = securityService.findLoggedInEmail();
 		model.addAttribute("email", loggedInEmail);
@@ -67,7 +67,12 @@ public class UserPageController {
 		return "user/account/account";
 	}
 	
-	@GetMapping("/account/verify")
+	@RequestMapping("/account/help")
+	public String getHelp() {
+		return "user/account/help";
+	}
+	
+	@RequestMapping("/account/verify")
 	public String getVerificationToChangeAccount(Model model) {
 		model.addAttribute(new VerificationForm());
 		return "user/account/verification";
@@ -105,7 +110,7 @@ public class UserPageController {
 			accountService.changeEmail(form.getEmail(), loggedInEmail);
 			return "redirect:/user/error";
 		}
-//		mailService.sendMailWithUrl(form.getEmail(), Mail.SUB_VERIFY_EMAIL, Mail.CONTEXT_PATH + "/signup/verify-email?token=" + emailToken);
+		mailService.sendMailWithUrl(form.getEmail(), Mail.SUB_VERIFY_EMAIL, Mail.CONTEXT_PATH + "/signup/verify-email?token=" + emailToken);
 		String loggedInRawPassword = session.getAttribute("rawPassword").toString();
 		securityService.autoLogin(form.getEmail(), loggedInRawPassword);
 		return "redirect:/user/account";
@@ -125,7 +130,7 @@ public class UserPageController {
 		return "redirect:/user/account";
 	}
 	
-	@GetMapping("/profile")
+	@RequestMapping("/profile")
 	public String getProfileInfo(Model model) {
 		String loggedInEmail = securityService.findLoggedInEmail();
 		Profile profile = profileService.getProfileByEmail(loggedInEmail);
@@ -150,7 +155,7 @@ public class UserPageController {
 		return "user/profile/profile";
 	}
 	
-	@GetMapping("/profile/verify")
+	@RequestMapping("/profile/verify")
 	public String getVerificationToChangeProfile(Model model) {
 		model.addAttribute(new VerificationForm());
 		return "user/profile/verification";
@@ -185,7 +190,11 @@ public class UserPageController {
 		} else {
 			String loggedInEmail = securityService.findLoggedInEmail();
 			Profile updatedProfile = profileService.convertProfileFormIntoProfile(form);
-			profileService.update(updatedProfile, loggedInEmail);
+			if (profileService.getProfileByEmail(loggedInEmail).getEmail() == null) {
+				profileService.register(updatedProfile, loggedInEmail);
+			}else {
+				profileService.update(updatedProfile, loggedInEmail);
+			}
 			return "redirect:/user/profile";
 		}
 	}

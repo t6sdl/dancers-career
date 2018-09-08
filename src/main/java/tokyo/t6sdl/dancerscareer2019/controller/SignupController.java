@@ -16,7 +16,6 @@ import tokyo.t6sdl.dancerscareer2019.httpresponse.NotFound404;
 import tokyo.t6sdl.dancerscareer2019.model.Account;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.model.Profile;
-import tokyo.t6sdl.dancerscareer2019.model.form.EmailForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.ProfileForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.SignupForm;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
@@ -53,7 +52,7 @@ public class SignupController {
 			accountService.delete(form.getEmail());
 			return "redirect:/signup?error";
 		}
-		mailService.sendMailWithUrl(form.getEmail(), Mail.SUB_VERIFY_EMAIL, Mail.CONTEXT_PATH + "/signup/verify-email?token=" + emailToken);
+		mailService.sendMailWithUrl(form.getEmail(), Mail.SUB_VERIFY_EMAIL, Mail.URI_VERIFY_EMAIL + emailToken);
 		session.setAttribute("rawPassword", form.getPassword());
 		securityService.autoLogin(form.getEmail(), form.getPassword());
 		return "redirect:/signup/profile";
@@ -78,26 +77,26 @@ public class SignupController {
 		return "redirect:/";
 	}
 	
-	@GetMapping("/verify-email")
+	@RequestMapping("/verify-email")
 	public String getVerifyEmail(@RequestParam("token") String token, Model model) {
 		if (accountService.isValidEmailToken(token)) {
 			String loggedInEmail = securityService.findLoggedInEmail();
 			String loggedInRawPassword = session.getAttribute("rawPassword").toString();
 			securityService.autoLogin(loggedInEmail, loggedInRawPassword);
-			session.invalidate();
 			return "signup/verifyEmail";
 		} else {
 			throw new NotFound404();
 		}
 	}
 	
-	@PostMapping("/verify-email")
-	public String postVerifyEmail(@Validated EmailForm form, BindingResult result) {
-		String emailToken = accountService.createEmailToken(form.getEmail());
+	@RequestMapping("/reverify-email")
+	public String getReverifyEmail() {
+		String loggedInEmail = securityService.findLoggedInEmail();
+		String emailToken = accountService.createEmailToken(loggedInEmail);
 		if (emailToken == "") {
-			return "redirect:/user/account?error";
+			return "redirect:/user/error";
 		}
-		mailService.sendMailWithUrl(form.getEmail(), Mail.SUB_VERIFY_EMAIL, Mail.CONTEXT_PATH + "/signup/verify-email?token=" + emailToken);
-		return "redirect:/user/account?success";
+		mailService.sendMailWithUrl(loggedInEmail, Mail.SUB_VERIFY_EMAIL, Mail.URI_VERIFY_EMAIL + emailToken);
+		return "redirect:/user/account/help";
 	}
 }
