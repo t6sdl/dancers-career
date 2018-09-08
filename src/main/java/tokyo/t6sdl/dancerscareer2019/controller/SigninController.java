@@ -57,7 +57,7 @@ public class SigninController {
 			return "signin/forgetPassword";
 		}
 		String passwordToken = accountService.createPasswordToken(form.getEmail());
-		mailService.sendMailWithUrl(form.getEmail(), Mail.SUB_RESET_PWD, Mail.CONTEXT_PATH + "/signin/forget-pwd?token=" + passwordToken);
+		mailService.sendMailWithUrl(form.getEmail(), Mail.SUB_RESET_PWD, Mail.URI_RESET_PWD + passwordToken);
 		return "signin/sentEmail";
 	}
 		

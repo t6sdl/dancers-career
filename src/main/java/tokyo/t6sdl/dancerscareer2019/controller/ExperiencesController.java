@@ -20,7 +20,7 @@ public class ExperiencesController {
 		if (securityService.findLoggedInAuthority()) {
 			model.addAttribute("header", "for-admin");
 			return "experiences/experiences";
-		} else if (!(securityService.findLoggedInValidEmail()) || profileService.isCompleteProfile(profileService.getProfileByEmail(securityService.findLoggedInEmail()))) {
+		} else if (!(securityService.findLoggedInValidEmail()) || !(profileService.isCompleteProfile(profileService.getProfileByEmail(securityService.findLoggedInEmail())))) {
 			return "experiences/error";
 		} else {
 			model.addAttribute("header", "for-user");
