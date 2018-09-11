@@ -10,8 +10,19 @@ public class Mail {
 	public static final String NAME_OF_SUPPORT = "（仮）ダンサーズキャリア事務局";
 	public static final String TO_SUPPORT = "dancerscareer_support@t6sdl.tokyo";
 	public static final String TO_ERROR = "dancerscareer_error@t6sdl.tokyo";
+	public static final String SUB_WELCOME_TO_US = "ダンサーズキャリアへようこそ！";
 	public static final String SUB_VERIFY_EMAIL = "メールアドレスの確認";
 	public static final String SUB_RESET_PWD = "パスワードの再設定";
 	public static final String SUB_CONTACT = "問い合わせ";
 	public static final String SUB_REPLY_TO_CONTACT = "ダンサーズキャリアへお問い合わせいただきありがとうございます";
+	
+	private String to;
+	private String subject;
+	private String content;
+	private String url;
+	
+	public Mail(String to, String subject) {
+		this.to = to;
+		this.subject = subject;
+	}
 }

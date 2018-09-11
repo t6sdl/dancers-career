@@ -19,7 +19,7 @@ public class GeneralController {
 	private final MailService mailService;
 	
 	@RequestMapping("")
-	public String index(Model model) {
+	public String isndex(Model model) {
 		if (securityService.findLoggedInAuthority()) {
 			return "redirect:/admin";
 		}
@@ -69,9 +69,13 @@ public class GeneralController {
 	}
 	
 	@PostMapping("/about/contact")
-	public String postContact(ContactForm form, Model model) {
-		mailService.receiveMail(Mail.TO_SUPPORT, Mail.SUB_CONTACT, form.getContent());
-		mailService.sendMailWithoutUrl(form.getFrom(), Mail.SUB_REPLY_TO_CONTACT);
+	public String postContact(ContactForm contactForm, Model model) {
+		Mail mail = new Mail(Mail.TO_SUPPORT, Mail.SUB_CONTACT);
+		mail.setContent(contactForm.getContent());
+		mailService.receiveMail(mail);
+		System.out.println(contactForm.getFrom());
+		Mail reply = new Mail(contactForm.getFrom(), Mail.SUB_REPLY_TO_CONTACT);
+		mailService.sendMail(reply);
 		if (securityService.findLoggedInEmail().equals("")) {
 			model.addAttribute("header", "for-stranger");
 		} else if (securityService.findLoggedInAuthority()) {
@@ -79,7 +83,7 @@ public class GeneralController {
 		} else {
 			model.addAttribute("header", "for-user");
 		}
-		model.addAttribute(form);
+		model.addAttribute(contactForm);
 		return "about/contact/sentContact";
 	}
 }

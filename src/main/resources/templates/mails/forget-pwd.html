@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang='ja' xmlns:th='http://www.thymeleaf.org'>
+<head>
+  <meta charset='utf-8'>
+  <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.3.1/css/all.css' integrity='sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU' crossorigin='anonymous'>
+  <style>
+    html {
+      font-size: 12px;
+    }
+    body {
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      padding: 1rem 0;
+      width: 100%;
+      height: 6rem;
+      background: #efefef;
+      margin-bottom: 3rem;
+    }
+    .service {
+      margin: 0 auto;
+      font-size: 2rem;
+      text-align: center;
+      line-height: 3;
+      color: #333;
+    }
+    main {
+      width: 94%;
+      margin: 0 auto;
+    }
+    .title {
+      width: 100%;
+      margin: 3rem 0 2rem;
+    }
+    footer {
+      padding: 1rem 0;
+      margin-top: 3rem;
+      width: 100%;
+      height: 13rem;
+      background: #efefef;
+      color: #333;
+    }
+    .slogan {
+      text-align: center;
+      margin: 1rem 0 0;
+    }
+    .sns {
+      display: flex;
+      justify-content: center;
+      padding: 0;
+      height: 3rem;
+      list-style: none;
+    }
+    .sns li, .sns li a {
+      display: inline-block;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      line-height: 2;
+      font-size: 1.5rem;
+      text-align: center;
+      color: #efefef;
+    }
+    .sns li {
+      margin: 0 1rem;
+      background: #999;
+    }
+    .contact {
+      text-align: center;
+      margin: 0;
+    }
+    .contact a {
+      color: skyblue;
+    }
+    .copy {
+      height: 2rem;
+      text-align: center;
+    }
+    p {
+      line-height: 2;
+      font-weight: normal;
+    }
+    a {
+      text-decoration: none;
+    }
+    .button-container {
+      width: 280px;
+      height: 3.75rem;
+      margin: 2rem auto;
+      font-size: 1.5rem;
+    }
+    .button {
+      padding: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      font-size: 1em;
+      line-height: 2.5;
+      text-align: center;
+      background: skyblue;
+      color: white;
+      border: none;
+      border-radius: .8em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1 class='service'>ダンサーズキャリア</h1>
+  </header>
+  <main>
+    <h1 class='title'>パスワードの再設定</h1>
+    <p>ご利用いただきありがとうございます。<br>下のボタンからパスワードの再設定を行うことができます。</p>
+    <div class='button-container'>
+      <a class='button' th:href='${url}'>
+        パスワードの再設定
+      </a>
+    </div>
+    <p>今後ともダンサーズキャリアをよろしくお願いいたします。</p>
+  </main>
+  <footer>
+    <p class='slogan'>ダンスに打ち込んだ自分をもっと誇ろう。</p>
+    <ul class='sns'>
+      <li><a href='https://twitter.com/T6SDL'><i class="fab fa-twitter"></i></a></li>
+      <li><a href='https://www.instagram.com/t6sdl/'><i class="fab fa-instagram"></i></a></li>
+    </ul>
+    <p class='contact'><a href='http://localhost:8080/about/contact'>お問い合わせ</a></p>
+    <div class='copy'>
+      <small class='copy'>&copy; 2018（一社）東京六大学ストリートダンス連盟</small>
+    </div>
+  </footer>
+</body>
+</html>
