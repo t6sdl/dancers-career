@@ -111,7 +111,9 @@ public class UserPageController {
 			return "redirect:/user/error";
 		}
 		accountService.changeValidEmail(form.getEmail(), false);
-		mailService.sendMailWithUrl(form.getEmail(), Mail.SUB_VERIFY_EMAIL, Mail.CONTEXT_PATH + "/signup/verify-email?token=" + emailToken);
+		Mail mail = new Mail(form.getEmail(), Mail.SUB_VERIFY_EMAIL);
+		mail.setUrl(Mail.URI_VERIFY_EMAIL + emailToken);
+		mailService.sendMail(mail);
 		String loggedInRawPassword = session.getAttribute("rawPassword").toString();
 		securityService.autoLogin(form.getEmail(), loggedInRawPassword);
 		return "redirect:/user/account";

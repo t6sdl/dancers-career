@@ -11,7 +11,7 @@
 <form th:action="@{/about/contact}" method="post" th:object="${contactForm}">
 <div>
 <label for="from">ご自身のメールアドレス</label>
-<input type="text" th:field="*{from}" required th:disabled="${isLoggedIn}">
+<input type="email" th:field="*{from}" required th:readonly="${isLoggedIn}">
 </div>
 <div>
 <label for="content">お問い合わせ内容</label><br>

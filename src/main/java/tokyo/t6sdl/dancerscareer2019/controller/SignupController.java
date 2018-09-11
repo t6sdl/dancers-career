@@ -52,7 +52,9 @@ public class SignupController {
 			accountService.delete(form.getEmail());
 			return "redirect:/signup?error";
 		}
-		mailService.sendMailWithUrl(form.getEmail(), Mail.SUB_VERIFY_EMAIL, Mail.URI_VERIFY_EMAIL + emailToken);
+		Mail mail = new Mail(form.getEmail(), Mail.SUB_WELCOME_TO_US);
+		mail.setUrl(Mail.URI_VERIFY_EMAIL + emailToken);
+		mailService.sendMail(mail);
 		session.setAttribute("rawPassword", form.getPassword());
 		securityService.autoLogin(form.getEmail(), form.getPassword());
 		return "redirect:/signup/profile";
@@ -101,7 +103,9 @@ public class SignupController {
 		if (emailToken == "") {
 			return "redirect:/user/error";
 		}
-		mailService.sendMailWithUrl(loggedInEmail, Mail.SUB_VERIFY_EMAIL, Mail.URI_VERIFY_EMAIL + emailToken);
+		Mail mail = new Mail(loggedInEmail, Mail.SUB_VERIFY_EMAIL);
+		mail.setUrl(Mail.URI_VERIFY_EMAIL + emailToken);
+		mailService.sendMail(mail);
 		return "redirect:/user/account/help";
 	}
 }

@@ -1,6 +1,11 @@
 package tokyo.t6sdl.dancerscareer2019.service;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -16,19 +21,19 @@ import tokyo.t6sdl.dancerscareer2019.model.Mail;
 @Service
 public class MailService {
 	private final JavaMailSender mailSender;
-		
-	public void sendMailWithUrl(String to, String subject, String url) {
+	
+	public void sendMail(Mail mail) {
 		try {
-			String content = this.createContent(subject, url);
-			MimeMessage mail = mailSender.createMimeMessage();
-			mail.setHeader("Content-type", "text/html");
-			mail.setHeader("Errors-To", Mail.TO_ERROR);
-			MimeMessageHelper helper = new MimeMessageHelper(mail, false, "UTF-8");
+			MimeMessage message = mailSender.createMimeMessage();
+			message.setHeader("Content-type", "text/html");
+			message.setHeader("Errors-To", Mail.TO_ERROR);
+			MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
 			helper.setFrom(Mail.TO_SUPPORT, Mail.NAME_OF_SUPPORT);
-			helper.setTo(to);
-			helper.setSubject(subject);
-			helper.setText(content, true);
-			mailSender.send(mail);
+			helper.setTo(mail.getTo());
+			helper.setSubject(mail.getSubject());
+			this.readContent(mail);
+			helper.setText(mail.getContent(), true);
+			mailSender.send(message);
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
@@ -36,18 +41,17 @@ public class MailService {
 		}
 	}
 	
-	public void sendMailWithoutUrl(String to, String subject) {
+	public void receiveMail(Mail mail) {
 		try {
-			String content = this.createContent(subject, "");
-			MimeMessage mail = mailSender.createMimeMessage();
-			mail.setHeader("Content-type", "text/html");
-			mail.setHeader("Errors-To", Mail.TO_ERROR);
-			MimeMessageHelper helper = new MimeMessageHelper(mail, false, "UTF-8");
+			MimeMessage message = mailSender.createMimeMessage();
+			message.setHeader("Content-type", "text/html");
+			message.setHeader("Errors-To", Mail.TO_ERROR);
+			MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
 			helper.setFrom(Mail.TO_SUPPORT, Mail.NAME_OF_SUPPORT);
-			helper.setTo(to);
-			helper.setSubject(subject);
-			helper.setText(content, true);
-			mailSender.send(mail);
+			helper.setTo(mail.getTo());
+			helper.setSubject(mail.getSubject());
+			helper.setText(mail.getContent(), true);
+			mailSender.send(message);
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
@@ -55,48 +59,47 @@ public class MailService {
 		}
 	}
 	
-	public String createContent(String subject, String url) {
-		String content;
+	protected void readContent(Mail mail) {
 		StringBuffer draft = new StringBuffer();
-		draft.append("<!DOCTYPE html><html><body>");
-		if (url != "") {
-			switch (subject) {
-			case Mail.SUB_VERIFY_EMAIL:
-				draft.append("<a href='" + url + "'><button>メールアドレスの確認</button></a>");
-				break;
-			case Mail.SUB_RESET_PWD:
-				draft.append("<a href='" + url + "'><button>パスワードの再設定</button></a>");
-			default:
-				break;
+		URL url = null;
+		InputStreamReader isr = null;
+		try {
+			url = new URL(Mail.CONTEXT_PATH + this.getHtmlSource(mail));
+			InputStream is = url.openStream();
+			isr = new InputStreamReader(is, "UTF-8");
+			while (true) {
+				int i = isr.read();
+				if (i == -1) {
+					break;
+				}
+				draft.append((char)i);
 			}
-		} else {
-			switch (subject) {
-			case Mail.SUB_REPLY_TO_CONTACT:
-				draft.append("<h1>お問い合わせありがとうございます<h1><p>後ほどダンサーズキャリア事務局からご連絡いたします。ご連絡には数日程度かかる場合がございます。ご了承ください。</p>");
-			default:
-				break;
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				isr.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
-		draft.append("</body></html>");
-		content = draft.toString();
-		return content;
+		mail.setContent(draft.toString());
 	}
 	
-	public void receiveMail(String to, String subject, String content) {
-		try {
-			MimeMessage mail = mailSender.createMimeMessage();
-			mail.setHeader("Content-type", "text/html");
-			mail.setHeader("Errors-To", Mail.TO_ERROR);
-			MimeMessageHelper helper = new MimeMessageHelper(mail, false, "UTF-8");
-			helper.setFrom(Mail.TO_SUPPORT, Mail.NAME_OF_SUPPORT);
-			helper.setTo(to);
-			helper.setSubject(subject);
-			helper.setText(content, false);
-			mailSender.send(mail);
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+	private String getHtmlSource(Mail mail) {
+		switch (mail.getSubject()) {
+		case Mail.SUB_WELCOME_TO_US:
+			return "/mails/welcome-to-us?url=" + mail.getUrl();
+		case Mail.SUB_VERIFY_EMAIL:
+			return "/mails/verify-email?url=" + mail.getUrl();
+		case Mail.SUB_RESET_PWD:
+			return "/mails/forget-pwd?url=" + mail.getUrl();
+		case Mail.SUB_REPLY_TO_CONTACT:
+			return "/mails/reply-to-contact";
+		default:
+			throw new IllegalArgumentException();
 		}
 	}
 }
