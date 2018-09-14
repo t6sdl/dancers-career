@@ -1,138 +1,235 @@
-<!DOCTYPE html>
-<html lang='ja' xmlns:th='http://www.thymeleaf.org'>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset='utf-8'>
-  <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.3.1/css/all.css' integrity='sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU' crossorigin='anonymous'>
-  <style>
-    html {
-      font-size: 12px;
-    }
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width" />
+  <style type="text/css">
     body {
-      width: 100%;
+      font-size: 12px;
+      width: 100% !important;
+      min-width: 100%;
+      color: #333;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+    * {
       margin: 0;
       padding: 0;
     }
-    header {
-      padding: 1rem 0;
+    table {
       width: 100%;
-      height: 6rem;
-      background: #efefef;
-      margin-bottom: 3rem;
-    }
-    .service {
+      border-spacing: 0;
+      border-collapse: collapse;
       margin: 0 auto;
-      font-size: 2rem;
-      text-align: center;
-      line-height: 3;
+    }
+    td {
+      word-wrap: break-word;
+      -webkit-hyphens: auto;
+      -moz-hyphens: auto;
+      hyphens: auto;
+      border-collapse: collapse !important;
+    }
+    table, tr, td {
+      padding: 0;
+      vertical-align: top;
+      text-align: left;
+    }
+    img {
+      outline: none;
+      text-decoration: none;
+      -ms-interpolation-mode: bicubic;
+      width: 100%;
+      clear: both;
+      display: block;
+    }
+    a {
+      outline: none;
+      text-decoration: none;
+      -ms-interpolation-mode: bicubic;
+      width: 100%;
+      clear: both;
+      display: block;
+      border: none;
+    }
+    .container {
+      padding: 2rem 0;
+    }
+    .container td {
+      padding: .5rem 0;
+    }
+    #header {
+      width: 100%;
+      background-color: #efefef;
       color: #333;
     }
-    main {
+    .service {
+      text-align: center;
+    }
+    #main table {
       width: 94%;
-      margin: 0 auto;
     }
     .title {
       width: 100%;
-      margin: 3rem 0 2rem;
     }
-    footer {
-      padding: 1rem 0;
-      margin-top: 3rem;
+    #footer {
       width: 100%;
-      height: 13rem;
-      background: #efefef;
+      background-color: #efefef;
       color: #333;
     }
     .slogan {
       text-align: center;
-      margin: 1rem 0 0;
     }
     .sns {
-      width: 12rem;
-      margin: 0 auto;
-      padding: 0;
-      height: 3rem;
-      list-style: none;
-      text-align: center;
-      line-height: 0;
-    }
-    .sns li, .sns li a {
-      display: inline-block;
       width: 3rem;
       height: 3rem;
-      border-radius: 50%;
-      line-height: 2;
-      font-size: 1.5rem;
-      text-align: center;
-      color: #efefef;
+      line-height: 0;
     }
-    .sns li {
-      margin: 0 1rem;
+    .sns a {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
       background: #999;
+      overflow: hidden;
     }
     .contact {
       text-align: center;
-      margin: 0;
     }
     .contact a {
       color: skyblue;
     }
     .copy {
-      height: 2rem;
       text-align: center;
-    }
-    p {
-      line-height: 2;
-      font-weight: normal;
-    }
-    a {
-      text-decoration: none;
     }
     .button-container {
       width: 280px;
       height: 3.75rem;
-      margin: 2rem auto;
       font-size: 1.5rem;
+      margin: 0 auto;
     }
-    .button {
-      padding: 0;
+    a.button {
       display: block;
       width: 100%;
       height: 100%;
       font-size: 1em;
       line-height: 2.5;
       text-align: center;
-      background: skyblue;
+      background-color: skyblue;
       color: white;
       border: none;
       border-radius: .8em;
     }
+    #outlook a {
+      padding: 0;
+    }
+    body.outlook p {
+      display: inline !important;
+    }
+    .ReadMsgBody {
+      width: 100%;
+    }
+    .ExternalClass{
+      width:100%;
+    }
+    .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div{
+      line-height: 100%;
+    }
+    #backgroundTable {
+      margin: 0;
+      Margin: 0;
+      padding: 0;
+      width: 100% !important;
+      line-height: 100% !important;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <h1 class='service'>ダンサーズキャリア</h1>
-  </header>
-  <main>
-    <h1 class='title'>メールアドレスの確認</h1>
-    <p>ご利用いただきありがとうございます。<br>下のボタンからメールアドレスの確認を行うことができます。</p>
-    <div class='button-container'>
-      <a class='button' th:href='${url}'>
-        メールアドレスの確認
-      </a>
-    </div>
-    <p>初回登録時に加え、メールアドレス変更の際もメールアドレスを確認する必要があります。</p>
-    <p>今後ともダンサーズキャリアをよろしくお願いいたします。</p>
-  </main>
-  <footer>
-    <p class='slogan'>ダンスに打ち込んだ自分をもっと誇ろう。</p>
-    <ul class='sns'>
-      <li><a href='https://twitter.com/T6SDL'><i class="fab fa-twitter"></i></a></li>
-      <li><a href='https://www.instagram.com/t6sdl/'><i class="fab fa-instagram"></i></a></li>
-    </ul>
-    <p class='contact'><a href='http://localhost:8080/about/contact'>お問い合わせ</a></p>
-    <div class='copy'>
-      <small class='copy'>&copy; 2018（一社）東京六大学ストリートダンス連盟</small>
-    </div>
-  </footer>
+  <table class="body">
+    <thead id="header">
+      <tr>
+        <td class="container">
+          <table>
+            <tr>
+              <td>
+                <h1 class="service">（ロゴ）</h1>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </thead>
+    <tbody id="main">
+      <tr>
+        <td class="container">
+          <table>
+            <tr>
+              <td>
+                <h1 class="title">メールアドレスの確認</h1>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p>ご利用いただきありがとうございます。下のボタンからメールアドレスの確認を行うことができます。</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="button-container">
+                  <a class="button" th:href="${url}">メールアドレスの確認</a>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p>初回登録時に加え、メールアドレス変更の際もメールアドレスを確認する必要があります。</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p>今後ともダンサーズキャリアをよろしくお願いいたします。</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot id="footer">
+      <tr>
+        <td class="container">
+          <table>
+            <tr>
+              <td colspan="2">
+                <p class="slogan">ダンスに打ち込んだ自分をもっと誇ろう。</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="sns" style="margin: 0 1rem 0 auto;">
+                  <a href="https://twitter.com/T6SDL"><img src="cid:twitter" /></a>
+                </div>
+              </td>
+              <td>
+                <div class="sns" style="margin: 0 auto 0 1rem;">
+                  <a href="https://www.instagram.com/t6sdl/"><img src="cid:instagram" /></a>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <p class="contact"><a href="#">お問い合わせ</a></p>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <div class="copy">
+                  <small>&copy; 2018（一社）東京六大学ストリートダンス連盟</small>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </tfoot>
+  </table>
 </body>
 </html>
