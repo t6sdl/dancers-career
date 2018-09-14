@@ -73,7 +73,6 @@ public class GeneralController {
 		Mail mail = new Mail(Mail.TO_SUPPORT, Mail.SUB_CONTACT);
 		mail.setContent(contactForm.getContent());
 		mailService.receiveMail(mail);
-		System.out.println(contactForm.getFrom());
 		Mail reply = new Mail(contactForm.getFrom(), Mail.SUB_REPLY_TO_CONTACT);
 		mailService.sendMail(reply);
 		if (securityService.findLoggedInEmail().equals("")) {

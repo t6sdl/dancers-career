@@ -10,6 +10,7 @@ import java.net.URL;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -27,12 +28,14 @@ public class MailService {
 			MimeMessage message = mailSender.createMimeMessage();
 			message.setHeader("Content-type", "text/html");
 			message.setHeader("Errors-To", Mail.TO_ERROR);
-			MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
+			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 			helper.setFrom(Mail.TO_SUPPORT, Mail.NAME_OF_SUPPORT);
 			helper.setTo(mail.getTo());
 			helper.setSubject(mail.getSubject());
 			this.readContent(mail);
 			helper.setText(mail.getContent(), true);
+			helper.addInline("twitter", new ClassPathResource("static/img/mails/twitter.jpg"));
+			helper.addInline("instagram", new ClassPathResource("static/img/mails/instagram.jpg"));
 			mailSender.send(message);
 		} catch (MessagingException e) {
 			e.printStackTrace();
