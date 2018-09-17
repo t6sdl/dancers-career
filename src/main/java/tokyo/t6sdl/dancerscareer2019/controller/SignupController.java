@@ -62,6 +62,7 @@ public class SignupController {
 	
 	@GetMapping("/profile")
 	public String getSignupProfile(Model model) {
+		model.addAttribute("positionList", Profile.POSITION_LIST);
 		model.addAttribute(new ProfileForm());
 		return "signup/profileForm";
 	}
@@ -72,6 +73,7 @@ public class SignupController {
 			model.addAttribute("hiddenUniv", form.getUniversity());
 			model.addAttribute("hiddenFac", form.getFaculty());
 			model.addAttribute("hiddenDep", form.getDepartment());
+			model.addAttribute("positionList", Profile.POSITION_LIST);
 			return "signup/profileForm";
 		}
 		Profile newProfile = profileService.convertProfileFormIntoProfile(form);

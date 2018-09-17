@@ -186,7 +186,7 @@
 <select th:field="*{university}" required>
 <option value="default">選択してください</option>
 </select>
-<input type="hidden" id="hiddenUniv" th:value="${hiddenUniv == null ? '' : hiddenUniv}">
+<input type="hidden" id="hiddenUniv" th:value="${hiddenUniv == null ? 'default' : hiddenUniv}">
 <p th:if="${#fields.hasErrors('university')}">必須項目です</p>
 </div>
 <div>
@@ -194,7 +194,7 @@
 <select th:field="*{faculty}" required>
 <option value="default">選択してください</option>
 </select>
-<input type="hidden" id="hiddenFac" th:value="${hiddenFac == null ? '' : hiddenFac}">
+<input type="hidden" id="hiddenFac" th:value="${hiddenFac == null ? 'default' : hiddenFac}">
 <p th:if="${#fields.hasErrors('faculty')}">必須項目です</p>
 </div>
 <div>
@@ -202,7 +202,7 @@
 <select th:field="*{department}" required>
 <option value="default">選択してください</option>
 </select>
-<input type="hidden" id="hiddenDep" th:value="${hiddenDep == null ? '' : hiddenDep}">
+<input type="hidden" id="hiddenDep" th:value="${hiddenDep == null ? 'default' : hiddenDep}">
 <p th:if="${#fields.hasErrors('department')}">必須項目です</p>
 </div>
 </div>
@@ -253,26 +253,10 @@
 <div><!-- この項目は未完成です -->
 <p>サークルなどでの役職・役割（複数選択可）</p>
 <div>
-<input type="checkbox" th:field="*{position}" value="代表">
-<label th:for="${#ids.prev('position')}">代表</label>
-<input type="checkbox" th:field="*{position}" value="副代表">
-<label th:for="${#ids.prev('position')}">副代表</label>
-<input type="checkbox" th:field="*{position}" value="イベント係">
-<label th:for="${#ids.prev('position')}">イベント係</label>
-<input type="checkbox" th:field="*{position}" value="広報">
-<label th:for="${#ids.prev('position')}">広報</label>
-<input type="checkbox" th:field="*{position}" value="渉外">
-<label th:for="${#ids.prev('position')}">渉外</label>
-<input type="checkbox" th:field="*{position}" value="舞台製作係">
-<label th:for="${#ids.prev('position')}">舞台製作係</label>
-<input type="checkbox" th:field="*{position}" value="ジャンルリーダー・振付師">
-<label th:for="${#ids.prev('position')}">ジャンルリーダー・振付師</label>
-<input type="checkbox" th:field="*{position}" value="プレイヤー">
-<label th:for="${#ids.prev('position')}">プレイヤー</label>
-<input type="checkbox" th:field="*{position}" value="その他">
-<label th:for="${#ids.prev('position')}">その他</label>
-<input type="checkbox" th:field="*{position}" value="特になし">
-<label th:for="${#ids.prev('position')}">特になし</label>
+<th:block th:each="pos : ${positionList}">
+<input type="checkbox" th:field="*{position}" th:value="${pos}">
+<label th:for="${#ids.prev('position')}" th:text="${pos}"></label>
+</th:block>
 <p th:if="${#fields.hasErrors('position')}">１つ以上選択してください</p>
 </div>
 </div>
@@ -290,5 +274,6 @@
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
 <script th:src="@{/js/profileForm.js}"></script>
+<script th:src="@{/js/submit.js}"></script>
 </body>
 </html>

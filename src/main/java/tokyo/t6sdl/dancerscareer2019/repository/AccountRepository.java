@@ -14,6 +14,7 @@ public interface AccountRepository {
 	void updateEmail(String loggedInEmail, String newEmail);
 	void updatePassword(String loggedInEmail, String newPassword);
 	void updateValidEmail(String loggedInEmail, boolean validEmail);
+	void updateLastLogin(String loggedInEmail);
 	void recordEmailToken(String loggedEmail, String emailToken);
 	void refreshEmailToken(String loggedInEmail);
 	void recordPasswordToken(String loggedInEmail, String passwordToken);

@@ -19,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.model.Profile;
 import tokyo.t6sdl.dancerscareer2019.model.form.AccountForm;
-import tokyo.t6sdl.dancerscareer2019.model.form.EmailForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.ProfileForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.VerificationForm;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
@@ -48,22 +47,11 @@ public class UserPageController {
 		return "user/error";
 	}
 	
-	@RequestMapping("/personality")
-	public String getPesonality() {
-		return "user/personality/result";
-	}
-	
 	@RequestMapping("/account")
 	public String getAccountInfo(Model model) {
 		String loggedInEmail = securityService.findLoggedInEmail();
 		model.addAttribute("email", loggedInEmail);
-		boolean validEmail = securityService.findLoggedInValidEmail();
-		if (validEmail == false) {
-			EmailForm form = new EmailForm();
-			form.setEmail(loggedInEmail);
-			model.addAttribute(form);
-		}
-		model.addAttribute("validEmail", validEmail);
+		model.addAttribute("validEmail", securityService.findLoggedInValidEmail());
 		return "user/account/account";
 	}
 	
@@ -167,6 +155,7 @@ public class UserPageController {
 	@PostMapping("/profile/change")
 	public String postVerificationToChangeProfile(VerificationForm verificationForm, Model model) {
 		if (passwordEncoder.matches(verificationForm.getPassword(), securityService.findLoggedInPassword())) {
+			model.addAttribute("positionList", Profile.POSITION_LIST);
 			ProfileForm form = profileService.convertProfileIntoProfileForm(profileService.getProfileByEmail(securityService.findLoggedInEmail()));
 			model.addAttribute(form);
 			model.addAttribute("hiddenUniv", form.getUniversity());
@@ -189,6 +178,7 @@ public class UserPageController {
 			model.addAttribute("hiddenUniv", form.getUniversity());
 			model.addAttribute("hiddenFac", form.getFaculty());
 			model.addAttribute("hiddenDep", form.getDepartment());
+			model.addAttribute("positionList", Profile.POSITION_LIST);
 			return "user/profile/changeProfile";
 		} else {
 			String loggedInEmail = securityService.findLoggedInEmail();

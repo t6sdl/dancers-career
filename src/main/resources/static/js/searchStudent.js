@@ -1,12 +1,10 @@
 $(function () {
 	const contextPath = $('#contextPath').val();
-	const $birthYear = $('#birth_year'),
-	$birthMonth = $('#birth_month'),
-	$birthDay = $('#birth_day'),
-	$prefecture = $('#prefecture'),
+	const $prefecture = $('#prefecture'),
 	$university = $('#university'),
 	$faculty = $('#faculty'),
 	$department = $('#department'),
+	$hiddenPref = $('#hiddenPref'),
 	$hiddenUniv = $('#hiddenUniv'),
 	$hiddenFac = $('#hiddenFac'),
 	$hiddenDep = $('#hiddenDep');
@@ -20,17 +18,11 @@ $(function () {
 	}
 	const setUniversity = function () {
 		if ($prefecture.val() === 'default') {
-			$university.prop('disabled', true);
-			$faculty.prop('disabled', true);
-			$department.prop('disabled', true);
 			return;
 		}
 		$university.children('[value!="default"]').remove();
 		$faculty.children('[value!="default"]').remove();
 		$department.children('[value!="default"]').remove();
-		$university.prop('disabled', false);
-		$faculty.prop('disabled', true);
-		$department.prop('disabled', true);
 		for (let univ in json[$prefecture.val()]) {
 			let options = '<option value="' + univ + '">' + univ + '</option>';
 			$university.append(options);
@@ -38,14 +30,10 @@ $(function () {
 	}
 	const setFaculty = function () {
 		if ($university.val() === 'default') {
-			$faculty.prop('disabled', true);
-			$department.prop('disabled', true);
 			return;
 		}
 		$faculty.children('[value!="default"]').remove();
 		$department.children('[value!="default"]').remove();
-		$faculty.prop('disabled', false);
-		$department.prop('disabled', true);
 		for (let fac in json[$prefecture.val()][$university.val()]) {
 			let options = '<option value="' + fac + '">' + fac + '</option>';
 			$faculty.append(options);
@@ -53,16 +41,17 @@ $(function () {
 	}
 	const setDepartment = function () {
 		if ($faculty.val() === 'default') {
-			$department.prop('disabled', true);
 			return;
 		}
 		$department.children('[value!="default"]').remove();
-		$department.prop('disabled', false);
 		for (let i = 0; i < json[$prefecture.val()][$university.val()][$faculty.val()].length; i++) {
 			let dep = json[$prefecture.val()][$university.val()][$faculty.val()][i];
 			let options = '<option value="' + dep + '">' + dep + '</option>';
 			$department.append(options);
 		}
+	}
+	const initPrefecture = function () {
+		$prefecture.children('[value="' + $hiddenPref.val() + '"]').prop('selected', true);
 	}
 	const initUniversity = function () {
 		setUniversity();
@@ -76,58 +65,11 @@ $(function () {
 		setDepartment();
 		$department.children('[value="' + $hiddenDep.val() + '"]').prop('selected', true);
 	}
-	const autoSetDate = function (max, $object) {
-		for (let i = 1; i <= 31; i++) {
-			if (!($object.children('[value="' + i + '"]').length)) {
-				let options = '<option value="' + i + '">' + i + '</option>';
-				$object.append(options);
-			}
-		}
-		if (max < 31) {
-			for (let i = 31; i > max; i--) {
-				$object.children('[value="' + i + '"]').remove();
-			}
-		}
-	}
-	const setBirthMonth = function () {
-		if ($birthYear.val() === 'default') {
-			$birthMonth.prop('disabled', true);
-			$birthDay.prop('disabled', true);
-			return;
-		}
-		$birthMonth.prop('disabled', false);
-		$birthDay.prop('disabled', true);
-	}
-	const setBirthDay = function() {
-		if ($birthMonth.val() === 'default') {
-			$birthDay.prop('disabled', true);
-			return;
-		}
-		$birthDay.prop('disabled', false);
-		if (($birthYear.val() === '1992' || $birthYear.val() === '1996') && $birthMonth.val() === '2') {
-			autoSetDate(29, $birthDay);
-		} else if ($birthMonth.val() === '2') {
-			autoSetDate(28, $birthDay);
-		} else if ($birthMonth.val() === '4' || $birthMonth.val() === '6' || $birthMonth.val() === '9' || $birthMonth.val() === '11') {
-			autoSetDate(30, $birthDay);
-		} else {
-			autoSetDate(31, $birthDay);
-		}
-	}
-	setBirthMonth();
-	setBirthDay();
 	prepJSON();
+	initPrefecture();
 	initUniversity();
 	initFaculty();
 	initDepartment();
-	$birthYear.on('input', function (event) {
-		event.preventDefault();
-		setBirthMonth();
-	});
-	$birthMonth.on('input', function (event) {
-		event.preventDefault();
-		setBirthDay();
-	});
 	$prefecture.on('input', function (event) {
 		event.preventDefault();
 		setUniversity();
