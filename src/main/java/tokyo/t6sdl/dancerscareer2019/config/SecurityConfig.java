@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,16 +17,14 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import tokyo.t6sdl.dancerscareer2019.service.AccountService;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private final DataSource dataSource;
-	
-	public SecurityConfig(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
+	private LoginSuccessHandler successHandler;
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
@@ -47,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.formLogin()
 			.loginProcessingUrl("/login")
 			.loginPage("/signin")
-			.defaultSuccessUrl("/", true)
+			.successHandler(successHandler)
 			.failureUrl("/signin?error")
 			.usernameParameter("email").passwordParameter("password")
 		.and()
@@ -62,18 +58,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.logoutSuccessUrl("/signin")
 			.deleteCookies("JSESSIONID");
 	}
-	
-	@Configuration
-	public static class AuthenticationConfiguration extends GlobalAuthenticationConfigurerAdapter {
-		@Autowired
-		AccountService accountService;
 		
-		@Override
-		public void init(AuthenticationManagerBuilder auth) throws Exception {
-			auth.userDetailsService(accountService).passwordEncoder(new BCryptPasswordEncoder());
-		}
-	}
-	
 	@Bean
 	public PersistentTokenRepository createTokenRepository() {
 		JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
@@ -89,5 +74,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public AuthenticationManager auth() throws Exception {
 		return super.authenticationManagerBean();
+	}
+	
+	@Autowired
+	public void setSuccessHandler(LoginSuccessHandler successHandler) {
+		this.successHandler = successHandler;
 	}
 }

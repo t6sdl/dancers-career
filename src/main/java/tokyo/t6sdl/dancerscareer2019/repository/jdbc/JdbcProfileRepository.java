@@ -65,11 +65,31 @@ public class JdbcProfileRepository implements ProfileRepository {
 			 return null;
 		 }
 	}
+	
+	@Override
+	public List<Profile> findByName(String kanaLastName, String kanaFirstName) {
+		return jdbcTemplate.query(
+				"SELECT * FROM profiles WHERE kana_last_name = ? AND kana_first_name = ? ORDER BY email ASC", (resultSet, i) -> {
+					Profile profile = new Profile();
+					this.adjustDataToProfile(profile, resultSet);
+					return profile;
+				}, kanaLastName, kanaFirstName);
+	}
+	
+	@Override
+	public List<Profile> findByPrefecture(String prefecture) {
+		return jdbcTemplate.query(
+				"SELECT * FROM profiles WHERE prefecture = ? ORDER BY email ASC", (resultSet, i) -> {
+					Profile profile = new Profile();
+					this.adjustDataToProfile(profile, resultSet);
+					return profile;
+				}, prefecture);
+	}
 
 	@Override
 	public List<Profile> findByUniversity(String university) {
 		return jdbcTemplate.query(
-				"SELECT * FROM profiles WHERE university = ? ORDER BY email", (resultSet, i) -> {
+				"SELECT * FROM profiles WHERE university = ? ORDER BY email ASC", (resultSet, i) -> {
 					Profile profile = new Profile();
 					this.adjustDataToProfile(profile, resultSet);
 					return profile;
@@ -79,7 +99,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 	@Override
 	public List<Profile> findByFaculty(String university, String faculty) {
 		return jdbcTemplate.query(
-				"SELECT * FROM profiles WHERE university = ? AND faculty = ? ORDER BY email", (resultSet, i) -> {
+				"SELECT * FROM profiles WHERE university = ? AND faculty = ? ORDER BY email ASC", (resultSet, i) -> {
 					Profile profile = new Profile();
 					this.adjustDataToProfile(profile, resultSet);
 					return profile;
@@ -89,7 +109,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 	@Override
 	public List<Profile> findByDepartment(String university, String faculty, String department) {
 		return jdbcTemplate.query(
-				"SELECT * FROM profiles WHERE university = ? AND faculty = ? AND department = ? ORDER BY email", (resultSet, i) -> {
+				"SELECT * FROM profiles WHERE university = ? AND faculty = ? AND department = ? ORDER BY email ASC", (resultSet, i) -> {
 					Profile profile = new Profile();
 					this.adjustDataToProfile(profile, resultSet);
 					return profile;
@@ -97,26 +117,16 @@ public class JdbcProfileRepository implements ProfileRepository {
 	}
 
 	@Override
-	public List<Profile> findByFacultyOnly(String faculty) {
-		return jdbcTemplate.query(
-				"SELECT * FROM profiles WHERE faculty = ? ORDER BY email", (resultSet, i) -> {
-					Profile profile = new Profile();
-					this.adjustDataToProfile(profile, resultSet);
-					return profile;
-				}, faculty);
-	}
-	
-	@Override
-	public List<Profile> findByPosition(List<String> position) {
+	public List<Profile> findByPosition(List<String> positions) {
 		StringBuffer like = new StringBuffer();
-		for (int i = 0; i < position.size(); i++) {
-			like.append("position LIKE '%").append(position.get(i)).append("%'");
-			if (i < position.size() - 1) {
+		for (int i = 0; i < positions.size(); i++) {
+			like.append("position LIKE '%").append(positions.get(i)).append("%'");
+			if (i < positions.size() - 1) {
 				like.append(" AND ");
 			}
 		}
 		return jdbcTemplate.query(
-				"SELECT * FROM profiles WHERE " + like + " ORDER BY email", (resultSet, i) -> {
+				"SELECT * FROM profiles WHERE " + like + " ORDER BY email ASC", (resultSet, i) -> {
 					Profile profile = new Profile();
 					this.adjustDataToProfile(profile, resultSet);
 					return profile;
@@ -126,7 +136,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 	@Override
 	public void insert(Profile newProfile) {
 		String positions = listToString(newProfile.getPosition());
-		Date date_of_birth = Date.from(newProfile.getDate_of_birth_for_calc().atStartOfDay(ZoneId.systemDefault()).toInstant());
+		Date date_of_birth = Date.from(newProfile.getDate_of_birth().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		jdbcTemplate.update(
 				"INSERT INTO profiles VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				newProfile.getEmail(), newProfile.getLast_name(), newProfile.getFirst_name(), newProfile.getKana_last_name(), newProfile.getKana_first_name(),
@@ -144,7 +154,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 	@Override
 	public void updateAny(Profile profile) {
 		String positions = listToString(profile.getPosition());
-		Date date_of_birth = Date.from(profile.getDate_of_birth_for_calc().atStartOfDay(ZoneId.systemDefault()).toInstant());
+		Date date_of_birth = Date.from(profile.getDate_of_birth().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		jdbcTemplate.update(
 				"UPDATE profiles SET last_name = ?, first_name = ?, kana_last_name = ?, kana_first_name = ?, date_of_birth = ?, sex = ?, phone_number = ?, "
 				+ "major = ?, prefecture = ?, university = ?, faculty = ?, department = ?, graduation = ?, academic_degree = ?, position = ? WHERE email = ?",
@@ -160,7 +170,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 		profile.setKana_last_name(resultSet.getString("kana_last_name"));
 		profile.setKana_first_name(resultSet.getString("kana_first_name"));
 		Date dateOfBirth = resultSet.getTimestamp("date_of_birth");
-		profile.setDate_of_birth_for_calc(LocalDate.ofInstant(dateOfBirth.toInstant(), ZoneId.systemDefault()));
+		profile.setDate_of_birth(LocalDate.ofInstant(dateOfBirth.toInstant(), ZoneId.systemDefault()));
 		profile.setSex(resultSet.getString("sex"));
 		profile.setPhone_number(resultSet.getString("phone_number"));
 		profile.setMajor(resultSet.getString("major"));

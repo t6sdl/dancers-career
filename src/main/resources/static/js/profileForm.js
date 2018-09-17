@@ -66,21 +66,15 @@ $(function () {
 	}
 	const initUniversity = function () {
 		setUniversity();
-		if ($hiddenUniv !== '') {
-			$university.children('[value="' + $hiddenUniv.val() + '"]').prop('selected', true);
-		}
+		$university.children('[value="' + $hiddenUniv.val() + '"]').prop('selected', true);
 	}
 	const initFaculty = function () {
 		setFaculty();
-		if ($hiddenFac !== '') {
-			$faculty.children('[value="' + $hiddenFac.val() + '"]').prop('selected', true);
-		}
+		$faculty.children('[value="' + $hiddenFac.val() + '"]').prop('selected', true);
 	}
 	const initDepartment = function () {
 		setDepartment();
-		if ($hiddenDep !== '') {
-			$department.children('[value="' + $hiddenDep.val() + '"]').prop('selected', true);
-		}
+		$department.children('[value="' + $hiddenDep.val() + '"]').prop('selected', true);
 	}
 	const autoSetDate = function (max, $object) {
 		for (let i = 1; i <= 31; i++) {

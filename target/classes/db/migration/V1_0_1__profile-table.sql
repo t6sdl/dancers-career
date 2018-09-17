@@ -20,3 +20,7 @@ CREATE TABLE profiles (
   KEY ix_pos (position),
   FOREIGN KEY (email) REFERENCES accounts (email) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+INSERT INTO profiles VALUES ('user1@t6sdl.tokyo', '大阪', '太郎', 'オオサカ', 'タロウ', '1995-09-11', '男性', '09032721323', '理系', '大阪府', '大阪大学', '工学部', '応用理工学科', '2020/03', '修士卒', '会計,公演総合演出,イベント企画');
+INSERT INTO profiles VALUES ('user2@t6sdl.tokyo', '東京', '文子', 'トウキョウ', 'フミコ', '1998-02-03', '女性', '09032914272', '文系', '東京都', '上智大学', '総合人間科学部', '社会学科', '2020/03', '学部卒', '会計,音響制作,合宿統括,その他');
+INSERT INTO profiles VALUES ('user3@t6sdl.tokyo', '東京', '太郎', 'トウキョウ', 'タロウ', '1996-12-28', '男性', '09098127434', '文系', '東京都', '慶應義塾大学', '商学部', '商学科', '2020/03', '学部卒', '代表,公演舞台監督,公演総合演出');

@@ -18,6 +18,7 @@ public class Account implements UserDetails {
 	private String password;
 	private String authority;
 	private boolean valid_email;
+	private LocalDateTime last_login;
 	private LocalDateTime updated_at;
 	private LocalDateTime created_at;
 	private String email_token;
