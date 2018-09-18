@@ -46,13 +46,18 @@ public class AdminController {
 	}
 	
 	@GetMapping(value="/students/search", params="by-name")
-	public String getSearchStudentsByName(@RequestParam(name="kanaLastName") String kanaLastName, @RequestParam(name="kanaFirstName") String kanaFirstName, Model model) {
+	public String getSearchStudentsByName(@RequestParam(name="kanaLastName") String kanaLastName, @RequestParam(name="kanaFirstName", required=false) String kanaFirstName, Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		StudentForm form = new StudentForm();
 		form.setKanaLastName(kanaLastName);
 		form.setKanaFirstName(kanaFirstName);
 		model.addAttribute(form);
-		List<Profile> profiles = profileService.getProfilesByName(kanaLastName, kanaFirstName);
+		List<Profile> profiles = new ArrayList<Profile>();
+		if (kanaFirstName.isEmpty()) {
+			profiles = profileService.getProfilesByLastName(kanaLastName);
+		} else {
+			profiles = profileService.getProfilesByName(kanaLastName, kanaFirstName);
+		}
 		List<Student> students = this.makeStudentOfProfile(profiles);
 		List<String> emails = new ArrayList<String>();
 		students.forEach(student -> {
@@ -98,13 +103,31 @@ public class AdminController {
 		return "admin/students/search";
 	}
 	
-	@GetMapping(value="/students/search", params="by-position")
-	public String getSearchStudentsByPosition(@RequestParam(name="position") List<String> position, Model model) {
+	@GetMapping(value="/students/search", params="and-search-by-position")
+	public String getAndSearchStudentsByPosition(@RequestParam(name="position") List<String> position, Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		StudentForm form = new StudentForm();
 		form.setPosition(position);
 		model.addAttribute(form);
-		List<Profile> profiles = profileService.getProfilesByPosition(position);
+		List<Profile> profiles = profileService.getProfilesByPosition(position, "AND");
+		List<Student> students = this.makeStudentOfProfile(profiles);
+		List<String> emails = new ArrayList<String>();
+		students.forEach(student -> {
+			emails.add(student.getEmail());
+			student.convertForDisplay();
+		});
+		model.addAttribute("students", students);
+		model.addAttribute("emails", emails);
+		return "admin/students/search";
+	}
+	
+	@GetMapping(value="/students/search", params="or-search-by-position")
+	public String getOrSearchStudentsByPosition(@RequestParam(name="position") List<String> position, Model model) {
+		model.addAttribute("positionList", Profile.POSITION_LIST);
+		StudentForm form = new StudentForm();
+		form.setPosition(position);
+		model.addAttribute(form);
+		List<Profile> profiles = profileService.getProfilesByPosition(position, "OR");
 		List<Student> students = this.makeStudentOfProfile(profiles);
 		List<String> emails = new ArrayList<String>();
 		students.forEach(student -> {
