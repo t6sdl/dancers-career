@@ -75,7 +75,17 @@ public class JdbcProfileRepository implements ProfileRepository {
 					return profile;
 				}, kanaLastName, kanaFirstName);
 	}
-	
+
+	@Override
+	public List<Profile> findByLastName(String kanaLastName) {
+		return jdbcTemplate.query(
+				"SELECT * FROM profiles WHERE kana_last_name = ? ORDER BY email ASC", (resultSet, i) -> {
+					Profile profile = new Profile();
+					this.adjustDataToProfile(profile, resultSet);
+					return profile;
+				}, kanaLastName);
+	}
+
 	@Override
 	public List<Profile> findByPrefecture(String prefecture) {
 		return jdbcTemplate.query(
@@ -117,12 +127,12 @@ public class JdbcProfileRepository implements ProfileRepository {
 	}
 
 	@Override
-	public List<Profile> findByPosition(List<String> positions) {
+	public List<Profile> findByPosition(List<String> position, String method) {
 		StringBuffer like = new StringBuffer();
-		for (int i = 0; i < positions.size(); i++) {
-			like.append("position LIKE '%").append(positions.get(i)).append("%'");
-			if (i < positions.size() - 1) {
-				like.append(" AND ");
+		for (int i = 0; i < position.size(); i++) {
+			like.append("position LIKE '%").append(position.get(i)).append("%'");
+			if (i < position.size() - 1) {
+				like.append(" " + method + " ");
 			}
 		}
 		return jdbcTemplate.query(

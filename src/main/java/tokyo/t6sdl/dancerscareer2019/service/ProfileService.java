@@ -46,6 +46,10 @@ public class ProfileService {
 		return profileRepository.findByName(kanaLastName, kanaFirstName);
 	}
 	
+	public List<Profile> getProfilesByLastName(String kanaLastName) {
+		return profileRepository.findByLastName(kanaLastName);
+	}
+	
 	public List<Profile> getProfilesByPrefecture(String prefecture) {
 		return profileRepository.findByPrefecture(prefecture);
 	}
@@ -62,8 +66,11 @@ public class ProfileService {
 		return profileRepository.findByDepartment(university, faculty, department);
 	}
 	
-	public List<Profile> getProfilesByPosition(List<String> positions) {
-		return profileRepository.findByPosition(positions);
+	public List<Profile> getProfilesByPosition(List<String> position, String method) {
+		if (!(method.equals("AND")) && !(method.equals("OR"))) {
+			return null;
+		}
+		return profileRepository.findByPosition(position, method);
 	}
 	
 	public Profile convertProfileFormIntoProfile(ProfileForm form) {
