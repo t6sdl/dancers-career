@@ -7,6 +7,7 @@
 <body>
 <header th:replace="common/header :: for-admin"></header>
 <main>
+<h1>登録学生検索</h1>
 <form th:action="@{/admin/students/search}" method="get" th:object="${studentForm}">
 <fieldset>
 <legend>氏名検索</legend>

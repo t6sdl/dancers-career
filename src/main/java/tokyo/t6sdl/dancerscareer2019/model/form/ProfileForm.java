@@ -11,30 +11,30 @@ import lombok.Data;
 @Data
 public class ProfileForm {
 	@NotEmpty
-	private String last_name;
+	private String lastName;
 	@NotEmpty
-	private String first_name;
-	@NotEmpty
-	@Pattern(message="カタカナで入力してください", regexp="^[\u30A1-\u30F6ー]+$")
-	private String kana_last_name;
+	private String firstName;
 	@NotEmpty
 	@Pattern(message="カタカナで入力してください", regexp="^[\u30A1-\u30F6ー]+$")
-	private String kana_first_name;
+	private String kanaLastName;
+	@NotEmpty
+	@Pattern(message="カタカナで入力してください", regexp="^[\u30A1-\u30F6ー]+$")
+	private String kanaFirstName;
 	@NotEmpty
 	@Pattern(regexp="^[0-9]+$")
-	private String birth_year;
+	private String birthYear;
 	@NotEmpty
 	@Pattern(regexp="^[0-9]+$")
-	private String birth_month;
+	private String birthMonth;
 	@NotEmpty
 	@Pattern(regexp="^[0-9]+$")
-	private String birth_day;
+	private String birthDay;
 	@NotEmpty
 	private String sex;
 	@NotEmpty
 	@Size(min=10)
 	@Pattern(regexp="^[0-9]+$")
-	private String phone_number;
+	private String phoneNumber;
 	@NotEmpty
 	private String major;
 	@NotEmpty
@@ -51,12 +51,12 @@ public class ProfileForm {
 	private String department;
 	@NotEmpty
 	@Pattern(regexp="^[0-9]+$")
-	private String graduation_year;
+	private String graduationYear;
 	@NotEmpty
 	@Pattern(regexp="^[0-9]+$")
-	private String graduation_month;
+	private String graduationMonth;
 	@NotEmpty
-	private String academic_degree;
+	private String academicDegree;
 	@NotEmpty
 	private List<String> position;
 }

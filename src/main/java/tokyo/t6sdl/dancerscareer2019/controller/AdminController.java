@@ -2,19 +2,28 @@ package tokyo.t6sdl.dancerscareer2019.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.model.Account;
+import tokyo.t6sdl.dancerscareer2019.model.Experience;
 import tokyo.t6sdl.dancerscareer2019.model.Profile;
 import tokyo.t6sdl.dancerscareer2019.model.Student;
+import tokyo.t6sdl.dancerscareer2019.model.form.EsForm;
+import tokyo.t6sdl.dancerscareer2019.model.form.ExperienceForm;
+import tokyo.t6sdl.dancerscareer2019.model.form.InterviewForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.StudentForm;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
+import tokyo.t6sdl.dancerscareer2019.service.ExperienceService;
 import tokyo.t6sdl.dancerscareer2019.service.ProfileService;
 
 @RequiredArgsConstructor
@@ -23,6 +32,7 @@ import tokyo.t6sdl.dancerscareer2019.service.ProfileService;
 public class AdminController {
 	private final ProfileService profileService;
 	private final AccountService accountService;
+	private final ExperienceService experienceService;
 	
 	@RequestMapping()
 	public String getAdmin() {
@@ -149,5 +159,56 @@ public class AdminController {
 			students.add(student);
 		});
 		return students;
+	}
+	
+	@GetMapping("/experiences/submit")
+	public String getSubmitExperiences(Model model) {
+		model.addAttribute("positionList", Profile.POSITION_LIST);
+		ExperienceForm experienceForm = new ExperienceForm();
+		experienceForm.init();
+		model.addAttribute(experienceForm);
+		return "admin/experiences/submit";
+	}
+	
+	@PostMapping("/experiences/submit")
+	public String postSubmitExperiences(@Validated ExperienceForm form, BindingResult result, Model model) {
+		form.setClub(this.cleanUp(form.getClub(), ""));
+		form.setOffer(this.cleanUp(form.getOffer(), ""));
+		form.setEs(this.cleanUp(form.getEs(), new EsForm()));
+		form.setInterview(this.cleanUp(form.getInterview(), new InterviewForm()));
+		if (result.hasErrors()) {
+			model.addAttribute("positionList", Profile.POSITION_LIST);
+			return "admin/experiences/submit";
+		}
+		model.addAttribute(form);
+		return "admin/experiences/confirm";
+	}
+	
+	@PostMapping(value="/experiences/complete", params="no")
+	public String postNotCompleteExperiences(@Validated ExperienceForm form, BindingResult result, Model model) {
+		model.addAttribute("positionList", Profile.POSITION_LIST);
+		model.addAttribute(form);
+		return "admin/experiences/submit";
+	}
+	
+	@PostMapping(value="/experiences/complete", params="yes")
+	public String postCompleteExperiences(@Validated ExperienceForm form, BindingResult result, Model model) {
+		Experience newExperience = experienceService.convertExperienceFormIntoExperience(form);
+		experienceService.register(newExperience);
+		return "admin/experiences/complete";
+	}
+	
+	private <T> List<T> cleanUp(List<T> list, T empty) {
+		ListIterator<T> listItr = list.listIterator();
+		while (listItr.hasNext()) {
+			T item = listItr.next();
+			if (item.toString().isEmpty()) {
+				listItr.remove();
+			}
+		}
+		if (list.isEmpty()) {
+			list.add(empty);
+		}
+		return list;
 	}
 }
