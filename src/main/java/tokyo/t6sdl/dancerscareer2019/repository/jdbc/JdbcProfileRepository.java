@@ -24,13 +24,13 @@ public class JdbcProfileRepository implements ProfileRepository {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 	
-	public List<String> stringToList(String str) {
+	private List<String> stringToList(String str) {
 		List<String> list = new ArrayList<String>();
 		list = Arrays.asList(str.split(","));
 		return list;
 	}
 	
-	public String listToString(List<String> list) {
+	private String listToString(List<String> list) {
 		StringBuffer buf = new StringBuffer();
 		for (int i = 0; i < list.size(); i++) {
 			buf.append(list.get(i));
@@ -145,13 +145,13 @@ public class JdbcProfileRepository implements ProfileRepository {
 
 	@Override
 	public void insert(Profile newProfile) {
-		String positions = listToString(newProfile.getPosition());
+		String position = listToString(newProfile.getPosition());
 		Date date_of_birth = Date.from(newProfile.getDate_of_birth().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		jdbcTemplate.update(
 				"INSERT INTO profiles VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				newProfile.getEmail(), newProfile.getLast_name(), newProfile.getFirst_name(), newProfile.getKana_last_name(), newProfile.getKana_first_name(),
 				date_of_birth, newProfile.getSex(), newProfile.getPhone_number(), newProfile.getMajor(), newProfile.getPrefecture(), newProfile.getUniversity(),
-				newProfile.getFaculty(), newProfile.getDepartment(), newProfile.getGraduation(), newProfile.getAcademic_degree(), positions);
+				newProfile.getFaculty(), newProfile.getDepartment(), newProfile.getGraduation(), newProfile.getAcademic_degree(), position);
 	}
 
 	@Override
@@ -163,14 +163,14 @@ public class JdbcProfileRepository implements ProfileRepository {
 
 	@Override
 	public void updateAny(Profile profile) {
-		String positions = listToString(profile.getPosition());
+		String position = listToString(profile.getPosition());
 		Date date_of_birth = Date.from(profile.getDate_of_birth().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		jdbcTemplate.update(
 				"UPDATE profiles SET last_name = ?, first_name = ?, kana_last_name = ?, kana_first_name = ?, date_of_birth = ?, sex = ?, phone_number = ?, "
 				+ "major = ?, prefecture = ?, university = ?, faculty = ?, department = ?, graduation = ?, academic_degree = ?, position = ? WHERE email = ?",
 				profile.getLast_name(), profile.getFirst_name(), profile.getKana_last_name(), profile.getKana_first_name(),
 				date_of_birth, profile.getSex(), profile.getPhone_number(), profile.getMajor(), profile.getPrefecture(), profile.getUniversity(),
-				profile.getFaculty(), profile.getDepartment(), profile.getGraduation(), profile.getAcademic_degree(), positions, profile.getEmail());
+				profile.getFaculty(), profile.getDepartment(), profile.getGraduation(), profile.getAcademic_degree(), position, profile.getEmail());
 	}
 	
 	private void adjustDataToProfile(Profile profile, ResultSet resultSet) throws SQLException {
