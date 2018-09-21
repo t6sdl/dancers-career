@@ -19,15 +19,15 @@ $(function () {
 		$.ajaxSetup({async: true});
 	}
 	const setUniversity = function () {
+		$university.children('[value!="default"]').remove();
+		$faculty.children('[value!="default"]').remove();
+		$department.children('[value!="default"]').remove();
 		if ($prefecture.val() === 'default') {
 			$university.prop('disabled', true);
 			$faculty.prop('disabled', true);
 			$department.prop('disabled', true);
 			return;
 		}
-		$university.children('[value!="default"]').remove();
-		$faculty.children('[value!="default"]').remove();
-		$department.children('[value!="default"]').remove();
 		$university.prop('disabled', false);
 		$faculty.prop('disabled', true);
 		$department.prop('disabled', true);
@@ -37,13 +37,13 @@ $(function () {
 		}
 	}
 	const setFaculty = function () {
+		$faculty.children('[value!="default"]').remove();
+		$department.children('[value!="default"]').remove();
 		if ($university.val() === 'default') {
 			$faculty.prop('disabled', true);
 			$department.prop('disabled', true);
 			return;
 		}
-		$faculty.children('[value!="default"]').remove();
-		$department.children('[value!="default"]').remove();
 		$faculty.prop('disabled', false);
 		$department.prop('disabled', true);
 		for (let fac in json[$prefecture.val()][$university.val()]) {
@@ -52,11 +52,11 @@ $(function () {
 		}
 	}
 	const setDepartment = function () {
+		$department.children('[value!="default"]').remove();
 		if ($faculty.val() === 'default') {
 			$department.prop('disabled', true);
 			return;
 		}
-		$department.children('[value!="default"]').remove();
 		$department.prop('disabled', false);
 		for (let i = 0; i < json[$prefecture.val()][$university.val()][$faculty.val()].length; i++) {
 			let dep = json[$prefecture.val()][$university.val()][$faculty.val()][i];

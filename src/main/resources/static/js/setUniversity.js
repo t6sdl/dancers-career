@@ -17,33 +17,33 @@ $(function () {
 		$.ajaxSetup({async: true});
 	}
 	const setUniversity = function () {
-		if ($prefecture.val() === 'default') {
+		$university.children('[value!=""]').remove();
+		$faculty.children('[value!=""]').remove();
+		$department.children('[value!=""]').remove();
+		if ($prefecture.val() === '') {
 			return;
 		}
-		$university.children('[value!="default"]').remove();
-		$faculty.children('[value!="default"]').remove();
-		$department.children('[value!="default"]').remove();
 		for (let univ in json[$prefecture.val()]) {
 			let options = '<option value="' + univ + '">' + univ + '</option>';
 			$university.append(options);
 		}
 	}
 	const setFaculty = function () {
-		if ($university.val() === 'default') {
+		$faculty.children('[value!=""]').remove();
+		$department.children('[value!=""]').remove();
+		if ($university.val() === '') {
 			return;
 		}
-		$faculty.children('[value!="default"]').remove();
-		$department.children('[value!="default"]').remove();
 		for (let fac in json[$prefecture.val()][$university.val()]) {
 			let options = '<option value="' + fac + '">' + fac + '</option>';
 			$faculty.append(options);
 		}
 	}
 	const setDepartment = function () {
-		if ($faculty.val() === 'default') {
+		$department.children('[value!=""]').remove();
+		if ($faculty.val() === '') {
 			return;
 		}
-		$department.children('[value!="default"]').remove();
 		for (let i = 0; i < json[$prefecture.val()][$university.val()][$faculty.val()].length; i++) {
 			let dep = json[$prefecture.val()][$university.val()][$faculty.val()][i];
 			let options = '<option value="' + dep + '">' + dep + '</option>';

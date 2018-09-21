@@ -8,7 +8,7 @@
 <header th:replace="common/header :: for-admin"></header>
 <main>
 <h1>ES/体験記【確認】</h1>
-<form th:action="@{/admin/experiences/complete}" method="post" th:object="${experienceForm}">
+<form th:action="@{/admin/experiences/new}" method="post" th:object="${experienceForm}">
 <fieldset>
 <legend>提供者情報</legend>
 <div>
@@ -57,17 +57,17 @@
 <input type="hidden" th:field="*{academicDegree}">
 </div>
 <div>
-<p>サークルなどでの役職・役割（複数選択可・未選択不可）</p>
+<p>サークルなどでの役職・役割</p>
 <p><span th:each="pos : *{position}" th:text="|【${pos}】 |"></span></p>
 <input type="hidden" th:field="*{position}">
 </div>
 <div>
-<p>所属サークル（複数登録可）</p>
+<p>所属サークル</p>
 <p><span th:each="clubItem : *{club}" th:text="|【${clubItem == '' ? '非公開' : clubItem}】 |"></span></p>
 <input th:each="clubItem, loop : *{club}" type="hidden" th:field="*{club[__${loop.index}__]}">
 </div>
 <div>
-<p>内定先（複数登録可）</p>
+<p>内定先</p>
 <p><span th:each="offerItem : *{offer}" th:text="|【${offerItem == '' ? '非公開' : offerItem}】 |"></span></p>
 <input th:each="offerItem, loop : *{offer}" type="hidden" th:field="*{offer[__${loop.index}__]}">
 </div>
@@ -89,7 +89,7 @@
 </div>
 </fieldset>
 <fieldset>
-<legend>ES</legend>
+<legend>Interview</legend>
 <div th:each="interviewItem, loop : *{interview}">
 <hr th:if="${loop.index > 0}">
 <p>設問：<span th:text="*{interview[__${loop.index}__].question} == '' ? '【非公開】' : *{interview[__${loop.index}__].question}"></span></p>
@@ -99,8 +99,8 @@
 </div>
 </fieldset>
 <div>
-<input type="submit" name="no" value="修正">
-<input type="submit" name="yes" value="完了">
+<input type="submit" name="modify" value="修正">
+<input type="submit" name="complete" value="完了">
 </div>
 </form>
 </main>

@@ -97,33 +97,33 @@ public class JdbcProfileRepository implements ProfileRepository {
 	}
 
 	@Override
-	public List<Profile> findByUniversity(String university) {
+	public List<Profile> findByUniversity(String prefecture, String university) {
 		return jdbcTemplate.query(
-				"SELECT * FROM profiles WHERE university = ? ORDER BY email ASC", (resultSet, i) -> {
+				"SELECT * FROM profiles WHERE prefecture = ? AND university = ? ORDER BY email ASC", (resultSet, i) -> {
 					Profile profile = new Profile();
 					this.adjustDataToProfile(profile, resultSet);
 					return profile;
-				}, university);
+				}, prefecture, university);
 	}
 
 	@Override
-	public List<Profile> findByFaculty(String university, String faculty) {
+	public List<Profile> findByFaculty(String prefecture, String university, String faculty) {
 		return jdbcTemplate.query(
-				"SELECT * FROM profiles WHERE university = ? AND faculty = ? ORDER BY email ASC", (resultSet, i) -> {
+				"SELECT * FROM profiles WHERE prefecture = ? AND university = ? AND faculty = ? ORDER BY email ASC", (resultSet, i) -> {
 					Profile profile = new Profile();
 					this.adjustDataToProfile(profile, resultSet);
 					return profile;
-				}, university, faculty);
+				}, prefecture, university, faculty);
 	}
 
 	@Override
-	public List<Profile> findByDepartment(String university, String faculty, String department) {
+	public List<Profile> findByDepartment(String prefecture, String university, String faculty, String department) {
 		return jdbcTemplate.query(
-				"SELECT * FROM profiles WHERE university = ? AND faculty = ? AND department = ? ORDER BY email ASC", (resultSet, i) -> {
+				"SELECT * FROM profiles WHERE prefecture = ? AND university = ? AND faculty = ? AND department = ? ORDER BY email ASC", (resultSet, i) -> {
 					Profile profile = new Profile();
 					this.adjustDataToProfile(profile, resultSet);
 					return profile;
-				}, university, faculty, department);
+				}, prefecture, university, faculty, department);
 	}
 
 	@Override

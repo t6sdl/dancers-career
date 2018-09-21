@@ -2,13 +2,13 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
-<title>登録学生検索｜ダンサーズキャリア</title>
+<title>ES/体験記【検索】｜ダンサーズキャリア</title>
 </head>
 <body>
 <header th:replace="common/header :: for-admin"></header>
 <main>
-<h1>登録学生検索</h1>
-<form th:action="@{/admin/search/students}" method="get" th:object="${studentForm}">
+<h1>ES/体験記【検索】</h1>
+<form th:action="@{/admin/search/experiences}" method="get" th:object="${studentForm}">
 <fieldset>
 <legend>氏名検索</legend>
 <div>
@@ -119,65 +119,31 @@
 <input type="hidden" id="contextPath" th:value="@{/}">
 <input type="hidden" name="start" value="1">
 </form>
-<div><a th:href="@{/admin/search/students?all}"><button>絞り込み解除</button></a></div>
+<div><a th:href="@{/admin/search/experiences?all}"><button>絞り込み解除</button></a></div>
 <hr>
 <div>
-<p style="text-align:center;">検索結果： <span th:text="${students.size()}"></span> 件</p>
+<p style="text-align:center;">検索結果： <span th:text="${experiences.size()}"></span> 件</p>
 </div>
-<section th:if="${students.size() == 0 ? false : true}">
-<article><p>メールアドレス一覧</p><p th:text="${emails}"></p></article>
-<article th:each="student : ${students}">
+<section th:if="${experiences.size() == 0 ? false : true}">
+<article style="padding:1em;border:1px solid #333;" th:each="experience : ${experiences}" th:object="${experience}">
 <div>
-<table border="1" style="width:100%;margin:2em 0;">
-<tr>
-<th colspan="2"><span th:text="|${student.last_name} ${student.first_name}|"></span>（<span th:text="|${student.kana_last_name} ${student.kana_first_name}|"></span>）
-最終ログイン：<span th:text="${student.last_login_for_display}"></span></th>
-</tr>
-<tr>
-<th align="right">メールアドレス</th>
-<td>
-<span th:text="${student.email}"></span>
-メールアドレス<span th:unless="${student.valid_email}">未</span>確認<span th:if="${student.valid_email}">済</span>
-</td>
-</tr>
-<tr>
-<th align="right">生年月日</th>
-<td th:text="${student.date_of_birth_for_display}"></td>
-</tr>
-<tr>
-<th align="right">性別</th>
-<td th:text="${student.sex}"></td>
-</tr>
-<tr>
-<th align="right">電話番号</th>
-<td th:text="${student.phone_number}"></td>
-</tr>
-<tr>
-<th align="right">文理</th>
-<td th:text="${student.major}"></td>
-</tr>
-<tr>
-<th align="right">学部・学科</th>
-<td th:text="|${student.university} ${student.faculty} ${student.department}|"></td>
-</tr>
-<tr>
-<th align="right">卒業年度</th>
-<td th:text="|${student.graduation} 卒業|"></td>
-</tr>
-<tr>
-<th align="right">最終学歴</th>
-<td th:text="${student.academic_degree}"></td>
-</tr>
-<tr>
-<th align="right">サークルなどでの役職・役割</th>
-<td><span th:each="pos : ${student.position}" th:text="|${pos} |"></span></td>
-</tr>
-</table>
+<p><span th:each="pos : *{position}" th:text="${pos}" style="background:#ddd;padding:.5em;margin-right:.5em;"></span></p>
+<h1 th:text="*{university}"></h1>
+<p><span th:each="off : *{offer}" th:text="${off} == '' ? '非公開' : ${off} + ' '"></span></p>
+</div>
+<hr>
+<div>
+<p><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'"></span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></p>
+</div>
+<hr>
+<div>
+<a th:href="@{/admin/experiences/{experienceId}(experienceId=*{experience_id})}"><button>詳細を見る</button></a>
+<a th:href="@{/admin/experiences/{experienceId}?delete(experienceId=*{experience_id})}"><button>消去する</button></a>
 </div>
 </article>
 </section>
-<section  th:unless="${students.size() == 0 ? false : true}">
-<p>お探しの学生は見つかりません</p>
+<section  th:unless="${experiences.size() == 0 ? false : true}">
+<p>お探しのES/体験記は見つかりません</p>
 </section>
 </main>
 <footer th:replace="common/footer :: footer"></footer>

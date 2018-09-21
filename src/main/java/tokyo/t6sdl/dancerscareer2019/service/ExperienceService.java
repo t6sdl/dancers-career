@@ -2,6 +2,7 @@ package tokyo.t6sdl.dancerscareer2019.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,10 @@ public class ExperienceService {
 	
 	public List<Experience> getExperiences() {
 		return experienceRepository.find();
+	}
+	
+	public Experience getExperienceById(int experienceId, boolean all) {
+		return experienceRepository.findOneById(experienceId, all);
 	}
 	
 	public List<Experience> getExperiencesByName(String kanaLastName, String kanaFirstName) {
@@ -49,6 +54,14 @@ public class ExperienceService {
 	
 	public List<Experience> getExperiencesByPosition(List<String> position, String method) {
 		return experienceRepository.findByPosition(position, method);
+	}
+	
+	public Es getEsById(int experienceId, int esId) {
+		return experienceRepository.findEsById(experienceId, esId);
+	}
+	
+	public Interview getInterviewById(int experienceId, int interviewId) {
+		return experienceRepository.findInterviewById(experienceId, interviewId);
 	}
 	
 	public void register(Experience newExperience) {
@@ -104,8 +117,10 @@ public class ExperienceService {
 		experience.setPosition(form.getPosition());
 		experience.setClub(form.getClub());
 		experience.setOffer(form.getOffer());
-		experience.setEs(this.convertEsFormIntoEs(form.getEs()));
-		experience.setInterview(this.convertInterviewFormIntoInterview(form.getInterview()));
+		if (!(Objects.equals(form.getEs(), null) || Objects.equals(form.getInterview(), null))) {
+			experience.setEs(this.convertEsFormIntoEs(form.getEs()));
+			experience.setInterview(this.convertInterviewFormIntoInterview(form.getInterview()));	
+		}
 		return experience;
 	}
 	
@@ -113,6 +128,7 @@ public class ExperienceService {
 		List<Es> es = new ArrayList<Es>();
 		form.forEach(formItem -> {;
 			Es esItem = new Es();
+			esItem.setEs_id(formItem.getEsId());
 			esItem.setCorp(formItem.getCorp());
 			esItem.setResult(formItem.getResult());
 			esItem.setQuestion(formItem.getQuestion());
@@ -127,10 +143,100 @@ public class ExperienceService {
 		List<Interview> interview = new ArrayList<Interview>();
 		form.forEach(formItem -> {;
 			Interview interviewItem = new Interview();
+			interviewItem.setInterview_id(formItem.getInterviewId());
 			interviewItem.setQuestion(formItem.getQuestion());
 			interviewItem.setAnswer(formItem.getAnswer());
 			interview.add(interviewItem);
 		});
 		return interview;
+	}
+	
+	public Es convertEsFormIntoEs(EsForm form) {
+		Es es = new Es();
+		es.setEs_id(form.getEsId());
+		es.setCorp(form.getCorp());
+		es.setResult(form.getResult());
+		es.setQuestion(form.getQuestion());
+		es.setAnswer(form.getAnswer());
+		es.setAdvice(form.getAdvice());
+		return es;
+	}
+	
+	public Interview convertInterviewFormIntoInterview(InterviewForm form) {
+		Interview interview = new Interview();
+		interview.setInterview_id(form.getInterviewId());
+		interview.setQuestion(form.getQuestion());
+		interview.setAnswer(form.getAnswer());
+		return interview;
+	}
+	
+	public ExperienceForm convertExperienceIntoExperienceForm(Experience experience) {
+		ExperienceForm form = new ExperienceForm();
+		form.setLastName(experience.getLast_name());
+		form.setFirstName(experience.getFirst_name());
+		form.setKanaLastName(experience.getKana_last_name());
+		form.setKanaFirstName(experience.getKana_first_name());
+		form.setSex(experience.getSex());
+		form.setMajor(experience.getMajor());
+		form.setPrefecture(experience.getPrefecture());
+		form.setUniversity(experience.getUniversity());
+		form.setFaculty(experience.getFaculty());
+		form.setDepartment(experience.getDepartment());
+		form.setGraduation(experience.getGraduation());
+		form.setAcademicDegree(experience.getAcademic_degree());
+		form.setPosition(experience.getPosition());
+		form.setClub(experience.getClub());
+		form.setOffer(experience.getOffer());
+		if (!(Objects.equals(experience.getEs(), null) || Objects.equals(experience.getInterview(), null))) {
+			form.setEs(this.convertEsIntoEsForm(experience.getEs()));
+			form.setInterview(this.convertInterviewIntoInterviewForm(experience.getInterview()));
+		}
+		return form;
+	}
+	
+	public List<EsForm> convertEsIntoEsForm(List<Es> es) {
+		List<EsForm> form = new ArrayList<EsForm>();
+		es.forEach(esItem -> {;
+			EsForm formItem = new EsForm();
+			formItem.setEsId(esItem.getEs_id());
+			formItem.setCorp(esItem.getCorp());
+			formItem.setResult(esItem.getResult());
+			formItem.setQuestion(esItem.getQuestion());
+			formItem.setAnswer(esItem.getAnswer());
+			formItem.setAdvice(esItem.getAdvice());
+			form.add(formItem);
+		});
+		return form;
+	}
+	
+	public List<InterviewForm> convertInterviewIntoInterviewForm(List<Interview> interview) {
+		List<InterviewForm> form = new ArrayList<InterviewForm>();
+		interview.forEach(interviewItem -> {;
+			InterviewForm formItem = new InterviewForm();
+			formItem.setInterviewId(interviewItem.getInterview_id());
+			formItem.setQuestion(interviewItem.getQuestion());
+			formItem.setAnswer(interviewItem.getAnswer());
+			form.add(formItem);
+		});
+		return form;
+	}
+	
+	public EsForm convertEsIntoEsForm(Es es) {
+		EsForm form = new EsForm();
+		form.setEsId(es.getEs_id());
+		form.setCorp(es.getCorp());
+		form.setResult(es.getResult());
+		form.setQuestion(es.getQuestion());
+		form.setAnswer(es.getAnswer());
+		form.setAdvice(es.getAdvice());
+		return form;
+	}
+	
+	public InterviewForm convertInterviewIntoInterviewForm(Interview interview) {
+		InterviewForm form = new InterviewForm();
+		form.setInterviewId(interview.getInterview_id());
+		form.setQuestion(interview.getQuestion());
+		form.setAnswer(interview.getAnswer());
+		return form;
 	}
 }
