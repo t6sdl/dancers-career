@@ -54,16 +54,16 @@ public class ProfileService {
 		return profileRepository.findByPrefecture(prefecture);
 	}
 	
-	public List<Profile> getProfilesByUniversity(String university) {
-		return profileRepository.findByUniversity(university);
+	public List<Profile> getProfilesByUniversity(String prefecture, String university) {
+		return profileRepository.findByUniversity(prefecture, university);
 	}
 	
-	public List<Profile> getProfilesByFaculty(String university, String faculty) {
-		return profileRepository.findByFaculty(university, faculty);
+	public List<Profile> getProfilesByFaculty(String prefecture, String university, String faculty) {
+		return profileRepository.findByFaculty(prefecture, university, faculty);
 	}
 	
-	public List<Profile> getProfilesByDepartment(String university, String faculty, String department) {
-		return profileRepository.findByDepartment(university, faculty, department);
+	public List<Profile> getProfilesByDepartment(String prefecture, String university, String faculty, String department) {
+		return profileRepository.findByDepartment(prefecture, university, faculty, department);
 	}
 	
 	public List<Profile> getProfilesByPosition(List<String> position, String method) {

@@ -8,7 +8,7 @@
 <header th:replace="common/header :: for-admin"></header>
 <main>
 <h1>ES/体験記【登録】</h1>
-<form th:action="@{/admin/experiences/submit}" method="post" th:object="${experienceForm}">
+<form th:action="@{/admin/experiences/{experienceId}(experienceId=${experienceId})}" method="post" th:object="${experienceForm}">
 <fieldset>
 <legend>提供者情報</legend>
 <div>
@@ -33,7 +33,6 @@
 <label th:for="${#ids.prev('sex')}">女性</label>
 <input type="radio" th:field="*{sex}" value="">
 <label th:for="${#ids.prev('sex')}">非公開</label>
-<p th:if="${#fields.hasErrors('sex')}">必須項目です</p>
 </div>
 <div>
 <p>文理</p>
@@ -43,7 +42,6 @@
 <label th:for="${#ids.prev('major')}">理系</label>
 <input type="radio" th:field="*{major}" value="">
 <label th:for="${#ids.prev('major')}">非公開</label>
-<p th:if="${#fields.hasErrors('major')}">必須項目です</p>
 </div>
 <div>
 <p>大学・学部・学科</p>
@@ -99,27 +97,28 @@
 <option value="鹿児島県">鹿児島県</option>
 <option value="沖縄県">沖縄県</option>
 </select>
+<input type="hidden" id="hiddenPref" th:value="${hiddenPref == null ? '' : hiddenPref}">
 </div>
 <div>
 <label for="university">大学</label>
 <select th:field="*{university}">
 <option value="">非公開</option>
 </select>
-<input type="hidden" id="hiddenUniv" th:value="${hiddenUniv == null ? 'default' : hiddenUniv}">
+<input type="hidden" id="hiddenUniv" th:value="${hiddenUniv == null ? '' : hiddenUniv}">
 </div>
 <div>
 <label for="faculty">学部</label>
 <select th:field="*{faculty}">
 <option value="">非公開</option>
 </select>
-<input type="hidden" id="hiddenFac" th:value="${hiddenFac == null ? 'default' : hiddenFac}">
+<input type="hidden" id="hiddenFac" th:value="${hiddenFac == null ? '' : hiddenFac}">
 </div>
 <div>
 <label for="department">学科</label>
 <select th:field="*{department}">
 <option value="">非公開</option>
 </select>
-<input type="hidden" id="hiddenDep" th:value="${hiddenDep == null ? 'default' : hiddenDep}">
+<input type="hidden" id="hiddenDep" th:value="${hiddenDep == null ? '' : hiddenDep}">
 </div>
 </div>
 <div>
@@ -134,6 +133,8 @@
 <option value="2016">2016</option>
 <option value="2017">2017</option>
 <option value="2018">2018</option>
+<option value="2019">2019</option>
+<option value="2020">2020</option>
 </select>
 <label for="graduation">年度</label>
 </div>
@@ -147,10 +148,9 @@
 <label th:for="${#ids.prev('academicDegree')}">博士卒</label>
 <input type="radio" th:field="*{academicDegree}" value="">
 <label th:for="${#ids.prev('academicDegree')}">非公開</label>
-<p th:if="${#fields.hasErrors('academicDegree')}">必須項目です</p>
 </div>
 <div>
-<p>サークルなどでの役職・役割（複数選択可・未選択不可）</p>
+<p>サークルなどでの役職・役割（複数選択可・必須）</p>
 <th:block th:each="pos : ${positionList}">
 <input type="checkbox" th:field="*{position}" th:value="${pos}">
 <label th:for="${#ids.prev('position')}" th:text="${pos}"></label>
@@ -160,25 +160,25 @@
 <div>
 <p>所属サークル（複数登録可）</p>
 <th:block th:each="clubItem, loop : *{club}">
-<input class="club-item" type="text" th:field="*{club[__${loop.index}__]}" placeholder="空欄可">
+<input class="clubItem" type="text" th:field="*{club[__${loop.index}__]}" placeholder="空欄可">
 </th:block>
 <div>
-<input type="button" id="add-club" value="追加">
+<input type="button" id="addClub" value="追加">
 </div>
 </div>
 <div>
 <p>内定先（複数登録可）</p>
 <th:block th:each="offerItem, loop : *{offer}">
-<input class="offer-item" type="text" th:field="*{offer[__${loop.index}__]}" placeholder="空欄可">
+<input class="offerItem" type="text" th:field="*{offer[__${loop.index}__]}" placeholder="空欄可">
 </th:block>
 <div>
-<input type="button" id="add-offer" value="追加">
+<input type="button" id="addOffer" value="追加">
 </div>
 </div>
 </fieldset>
 <fieldset>
 <legend>ES</legend>
-<div class="es-item" th:each="esItem, loop : *{es}">
+<div class="esItem" th:each="esItem, loop : *{es}">
 <div>
 <label th:for="es__${loop.index}__.corp">提出先企業</label>
 <input type="text" th:field="*{es[__${loop.index}__].corp}" placeholder="空欄可">
@@ -202,12 +202,12 @@
 <hr>
 </div>
 <div>
-<input type="button" id="add-es" value="追加">
+<input type="button" id="addEs" value="追加">
 </div>
 </fieldset>
 <fieldset>
 <legend>Interview</legend>
-<div class="interview-item" th:each="interviewItem, loop : *{interview}">
+<div class="interviewItem" th:each="interviewItem, loop : *{interview}">
 <div>
 <label th:for="interview__${loop.index}__.question">質問</label>
 <input type="text" th:field="*{interview[__${loop.index}__].question}" placeholder="空欄可">
@@ -219,11 +219,13 @@
 <hr>
 </div>
 <div>
-<input type="button" id="add-interview" value="追加">
+<input type="button" id="addInterview" value="追加">
 </div>
 </fieldset>
 <div>
-<input type="submit" value="登録">
+<input type="submit" name="post" value="登録">
+<input type="hidden" id="contextPath" th:value="@{/}">
+<input type="hidden" id="experienceId" th:value="${experienceId}">
 </div>
 </form>
 </main>
@@ -232,6 +234,7 @@
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
+<script th:src="@{/js/setUniversity.js}"></script>
 <script th:src="@{/js/submit.js}"></script>
 <script th:src="@{/js/add.js}"></script>
 </body>

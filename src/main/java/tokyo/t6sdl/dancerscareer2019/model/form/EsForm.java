@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class EsForm {
+	private int esId;
 	private String corp;
 	private String result;
 	private String question;

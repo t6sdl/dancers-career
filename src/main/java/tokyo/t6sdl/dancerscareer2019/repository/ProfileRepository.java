@@ -10,9 +10,9 @@ public interface ProfileRepository {
 	List<Profile> findByName(String kanaLastName, String kanaFirstName);
 	List<Profile> findByLastName(String kanaLastName);
 	List<Profile> findByPrefecture(String prefecture);
-	List<Profile> findByUniversity(String university);
-	List<Profile> findByFaculty(String university, String faculty);
-	List<Profile> findByDepartment(String university, String faculty, String department);
+	List<Profile> findByUniversity(String prefecture, String university);
+	List<Profile> findByFaculty(String prefecture, String university, String faculty);
+	List<Profile> findByDepartment(String prefecture, String university, String faculty, String department);
 	List<Profile> findByPosition(List<String> position, String method);
 	void insert(Profile newProfile);
 	void delete(String email);

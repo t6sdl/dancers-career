@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class InterviewForm {
+	private int interviewId;
 	private String question;
 	private String answer;
 	

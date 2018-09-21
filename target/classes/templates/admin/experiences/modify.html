@@ -2,12 +2,12 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
-<title>ES/体験記【登録】｜ダンサーズキャリア</title>
+<title>ES/体験記【修正】｜ダンサーズキャリア</title>
 </head>
 <body>
 <header th:replace="common/header :: for-admin"></header>
 <main>
-<h1>ES/体験記【登録】</h1>
+<h1>ES/体験記【修正】</h1>
 <form th:action="@{/admin/experiences/{experienceId}(experienceId=${experienceId})}" method="post" th:object="${experienceForm}">
 <fieldset>
 <legend>提供者情報</legend>
@@ -175,58 +175,12 @@
 <input type="button" id="addOffer" value="追加">
 </div>
 </div>
-</fieldset>
-<fieldset>
-<legend>ES</legend>
-<div class="esItem" th:each="esItem, loop : *{es}">
-<div>
-<label th:for="es__${loop.index}__.corp">提出先企業</label>
-<input type="text" th:field="*{es[__${loop.index}__].corp}" placeholder="空欄可">
-</div>
-<div>
-<label th:for="es__${loop.index}__.result">選考結果</label>
-<input type="text" th:field="*{es[__${loop.index}__].result}" placeholder="空欄可">
-</div>
-<div>
-<label th:for="es__${loop.index}__.question">設問</label>
-<input type="text" th:field="*{es[__${loop.index}__].question}" placeholder="空欄可">
-</div>
-<div>
-<label th:for="es__${loop.index}__.answer">回答</label>
-<br><textarea th:field="*{es[__${loop.index}__].answer}" rows="10" cols="100" placeholder="空欄可"></textarea>
-</div>
-<div>
-<label th:for="es__${loop.index}__.advice">赤入れ</label>
-<br><textarea th:field="*{es[__${loop.index}__].advice}" rows="10" cols="100" placeholder="空欄可"></textarea>
-</div>
 <hr>
-</div>
 <div>
-<input type="button" id="addEs" value="追加">
+<input type="submit" name="post" value="修正">
 </div>
 </fieldset>
-<fieldset>
-<legend>Interview</legend>
-<div class="interviewItem" th:each="interviewItem, loop : *{interview}">
-<div>
-<label th:for="interview__${loop.index}__.question">質問</label>
-<input type="text" th:field="*{interview[__${loop.index}__].question}" placeholder="空欄可">
-</div>
-<div>
-<label th:for="interview__${loop.index}__.answer">回答</label>
-<br><textarea th:field="*{interview[__${loop.index}__].answer}" rows="10" cols="100" placeholder="空欄可"></textarea>
-</div>
-<hr>
-</div>
-<div>
-<input type="button" id="addInterview" value="追加">
-</div>
-</fieldset>
-<div>
-<input type="submit" name="post" value="登録">
 <input type="hidden" id="contextPath" th:value="@{/}">
-<input type="hidden" id="experienceId" th:value="${experienceId}">
-</div>
 </form>
 </main>
 <footer th:replace="common/footer :: footer"></footer>

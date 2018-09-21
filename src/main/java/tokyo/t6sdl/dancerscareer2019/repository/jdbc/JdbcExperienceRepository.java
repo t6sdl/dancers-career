@@ -5,7 +5,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -43,9 +45,23 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		return jdbcTemplate.query(
 				"SELECT * FROM experiences ORDER BY experience_id DESC", (resultSet, i) -> {
 					Experience experience = new Experience();
-					this.adjustDataToExperience(experience, resultSet);
+					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;
 				});
+	}
+	
+	@Override
+	public Experience findOneById(int experience_id, boolean all) {
+		try {
+			return jdbcTemplate.queryForObject(
+					"SELECT * FROM experiences WHERE experience_id = ?", (resultSet, i) -> {
+						Experience experience = new Experience();
+						this.adjustDataToExperience(experience, resultSet, all);
+						return experience;
+					}, experience_id);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -53,7 +69,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		return jdbcTemplate.query(
 				"SELECT * FROM experiences WHERE kana_last_name = ? AND kana_first_name = ? ORDER BY experience_id DESC", (resultSet, i) -> {
 					Experience experience = new Experience();
-					this.adjustDataToExperience(experience, resultSet);
+					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;
 				}, kanaLastName, kanaFirstName);
 	}
@@ -63,7 +79,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		return jdbcTemplate.query(
 				"SELECT * FROM experiences WHERE kana_last_name = ? ORDER BY experience_id DESC", (resultSet, i) -> {
 					Experience experience = new Experience();
-					this.adjustDataToExperience(experience, resultSet);
+					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;
 				}, kanaLastName);
 	}
@@ -73,7 +89,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		return jdbcTemplate.query(
 				"SELECT * FROM experiences WHERE prefecture = ? ORDER BY experience_id DESC", (resultSet, i) -> {
 					Experience experience = new Experience();
-					this.adjustDataToExperience(experience, resultSet);
+					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;
 				}, prefecture);
 	}
@@ -83,7 +99,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		return jdbcTemplate.query(
 				"SELECT * FROM experiences WHERE prefecture = ? AND university = ? ORDER BY experience_id DESC", (resultSet, i) -> {
 					Experience experience = new Experience();
-					this.adjustDataToExperience(experience, resultSet);
+					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;
 				}, prefecture, university);
 	}
@@ -93,7 +109,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		return jdbcTemplate.query(
 				"SELECT * FROM experiences WHERE prefecture = ? AND university = ? AND faculty = ? ORDER BY experience_id DESC", (resultSet, i) -> {
 					Experience experience = new Experience();
-					this.adjustDataToExperience(experience, resultSet);
+					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;
 				}, prefecture, university, faculty);
 	}
@@ -103,7 +119,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		return jdbcTemplate.query(
 				"SELECT * FROM experiences WHERE prefecture = ? AND university = ? AND faculty = ? AND department = ? ORDER BY experience_id DESC", (resultSet, i) -> {
 					Experience experience = new Experience();
-					this.adjustDataToExperience(experience, resultSet);
+					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;
 				}, prefecture, university, faculty, department);
 	}
@@ -120,9 +136,46 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		return jdbcTemplate.query(
 				"SELECT * FROM experiences WHERE " + like + " ORDER BY experience_id DESC", (resultSet, i) -> {
 					Experience experience = new Experience();
-					this.adjustDataToExperience(experience, resultSet);
+					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;
 				});
+	}
+	
+	@Override
+	public Es findEsById(int experience_id, int es_id) {
+		try {
+			return jdbcTemplate.queryForObject(
+					"SELECT * FROM es WHERE experience_id = ? AND es_id = ?", (resultSet, i) -> {
+						Es es = new Es();
+						es.setExperience_id(resultSet.getInt("experience_id"));
+						es.setEs_id(resultSet.getInt("es_id"));
+						es.setCorp(resultSet.getString("corp"));
+						es.setResult(resultSet.getString("result"));
+						es.setQuestion(resultSet.getString("question"));
+						es.setAnswer(resultSet.getString("answer"));
+						es.setAdvice(resultSet.getString("advice"));
+						return es;
+					}, experience_id, es_id);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+	}
+	
+	@Override
+	public Interview findInterviewById(int experience_id, int interview_id) {
+		try {
+			return jdbcTemplate.queryForObject(
+					"SELECT * FROM interview WHERE experience_id = ? AND interview_id = ?", (resultSet, i) -> {
+						Interview interview = new Interview();
+						interview.setExperience_id(resultSet.getInt("experience_id"));
+						interview.setInterview_id(resultSet.getInt("interview_id"));
+						interview.setQuestion(resultSet.getString("question"));
+						interview.setAnswer(resultSet.getString("answer"));
+						return interview;
+					}, experience_id, interview_id);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -168,16 +221,20 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		String offer = this.listToString(experience.getOffer());
 		jdbcTemplate.update(
 				"UPDATE experiences SET last_name = ?, first_name = ?, kana_last_name = ?, kana_first_name = ?, sex = ?, major = ?, "
-				+ "prefecture = ?, university = ?, faculty = ?, department = ?, graduation = ?, academic_degree = ?, position = ?, club = ?, offer = ?",
+				+ "prefecture = ?, university = ?, faculty = ?, department = ?, graduation = ?, academic_degree = ?, position = ?, club = ?, offer = ? WHERE experience_id = ?",
 				experience.getLast_name(), experience.getFirst_name(), experience.getKana_last_name(), experience.getKana_first_name(), experience.getSex(), experience.getMajor(), 
-				experience.getPrefecture(), experience.getUniversity(), experience.getFaculty(), experience.getDepartment(), experience.getGraduation(), experience.getAcademic_degree(), position, club, offer);
+				experience.getPrefecture(), experience.getUniversity(), experience.getFaculty(), experience.getDepartment(), experience.getGraduation(), experience.getAcademic_degree(), position, club, offer, experience.getExperience_id());
 	}
 
 	@Override
 	public void insertEs(Es newEs) {
+		Integer es_id = jdbcTemplate.queryForObject("SELECT MAX(es_id) FROM es WHERE experience_id = ?", Integer.class, newEs.getExperience_id());
+		if (Objects.equals(es_id, null)) {
+			es_id = 0;
+		}
 		jdbcTemplate.update(
 				"INSERT INTO es VALUES (?, ?, ?, ?, ?, ?, ?)",
-				newEs.getExperience_id(), newEs.getEs_id(), newEs.getCorp(), newEs.getResult(), newEs.getQuestion(), newEs.getAnswer(), newEs.getAdvice());
+				newEs.getExperience_id(), es_id + 1, newEs.getCorp(), newEs.getResult(), newEs.getQuestion(), newEs.getAnswer(), newEs.getAdvice());
 	}
 
 	@Override
@@ -194,9 +251,13 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 
 	@Override
 	public void insertInterview(Interview newInterview) {
+		Integer interview_id = jdbcTemplate.queryForObject("SELECT MAX(interview_id) FROM interview WHERE experience_id = ?", Integer.class, newInterview.getExperience_id());
+		if (Objects.equals(interview_id, null)) {
+			interview_id = 0;
+		}
 		jdbcTemplate.update(
 				"INSERT INTO interview VALUES (?, ?, ?, ?)",
-				newInterview.getExperience_id(), newInterview.getInterview_id(), newInterview.getQuestion(), newInterview.getAnswer());
+				newInterview.getExperience_id(), interview_id + 1, newInterview.getQuestion(), newInterview.getAnswer());
 	}
 
 	@Override
@@ -211,7 +272,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 				interview.getQuestion(), interview.getAnswer(), interview.getExperience_id(), interview.getInterview_id());
 	}
 
-	private void adjustDataToExperience(Experience experience, ResultSet resultSet) throws SQLException {
+	private void adjustDataToExperience(Experience experience, ResultSet resultSet, boolean all) throws SQLException {
 		experience.setExperience_id(resultSet.getInt("experience_id"));
 		experience.setLast_name(resultSet.getString("last_name"));
 		experience.setFirst_name(resultSet.getString("first_name"));
@@ -228,26 +289,28 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		experience.setPosition(this.stringToList(resultSet.getString("position")));
 		experience.setClub(this.stringToList(resultSet.getString("club")));
 		experience.setOffer(this.stringToList(resultSet.getString("offer")));
-		experience.setEs(jdbcTemplate.query(
-				"SELECT * FROM es WHERE experience_id = ?", (esSet, j) -> {
-					Es es = new Es();
-					es.setExperience_id(experience.getExperience_id());
-					es.setEs_id(esSet.getInt("es_id"));
-					es.setCorp(esSet.getString("corp"));
-					es.setResult(esSet.getString("result"));
-					es.setQuestion(esSet.getString("question"));
-					es.setAnswer(esSet.getString("answer"));
-					es.setAdvice(esSet.getString("advice"));
-					return es;
-				}, experience.getExperience_id()));
-		experience.setInterview(jdbcTemplate.query(
-				"SELECT * FROM interview WHERE experience_id = ?", (interviewSet, k) -> {
-					Interview interview = new Interview();
-					interview.setExperience_id(experience.getExperience_id());
-					interview.setInterview_id(interviewSet.getInt("interview_id"));
-					interview.setQuestion(interviewSet.getString("question"));
-					interview.setAnswer(interviewSet.getString("answer"));
-					return interview;
-				}, experience.getExperience_id()));					
+		if (all) {
+			experience.setEs(jdbcTemplate.query(
+					"SELECT * FROM es WHERE experience_id = ?", (esSet, j) -> {
+						Es es = new Es();
+						es.setExperience_id(experience.getExperience_id());
+						es.setEs_id(esSet.getInt("es_id"));
+						es.setCorp(esSet.getString("corp"));
+						es.setResult(esSet.getString("result"));
+						es.setQuestion(esSet.getString("question"));
+						es.setAnswer(esSet.getString("answer"));
+						es.setAdvice(esSet.getString("advice"));
+						return es;
+					}, experience.getExperience_id()));
+			experience.setInterview(jdbcTemplate.query(
+					"SELECT * FROM interview WHERE experience_id = ?", (interviewSet, k) -> {
+						Interview interview = new Interview();
+						interview.setExperience_id(experience.getExperience_id());
+						interview.setInterview_id(interviewSet.getInt("interview_id"));
+						interview.setQuestion(interviewSet.getString("question"));
+						interview.setAnswer(interviewSet.getString("answer"));
+						return interview;
+					}, experience.getExperience_id()));
+		}
 	}
 }

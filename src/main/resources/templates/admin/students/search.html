@@ -8,7 +8,7 @@
 <header th:replace="common/header :: for-admin"></header>
 <main>
 <h1>登録学生検索</h1>
-<form th:action="@{/admin/students/search}" method="get" th:object="${studentForm}">
+<form th:action="@{/admin/search/students}" method="get" th:object="${studentForm}">
 <fieldset>
 <legend>氏名検索</legend>
 <div>
@@ -27,7 +27,7 @@
 <div>
 <label for="prefecture">大学所在地</label>
 <select th:field="*{prefecture}">
-<option value="default">選択してください</option>
+<option value="">選択してください</option>
 <option value="北海道">北海道</option>
 <option value="青森県">青森県</option>
 <option value="岩手県">岩手県</option>
@@ -76,28 +76,28 @@
 <option value="鹿児島県">鹿児島県</option>
 <option value="沖縄県">沖縄県</option>
 </select>
-<input type="hidden" id="hiddenPref" th:value="${hiddenPref == null ? 'default' : hiddenPref}">
+<input type="hidden" id="hiddenPref" th:value="${hiddenPref == null ? '' : hiddenPref}">
 </div>
 <div>
 <label for="university">大学</label>
 <select th:field="*{university}">
-<option value="default">選択してください</option>
+<option value="">選択してください</option>
 </select>
-<input type="hidden" id="hiddenUniv" th:value="${hiddenUniv == null ? 'default' : hiddenUniv}">
+<input type="hidden" id="hiddenUniv" th:value="${hiddenUniv == null ? '' : hiddenUniv}">
 </div>
 <div>
 <label for="faculty">学部</label>
 <select th:field="*{faculty}">
-<option value="default">選択してください</option>
+<option value="">選択してください</option>
 </select>
-<input type="hidden" id="hiddenFac" th:value="${hiddenFac == null ? 'default' : hiddenFac}">
+<input type="hidden" id="hiddenFac" th:value="${hiddenFac == null ? '' : hiddenFac}">
 </div>
 <div>
 <label for="department">学科</label>
 <select th:field="*{department}">
-<option value="default">選択してください</option>
+<option value="">選択してください</option>
 </select>
-<input type="hidden" id="hiddenDep" th:value="${hiddenDep == null ? 'default' : hiddenDep}">
+<input type="hidden" id="hiddenDep" th:value="${hiddenDep == null ? '' : hiddenDep}">
 </div>
 <div>
 <input type="submit" value="検索" name="by-university">
@@ -119,7 +119,7 @@
 <input type="hidden" id="contextPath" th:value="@{/}">
 <input type="hidden" name="start" value="1">
 </form>
-<div><a th:href="@{/admin/students/search?all}"><button>絞り込み解除</button></a></div>
+<div><a th:href="@{/admin/search/students?all}"><button>絞り込み解除</button></a></div>
 <hr>
 <div>
 <p style="text-align:center;">検索結果： <span th:text="${students.size()}"></span> 件</p>
@@ -185,7 +185,7 @@
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
-<script th:src="@{/js/searchStudent.js}"></script>
+<script th:src="@{/js/setUniversity.js}"></script>
 <script th:src="@{/js/submit.js}"></script>
 </body>
 </html>
