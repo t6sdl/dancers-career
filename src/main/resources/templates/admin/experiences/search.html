@@ -135,9 +135,12 @@
 <p><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'"></span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></p>
 </div>
 <hr>
-<div>
+<div style="display:flex;justify-content:space-between">
+<span th:text="|PV数 *{page_view} ｜ お気に入り登録者数 *{likes}|"></span>
+<span>
 <a th:href="@{/admin/experiences/{experienceId}(experienceId=*{experience_id})}"><button>詳細を見る</button></a>
 <a th:href="@{/admin/experiences/{experienceId}?delete(experienceId=*{experience_id})}"><button>消去する</button></a>
+</span>
 </div>
 </article>
 </section>

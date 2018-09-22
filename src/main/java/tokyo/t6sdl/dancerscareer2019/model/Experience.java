@@ -7,6 +7,8 @@ import lombok.Data;
 @Data
 public class Experience {
 	private int experience_id;
+	private int page_view;
+	private int likes;
 	private String last_name;
 	private String first_name;
 	private String kana_last_name;

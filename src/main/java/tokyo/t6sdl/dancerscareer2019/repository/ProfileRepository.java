@@ -14,7 +14,10 @@ public interface ProfileRepository {
 	List<Profile> findByFaculty(String prefecture, String university, String faculty);
 	List<Profile> findByDepartment(String prefecture, String university, String faculty, String department);
 	List<Profile> findByPosition(List<String> position, String method);
+	String findLastNameByEmail(String email);
+	List<String> findLikesByEmail(String email);
 	void insert(Profile newProfile);
 	void delete(String email);
 	void updateAny(Profile profile);
+	void updateLikes(String email, List<String> likes);
 }

@@ -142,6 +142,17 @@ public class JdbcProfileRepository implements ProfileRepository {
 					return profile;
 				});
 	}
+	
+	@Override
+	public String findLastNameByEmail(String email) {
+		return jdbcTemplate.queryForObject("SELECT (last_name) FROM profiles WHERE email = ?", String.class, email);
+	}
+	
+	@Override
+	public List<String> findLikesByEmail(String email) {
+		String likesData = jdbcTemplate.queryForObject("SELECT (likes) FROM profiles WHERE email = ?", String.class, email);
+		return this.stringToList(likesData);
+	}
 
 	@Override
 	public void insert(Profile newProfile) {
@@ -173,6 +184,17 @@ public class JdbcProfileRepository implements ProfileRepository {
 				profile.getFaculty(), profile.getDepartment(), profile.getGraduation(), profile.getAcademic_degree(), position, profile.getEmail());
 	}
 	
+	@Override
+	public void updateLikes(String email, List<String> likes) {
+		String likesData;
+		if (likes.isEmpty()) {
+			likesData = "";
+		} else {
+			likesData = this.listToString(likes);
+		}
+		jdbcTemplate.update("UPDATE profiles SET likes = ? WHERE email = ?", likesData, email);
+	}
+	
 	private void adjustDataToProfile(Profile profile, ResultSet resultSet) throws SQLException {
 		profile.setEmail(resultSet.getString("email"));
 		profile.setLast_name(resultSet.getString("last_name"));
@@ -190,6 +212,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 		profile.setDepartment(resultSet.getString("department"));
 		profile.setGraduation(resultSet.getString("graduation"));
 		profile.setAcademic_degree(resultSet.getString("academic_degree"));
-		profile.setPosition(stringToList(resultSet.getString("position")));
+		profile.setPosition(this.stringToList(resultSet.getString("position")));
+		profile.setLikes(this.stringToList(resultSet.getString("likes")));
 	}
 }

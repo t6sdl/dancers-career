@@ -9,6 +9,7 @@
 <main>
 <h1>ES/体験記【詳細】</h1>
 <article th:object="${experience}">
+<p th:text="|PV数 *{page_view} ｜ お気に入り登録者数 *{likes}|"></p>
 <fieldset>
 <legend>提供者情報</legend>
 <div>
@@ -57,7 +58,7 @@
 <p><span th:each="offerItem : *{offer}" th:text="|【${offerItem == '' ? '非公開' : offerItem}】 |"></span></p>
 </div>
 <hr>
-<div>
+<div style="text-align:right;">
 <a th:href="@{/admin/experiences/{experienceId}?modify(experienceId=*{experience_id})}"><button>提供者情報を修正する</button></a>
 </div>
 </fieldset>
@@ -69,7 +70,7 @@
 <p>設問：<span th:text="*{es[__${loop.index}__].question} == '' ? '【非公開】' : *{es[__${loop.index}__].question}"></span></p>
 <p>回答：<br><span th:text="*{es[__${loop.index}__].answer} == '' ? '【非公開】' : *{es[__${loop.index}__].answer}"></span></p>
 <p>赤入れ：<br><span th:text="*{es[__${loop.index}__].advice} == '' ? '【非公開】' : *{es[__${loop.index}__].advice}"></span></p>
-<div>
+<div style="text-align:right;">
 <a th:href="@{/admin/experiences/{experienceId}/es/{esId}?modify(experienceId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}"><button>このESを修正する</button></a>
 <a th:href="@{/admin/experiences/{experienceId}/es/{esId}?delete(experienceId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}"><button>このESを消去する</button></a>
 </div>
@@ -84,7 +85,7 @@
 <div th:each="interviewItem, loop : *{interview}">
 <p>設問：<span th:text="*{interview[__${loop.index}__].question} == '' ? '【非公開】' : *{interview[__${loop.index}__].question}"></span></p>
 <p>回答：<br><span th:text="*{interview[__${loop.index}__].answer} == '' ? '【非公開】' : *{interview[__${loop.index}__].answer}"></span></p>
-<div>
+<div style="text-align:right;">
 <a th:href="@{/admin/experiences/{experienceId}/interview/{interviewId}?modify(experienceId=*{experience_id},interviewId=*{interview[__${loop.index}__].interview_id})}"><button>このInterviewを修正する</button></a>
 <a th:href="@{/admin/experiences/{experienceId}/interview/{interviewId}?delete(experienceId=*{experience_id},interviewId=*{interview[__${loop.index}__].interview_id})}"><button>このInterviewを消去する</button></a>
 </div>

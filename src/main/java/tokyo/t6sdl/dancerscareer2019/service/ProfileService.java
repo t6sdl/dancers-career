@@ -31,6 +31,10 @@ public class ProfileService {
 		profileRepository.updateAny(profile);
 	}
 	
+	public void updateLikes(String email, List<String> likes) {
+		profileRepository.updateLikes(email, likes);
+	}
+	
 	public List<Profile> getProfiles() {
 		return profileRepository.find();
 	}
@@ -71,6 +75,14 @@ public class ProfileService {
 			return null;
 		}
 		return profileRepository.findByPosition(position, method);
+	}
+	
+	public String getLastNameByEmail(String email) {
+		return profileRepository.findLastNameByEmail(email);
+	}
+	
+	public List<String> getLikesByEmail(String email) {
+		return profileRepository.findLikesByEmail(email);
 	}
 	
 	public Profile convertProfileFormIntoProfile(ProfileForm form) {

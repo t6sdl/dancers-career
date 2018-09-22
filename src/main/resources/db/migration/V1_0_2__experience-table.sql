@@ -1,5 +1,7 @@
 CREATE TABLE experiences (
   experience_id INTEGER NOT NULL AUTO_INCREMENT,
+  page_view INTEGER NOT NULL DEFAULT 0,
+  likes INTEGER NOT NULL DEFAULT 0,
   last_name VARCHAR(45) NOT NULL DEFAULT '',
   first_name VARCHAR(45) NOT NULL DEFAULT '',
   kana_last_name VARCHAR(45) NOT NULL DEFAULT '',

@@ -9,6 +9,10 @@
 <main>
 <h1>ES/体験記</h1>
 <article th:object="${experience}">
+<div style="text-align:right;">
+<p th:unless="${isLiked}">お気に入りに登録されていません <a th:href="@{/experiences/{experienceId}?like(experienceId=*{experience_id})}"><button>登録</button></a></p>
+<p th:if="${isLiked}">お気に入りに登録されています <a th:href="@{/experiences/{experienceId}?dislike(experienceId=*{experience_id})}"><button>削除</button></a></p>
+</div>
 <div>
 <p><span th:each="pos : *{position}" th:text="${pos}" style="background:#ddd;padding:.5em;margin-right:.5em;"></span></p><!-- 役職タグ -->
 <h2><span th:text="*{university} == '' ? '非公開' : *{university}"></span>
@@ -31,6 +35,10 @@
 <hr>
 <p>質問：<span th:text="*{interview[__${loop.index}__].question} == '' ? '非公開' : *{interview[__${loop.index}__].question}"></span></p>
 <p>回答：<br><span th:each="str, stat : *{interview[__${loop.index}__].answer.split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
+</div>
+<div style="text-align:right;">
+<a th:unless="${isLiked}" th:href="@{/experiences/{experienceId}?like(experienceId=*{experience_id})}"><button>お気に入りに登録</button></a>
+<a th:if="${isLiked}" th:href="@{/experiences/{experienceId}?dislike(experienceId=*{experience_id})}"><button>お気に入りから削除</button></a>
 </div>
 </article>
 </main>

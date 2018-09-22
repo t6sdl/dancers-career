@@ -175,7 +175,7 @@ public class AdminController {
 			return "admin/experiences/submit";
 		} else {
 			int id = Integer.parseInt(experienceId);
-			Experience experience = experienceService.getExperienceById(id, true);
+			Experience experience = experienceService.getExperienceById(id, true, false);
 			model.addAttribute(experience);
 			return "admin/experiences/detail";
 		}
@@ -198,7 +198,7 @@ public class AdminController {
 		}
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		int id = Integer.parseInt(experienceId);
-		ExperienceForm form = experienceService.convertExperienceIntoExperienceForm(experienceService.getExperienceById(id, false));
+		ExperienceForm form = experienceService.convertExperienceIntoExperienceForm(experienceService.getExperienceById(id, false, false));
 		model.addAttribute("hiddenPref", form.getPrefecture());
 		model.addAttribute("hiddenUniv", form.getUniversity());
 		model.addAttribute("hiddenFac", form.getFaculty());
