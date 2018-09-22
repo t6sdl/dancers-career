@@ -125,6 +125,7 @@
 <p style="text-align:center;">検索結果： <span th:text="${students.size()}"></span> 件</p>
 </div>
 <section th:if="${students.size() == 0 ? false : true}">
+<div th:with="downloadURL=(${#request.requestURI + '/download?' + #strings.defaultString(#request.queryString, '')})"><a th:href="@{__${downloadURL}__}"><button>Excel形式で出力</button></a></div>
 <article><p>メールアドレス一覧</p><p th:text="${emails}"></p></article>
 <article th:each="student : ${students}">
 <div>

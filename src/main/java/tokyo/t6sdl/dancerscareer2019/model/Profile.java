@@ -1,6 +1,7 @@
 package tokyo.t6sdl.dancerscareer2019.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,14 +31,14 @@ public class Profile {
 	private List<String> likes;
 	
 	public void convertForDisplay() {
-		StringBuffer graduation = new StringBuffer();
-		StringBuffer date_of_birth = new StringBuffer();
+		StringBuilder graduation = new StringBuilder();
+		String date_of_birth = this.getDate_of_birth().format(DateTimeFormatter.ofPattern("yyyy年M月d日"));
 		String[] split = this.getGraduation().split("/");
 		if (split[1].charAt(0) == '0') {
 			split[1] = String.valueOf(split[1].charAt(1));
 		}
 		this.setGraduation(graduation.append(split[0]).append("年").append(split[1]).append("月").toString());
-		this.setDate_of_birth_for_display(date_of_birth.append(this.getDate_of_birth().getYear()).append("年").append(this.getDate_of_birth().getMonthValue()).append("月").append(this.getDate_of_birth().getDayOfMonth()).append("日").toString());
+		this.setDate_of_birth_for_display(date_of_birth);
 		if (this.getFaculty().equals("-")) {
 			this.setFaculty("");
 		}

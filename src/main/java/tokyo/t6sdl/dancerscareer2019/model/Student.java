@@ -2,6 +2,7 @@ package tokyo.t6sdl.dancerscareer2019.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import lombok.Data;
@@ -28,17 +29,18 @@ public class Student {
 	private String graduation;
 	private String academic_degree;
 	private List<String> position;
+	private List<String> likes;
 	
 	public void convertForDisplay() {
-		StringBuffer last_login = new StringBuffer();
-		StringBuffer graduation = new StringBuffer();
-		StringBuffer date_of_birth = new StringBuffer();
+		String last_login = this.getLast_login().format(DateTimeFormatter.ofPattern("yyyy年M月d日 H時m分s秒"));
+		String date_of_birth = this.getDate_of_birth().format(DateTimeFormatter.ofPattern("yyyy年M月d日"));
+		StringBuilder graduation = new StringBuilder();
 		String[] split = this.getGraduation().split("/");
 		if (split[1].charAt(0) == '0') {
 			split[1] = String.valueOf(split[1].charAt(1));
 		}
-		this.setLast_login_for_display(last_login.append(this.getLast_login().getYear()).append("年").append(this.getLast_login().getMonthValue()).append("月").append(this.getLast_login().getDayOfMonth()).append("日 ").append(this.getLast_login().getHour()).append("時").append(this.getLast_login().getMinute()).append("分").toString());
 		this.setGraduation(graduation.append(split[0]).append("年").append(split[1]).append("月").toString());
-		this.setDate_of_birth_for_display(date_of_birth.append(this.getDate_of_birth().getYear()).append("年").append(this.getDate_of_birth().getMonthValue()).append("月").append(this.getDate_of_birth().getDayOfMonth()).append("日").toString());
+		this.setLast_login_for_display(last_login);
+		this.setDate_of_birth_for_display(date_of_birth);
 	}
 }
