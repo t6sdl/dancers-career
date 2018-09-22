@@ -1,7 +1,9 @@
 package tokyo.t6sdl.dancerscareer2019.controller;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,12 +18,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
+import tokyo.t6sdl.dancerscareer2019.model.Experience;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.model.Profile;
 import tokyo.t6sdl.dancerscareer2019.model.form.AccountForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.ProfileForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.VerificationForm;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
+import tokyo.t6sdl.dancerscareer2019.service.ExperienceService;
 import tokyo.t6sdl.dancerscareer2019.service.MailService;
 import tokyo.t6sdl.dancerscareer2019.service.ProfileService;
 import tokyo.t6sdl.dancerscareer2019.service.SecurityService;
@@ -33,12 +37,30 @@ public class UserPageController {
 	private final SecurityService securityService;
 	private final AccountService accountService;
 	private final ProfileService profileService;
+	private final ExperienceService experienceService;
 	private final MailService mailService;
 	private final PasswordEncoder passwordEncoder;
 	private final HttpSession session;
 		
 	@RequestMapping()
-	public String getMypage() {
+	public String getMypage(Model model) {
+		String lastName = profileService.getLastNameByEmail(securityService.findLoggedInEmail());
+		List<String> likesData = profileService.getLikesByEmail(securityService.findLoggedInEmail());
+		List<Experience> experiences = new ArrayList<Experience>();
+		List<String> likes = new ArrayList<String>();
+		likes.addAll(likesData);
+		if (likes.contains("")) {
+			likes.remove("");
+		} else {
+			likes.forEach(like -> {
+				int id = Integer.parseInt(like);
+				experiences.add(experienceService.getExperienceById(id, false, false));
+			});
+		}
+		Collections.reverse(experiences);
+		model.addAttribute("lastName", lastName);
+		model.addAttribute("likes", likes);
+		model.addAttribute("experiences", experiences);
 		return "user/user";
 	}
 	

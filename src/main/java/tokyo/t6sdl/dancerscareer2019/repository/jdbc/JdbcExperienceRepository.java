@@ -51,8 +51,12 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	}
 	
 	@Override
-	public Experience findOneById(int experience_id, boolean all) {
+	public Experience findOneById(int experience_id, boolean all, boolean pv_count) {
 		try {
+			if (pv_count) {
+				Integer page_view = jdbcTemplate.queryForObject("SELECT (page_view) FROM experiences WHERE experience_id = ?", Integer.class, experience_id);
+				jdbcTemplate.update("UPDATE experiences SET page_view = ? WHERE experience_id = ?", page_view + 1, experience_id);
+			}
 			return jdbcTemplate.queryForObject(
 					"SELECT * FROM experiences WHERE experience_id = ?", (resultSet, i) -> {
 						Experience experience = new Experience();
@@ -225,6 +229,18 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 				experience.getLast_name(), experience.getFirst_name(), experience.getKana_last_name(), experience.getKana_first_name(), experience.getSex(), experience.getMajor(), 
 				experience.getPrefecture(), experience.getUniversity(), experience.getFaculty(), experience.getDepartment(), experience.getGraduation(), experience.getAcademic_degree(), position, club, offer, experience.getExperience_id());
 	}
+	
+	@Override
+	public void updateLikes(int experience_id, boolean increment) {
+		Integer likes = jdbcTemplate.queryForObject("SELECT (likes) FROM experiences WHERE experience_id = ?", Integer.class, experience_id);
+		if (increment) {
+			jdbcTemplate.update("UPDATE experiences SET likes = ? WHERE experience_id = ?", likes + 1, experience_id);
+		} else if (likes > 0) {
+			jdbcTemplate.update("UPDATE experiences SET likes = ? WHERE experience_id = ?", likes - 1, experience_id);
+		} else {
+			jdbcTemplate.update("UPDATE experiences SET likes = ? WHERE experience_id = ?", 0, experience_id);
+		}
+	}
 
 	@Override
 	public void insertEs(Es newEs) {
@@ -274,6 +290,8 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 
 	private void adjustDataToExperience(Experience experience, ResultSet resultSet, boolean all) throws SQLException {
 		experience.setExperience_id(resultSet.getInt("experience_id"));
+		experience.setPage_view(resultSet.getInt("page_view"));
+		experience.setLikes(resultSet.getInt("likes"));
 		experience.setLast_name(resultSet.getString("last_name"));
 		experience.setFirst_name(resultSet.getString("first_name"));
 		experience.setKana_last_name(resultSet.getString("kana_last_name"));

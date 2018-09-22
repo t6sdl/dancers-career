@@ -27,6 +27,7 @@ public class Profile {
 	private String graduation;
 	private String academic_degree;
 	private List<String> position;
+	private List<String> likes;
 	
 	public void convertForDisplay() {
 		StringBuffer graduation = new StringBuffer();

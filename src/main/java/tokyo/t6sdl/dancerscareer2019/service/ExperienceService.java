@@ -24,8 +24,8 @@ public class ExperienceService {
 		return experienceRepository.find();
 	}
 	
-	public Experience getExperienceById(int experienceId, boolean all) {
-		return experienceRepository.findOneById(experienceId, all);
+	public Experience getExperienceById(int experienceId, boolean all, boolean pvCount) {
+		return experienceRepository.findOneById(experienceId, all, pvCount);
 	}
 	
 	public List<Experience> getExperiencesByName(String kanaLastName, String kanaFirstName) {
@@ -74,6 +74,10 @@ public class ExperienceService {
 	
 	public void update(Experience experience) {
 		experienceRepository.update(experience);
+	}
+	
+	public void updateLikes(int experience_id, boolean increment) {
+		experienceRepository.updateLikes(experience_id, increment);
 	}
 	
 	public void registerEs(Es newEs) {

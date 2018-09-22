@@ -8,7 +8,7 @@ import tokyo.t6sdl.dancerscareer2019.model.Interview;
 
 public interface ExperienceRepository {
 	List<Experience> find();
-	Experience findOneById(int experience_id, boolean all);
+	Experience findOneById(int experience_id, boolean all, boolean pv_count);
 	List<Experience> findByName(String kanaLastName, String kanaFirstName);
 	List<Experience> findByLastName(String kanaLastName);
 	List<Experience> findByPrefecture(String prefecture);
@@ -21,6 +21,7 @@ public interface ExperienceRepository {
 	void insert(Experience newExperience);
 	void delete(int experience_id);
 	void update(Experience experience);
+	void updateLikes(int experience_id, boolean increment);
 	void insertEs(Es newEs);
 	void deleteEs(int experience_id, int es_id);
 	void updateEs(Es es);
