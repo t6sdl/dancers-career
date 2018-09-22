@@ -24,7 +24,7 @@ import tokyo.t6sdl.dancerscareer2019.model.Student;
 import tokyo.t6sdl.dancerscareer2019.model.form.EsForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.ExperienceForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.InterviewForm;
-import tokyo.t6sdl.dancerscareer2019.model.form.StudentForm;
+import tokyo.t6sdl.dancerscareer2019.model.form.SearchForm;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 import tokyo.t6sdl.dancerscareer2019.service.ExperienceService;
 import tokyo.t6sdl.dancerscareer2019.service.ProfileService;
@@ -45,7 +45,7 @@ public class AdminController {
 	@RequestMapping(value="/search/students", params="all")
 	public String getSearchStudents(Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute(new StudentForm());
+		model.addAttribute(new SearchForm());
 		List<Profile> profiles = profileService.getProfiles();
 		List<Student> students = this.makeStudentOfProfile(profiles);
 		List<String> emails = new ArrayList<String>();
@@ -61,7 +61,7 @@ public class AdminController {
 	@GetMapping(value="/search/students", params="by-name")
 	public String getSearchStudentsByName(@RequestParam(name="kanaLastName") String kanaLastName, @RequestParam(name="kanaFirstName", required=false) String kanaFirstName, Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		StudentForm form = new StudentForm();
+		SearchForm form = new SearchForm();
 		form.setKanaLastName(kanaLastName);
 		form.setKanaFirstName(kanaFirstName);
 		model.addAttribute(form);
@@ -85,7 +85,7 @@ public class AdminController {
 	@GetMapping(value="/search/students", params="by-university")
 	public String getSearchStudentsByUniveristy(@RequestParam(name="prefecture") String prefecture, @RequestParam(name="university", required=false) String university, @RequestParam(name="faculty", required=false) String faculty, @RequestParam(name="department", required=false) String department, Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		StudentForm form = new StudentForm();
+		SearchForm form = new SearchForm();
 		form.setPrefecture(prefecture);
 		form.setUniversity(university);
 		form.setFaculty(faculty);
@@ -119,7 +119,7 @@ public class AdminController {
 	@GetMapping(value="/search/students", params="and-search-by-position")
 	public String getAndSearchStudentsByPosition(@RequestParam(name="position") List<String> position, Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		StudentForm form = new StudentForm();
+		SearchForm form = new SearchForm();
 		form.setPosition(position);
 		model.addAttribute(form);
 		List<Profile> profiles = profileService.getProfilesByPosition(position, "AND");
@@ -137,7 +137,7 @@ public class AdminController {
 	@GetMapping(value="/search/students", params="or-search-by-position")
 	public String getOrSearchStudentsByPosition(@RequestParam(name="position") List<String> position, Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		StudentForm form = new StudentForm();
+		SearchForm form = new SearchForm();
 		form.setPosition(position);
 		model.addAttribute(form);
 		List<Profile> profiles = profileService.getProfilesByPosition(position, "OR");
@@ -169,9 +169,9 @@ public class AdminController {
 		model.addAttribute("experienceId", experienceId);
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		if (experienceId.equals("new")) {
-			ExperienceForm experienceForm = new ExperienceForm();
-			experienceForm.init();
-			model.addAttribute(experienceForm);
+			ExperienceForm form = new ExperienceForm();
+			form.init();
+			model.addAttribute(form);
 			return "admin/experiences/submit";
 		} else {
 			int id = Integer.parseInt(experienceId);
@@ -198,12 +198,12 @@ public class AdminController {
 		}
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		int id = Integer.parseInt(experienceId);
-		ExperienceForm experienceForm = experienceService.convertExperienceIntoExperienceForm(experienceService.getExperienceById(id, false));
-		model.addAttribute("hiddenPref", experienceForm.getPrefecture());
-		model.addAttribute("hiddenUniv", experienceForm.getUniversity());
-		model.addAttribute("hiddenFac", experienceForm.getFaculty());
-		model.addAttribute("hiddenDep", experienceForm.getDepartment());
-		model.addAttribute(experienceForm);
+		ExperienceForm form = experienceService.convertExperienceIntoExperienceForm(experienceService.getExperienceById(id, false));
+		model.addAttribute("hiddenPref", form.getPrefecture());
+		model.addAttribute("hiddenUniv", form.getUniversity());
+		model.addAttribute("hiddenFac", form.getFaculty());
+		model.addAttribute("hiddenDep", form.getDepartment());
+		model.addAttribute(form);
 		return "admin/experiences/modify";
 	}
 	
@@ -218,6 +218,10 @@ public class AdminController {
 				form.setInterview(this.cleanUp(form.getInterview(), new InterviewForm()));
 				if (result.hasErrors()) {
 					model.addAttribute("positionList", Profile.POSITION_LIST);
+					model.addAttribute("hiddenPref", form.getPrefecture());
+					model.addAttribute("hiddenUniv", form.getUniversity());
+					model.addAttribute("hiddenFac", form.getFaculty());
+					model.addAttribute("hiddenDep", form.getDepartment());
 					return "admin/experiences/submit";
 				} else {
 					model.addAttribute(form);
@@ -226,6 +230,10 @@ public class AdminController {
 			default:
 				if (result.hasErrors()) {
 					model.addAttribute("positionList", Profile.POSITION_LIST);
+					model.addAttribute("hiddenPref", form.getPrefecture());
+					model.addAttribute("hiddenUniv", form.getUniversity());
+					model.addAttribute("hiddenFac", form.getFaculty());
+					model.addAttribute("hiddenDep", form.getDepartment());
 					return "admin/experiences/modify";
 				} else {
 					int experience_id = Integer.parseInt(experienceId);
@@ -241,6 +249,10 @@ public class AdminController {
 	public String postNotCompleteExperiences(@Validated ExperienceForm form, BindingResult result, Model model) {
 		model.addAttribute("experienceId", "new");
 		model.addAttribute("positionList", Profile.POSITION_LIST);
+		model.addAttribute("hiddenPref", form.getPrefecture());
+		model.addAttribute("hiddenUniv", form.getUniversity());
+		model.addAttribute("hiddenFac", form.getFaculty());
+		model.addAttribute("hiddenDep", form.getDepartment());
 		model.addAttribute(form);
 		return "admin/experiences/submit";
 	}
@@ -266,8 +278,8 @@ public class AdminController {
 		model.addAttribute("esId", esId);
 		int experience_id = Integer.parseInt(experienceId);
 		int es_id = Integer.parseInt(esId);
-		EsForm esForm = experienceService.convertEsIntoEsForm(experienceService.getEsById(experience_id, es_id));
-		model.addAttribute(esForm);
+		EsForm form = experienceService.convertEsIntoEsForm(experienceService.getEsById(experience_id, es_id));
+		model.addAttribute(form);
 		return "admin/experiences/modifyEs";
 	}
 		
@@ -308,8 +320,8 @@ public class AdminController {
 		model.addAttribute("interviewId", interviewId);
 		int experience_id = Integer.parseInt(experienceId);
 		int interview_id = Integer.parseInt(interviewId);
-		InterviewForm interviewForm = experienceService.convertInterviewIntoInterviewForm(experienceService.getInterviewById(experience_id, interview_id));
-		model.addAttribute(interviewForm);
+		InterviewForm form = experienceService.convertInterviewIntoInterviewForm(experienceService.getInterviewById(experience_id, interview_id));
+		model.addAttribute(form);
 		return "admin/experiences/modifyInterview";
 	}
 		
@@ -353,7 +365,7 @@ public class AdminController {
 	@GetMapping(value="/search/experiences", params="all")
 	public String getSearchExperiences(Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute(new StudentForm());
+		model.addAttribute(new SearchForm());
 		List<Experience> experiences = experienceService.getExperiences();
 		model.addAttribute("experiences", experiences);
 		return "admin/experiences/search";
@@ -362,7 +374,7 @@ public class AdminController {
 	@GetMapping(value="/search/experiences", params="by-name")
 	public String getSearchExperiencesByName(@RequestParam(name="kanaLastName") String kanaLastName, @RequestParam(name="kanaFirstName", required=false) String kanaFirstName, Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		StudentForm form = new StudentForm();
+		SearchForm form = new SearchForm();
 		form.setKanaLastName(kanaLastName);
 		form.setKanaFirstName(kanaFirstName);
 		model.addAttribute(form);
@@ -379,7 +391,7 @@ public class AdminController {
 	@GetMapping(value="/search/experiences", params="by-university")
 	public String getSearchExperiencesByUniveristy(@RequestParam(name="prefecture") String prefecture, @RequestParam(name="university", required=false) String university, @RequestParam(name="faculty", required=false) String faculty, @RequestParam(name="department", required=false) String department, Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		StudentForm form = new StudentForm();
+		SearchForm form = new SearchForm();
 		form.setPrefecture(prefecture);
 		form.setUniversity(university);
 		form.setFaculty(faculty);
@@ -406,7 +418,7 @@ public class AdminController {
 	@GetMapping(value="/search/experiences", params="and-search-by-position")
 	public String getAndSearchExperiencesByPosition(@RequestParam(name="position") List<String> position, Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		StudentForm form = new StudentForm();
+		SearchForm form = new SearchForm();
 		form.setPosition(position);
 		model.addAttribute(form);
 		List<Experience> experiences = experienceService.getExperiencesByPosition(position, "AND");
@@ -417,7 +429,7 @@ public class AdminController {
 	@GetMapping(value="/search/experiences", params="or-search-by-position")
 	public String getOrSearchExperiencesByPosition(@RequestParam(name="position") List<String> position, Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		StudentForm form = new StudentForm();
+		SearchForm form = new SearchForm();
 		form.setPosition(position);
 		model.addAttribute(form);
 		List<Experience> experiences = experienceService.getExperiencesByPosition(position, "OR");

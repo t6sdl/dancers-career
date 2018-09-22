@@ -8,7 +8,7 @@
 <header th:replace="common/header :: for-admin"></header>
 <main>
 <h1>ES/体験記【検索】</h1>
-<form th:action="@{/admin/search/experiences}" method="get" th:object="${studentForm}">
+<form th:action="@{/admin/search/experiences}" method="get" th:object="${searchForm}">
 <fieldset>
 <legend>氏名検索</legend>
 <div>
@@ -129,9 +129,8 @@
 <div>
 <p><span th:each="pos : *{position}" th:text="${pos}" style="background:#ddd;padding:.5em;margin-right:.5em;"></span></p>
 <h1 th:text="*{university}"></h1>
-<p><span th:each="off : *{offer}" th:text="${off} == '' ? '非公開' : ${off} + ' '"></span></p>
+<p>内定先：<span th:each="off : *{offer}" th:text="${off} == '' ? '非公開' : ${off} + ' '"></span></p>
 </div>
-<hr>
 <div>
 <p><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'"></span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></p>
 </div>

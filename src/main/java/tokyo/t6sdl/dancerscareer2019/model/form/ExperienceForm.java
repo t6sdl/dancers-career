@@ -16,7 +16,9 @@ public class ExperienceForm {
 	private String kanaFirstName;
 	private String sex;
 	private String major;
+	@NotEmpty
 	private String prefecture;
+	@NotEmpty
 	private String university;
 	private String faculty;
 	private String department;

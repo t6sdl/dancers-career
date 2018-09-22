@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class StudentForm {
+public class SearchForm {
 	private String kanaLastName;
 	private String kanaFirstName;
 	private String prefecture;
