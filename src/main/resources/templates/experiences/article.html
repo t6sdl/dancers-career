@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>ES/体験記｜ダンサーズキャリア</title>
+</head>
+<body>
+<header th:replace="common/header :: ${header}"></header>
+<main>
+<h1>ES/体験記</h1>
+<article th:object="${experience}">
+<div>
+<p><span th:each="pos : *{position}" th:text="${pos}" style="background:#ddd;padding:.5em;margin-right:.5em;"></span></p><!-- 役職タグ -->
+<h2><span th:text="*{university} == '' ? '非公開' : *{university}"></span>
+<span th:text="*{faculty}"></span>
+<span th:text="*{department}"></span></h2>
+<p th:if="*{last_name != '' && first_name != ''}" th:text="|*{last_name} *{first_name} さん|"></p>
+<p>所属サークル：<span th:each="cl : *{club}" th:text="|${cl == '' ? '非公開' : cl} |"></span></p>
+<p>内定先：<span th:each="off : *{offer}" th:text="|${off == '' ? '非公開' : off} |"></span></p>
+<p><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'"></span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></p>
+</div>
+<div th:each="esItem, loop : *{es}">
+<hr>
+<p>提出先企業：<span th:text="*{es[__${loop.index}__].corp} == '' ? '非公開' : *{es[__${loop.index}__].corp}"></span></p>
+<p>選考結果：<span th:text="*{es[__${loop.index}__].result} == '' ? '非公開' : *{es[__${loop.index}__].result}"></span></p>
+<p>設問：<span th:text="*{es[__${loop.index}__].question} == '' ? '非公開' : *{es[__${loop.index}__].question}"></span></p>
+<p>回答：<br><span th:each="str, stat : *{es[__${loop.index}__].answer.split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
+<p>赤入れ：<br><span style="color:red;" th:each="str, stat : *{es[__${loop.index}__].advice.split('\n', -1)}"><th:block th:text="${str == '' ? 'なし' : str}"></th:block><br th:if="${!stat.last}"></span></p>
+</div>
+<div th:each="interviewItem, loop : *{interview}">
+<hr>
+<p>設問：<span th:text="*{interview[__${loop.index}__].question} == '' ? '非公開' : *{interview[__${loop.index}__].question}"></span></p>
+<p>回答：<br><span th:each="str, stat : *{interview[__${loop.index}__].answer.split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
+</div>
+</article>
+</main>
+<footer th:replace="common/footer :: footer"></footer>
+</body>
+</html>

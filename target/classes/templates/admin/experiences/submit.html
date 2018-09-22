@@ -97,6 +97,7 @@
 <option value="鹿児島県">鹿児島県</option>
 <option value="沖縄県">沖縄県</option>
 </select>
+<p th:if="${#fields.hasErrors('prefecture')}">必須項目です</p>
 <input type="hidden" id="hiddenPref" th:value="${hiddenPref == null ? '' : hiddenPref}">
 </div>
 <div>
@@ -104,6 +105,7 @@
 <select th:field="*{university}">
 <option value="">非公開</option>
 </select>
+<p th:if="${#fields.hasErrors('university')}">必須項目です</p>
 <input type="hidden" id="hiddenUniv" th:value="${hiddenUniv == null ? '' : hiddenUniv}">
 </div>
 <div>
@@ -189,7 +191,7 @@
 </div>
 <div>
 <label th:for="es__${loop.index}__.question">設問</label>
-<input type="text" th:field="*{es[__${loop.index}__].question}" placeholder="空欄可">
+<br><textarea th:field="*{es[__${loop.index}__].question}" rows="5" cols="100" placeholder="空欄可"></textarea>
 </div>
 <div>
 <label th:for="es__${loop.index}__.answer">回答</label>
@@ -210,7 +212,7 @@
 <div class="interviewItem" th:each="interviewItem, loop : *{interview}">
 <div>
 <label th:for="interview__${loop.index}__.question">質問</label>
-<input type="text" th:field="*{interview[__${loop.index}__].question}" placeholder="空欄可">
+<br><textarea th:field="*{interview[__${loop.index}__].question}" rows="5" cols="100" placeholder="空欄可"></textarea>
 </div>
 <div>
 <label th:for="interview__${loop.index}__.answer">回答</label>
