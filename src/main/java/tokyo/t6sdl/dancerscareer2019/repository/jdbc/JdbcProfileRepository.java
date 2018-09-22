@@ -31,14 +31,14 @@ public class JdbcProfileRepository implements ProfileRepository {
 	}
 	
 	private String listToString(List<String> list) {
-		StringBuffer buf = new StringBuffer();
+		StringBuilder builder = new StringBuilder();
 		for (int i = 0; i < list.size(); i++) {
-			buf.append(list.get(i));
+			builder.append(list.get(i));
 			if (i < list.size() - 1) {
-				buf.append(",");
+				builder.append(",");
 			}
 		}
-		String str = buf.toString();
+		String str = builder.toString();
 		return str;
 	}
 

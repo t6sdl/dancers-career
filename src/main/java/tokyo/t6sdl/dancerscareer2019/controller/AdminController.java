@@ -1,8 +1,12 @@
 package tokyo.t6sdl.dancerscareer2019.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +17,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import lombok.RequiredArgsConstructor;
+import tokyo.t6sdl.dancerscareer2019.io.ExcelBuilder;
 import tokyo.t6sdl.dancerscareer2019.model.Account;
 import tokyo.t6sdl.dancerscareer2019.model.Es;
 import tokyo.t6sdl.dancerscareer2019.model.Experience;
@@ -58,7 +64,18 @@ public class AdminController {
 		return "admin/students/search";
 	}
 	
-	@GetMapping(value="/search/students", params="by-name")
+	@RequestMapping(value="/search/students/download", params="all")
+	public ModelAndView getStudentsData() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Student> students = this.makeStudentOfProfile(profileService.getProfiles());
+		map.put("students", students);
+		LocalDateTime now = LocalDateTime.now();
+		String today = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		ModelAndView mav = new ModelAndView(new ExcelBuilder("students_all_" + today + ".xlsx"), map);
+		return mav;
+	}
+	
+	@RequestMapping(value="/search/students", params="by-name")
 	public String getSearchStudentsByName(@RequestParam(name="kanaLastName") String kanaLastName, @RequestParam(name="kanaFirstName", required=false) String kanaFirstName, Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		SearchForm form = new SearchForm();
@@ -82,7 +99,24 @@ public class AdminController {
 		return "admin/students/search";
 	}
 	
-	@GetMapping(value="/search/students", params="by-university")
+	@RequestMapping(value="/search/students/download", params="by-name")
+	public ModelAndView getStudentsDataByName(@RequestParam(name="kanaLastName") String kanaLastName, @RequestParam(name="kanaFirstName", required=false) String kanaFirstName) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Profile> profiles = new ArrayList<Profile>();
+		if (kanaFirstName.isEmpty()) {
+			profiles = profileService.getProfilesByLastName(kanaLastName);
+		} else {
+			profiles = profileService.getProfilesByName(kanaLastName, kanaFirstName);
+		}
+		List<Student> students = this.makeStudentOfProfile(profiles);
+		map.put("students", students);
+		LocalDateTime now = LocalDateTime.now();
+		String today = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		ModelAndView mav = new ModelAndView(new ExcelBuilder("students_byname_" + today + ".xlsx"), map);
+		return mav;
+	}
+	
+	@RequestMapping(value="/search/students", params="by-university")
 	public String getSearchStudentsByUniveristy(@RequestParam(name="prefecture") String prefecture, @RequestParam(name="university", required=false) String university, @RequestParam(name="faculty", required=false) String faculty, @RequestParam(name="department", required=false) String department, Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		SearchForm form = new SearchForm();
@@ -116,7 +150,28 @@ public class AdminController {
 		return "admin/students/search";
 	}
 	
-	@GetMapping(value="/search/students", params="and-search-by-position")
+	@RequestMapping(value="/search/students/download", params="by-university")
+	public ModelAndView getStudentsDataByUniveristy(@RequestParam(name="prefecture") String prefecture, @RequestParam(name="university", required=false) String university, @RequestParam(name="faculty", required=false) String faculty, @RequestParam(name="department", required=false) String department) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Profile> profiles = new ArrayList<Profile>();
+		if (!(department.isEmpty())) {
+			profiles = profileService.getProfilesByDepartment(prefecture, university, faculty, department);
+		} else if (!(faculty.isEmpty())) {
+			profiles = profileService.getProfilesByFaculty(prefecture, university, faculty);
+		} else if (!(university.isEmpty())) {
+			profiles = profileService.getProfilesByUniversity(prefecture, university);
+		} else {
+			profiles = profileService.getProfilesByPrefecture(prefecture);
+		}
+		List<Student> students = this.makeStudentOfProfile(profiles);
+		map.put("students", students);
+		LocalDateTime now = LocalDateTime.now();
+		String today = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		ModelAndView mav = new ModelAndView(new ExcelBuilder("students_byuniv_" + today + ".xlsx"), map);
+		return mav;
+	}
+	
+	@RequestMapping(value="/search/students", params="and-search-by-position")
 	public String getAndSearchStudentsByPosition(@RequestParam(name="position") List<String> position, Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		SearchForm form = new SearchForm();
@@ -134,7 +189,18 @@ public class AdminController {
 		return "admin/students/search";
 	}
 	
-	@GetMapping(value="/search/students", params="or-search-by-position")
+	@RequestMapping(value="/search/students/download", params="and-search-by-position")
+	public ModelAndView getAndStudentsDataByPosition(@RequestParam(name="position") List<String> position) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Student> students = this.makeStudentOfProfile(profileService.getProfilesByPosition(position, "AND"));
+		map.put("students", students);
+		LocalDateTime now = LocalDateTime.now();
+		String today = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		ModelAndView mav = new ModelAndView(new ExcelBuilder("students_byandpos_" + today + ".xlsx"), map);
+		return mav;
+	}
+	
+	@RequestMapping(value="/search/students", params="or-search-by-position")
 	public String getOrSearchStudentsByPosition(@RequestParam(name="position") List<String> position, Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		SearchForm form = new SearchForm();
@@ -152,6 +218,17 @@ public class AdminController {
 		return "admin/students/search";
 	}
 	
+	@RequestMapping(value="/search/students/download", params="or-search-by-position")
+	public ModelAndView getOrStudentsDataByPosition(@RequestParam(name="position") List<String> position) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<Student> students = this.makeStudentOfProfile(profileService.getProfilesByPosition(position, "OR"));
+		map.put("students", students);
+		LocalDateTime now = LocalDateTime.now();
+		String today = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		ModelAndView mav = new ModelAndView(new ExcelBuilder("students_byorpos_" + today + ".xlsx"), map);
+		return mav;
+	}
+		
 	private List<Student> makeStudentOfProfile(List<Profile> profiles) {
 		List<Student> students = new ArrayList<Student>();
 		profiles.forEach(profile -> {
@@ -362,7 +439,7 @@ public class AdminController {
 		return list;
 	}
 		
-	@GetMapping(value="/search/experiences", params="all")
+	@RequestMapping(value="/search/experiences", params="all")
 	public String getSearchExperiences(Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		model.addAttribute(new SearchForm());
@@ -371,7 +448,7 @@ public class AdminController {
 		return "admin/experiences/search";
 	}
 	
-	@GetMapping(value="/search/experiences", params="by-name")
+	@RequestMapping(value="/search/experiences", params="by-name")
 	public String getSearchExperiencesByName(@RequestParam(name="kanaLastName") String kanaLastName, @RequestParam(name="kanaFirstName", required=false) String kanaFirstName, Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		SearchForm form = new SearchForm();
@@ -388,7 +465,7 @@ public class AdminController {
 		return "admin/experiences/search";
 	}
 	
-	@GetMapping(value="/search/experiences", params="by-university")
+	@RequestMapping(value="/search/experiences", params="by-university")
 	public String getSearchExperiencesByUniveristy(@RequestParam(name="prefecture") String prefecture, @RequestParam(name="university", required=false) String university, @RequestParam(name="faculty", required=false) String faculty, @RequestParam(name="department", required=false) String department, Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		SearchForm form = new SearchForm();
@@ -415,7 +492,7 @@ public class AdminController {
 		return "admin/experiences/search";
 	}
 	
-	@GetMapping(value="/search/experiences", params="and-search-by-position")
+	@RequestMapping(value="/search/experiences", params="and-search-by-position")
 	public String getAndSearchExperiencesByPosition(@RequestParam(name="position") List<String> position, Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		SearchForm form = new SearchForm();
@@ -426,7 +503,7 @@ public class AdminController {
 		return "admin/experiences/search";
 	}
 	
-	@GetMapping(value="/search/experiences", params="or-search-by-position")
+	@RequestMapping(value="/search/experiences", params="or-search-by-position")
 	public String getOrSearchExperiencesByPosition(@RequestParam(name="position") List<String> position, Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		SearchForm form = new SearchForm();

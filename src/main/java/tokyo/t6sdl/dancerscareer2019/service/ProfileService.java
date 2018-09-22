@@ -162,6 +162,7 @@ public class ProfileService {
 		student.setGraduation(profile.getGraduation());
 		student.setAcademic_degree(profile.getAcademic_degree());
 		student.setPosition(profile.getPosition());
+		student.setLikes(profile.getLikes());
 		return student;
 	}
 	
