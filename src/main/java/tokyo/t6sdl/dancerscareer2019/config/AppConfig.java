@@ -42,6 +42,9 @@ public class AppConfig implements WebMvcConfigurer {
 		config.setJdbcUrl("jdbc:mysql://us-cdbr-iron-east-01.cleardb.net/heroku_6ed62eaddfd562d");
 		config.setUsername("b23da6ad7dabc5");
 		config.setPassword("f5f14f28");
+		config.setMaximumPoolSize(8);
+		config.setLeakDetectionThreshold(5000);
+		config.setConnectionInitSql("SET SESSION sql_mode='TRADITIONAL,NO_AUTO_VALUE_ON_ZERO,ONLY_FULL_GROUP_BY'");
 		config.addDataSourceProperty("cachePrepStmts", true);
 		config.addDataSourceProperty("prepStmtCacheSize", "250");
 		config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");

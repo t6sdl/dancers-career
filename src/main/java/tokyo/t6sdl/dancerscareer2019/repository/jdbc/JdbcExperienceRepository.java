@@ -151,7 +151,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 			return jdbcTemplate.queryForObject(
 					"SELECT * FROM es WHERE id = ? AND es_id = ?", (resultSet, i) -> {
 						Es es = new Es();
-						es.setExperience_id(resultSet.getInt("experience_id"));
+						es.setExperience_id(resultSet.getInt("id"));
 						es.setEs_id(resultSet.getInt("es_id"));
 						es.setCorp(resultSet.getString("corp"));
 						es.setResult(resultSet.getString("result"));
@@ -171,7 +171,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 			return jdbcTemplate.queryForObject(
 					"SELECT * FROM interview WHERE id = ? AND interview_id = ?", (resultSet, i) -> {
 						Interview interview = new Interview();
-						interview.setExperience_id(resultSet.getInt("experience_id"));
+						interview.setExperience_id(resultSet.getInt("id"));
 						interview.setInterview_id(resultSet.getInt("interview_id"));
 						interview.setQuestion(resultSet.getString("question"));
 						interview.setAnswer(resultSet.getString("answer"));
