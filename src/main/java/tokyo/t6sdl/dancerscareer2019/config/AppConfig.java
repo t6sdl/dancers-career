@@ -39,9 +39,9 @@ public class AppConfig implements WebMvcConfigurer {
 	public DataSource dataSource() {
 		HikariConfig config = new HikariConfig();
 		config.setDriverClassName("com.mysql.jdbc.Driver");
-//		DBテスト環境
-		config.setJdbcUrl("jdbc:mysql://localhost:3306/dancers_career?useSSL=false");
-		config.setUsername("root");
+		config.setJdbcUrl("jdbc:mysql://b23da6ad7dabc5:f5f14f28@us-cdbr-iron-east-01.cleardb.net/heroku_6ed62eaddfd562d?reconnect=true");
+		config.setUsername("b23da6ad7dabc5");
+		config.setPassword("f5f14f28");
 		config.addDataSourceProperty("cachePrepStmts", true);
 		config.addDataSourceProperty("prepStmtCacheSize", "250");
 		config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
