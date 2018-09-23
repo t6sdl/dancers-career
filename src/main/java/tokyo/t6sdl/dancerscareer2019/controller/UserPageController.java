@@ -83,8 +83,28 @@ public class UserPageController {
 	
 	@RequestMapping("/account/verify")
 	public String getVerificationToChangeAccount(Model model) {
+		model.addAttribute("cod", "change");
 		model.addAttribute(new VerificationForm());
 		return "user/account/verification";
+	}
+	
+	@GetMapping("/account/delete")
+	public String getVerificationToDeleteAccount(Model model) {
+		model.addAttribute("cod", "delete");
+		model.addAttribute(new VerificationForm());
+		return "user/account/verification";
+	}
+	
+	@PostMapping("/account/delete")
+	public String postVerificationToDeleteAccount(VerificationForm form, Model model) {
+		if (passwordEncoder.matches(form.getPassword(), securityService.findLoggedInPassword())) {
+			String loggedInEmail = securityService.findLoggedInEmail();
+			profileService.delete(loggedInEmail);
+			accountService.delete(loggedInEmail);
+			return "redirect:/logout";
+		} else {
+			return "redirect:/user/account/delete?error";
+		}
 	}
 	
 	@PostMapping("/account/change")
