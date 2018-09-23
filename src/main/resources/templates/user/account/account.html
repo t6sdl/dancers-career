@@ -3,17 +3,18 @@
 <head>
 <meta charset="utf-8">
 <title>アカウント｜ダンサーズキャリア</title>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 </head>
 <body>
-<header th:replace="common/header :: header"></header>
+<header th:replace="common/header :: for-user"></header>
 <main>
-<h1>アカウント</h1>
 <article>
+<h1>アカウント</h1>
 <!-- アカウント情報 -->
 <table>
 <tr>
 <th align="right">メールアドレス：</th>
-<td th:text="${email}"></td>
+<td><span th:text="${email}"></span> <span th:unless="${validEmail}">メールアドレス未確認 <a th:href="@{/user/account/help}"><i class="far fa-question-circle"></i>メールが届かない</a></span><span th:if="${validEmail}">メールアドレス確認済</span></td>
 </tr>
 <tr>
 <th align="right">パスワード：</th>

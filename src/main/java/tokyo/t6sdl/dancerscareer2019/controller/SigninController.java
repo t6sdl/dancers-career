@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import tokyo.t6sdl.dancerscareer2019.httpresponse.NotFound404;
-import tokyo.t6sdl.dancerscareer2019.model.EmailForm;
-import tokyo.t6sdl.dancerscareer2019.model.PasswordForm;
+import tokyo.t6sdl.dancerscareer2019.model.Mail;
+import tokyo.t6sdl.dancerscareer2019.model.form.EmailForm;
+import tokyo.t6sdl.dancerscareer2019.model.form.PasswordForm;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 import tokyo.t6sdl.dancerscareer2019.service.MailService;
 
@@ -56,7 +57,9 @@ public class SigninController {
 			return "signin/forgetPassword";
 		}
 		String passwordToken = accountService.createPasswordToken(form.getEmail());
-		mailService.sendMailWithUrl(form.getEmail(), MailService.SUB_RESET_PWD, MailService.CONTEXT_PATH + "/signin/forget-pwd?token=" + passwordToken);
+		Mail mail = new Mail(form.getEmail(), Mail.SUB_RESET_PWD);
+		mail.setUrl(Mail.URI_RESET_PWD + passwordToken);
+		mailService.sendMail(mail);
 		return "signin/sentEmail";
 	}
 		

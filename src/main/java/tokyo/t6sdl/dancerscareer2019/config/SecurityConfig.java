@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.GlobalAuthenticationConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,27 +17,26 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import tokyo.t6sdl.dancerscareer2019.service.AccountService;
+import lombok.RequiredArgsConstructor;
 
+@RequiredArgsConstructor
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private final DataSource dataSource;
-	
-	public SecurityConfig(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
+	private SigninSuccessHandler signinSuccessHandler;
+	private SignoutSuccessHandler signoutSuccessHandler;
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/favicon.ico", "/css/**", "/img/**", "/js/**");
+		web.ignoring().antMatchers("/favicon.ico", "/css/**", "/img/**", "/js/**", "/mails/**");
 	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 			.antMatchers("/signup/profile").authenticated()
-			.antMatchers("/signin/**", "/signup/**").permitAll()
+			.antMatchers("/signin/**", "/signup/**", "/about/**").permitAll()
 			.antMatchers("/admin/**").hasRole("ADMIN")
 			.antMatchers("/user/**").hasRole("USER")
 			.anyRequest().authenticated()
@@ -47,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.formLogin()
 			.loginProcessingUrl("/login")
 			.loginPage("/signin")
-			.defaultSuccessUrl("/", true)
+			.successHandler(signinSuccessHandler)
 			.failureUrl("/signin?error")
 			.usernameParameter("email").passwordParameter("password")
 		.and()
@@ -59,21 +56,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 			.logout()
 			.logoutRequestMatcher(new AntPathRequestMatcher("/logout**"))
-			.logoutSuccessUrl("/signin")
+			.logoutSuccessHandler(signoutSuccessHandler)
 			.deleteCookies("JSESSIONID");
 	}
-	
-	@Configuration
-	public static class AuthenticationConfiguration extends GlobalAuthenticationConfigurerAdapter {
-		@Autowired
-		AccountService accountService;
 		
-		@Override
-		public void init(AuthenticationManagerBuilder auth) throws Exception {
-			auth.userDetailsService(accountService).passwordEncoder(new BCryptPasswordEncoder());
-		}
-	}
-	
 	@Bean
 	public PersistentTokenRepository createTokenRepository() {
 		JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
@@ -89,5 +75,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public AuthenticationManager auth() throws Exception {
 		return super.authenticationManagerBean();
+	}
+	
+	@Autowired
+	public void setSigninSuccessHandler(SigninSuccessHandler signinSuccessHandler) {
+		this.signinSuccessHandler = signinSuccessHandler;
+	}
+	
+	@Autowired
+	public void setSignoutSuccessHandler(SignoutSuccessHandler signoutSuccessHandler) {
+		this.signoutSuccessHandler = signoutSuccessHandler;
 	}
 }

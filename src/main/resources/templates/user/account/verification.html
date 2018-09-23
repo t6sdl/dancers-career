@@ -5,11 +5,12 @@
 <title>パスワード確認｜ダンサーズキャリア</title>
 </head>
 <body>
-<header th:replace="common/header :: header"></header>
+<header th:replace="common/header :: for-user"></header>
 <main>
+<article>
 <h1>パスワード確認</h1>
 <p th:if="${param.error}">パスワードが異なります</p>
-<form th:action="@{/user/account/change}" method="post" th:object="${verification}">
+<form th:action="@{/user/account/change}" method="post" th:object="${verificationForm}">
 <div>
 <label for="password">パスワード</label>
 <input type="password" th:field="*{password}">
@@ -18,8 +19,14 @@
 <input type="submit" value="確認">
 </div>
 </form>
+</article>
 <aside th:replace="user/common/tab :: tab"></aside>
 </main>
 <footer th:replace="common/footer :: footer"></footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script th:src="@{/js/submit.js}"></script>
 </body>
 </html>

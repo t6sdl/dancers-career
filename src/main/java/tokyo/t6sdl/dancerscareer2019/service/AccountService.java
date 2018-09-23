@@ -4,26 +4,23 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.model.Account;
 import tokyo.t6sdl.dancerscareer2019.repository.AccountRepository;
 
+@RequiredArgsConstructor
 @Service
 public class AccountService implements UserDetailsService {
 	private final AccountRepository accountRepository;
-	private final PasswordEncoder passwordEncoder;
-	
-	public AccountService(AccountRepository accountRepository, PasswordEncoder passwordEncoder) {
-		this.accountRepository = accountRepository;
-		this.passwordEncoder = passwordEncoder;
-	}
-	
+	private PasswordEncoder passwordEncoder;
+		
 	public Account getAccountByEmail(String email) {
 		return accountRepository.findOneByEmail(email);
 	}
@@ -49,6 +46,10 @@ public class AccountService implements UserDetailsService {
 	
 	public void changeValidEmail(String loggedInEmail, boolean validEmail) {
 		accountRepository.updateValidEmail(loggedInEmail, validEmail);
+	}
+	
+	public void changeLastLogin(String loggedInEmail) {
+		accountRepository.updateLastLogin(loggedInEmail);
 	}
 	
 	public String createEmailToken(String loggedInEmail) {
@@ -134,5 +135,10 @@ public class AccountService implements UserDetailsService {
 			throw new UsernameNotFoundException("このユーザーは存在しません");
 		}
 		return account;
+	}
+	
+	@Autowired
+	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+		this.passwordEncoder = passwordEncoder;
 	}
 }

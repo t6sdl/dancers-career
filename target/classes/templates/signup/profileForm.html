@@ -5,32 +5,32 @@
 <title>プロフィール登録｜ダンサーズキャリア</title>
 </head>
 <body>
-<header th:replace="common/header :: header"></header>
+<header th:replace="common/header :: for-stranger"></header>
 <main>
 <form th:action="@{/signup/profile}" method="post" th:object="${profileForm}">
 <h1>プロフィール登録</h1>
 <div>
 <p>氏名</p>
 <div>
-<label for="last_name">姓</label>
-<input type="text" th:field="*{last_name}" th:errorclass="error" required>
-<label for="first_name">名</label>
-<input type="text" th:field="*{first_name}" th:errorclass="error" required>
-<p th:if="${#fields.hasErrors('last_name') || #fields.hasErrors('first_name')}">入力してください</p>
+<label for="lastName">姓</label>
+<input type="text" th:field="*{lastName}" th:errorclass="error" required>
+<label for="firstName">名</label>
+<input type="text" th:field="*{firstName}" th:errorclass="error" required>
+<p th:if="${#fields.hasErrors('lastName') || #fields.hasErrors('firstName')}">入力してください</p>
 </div>
 </div>
 <p>氏名（カナ）</p>
 <div>
-<label for="kana_last_name">セイ</label>
-<input type="text" th:field="*{kana_last_name}" th:errorclass="error" required>
-<label for="kana_first_name">メイ</label>
-<input type="text" th:field="*{kana_first_name}" th:errorclass="error" required>
-<p th:if="${#fields.hasErrors('kana_last_name') || #fields.hasErrors('kana_first_name')}">カタカナで入力してください</p>
+<label for="kanaLastName">セイ</label>
+<input type="text" th:field="*{kanaLastName}" th:errorclass="error" required>
+<label for="kanaFirstName">メイ</label>
+<input type="text" th:field="*{kanaFirstName}" th:errorclass="error" required>
+<p th:if="${#fields.hasErrors('kanaLastName') || #fields.hasErrors('kanaFirstName')}">カタカナで入力してください</p>
 </div>
 <div>
 <p>生年月日</p>
 <div>
-<select th:field="*{birth_year}" required>
+<select th:field="*{birthYear}" required>
 <option value="default">選択してください</option>
 <option value="1990">1990</option>
 <option value="1991">1991</option>
@@ -43,8 +43,8 @@
 <option value="1998">1998</option>
 <option value="1999">1999</option>
 </select>
-<label for="birth_year">年</label>
-<select th:field="*{birth_month}" required>
+<label for="birthYear">年</label>
+<select th:field="*{birthMonth}" required>
 <option value="default">選択してください</option>
 <option value="1">1</option>
 <option value="2">2</option>
@@ -59,8 +59,8 @@
 <option value="11">11</option>
 <option value="12">12</option>
 </select>
-<label for="birth_month">月</label>
-<select th:field="*{birth_day}" required>
+<label for="birthMonth">月</label>
+<select th:field="*{birthDay}" required>
 <option value="default">選択してください</option>
 <option value="1">1</option>
 <option value="2">2</option>
@@ -94,8 +94,8 @@
 <option value="30">30</option>
 <option value="31">31</option>
 </select>
-<label for="birth_day">日</label>
-<p th:if="${#fields.hasErrors('birth_year') || #fields.hasErrors('birth_month') || #fields.hasErrors('birth_day')}">必須項目です</p>
+<label for="birthDay">日</label>
+<p th:if="${#fields.hasErrors('birthYear') || #fields.hasErrors('birthMonth') || #fields.hasErrors('birthDay')}">必須項目です</p>
 </div>
 </div>
 <div>
@@ -109,9 +109,9 @@
 </div>
 </div>
 <div>
-<label for="phone_number">電話番号</label>
-<input type="tel" th:field="*{phone_number}" th:errorclass="error" required>
-<p th:if="${#fields.hasErrors('phone_number')}">ハイフンなしの電話番号を入力してください</p>
+<label for="phoneNumber">電話番号</label>
+<input type="tel" th:field="*{phoneNumber}" th:errorclass="error" required>
+<p th:if="${#fields.hasErrors('phoneNumber')}">ハイフンなしの電話番号を入力してください</p>
 </div>
 <div>
 <p>文理</p>
@@ -185,7 +185,7 @@
 <select th:field="*{university}" required>
 <option value="default">選択してください</option>
 </select>
-<input type="hidden" id="hiddenUniv" th:value="${hiddenUniv == null ? '' : hiddenUniv}">
+<input type="hidden" id="hiddenUniv" th:value="${hiddenUniv == null ? 'default' : hiddenUniv}">
 <p th:if="${#fields.hasErrors('university')}">必須項目です</p>
 </div>
 <div>
@@ -193,7 +193,7 @@
 <select th:field="*{faculty}" required>
 <option value="default">選択してください</option>
 </select>
-<input type="hidden" id="hiddenFac" th:value="${hiddenFac == null ? '' : hiddenFac}">
+<input type="hidden" id="hiddenFac" th:value="${hiddenFac == null ? 'default' : hiddenFac}">
 <p th:if="${#fields.hasErrors('faculty')}">必須項目です</p>
 </div>
 <div>
@@ -201,7 +201,7 @@
 <select th:field="*{department}" required>
 <option value="default">選択してください</option>
 </select>
-<input type="hidden" id="hiddenDep" th:value="${hiddenDep == null ? '' : hiddenDep}">
+<input type="hidden" id="hiddenDep" th:value="${hiddenDep == null ? 'default' : hiddenDep}">
 <p th:if="${#fields.hasErrors('department')}">必須項目です</p>
 </div>
 </div>
@@ -209,15 +209,15 @@
 <div>
 <p>卒業年度</p>
 <div>
-<select th:field="*{graduation_year}" required>
+<select th:field="*{graduationYear}" required>
 <option value="default">選択してください</option>
 <option value="2019">2019</option>
 <option value="2020">2020</option>
 <option value="2021">2021</option>
 <option value="2022">2022</option>
 </select>
-<label for="graduation_year">年</label>
-<select th:field="*{graduation_month}" required>
+<label for="graduationYear">年</label>
+<select th:field="*{graduationMonth}" required>
 <option value="default">選択してください</option>
 <option value="1">1</option>
 <option value="2">2</option>
@@ -232,46 +232,30 @@
 <option value="11">11</option>
 <option value="12">12</option>
 </select>
-<label for="graduation_month">月</label>
+<label for="graduationMonth">月</label>
 <span>卒業予定</span>
-<p th:if="${#fields.hasErrors('graduation_year') || #fields.hasErrors('graduation_month')}">必須項目です</p>
+<p th:if="${#fields.hasErrors('graduationYear') || #fields.hasErrors('graduationMonth')}">必須項目です</p>
 </div>
 </div>
 <div>
-<p>学位</p>
+<p>最終学歴</p>
 <div>
-<input type="radio" th:field="*{academic_degree}" value="学部卒" required>
-<label th:for="${#ids.prev('academic_degree')}">学部卒</label>
-<input type="radio" th:field="*{academic_degree}" value="修士卒">
-<label th:for="${#ids.prev('academic_degree')}">修士卒</label>
-<input type="radio" th:field="*{academic_degree}" value="博士卒">
-<label th:for="${#ids.prev('academic_degree')}">博士卒</label>
-<p th:if="${#fields.hasErrors('academic_degree')}">必須項目です</p>
+<input type="radio" th:field="*{academicDegree}" value="学部卒" required>
+<label th:for="${#ids.prev('academicDegree')}">学部卒</label>
+<input type="radio" th:field="*{academicDegree}" value="修士卒">
+<label th:for="${#ids.prev('academicDegree')}">修士卒</label>
+<input type="radio" th:field="*{academicDegree}" value="博士卒">
+<label th:for="${#ids.prev('academicDegree')}">博士卒</label>
+<p th:if="${#fields.hasErrors('academicDegree')}">必須項目です</p>
 </div>
 </div>
-<div><!-- この項目は未完成です -->
+<div>
 <p>サークルなどでの役職・役割（複数選択可）</p>
 <div>
-<input type="checkbox" th:field="*{position}" value="代表">
-<label th:for="${#ids.prev('position')}">代表</label>
-<input type="checkbox" th:field="*{position}" value="副代表">
-<label th:for="${#ids.prev('position')}">副代表</label>
-<input type="checkbox" th:field="*{position}" value="イベント係">
-<label th:for="${#ids.prev('position')}">イベント係</label>
-<input type="checkbox" th:field="*{position}" value="広報">
-<label th:for="${#ids.prev('position')}">広報</label>
-<input type="checkbox" th:field="*{position}" value="渉外">
-<label th:for="${#ids.prev('position')}">渉外</label>
-<input type="checkbox" th:field="*{position}" value="舞台製作係">
-<label th:for="${#ids.prev('position')}">舞台製作係</label>
-<input type="checkbox" th:field="*{position}" value="ジャンルリーダー・振付師">
-<label th:for="${#ids.prev('position')}">ジャンルリーダー・振付師</label>
-<input type="checkbox" th:field="*{position}" value="プレイヤー">
-<label th:for="${#ids.prev('position')}">プレイヤー</label>
-<input type="checkbox" th:field="*{position}" value="その他">
-<label th:for="${#ids.prev('position')}">その他</label>
-<input type="checkbox" th:field="*{position}" value="特になし">
-<label th:for="${#ids.prev('position')}">特になし</label>
+<th:block th:each="pos : ${positionList}">
+<input type="checkbox" th:field="*{position}" th:value="${pos}">
+<label th:for="${#ids.prev('position')}" th:text="${pos}"></label>
+</th:block>
 <p th:if="${#fields.hasErrors('position')}">１つ以上選択してください</p>
 </div>
 </div>
@@ -286,6 +270,7 @@
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
-<script th:src="@{/js/profileForm.js}"></script>
+<script th:src="@{/js/setUniversityAndBirth.js}"></script>
+<script th:src="@{/js/submit.js}"></script>
 </body>
 </html>

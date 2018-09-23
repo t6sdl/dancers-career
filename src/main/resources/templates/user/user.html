@@ -5,21 +5,29 @@
 <title>マイページ｜ダンサーズキャリア</title>
 </head>
 <body>
-<header th:replace="common/header :: header"></header>
+<header th:replace="common/header :: for-user"></header>
 <main>
+<article>
 <h1>マイページ</h1>
 <section>
-<div><p>PickしたES/体験記はありません</p></div>
-<article>
-<header>
-<h2><!-- タイトル --></h2>
-<p><!-- 出身大学など提供者の情報 --></p>
-</header>
-<section>
-<p><!-- 記事本文 --></p>
-</section>
+<p th:text="|こんにちは ${lastName == null ? '名無しさん' : lastName + 'さん'}|"></p>
+<p>お気に入りに登録されたES/体験記：<span th:text="${likes.size()}"></span>件</p>
+<article style="padding:1em;border:1px solid #333;" th:each="experience : ${experiences}" th:object="${experience}">
+<div>
+<p><span th:each="pos : *{position}" th:text="${pos}" style="background:#ddd;padding:.5em;margin-right:.5em;"></span></p>
+<h1 th:text="*{university}"></h1>
+<p>内定先：<span th:each="off : *{offer}" th:text="${off} == '' ? '非公開' : ${off} + ' '"></span></p>
+</div>
+<div>
+<p><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'"></span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></p>
+</div>
+<hr>
+<div>
+<a th:href="@{/experiences/{experienceId}(experienceId=*{experience_id})}"><button>詳細を見る</button></a>
+</div>
 </article>
 </section>
+</article>
 <aside th:replace="user/common/tab :: tab"></aside>
 </main>
 <footer th:replace="common/footer :: footer"></footer>

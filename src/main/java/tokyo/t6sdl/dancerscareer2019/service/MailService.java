@@ -1,36 +1,42 @@
 package tokyo.t6sdl.dancerscareer2019.service;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import lombok.RequiredArgsConstructor;
+import tokyo.t6sdl.dancerscareer2019.model.Mail;
+
+@RequiredArgsConstructor
 @Service
 public class MailService {
 	private final JavaMailSender mailSender;
-	public static final String CONTEXT_PATH = "http://localhost:8080";
-	public static final String SUB_VERIFY_EMAIL = "メールアドレスの確認";
-	public static final String SUB_RESET_PWD = "パスワードの再設定";
 	
-	public MailService(JavaMailSender mailSender) {
-		this.mailSender = mailSender;
-	}
-	
-	public void sendMailWithUrl(String to, String subject, String url) {
+	public void sendMail(Mail mail) {
 		try {
-			String content = this.createContent(subject, url);
-			MimeMessage mail = mailSender.createMimeMessage();
-			mail.setHeader("Content-type", "text/html");
-			MimeMessageHelper helper = new MimeMessageHelper(mail, false, "UTF-8");
-			helper.setFrom("test_dancerscareer@t6sdl.tokyo", "（テスト）ダンサーズキャリア事務局");
-			helper.setTo(to);
-			helper.setSubject(subject);
-			helper.setText(content, true);
-			mailSender.send(mail);
+			MimeMessage message = mailSender.createMimeMessage();
+			message.setHeader("Content-type", "text/html");
+			message.setHeader("Errors-To", Mail.TO_ERROR);
+			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+			helper.setFrom(Mail.TO_SUPPORT, Mail.NAME_OF_SUPPORT);
+			helper.setTo(mail.getTo());
+			helper.setSubject(mail.getSubject());
+			this.readContent(mail);
+			helper.setText(mail.getContent(), true);
+			helper.addInline("twitter", new ClassPathResource("static/img/mails/twitter.jpg"));
+			helper.addInline("instagram", new ClassPathResource("static/img/mails/instagram.jpg"));
+			mailSender.send(message);
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
@@ -38,17 +44,17 @@ public class MailService {
 		}
 	}
 	
-	public void sendMailWithoutUrl(String to, String subject) {
+	public void receiveMail(Mail mail) {
 		try {
-			String content = this.createContent(subject, "");
-			MimeMessage mail = mailSender.createMimeMessage();
-			mail.setHeader("Content-type", "text/html");
-			MimeMessageHelper helper = new MimeMessageHelper(mail, false, "UTF-8");
-			helper.setFrom("test_dancerscareer@t6sdl.tokyo", "（テスト）ダンサーズキャリア事務局");
-			helper.setTo(to);
-			helper.setSubject(subject);
-			helper.setText(content, true);
-			mailSender.send(mail);
+			MimeMessage message = mailSender.createMimeMessage();
+			message.setHeader("Content-type", "text/html");
+			message.setHeader("Errors-To", Mail.TO_ERROR);
+			MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
+			helper.setFrom(Mail.TO_SUPPORT, Mail.NAME_OF_SUPPORT);
+			helper.setTo(mail.getTo());
+			helper.setSubject(mail.getSubject());
+			helper.setText(mail.getContent(), false);
+			mailSender.send(message);
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
@@ -56,28 +62,47 @@ public class MailService {
 		}
 	}
 	
-	public String createContent(String subject, String url) {
-		String content;
+	protected void readContent(Mail mail) {
 		StringBuffer draft = new StringBuffer();
-		draft.append("<!DOCTYPE html><html><body>");
-		if (url != "") {
-			switch (subject) {
-			case MailService.SUB_VERIFY_EMAIL:
-				draft.append("<a href='" + url + "'><button>メールアドレスの確認</button></a>");
-				break;
-			case MailService.SUB_RESET_PWD:
-				draft.append("<a href='" + url + "'><button>パスワードの再設定</button></a>");
-			default:
-				break;
-			}
-		} else {
-			switch (subject) {
-				default:
+		URL url = null;
+		InputStreamReader isr = null;
+		try {
+			url = new URL(Mail.CONTEXT_PATH + this.getHtmlSource(mail));
+			InputStream is = url.openStream();
+			isr = new InputStreamReader(is, "UTF-8");
+			while (true) {
+				int i = isr.read();
+				if (i == -1) {
 					break;
+				}
+				draft.append((char)i);
+			}
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				isr.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
-		draft.append("</body></html>");
-		content = draft.toString();
-		return content;
+		mail.setContent(draft.toString());
+	}
+	
+	private String getHtmlSource(Mail mail) {
+		switch (mail.getSubject()) {
+		case Mail.SUB_WELCOME_TO_US:
+			return "/mails/welcome-to-us?url=" + mail.getUrl();
+		case Mail.SUB_VERIFY_EMAIL:
+			return "/mails/verify-email?url=" + mail.getUrl();
+		case Mail.SUB_RESET_PWD:
+			return "/mails/forget-pwd?url=" + mail.getUrl();
+		case Mail.SUB_REPLY_TO_CONTACT:
+			return "/mails/reply-to-contact";
+		default:
+			throw new IllegalArgumentException();
+		}
 	}
 }
