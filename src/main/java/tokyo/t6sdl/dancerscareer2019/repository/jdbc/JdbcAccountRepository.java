@@ -85,7 +85,7 @@ public class JdbcAccountRepository implements AccountRepository {
 	@Override
 	public void insert(Account newAccount) {
 		jdbcTemplate.update(
-				"INSERT INTO accounts (email, password) VALUES (?, ?)",
+				"INSERT INTO accounts (email, password, updated_at, created_at, last_login) VALUES (?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)",
 				newAccount.getEmail(), newAccount.getPassword());
 	}
 
