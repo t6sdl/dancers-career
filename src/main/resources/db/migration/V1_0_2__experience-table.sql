@@ -24,24 +24,24 @@ CREATE TABLE experiences (
 );
 
 CREATE TABLE es (
-  experience_id INTEGER NOT NULL,
+  id INTEGER NOT NULL,
   es_id INTEGER NOT NULL,
   corp VARCHAR(150) NOT NULL DEFAULT '',
   result VARCHAR(75) NOT NULL DEFAULT '',
   question VARCHAR(315) NOT NULL,
   answer TEXT NOT NULL,
   advice TEXT NOT NULL,
-  PRIMARY KEY (experience_id, es_id),
-  FOREIGN KEY (experience_id) REFERENCES experiences (experience_id) ON DELETE CASCADE
+  PRIMARY KEY (id, es_id),
+  FOREIGN KEY (id) REFERENCES experiences (experience_id) ON DELETE CASCADE
 );
 
 CREATE TABLE interview (
-  experience_id INTEGER NOT NULL,
+  id INTEGER NOT NULL,
   interview_id INTEGER NOT NULL,
   question VARCHAR(315) NOT NULL,
   answer TEXT NOT NULL,
-  PRIMARY KEY (experience_id, interview_id),
-  FOREIGN KEY (experience_id) REFERENCES experiences (experience_id) ON DELETE CASCADE
+  PRIMARY KEY (id, interview_id),
+  FOREIGN KEY (id) REFERENCES experiences (experience_id) ON DELETE CASCADE
 );
 
 INSERT INTO experiences (prefecture, university, faculty, graduation, position) VALUES
