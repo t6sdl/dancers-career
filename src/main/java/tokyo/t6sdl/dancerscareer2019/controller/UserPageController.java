@@ -1,10 +1,9 @@
 package tokyo.t6sdl.dancerscareer2019.controller;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 import javax.servlet.http.HttpSession;
 
@@ -147,20 +146,8 @@ public class UserPageController {
 	public String getProfileInfo(Model model) {
 		String loggedInEmail = securityService.findLoggedInEmail();
 		Profile profile = profileService.getProfileByEmail(loggedInEmail);
-		if (profile.getEmail() == null) {
-			for (Field field: profile.getClass().getDeclaredFields()) {
-				try {
-					field.setAccessible(true);
-					if (field.getType() == String.class) {
-						field.set(profile, "");
-					} else if (field.getType() == List.class) {
-						String[] arr = {""};
-						List<String> pos = Arrays.asList(arr);
-						field.set(profile, pos);
-					}
-				} catch (IllegalAccessException e) {
-				}
-			}
+		if (Objects.equals(profile, null)) {
+			profile = new Profile();
 		} else {
 			profile.convertForDisplay();
 		}
@@ -178,7 +165,13 @@ public class UserPageController {
 	public String postVerificationToChangeProfile(VerificationForm verificationForm, Model model) {
 		if (passwordEncoder.matches(verificationForm.getPassword(), securityService.findLoggedInPassword())) {
 			model.addAttribute("positionList", Profile.POSITION_LIST);
-			ProfileForm form = profileService.convertProfileIntoProfileForm(profileService.getProfileByEmail(securityService.findLoggedInEmail()));
+			Profile profile = profileService.getProfileByEmail(securityService.findLoggedInEmail());
+			ProfileForm form;
+			if (Objects.equals(profile, null)) {
+				form = new ProfileForm();
+			} else {
+				form = profileService.convertProfileIntoProfileForm(profile);
+			}
 			model.addAttribute(form);
 			model.addAttribute("hiddenUniv", form.getUniversity());
 			model.addAttribute("hiddenFac", form.getFaculty());
@@ -205,9 +198,9 @@ public class UserPageController {
 		} else {
 			String loggedInEmail = securityService.findLoggedInEmail();
 			Profile updatedProfile = profileService.convertProfileFormIntoProfile(form);
-			if (profileService.getProfileByEmail(loggedInEmail).getEmail() == null) {
+			if (Objects.equals(profileService.getProfileByEmail(loggedInEmail), null)) {
 				profileService.register(updatedProfile, loggedInEmail);
-			}else {
+			} else {
 				profileService.update(updatedProfile, loggedInEmail);
 			}
 			return "redirect:/user/profile";

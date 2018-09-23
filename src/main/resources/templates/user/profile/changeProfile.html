@@ -25,7 +25,7 @@
 <label for="kanaLastName">セイ</label>
 <input type="text" th:field="*{kanaLastName}" th:errorclass="error" required>
 <label for="kanaFirstName">メイ</label>
-<input type="text" th:field="*{kanaFirst_Name}" th:errorclass="error" required>
+<input type="text" th:field="*{kanaFirstName}" th:errorclass="error" required>
 <p th:if="${#fields.hasErrors('kanaLastName') || #fields.hasErrors('kanaFirstName')}">カタカナで入力してください</p>
 </div>
 <div>

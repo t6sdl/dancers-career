@@ -3,6 +3,7 @@ package tokyo.t6sdl.dancerscareer2019.controller;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -67,11 +68,13 @@ public class AdminController {
 	@RequestMapping(value="/search/students/download", params="all")
 	public ModelAndView getStudentsData() {
 		Map<String, Object> map = new HashMap<String, Object>();
+		List<String> filter = Arrays.asList("なし");
 		List<Student> students = this.makeStudentOfProfile(profileService.getProfiles());
+		map.put("filter", filter);
 		map.put("students", students);
 		LocalDateTime now = LocalDateTime.now();
-		String today = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		ModelAndView mav = new ModelAndView(new ExcelBuilder("students_all_" + today + ".xlsx"), map);
+		String today = now.format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm"));
+		ModelAndView mav = new ModelAndView(new ExcelBuilder(today + "_students_all" + ".xlsx"), map);
 		return mav;
 	}
 	
@@ -102,6 +105,7 @@ public class AdminController {
 	@RequestMapping(value="/search/students/download", params="by-name")
 	public ModelAndView getStudentsDataByName(@RequestParam(name="kanaLastName") String kanaLastName, @RequestParam(name="kanaFirstName", required=false) String kanaFirstName) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		List<String> filter = Arrays.asList("氏名(カナ)", "セイ", kanaLastName, "メイ", kanaFirstName);
 		List<Profile> profiles = new ArrayList<Profile>();
 		if (kanaFirstName.isEmpty()) {
 			profiles = profileService.getProfilesByLastName(kanaLastName);
@@ -109,10 +113,11 @@ public class AdminController {
 			profiles = profileService.getProfilesByName(kanaLastName, kanaFirstName);
 		}
 		List<Student> students = this.makeStudentOfProfile(profiles);
+		map.put("filter", filter);
 		map.put("students", students);
 		LocalDateTime now = LocalDateTime.now();
-		String today = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		ModelAndView mav = new ModelAndView(new ExcelBuilder("students_byname_" + today + ".xlsx"), map);
+		String today = now.format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm"));
+		ModelAndView mav = new ModelAndView(new ExcelBuilder(today + "_students_byname" + ".xlsx"), map);
 		return mav;
 	}
 	
@@ -153,6 +158,7 @@ public class AdminController {
 	@RequestMapping(value="/search/students/download", params="by-university")
 	public ModelAndView getStudentsDataByUniveristy(@RequestParam(name="prefecture") String prefecture, @RequestParam(name="university", required=false) String university, @RequestParam(name="faculty", required=false) String faculty, @RequestParam(name="department", required=false) String department) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		List<String> filter = Arrays.asList("大学", "大学所在地", prefecture, "大学名", university, "学部名", faculty, "学科名", department);
 		List<Profile> profiles = new ArrayList<Profile>();
 		if (!(department.isEmpty())) {
 			profiles = profileService.getProfilesByDepartment(prefecture, university, faculty, department);
@@ -164,10 +170,11 @@ public class AdminController {
 			profiles = profileService.getProfilesByPrefecture(prefecture);
 		}
 		List<Student> students = this.makeStudentOfProfile(profiles);
+		map.put("filter", filter);
 		map.put("students", students);
 		LocalDateTime now = LocalDateTime.now();
-		String today = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		ModelAndView mav = new ModelAndView(new ExcelBuilder("students_byuniv_" + today + ".xlsx"), map);
+		String today = now.format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm"));
+		ModelAndView mav = new ModelAndView(new ExcelBuilder(today + "_students_byuniv" + ".xlsx"), map);
 		return mav;
 	}
 	
@@ -192,11 +199,18 @@ public class AdminController {
 	@RequestMapping(value="/search/students/download", params="and-search-by-position")
 	public ModelAndView getAndStudentsDataByPosition(@RequestParam(name="position") List<String> position) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		List<String> filter = new ArrayList<String>(Arrays.asList("役職(AND検索)"));
+		for (int i = 0; i < position.size(); i++) {
+			String num = String.valueOf(i + 1);
+			filter.add("役職 " + num);
+			filter.add(position.get(i));
+		}
 		List<Student> students = this.makeStudentOfProfile(profileService.getProfilesByPosition(position, "AND"));
+		map.put("filter", filter);
 		map.put("students", students);
 		LocalDateTime now = LocalDateTime.now();
-		String today = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		ModelAndView mav = new ModelAndView(new ExcelBuilder("students_byandpos_" + today + ".xlsx"), map);
+		String today = now.format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm"));
+		ModelAndView mav = new ModelAndView(new ExcelBuilder(today + "_students_bypos(and)" + ".xlsx"), map);
 		return mav;
 	}
 	
@@ -221,11 +235,18 @@ public class AdminController {
 	@RequestMapping(value="/search/students/download", params="or-search-by-position")
 	public ModelAndView getOrStudentsDataByPosition(@RequestParam(name="position") List<String> position) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		List<String> filter = new ArrayList<String>(Arrays.asList("役職(OR検索)"));
+		for (int i = 0; i < position.size(); i++) {
+			String num = String.valueOf(i + 1);
+			filter.add("役職 " + num);
+			filter.add(position.get(i));
+		}
 		List<Student> students = this.makeStudentOfProfile(profileService.getProfilesByPosition(position, "OR"));
+		map.put("filter", filter);
 		map.put("students", students);
 		LocalDateTime now = LocalDateTime.now();
-		String today = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		ModelAndView mav = new ModelAndView(new ExcelBuilder("students_byorpos_" + today + ".xlsx"), map);
+		String today = now.format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm"));
+		ModelAndView mav = new ModelAndView(new ExcelBuilder(today + "_students_bypos(or)" + ".xlsx"), map);
 		return mav;
 	}
 		

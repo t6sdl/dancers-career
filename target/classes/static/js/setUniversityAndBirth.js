@@ -1,8 +1,8 @@
 $(function () {
 	const contextPath = $('#contextPath').val();
-	const $birthYear = $('#birth_year'),
-	$birthMonth = $('#birth_month'),
-	$birthDay = $('#birth_day'),
+	const $birthYear = $('#birthYear'),
+	$birthMonth = $('#birthMonth'),
+	$birthDay = $('#birthDay'),
 	$prefecture = $('#prefecture'),
 	$university = $('#university'),
 	$faculty = $('#faculty'),

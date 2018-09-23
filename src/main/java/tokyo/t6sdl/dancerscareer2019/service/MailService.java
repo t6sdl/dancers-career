@@ -53,7 +53,7 @@ public class MailService {
 			helper.setFrom(Mail.TO_SUPPORT, Mail.NAME_OF_SUPPORT);
 			helper.setTo(mail.getTo());
 			helper.setSubject(mail.getSubject());
-			helper.setText(mail.getContent(), true);
+			helper.setText(mail.getContent(), false);
 			mailSender.send(message);
 		} catch (MessagingException e) {
 			e.printStackTrace();
