@@ -34,7 +34,7 @@ public class AppConfig implements WebMvcConfigurer {
 	public JdbcTemplate jdbcTemplate(DataSource dataSource) {
 		return new JdbcTemplate(dataSource);
 	}
-	
+		
 	@Bean
 	public DataSource dataSource() {
 		HikariConfig config = new HikariConfig();
