@@ -12,7 +12,7 @@ public class DancersCareer2019Application {
 
 	public static void main(String[] args) {
 		Flyway flyway = new Flyway();
-		flyway.setDataSource("jdbc:mysql://b23da6ad7dabc5:f5f14f28@us-cdbr-iron-east-01.cleardb.net/heroku_6ed62eaddfd562d?reconnect=true", "b23da6ad7dabc5", "f5f14f28");
+		flyway.setDataSource("jdbc:mysql://us-cdbr-iron-east-01.cleardb.net/heroku_6ed62eaddfd562d", "b23da6ad7dabc5", "f5f14f28");
 		flyway.repair();
 		flyway.clean();
 		SpringApplication.run(DancersCareer2019Application.class, args);
