@@ -149,7 +149,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	public Es findEsById(int experience_id, int es_id) {
 		try {
 			return jdbcTemplate.queryForObject(
-					"SELECT * FROM es WHERE experience_id = ? AND es_id = ?", (resultSet, i) -> {
+					"SELECT * FROM es WHERE id = ? AND es_id = ?", (resultSet, i) -> {
 						Es es = new Es();
 						es.setExperience_id(resultSet.getInt("experience_id"));
 						es.setEs_id(resultSet.getInt("es_id"));
@@ -169,7 +169,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	public Interview findInterviewById(int experience_id, int interview_id) {
 		try {
 			return jdbcTemplate.queryForObject(
-					"SELECT * FROM interview WHERE experience_id = ? AND interview_id = ?", (resultSet, i) -> {
+					"SELECT * FROM interview WHERE id = ? AND interview_id = ?", (resultSet, i) -> {
 						Interview interview = new Interview();
 						interview.setExperience_id(resultSet.getInt("experience_id"));
 						interview.setInterview_id(resultSet.getInt("interview_id"));
@@ -213,8 +213,8 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 
 	@Override
 	public void delete(int experience_id) {
-		jdbcTemplate.update("DELETE FROM es WHERE experience_id = ?", experience_id);
-		jdbcTemplate.update("DELETE FROM interview WHERE experience_id = ?", experience_id);
+		jdbcTemplate.update("DELETE FROM es WHERE id = ?", experience_id);
+		jdbcTemplate.update("DELETE FROM interview WHERE id = ?", experience_id);
 		jdbcTemplate.update("DELETE FROM experiences WHERE experience_id = ?", experience_id);
 	}
 
@@ -244,7 +244,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 
 	@Override
 	public void insertEs(Es newEs) {
-		Integer es_id = jdbcTemplate.queryForObject("SELECT MAX(es_id) FROM es WHERE experience_id = ?", Integer.class, newEs.getExperience_id());
+		Integer es_id = jdbcTemplate.queryForObject("SELECT MAX(es_id) FROM es WHERE id = ?", Integer.class, newEs.getExperience_id());
 		if (Objects.equals(es_id, null)) {
 			es_id = 0;
 		}
@@ -255,19 +255,19 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 
 	@Override
 	public void deleteEs(int experience_id, int es_id) {
-		jdbcTemplate.update("DELETE FROM es WHERE experience_id = ? AND es_id = ?", experience_id, es_id);
+		jdbcTemplate.update("DELETE FROM es WHERE id = ? AND es_id = ?", experience_id, es_id);
 	}
 
 	@Override
 	public void updateEs(Es es) {
 		jdbcTemplate.update(
-				"UPDATE es SET corp = ?, result = ?, question = ?, answer = ?, advice = ? WHERE experience_id = ? AND es_id = ?",
+				"UPDATE es SET corp = ?, result = ?, question = ?, answer = ?, advice = ? WHERE id = ? AND es_id = ?",
 				es.getCorp(), es.getResult(), es.getQuestion(), es.getAnswer(), es.getAdvice(), es.getExperience_id(), es.getEs_id());
 	}
 
 	@Override
 	public void insertInterview(Interview newInterview) {
-		Integer interview_id = jdbcTemplate.queryForObject("SELECT MAX(interview_id) FROM interview WHERE experience_id = ?", Integer.class, newInterview.getExperience_id());
+		Integer interview_id = jdbcTemplate.queryForObject("SELECT MAX(interview_id) FROM interview WHERE id = ?", Integer.class, newInterview.getExperience_id());
 		if (Objects.equals(interview_id, null)) {
 			interview_id = 0;
 		}
@@ -278,13 +278,13 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 
 	@Override
 	public void deleteInterview(int experience_id, int interview_id) {
-		jdbcTemplate.update("DELETE FROM interview WHERE experience_id = ? AND interview_id = ?", experience_id, interview_id);
+		jdbcTemplate.update("DELETE FROM interview WHERE id = ? AND interview_id = ?", experience_id, interview_id);
 	}
 
 	@Override
 	public void updateInterview(Interview interview) {
 		jdbcTemplate.update(
-				"UPDATE interview SET question = ?, answer = ? WHERE experience_id = ? AND interview_id = ?",
+				"UPDATE interview SET question = ?, answer = ? WHERE id = ? AND interview_id = ?",
 				interview.getQuestion(), interview.getAnswer(), interview.getExperience_id(), interview.getInterview_id());
 	}
 
@@ -309,7 +309,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		experience.setOffer(this.stringToList(resultSet.getString("offer")));
 		if (all) {
 			experience.setEs(jdbcTemplate.query(
-					"SELECT * FROM es WHERE experience_id = ?", (esSet, j) -> {
+					"SELECT * FROM es WHERE id = ?", (esSet, j) -> {
 						Es es = new Es();
 						es.setExperience_id(experience.getExperience_id());
 						es.setEs_id(esSet.getInt("es_id"));
@@ -321,7 +321,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 						return es;
 					}, experience.getExperience_id()));
 			experience.setInterview(jdbcTemplate.query(
-					"SELECT * FROM interview WHERE experience_id = ?", (interviewSet, k) -> {
+					"SELECT * FROM interview WHERE id = ?", (interviewSet, k) -> {
 						Interview interview = new Interview();
 						interview.setExperience_id(experience.getExperience_id());
 						interview.setInterview_id(interviewSet.getInt("interview_id"));
