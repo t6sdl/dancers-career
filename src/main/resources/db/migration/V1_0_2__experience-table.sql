@@ -32,7 +32,7 @@ CREATE TABLE es (
   answer TEXT NOT NULL,
   advice TEXT NOT NULL,
   PRIMARY KEY (id, es_id),
-  FOREIGN KEY (id) REFERENCES experiences (experience_id) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (id) REFERENCES experiences (experience_id) ON DELETE CASCADE
 );
 
 CREATE TABLE interview (
@@ -41,9 +41,9 @@ CREATE TABLE interview (
   question VARCHAR(315) NOT NULL,
   answer TEXT NOT NULL,
   PRIMARY KEY (id, interview_id),
-  FOREIGN KEY (id) REFERENCES experiences (experience_id) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (id) REFERENCES experiences (experience_id) ON DELETE CASCADE
 );
 
-INSERT INTO experiences (prefecture, university, faculty, graduation, position) VALUES ('東京都', '東京大学', '理学部', '2018', '代表,会計,イベント企画');
-INSERT INTO experiences (prefecture, university, faculty, graduation, position) VALUES ('東京都', '慶應義塾大学', '法学部', '2018', '公演総合演出,音響制作');
-INSERT INTO experiences (prefecture, university, faculty, graduation, position) VALUES ('神奈川県', '横浜国立大学', '', '2018', '副代表');
+INSERT INTO experiences (experience_id, prefecture, university, faculty, graduation, position) VALUES (1, '東京都', '東京大学', '理学部', '2018', '代表,会計,イベント企画');
+INSERT INTO experiences (experience_id, prefecture, university, faculty, graduation, position) VALUES (2, '東京都', '慶應義塾大学', '法学部', '2018', '公演総合演出,音響制作');
+INSERT INTO experiences (experience_id, prefecture, university, faculty, graduation, position) VALUES (3, '神奈川県', '横浜国立大学', '', '2018', '副代表');
