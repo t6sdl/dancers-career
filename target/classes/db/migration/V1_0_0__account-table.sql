@@ -1,5 +1,5 @@
 CREATE TABLE accounts (
-  email VARCHAR(255) NOT NULL,
+  email VARCHAR(150) NOT NULL,
   password CHAR(60) NOT NULL,
   authority VARCHAR(45) NOT NULL DEFAULT 'ROLE_USER',
   valid_email BOOLEAN NOT NULL DEFAULT false,

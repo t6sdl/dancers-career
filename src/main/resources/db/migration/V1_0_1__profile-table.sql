@@ -1,5 +1,5 @@
 CREATE TABLE profiles (
-  email VARCHAR(255) NOT NULL COLLATE utf8_bin,
+  email VARCHAR(150) NOT NULL COLLATE utf8_bin,
   last_name VARCHAR(45) NOT NULL,
   first_name VARCHAR(45) NOT NULL,
   kana_last_name VARCHAR(45) NOT NULL,
