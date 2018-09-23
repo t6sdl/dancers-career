@@ -145,13 +145,21 @@ public class JdbcProfileRepository implements ProfileRepository {
 	
 	@Override
 	public String findLastNameByEmail(String email) {
-		return jdbcTemplate.queryForObject("SELECT (last_name) FROM profiles WHERE email = ?", String.class, email);
+		try {
+			return jdbcTemplate.queryForObject("SELECT (last_name) FROM profiles WHERE email = ?", String.class, email);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
 	}
 	
 	@Override
 	public List<String> findLikesByEmail(String email) {
-		String likesData = jdbcTemplate.queryForObject("SELECT (likes) FROM profiles WHERE email = ?", String.class, email);
-		return this.stringToList(likesData);
+		try {
+			String likesData = jdbcTemplate.queryForObject("SELECT (likes) FROM profiles WHERE email = ?", String.class, email);
+			return this.stringToList(likesData);
+		} catch (EmptyResultDataAccessException e) {
+			return new ArrayList<String>(Arrays.asList(""));
+		}
 	}
 
 	@Override
@@ -159,10 +167,10 @@ public class JdbcProfileRepository implements ProfileRepository {
 		String position = listToString(newProfile.getPosition());
 		Date date_of_birth = Date.from(newProfile.getDate_of_birth().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		jdbcTemplate.update(
-				"INSERT INTO profiles VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				"INSERT INTO profiles VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				newProfile.getEmail(), newProfile.getLast_name(), newProfile.getFirst_name(), newProfile.getKana_last_name(), newProfile.getKana_first_name(),
 				date_of_birth, newProfile.getSex(), newProfile.getPhone_number(), newProfile.getMajor(), newProfile.getPrefecture(), newProfile.getUniversity(),
-				newProfile.getFaculty(), newProfile.getDepartment(), newProfile.getGraduation(), newProfile.getAcademic_degree(), position);
+				newProfile.getFaculty(), newProfile.getDepartment(), newProfile.getGraduation(), newProfile.getAcademic_degree(), position, "");
 	}
 
 	@Override

@@ -13,43 +13,43 @@
 <table th:object="${profile}">
 <tr>
 <th align="right">氏名：</th>
-<td th:text="|*{last_name} *{first_name}|"></td>
+<td th:text="|*{last_name == null ? '' : last_name} *{first_name == null ? '' : first_name}|"></td>
 </tr>
 <tr>
 <th align="right">氏名（カナ）：</th>
-<td th:text="|*{kana_last_name} *{kana_first_name}|"></td>
+<td th:text="|*{kana_last_name == null ? '' : kana_last_name} *{kana_first_name == null ? '' : kana_first_name}|"></td>
 </tr>
 <tr>
 <th align="right">生年月日：</th>
-<td th:text="*{date_of_birth_for_display}"></td>
+<td th:text="*{date_of_birth_for_display == null ? '' : date_of_birth_for_display}"></td>
 </tr>
 <tr>
 <th align="right">性別：</th>
-<td th:text="*{sex}"></td>
+<td th:text="*{sex == null ? '' : sex}"></td>
 </tr>
 <tr>
 <th align="right">電話番号：</th>
-<td th:text="*{phone_number}"></td>
+<td th:text="*{phone_number == null ? '' : phone_number}"></td>
 </tr>
 <tr>
 <th align="right">文理：</th>
-<td th:text="*{major}"></td>
+<td th:text="*{major == null ? '' : major}"></td>
 </tr>
 <tr>
 <th align="right">学部・学科：</th>
-<td th:text="|*{university} *{faculty} *{department}|"></td>
+<td th:text="|*{university == null ? '' : university} *{faculty == null ? '' : faculty} *{department == null ? '' : department}|"></td>
 </tr>
 <tr>
 <th align="right">卒業年度：</th>
-<td th:text="|*{graduation} 卒業|"></td>
+<td th:text="*{graduation == null ? '' : graduation + ' 卒業'}"></td>
 </tr>
 <tr>
 <th align="right">最終学歴：</th>
-<td th:text="*{academic_degree}"></td>
+<td th:text="*{academic_degree == null ? '' : academic_degree}"></td>
 </tr>
 <tr>
 <th align="right">サークルなどでの役職・役割：</th>
-<td><span th:each="pos : *{position}" th:text="|${pos} |"></span></td>
+<td><span th:each="pos : *{position == null ? '' : position}" th:text="|${pos} |"></span></td>
 </tr>
 </table>
 <div><a th:href="@{/user/profile/verify}"><button>修正する</button></a></div>

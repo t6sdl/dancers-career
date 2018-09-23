@@ -40,9 +40,6 @@ public class ProfileService {
 	}
 	
 	public Profile getProfileByEmail(String email) {
-		if (profileRepository.findOneByEmail(email) == null) {
-			return new Profile();
-		}
 		return profileRepository.findOneByEmail(email);
 	}
 	
