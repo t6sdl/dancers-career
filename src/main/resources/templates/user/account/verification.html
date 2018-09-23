@@ -9,8 +9,9 @@
 <main>
 <article>
 <h1>パスワード確認</h1>
+<p th:if="${cod == 'delete'}">アカウントを削除すると全てのデータが消去されます。アカウント削除のためにはパスワードの入力が必要です。</p>
 <p th:if="${param.error}">パスワードが異なります</p>
-<form th:action="@{/user/account/change}" method="post" th:object="${verificationForm}">
+<form th:action="@{/user/account/{changeOrDelete}(changeOrDelete=${cod})}" method="post" th:object="${verificationForm}">
 <div>
 <label for="password">パスワード</label>
 <input type="password" th:field="*{password}">
