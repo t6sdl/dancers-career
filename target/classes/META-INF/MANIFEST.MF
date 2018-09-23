@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Built-By: Akihiro
 Build-Jdk: 10.0.1
 Implementation-Title: dancersCareer2019
-Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Version: 1.0.1
 Implementation-Vendor-Id: tokyo.t6sdl.dancerscareer2019
 Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
- ot-starter-parent/dancersCareer2019
+ ot-starter-parent/dancers-career-2019
 Created-By: Maven Integration for Eclipse
 
