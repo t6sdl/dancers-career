@@ -3,9 +3,9 @@ CREATE TABLE accounts (
   password CHAR(60) NOT NULL,
   authority VARCHAR(45) NOT NULL DEFAULT 'ROLE_USER',
   valid_email BOOLEAN NOT NULL DEFAULT false,
-  updated_at TIMESTAMP NOT NULL DEFAULT 0,
-  created_at TIMESTAMP NOT NULL DEFAULT 0,
-  last_login TIMESTAMP NOT NULL DEFAULT 0,
+  updated_at TIMESTAMP NULL,
+  created_at TIMESTAMP NULL,
+  last_login TIMESTAMP NULL,
   email_token CHAR(40) DEFAULT NULL UNIQUE,
   password_token CHAR(40) DEFAULT NULL UNIQUE,
   PRIMARY KEY (email)
