@@ -39,7 +39,7 @@ public class AppConfig implements WebMvcConfigurer {
 	public DataSource dataSource() {
 		HikariConfig config = new HikariConfig();
 		config.setDriverClassName("com.mysql.jdbc.Driver");
-		config.setJdbcUrl("jdbc:mysql://b23da6ad7dabc5:f5f14f28@us-cdbr-iron-east-01.cleardb.net/heroku_6ed62eaddfd562d?reconnect=true");
+		config.setJdbcUrl("jdbc:mysql://us-cdbr-iron-east-01.cleardb.net/heroku_6ed62eaddfd562d");
 		config.setUsername("b23da6ad7dabc5");
 		config.setPassword("f5f14f28");
 		config.addDataSourceProperty("cachePrepStmts", true);
