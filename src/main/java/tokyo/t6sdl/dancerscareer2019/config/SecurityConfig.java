@@ -24,7 +24,8 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private final DataSource dataSource;
-	private LoginSuccessHandler successHandler;
+	private SigninSuccessHandler signinSuccessHandler;
+	private SignoutSuccessHandler signoutSuccessHandler;
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
@@ -43,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.formLogin()
 			.loginProcessingUrl("/login")
 			.loginPage("/signin")
-			.successHandler(successHandler)
+			.successHandler(signinSuccessHandler)
 			.failureUrl("/signin?error")
 			.usernameParameter("email").passwordParameter("password")
 		.and()
@@ -55,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 			.logout()
 			.logoutRequestMatcher(new AntPathRequestMatcher("/logout**"))
-			.logoutSuccessUrl("/signin")
+			.logoutSuccessHandler(signoutSuccessHandler)
 			.deleteCookies("JSESSIONID");
 	}
 		
@@ -77,7 +78,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Autowired
-	public void setSuccessHandler(LoginSuccessHandler successHandler) {
-		this.successHandler = successHandler;
+	public void setSigninSuccessHandler(SigninSuccessHandler signinSuccessHandler) {
+		this.signinSuccessHandler = signinSuccessHandler;
+	}
+	
+	@Autowired
+	public void setSignoutSuccessHandler(SignoutSuccessHandler signoutSuccessHandler) {
+		this.signoutSuccessHandler = signoutSuccessHandler;
 	}
 }

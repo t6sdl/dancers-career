@@ -15,7 +15,7 @@ import tokyo.t6sdl.dancerscareer2019.model.Account;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 
 @Component
-public class LoginSuccessHandler implements AuthenticationSuccessHandler {
+public class SigninSuccessHandler implements AuthenticationSuccessHandler {
 	private AccountService accountService;
 
 	@Override
@@ -29,6 +29,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 			} else {
 				response.sendRedirect("/");
 			}
+		} else {
+			response.sendError(403);
 		}
 	}
 	
