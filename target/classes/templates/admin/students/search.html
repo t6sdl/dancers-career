@@ -170,8 +170,12 @@
 <td th:text="${student.academic_degree}"></td>
 </tr>
 <tr>
-<th align="right">サークルなどでの役職・役割</th>
+<th align="right">役職</th>
 <td><span th:each="pos : ${student.position}" th:text="|${pos} |"></span></td>
+</tr>
+<tr>
+<th align="right">お気に入りの記事</th>
+<td><a th:href="@{/admin/experiences/{like}(like=${like})}" th:each="like : ${student.likes}" th:text="|${like} |"></a></td>
 </tr>
 </table>
 </div>
