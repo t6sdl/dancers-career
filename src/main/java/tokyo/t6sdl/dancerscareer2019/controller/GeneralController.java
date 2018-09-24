@@ -126,7 +126,7 @@ public class GeneralController {
 			HttpEntity<ParamForLineOAuth> entity = new HttpEntity<ParamForLineOAuth>(params, headers);
 			AccessToken token = restTemplate.postForObject("https://notify-bot.line.me/oauth/token", entity, AccessToken.class);
 			accountService.changeLineAccessToken(securityService.findLoggedInEmail(), token.getAccess_token());
-			model.addAttribute("token", token.getAccess_token());
+			model.addAttribute("access_token", token.getAccess_token());
 			return "index/index";
 		}
 	}
