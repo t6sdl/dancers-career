@@ -2,12 +2,16 @@ package tokyo.t6sdl.dancerscareer2019.controller;
 
 import java.util.Objects;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +36,8 @@ public class GeneralController {
 	private final MailService mailService;
 	private final PasswordEncoder passwordEncoder;
 	private final AccountService accountService;
+	
+	private static final Logger logger = LoggerFactory.getLogger(GeneralController.class);
 	
 	@RequestMapping("")
 	public String isndex(Model model) {
@@ -111,8 +117,12 @@ public class GeneralController {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 			ParamForLineOAuth params = new ParamForLineOAuth("authorization_code", code, "https://dancers-career-2019-stg.herokuapp.com/line-notify/oauth/token", "hjr1WCDvkmDhaomQuOMwmD", "BmCuA1Ca9NPxbBCFhhp24QFr6cKc54sflO0Pl481eYy");
-			HttpEntity<ParamForLineOAuth> entity = new HttpEntity<ParamForLineOAuth>(params, headers);
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("params", params);
+			HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<MultiValueMap<String, Object>>(map, headers);
+			logger.info(entity.toString());
 			AccessToken token = restTemplate.postForObject("https://notify-bot.line.me/oauth/token", entity, AccessToken.class);
+			logger.info(token.getAccess_token());
 			accountService.changeLineAccessToken(securityService.findLoggedInEmail(), token.getAccess_token());
 			model.addAttribute("access_token", token.getAccess_token());
 			return "index/index";
