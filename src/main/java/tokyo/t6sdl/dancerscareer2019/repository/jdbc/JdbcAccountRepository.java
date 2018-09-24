@@ -81,6 +81,15 @@ public class JdbcAccountRepository implements AccountRepository {
 			return null;
 		}
 	}
+	
+	@Override
+	public String findLineAccessTokenByEmail(String email) {
+		try {
+			return jdbcTemplate.queryForObject("SELECT (line_access_token) FROM accounts WHERE email = ?", String.class, email);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+	}
 
 	@Override
 	public void insert(Account newAccount) {
@@ -117,10 +126,18 @@ public class JdbcAccountRepository implements AccountRepository {
 				validEmail, loggedInEmail);
 	}
 	
+	@Override
 	public void updateLastLogin(String loggedInEmail) {
 		jdbcTemplate.update(
 				"UPDATE accounts SET last_login = CURRENT_TIMESTAMP WHERE email = ?",
 				loggedInEmail);
+	}
+	
+	@Override
+	public void updateLineAccessToken(String loggedInEmail, String lineAccessToken) {
+		jdbcTemplate.update(
+				"UPDATE accounts SET line_access_token = ? WHERE email = ?",
+				lineAccessToken, loggedInEmail);
 	}
 
 	@Override
