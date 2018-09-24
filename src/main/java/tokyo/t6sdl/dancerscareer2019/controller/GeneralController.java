@@ -105,11 +105,13 @@ public class GeneralController {
 		uri.queryParam("scope", "notify");
 		uri.queryParam("state", state);
 		uri.queryParam("response_mode", "form_post");
+		logger.info("logger is working");
 		return "redirect:" + uri.toUriString();
 	}
 	
 	@PostMapping("/line-notify/oauth/authorize")
 	public String postCode(@RequestParam(name="code", required=false) String code, @RequestParam(name="state", required=false) String state, @RequestParam(name="error", required=false) String error, @RequestParam(name="error_description", required=false) String error_description, Model model) {
+		logger.info("redirect is not wrong");
 		if (Objects.equals(code, null) || !(passwordEncoder.matches(securityService.findLoggedInEmail(), state))) {
 			throw new NotFound404();
 		} else {
