@@ -99,7 +99,7 @@ public class GeneralController {
 		uri.queryParam("scope", "notify");
 		uri.queryParam("state", state);
 		uri.queryParam("response_mode", "form_post");
-		return "redirect:" + uri.toString();
+		return "redirect:" + uri.toUriString();
 	}
 	
 	@PostMapping("/line-notify/oauth/authorize")
