@@ -102,7 +102,7 @@ public class GeneralController {
 		return "redirect:" + uri.toUriString();
 	}
 	
-	@PostMapping("/line-notify/oauth/authorize")
+	@PostMapping("/line-notify/oauth")
 	public String postCode(@RequestParam(name="code", required=false) String code, @RequestParam(name="state", required=false) String state, @RequestParam(name="error", required=false) String error, @RequestParam(name="error_description", required=false) String error_description, Model model) {
 		if (Objects.equals(code, null) || passwordEncoder.matches(securityService.findLoggedInEmail(), state)) {
 			throw new NotFound404();
