@@ -32,34 +32,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers("/favicon.ico", "/css/**", "/img/**", "/js/**", "/mails/**");
 	}
 	
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-			.antMatchers("/signup/profile").authenticated()
-			.antMatchers("/signin/**", "/signup/**", "/about/**").permitAll()
-			.antMatchers("/admin/**").hasRole("ADMIN")
-			.antMatchers("/user/**").hasRole("USER")
-			.anyRequest().authenticated()
-		.and()
-			.formLogin()
-			.loginProcessingUrl("/login")
-			.loginPage("/signin")
-			.successHandler(signinSuccessHandler)
-			.failureUrl("/signin?error")
-			.usernameParameter("email").passwordParameter("password")
-		.and()
-			.rememberMe()
-			.rememberMeParameter("remember-me")
-			.tokenRepository(createTokenRepository())
-		.and()
-			.csrf().csrfTokenRepository(new CookieCsrfTokenRepository())
-		.and()
-			.logout()
-			.logoutRequestMatcher(new AntPathRequestMatcher("/logout**"))
-			.logoutSuccessHandler(signoutSuccessHandler)
-			.deleteCookies("JSESSIONID");
-	}
-		
 	@Bean
 	public PersistentTokenRepository createTokenRepository() {
 		JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
