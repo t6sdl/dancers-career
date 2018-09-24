@@ -8,6 +8,7 @@ CREATE TABLE accounts (
   last_login TIMESTAMP NULL,
   email_token CHAR(40) DEFAULT NULL UNIQUE,
   password_token CHAR(40) DEFAULT NULL UNIQUE,
+  line_access_token VARCHAR(60) DEFAULT NULL,
   PRIMARY KEY (email)
 ) CHARACTER SET utf8 COLLATE utf8_bin;
 
