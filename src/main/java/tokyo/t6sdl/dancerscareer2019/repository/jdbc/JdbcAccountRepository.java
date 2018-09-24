@@ -161,7 +161,7 @@ public class JdbcAccountRepository implements AccountRepository {
 		Date updatedAt = resultSet.getTimestamp("updated_at");
 		account.setUpdated_at(LocalDateTime.ofInstant(updatedAt.toInstant(), ZoneId.of("Asia/Tokyo")));
 		Date createdAt = resultSet.getTimestamp("created_at");
-		account.setCreated_at(LocalDateTime.ofInstant(createdAt.toInstant(), ZoneId.of("Asua/Tokyo")));
+		account.setCreated_at(LocalDateTime.ofInstant(createdAt.toInstant(), ZoneId.of("Asia/Tokyo")));
 		account.setEmail_token(resultSet.getString("email_token"));
 		account.setPassword_token(resultSet.getString("password_token"));
 	}
