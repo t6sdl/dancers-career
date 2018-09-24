@@ -3,6 +3,7 @@ package tokyo.t6sdl.dancerscareer2019.service;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -90,7 +91,7 @@ public class AccountService implements UserDetailsService {
 			return false;
 		}
 		LocalDateTime expiration = account.getUpdated_at().plusMinutes(30);
-		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
 		if (now.isAfter(expiration)) {
 			return false;
 		} else {

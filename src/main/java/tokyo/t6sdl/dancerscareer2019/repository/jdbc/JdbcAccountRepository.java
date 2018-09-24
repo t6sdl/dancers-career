@@ -157,11 +157,11 @@ public class JdbcAccountRepository implements AccountRepository {
 		account.setAuthority(resultSet.getString("authority"));
 		account.setValid_email(resultSet.getBoolean("valid_email"));
 		Date lastLogin = resultSet.getTimestamp("last_login");
-		account.setLast_login(LocalDateTime.ofInstant(lastLogin.toInstant(), ZoneId.systemDefault()));
+		account.setLast_login(LocalDateTime.ofInstant(lastLogin.toInstant(), ZoneId.of("Asia/Tokyo")));
 		Date updatedAt = resultSet.getTimestamp("updated_at");
-		account.setUpdated_at(LocalDateTime.ofInstant(updatedAt.toInstant(), ZoneId.systemDefault()));
+		account.setUpdated_at(LocalDateTime.ofInstant(updatedAt.toInstant(), ZoneId.of("Asia/Tokyo")));
 		Date createdAt = resultSet.getTimestamp("created_at");
-		account.setCreated_at(LocalDateTime.ofInstant(createdAt.toInstant(), ZoneId.systemDefault()));
+		account.setCreated_at(LocalDateTime.ofInstant(createdAt.toInstant(), ZoneId.of("Asua/Tokyo")));
 		account.setEmail_token(resultSet.getString("email_token"));
 		account.setPassword_token(resultSet.getString("password_token"));
 	}
@@ -171,7 +171,7 @@ public class JdbcAccountRepository implements AccountRepository {
 			List<LocalDateTime> lastLogins = jdbcTemplate.query(
 					"SELECT last_used FROM persistent_logins WHERE username = ? ORDER BY last_used DESC LIMIT 1", (resultSet, i) -> {
 						Date lastUsed = resultSet.getTimestamp("last_used");
-						LocalDateTime lastLogin = LocalDateTime.ofInstant(lastUsed.toInstant(), ZoneId.systemDefault());
+						LocalDateTime lastLogin = LocalDateTime.ofInstant(lastUsed.toInstant(), ZoneId.of("Asia/Tokyo"));
 						return lastLogin;
 					}, account.getEmail());
 			if (!(lastLogins.isEmpty()) && lastLogins.get(0).isAfter(account.getLast_login())) {
@@ -184,7 +184,7 @@ public class JdbcAccountRepository implements AccountRepository {
 		List<LocalDateTime> lastLogins = jdbcTemplate.query(
 				"SELECT last_used FROM persistent_logins WHERE username = ? ORDER BY last_used DESC LIMIT 1", (resultSet, i) -> {
 					Date lastUsed = resultSet.getTimestamp("last_used");
-					LocalDateTime lastLogin = LocalDateTime.ofInstant(lastUsed.toInstant(), ZoneId.systemDefault());
+					LocalDateTime lastLogin = LocalDateTime.ofInstant(lastUsed.toInstant(), ZoneId.of("Asia/Tokyo"));
 					return lastLogin;
 				}, account.getEmail());
 		if (!(lastLogins.isEmpty()) && lastLogins.get(0).isAfter(account.getLast_login())) {

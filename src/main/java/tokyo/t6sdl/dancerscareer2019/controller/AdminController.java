@@ -1,6 +1,7 @@
 package tokyo.t6sdl.dancerscareer2019.controller;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -72,7 +73,7 @@ public class AdminController {
 		List<Student> students = this.makeStudentOfProfile(profileService.getProfiles());
 		map.put("filter", filter);
 		map.put("students", students);
-		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
 		String today = now.format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm"));
 		ModelAndView mav = new ModelAndView(new ExcelBuilder(today + "_students_all" + ".xlsx"), map);
 		return mav;
@@ -115,7 +116,7 @@ public class AdminController {
 		List<Student> students = this.makeStudentOfProfile(profiles);
 		map.put("filter", filter);
 		map.put("students", students);
-		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
 		String today = now.format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm"));
 		ModelAndView mav = new ModelAndView(new ExcelBuilder(today + "_students_byname" + ".xlsx"), map);
 		return mav;
@@ -172,7 +173,7 @@ public class AdminController {
 		List<Student> students = this.makeStudentOfProfile(profiles);
 		map.put("filter", filter);
 		map.put("students", students);
-		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
 		String today = now.format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm"));
 		ModelAndView mav = new ModelAndView(new ExcelBuilder(today + "_students_byuniv" + ".xlsx"), map);
 		return mav;
@@ -208,7 +209,7 @@ public class AdminController {
 		List<Student> students = this.makeStudentOfProfile(profileService.getProfilesByPosition(position, "AND"));
 		map.put("filter", filter);
 		map.put("students", students);
-		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
 		String today = now.format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm"));
 		ModelAndView mav = new ModelAndView(new ExcelBuilder(today + "_students_bypos(and)" + ".xlsx"), map);
 		return mav;
@@ -244,7 +245,7 @@ public class AdminController {
 		List<Student> students = this.makeStudentOfProfile(profileService.getProfilesByPosition(position, "OR"));
 		map.put("filter", filter);
 		map.put("students", students);
-		LocalDateTime now = LocalDateTime.now();
+		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
 		String today = now.format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm"));
 		ModelAndView mav = new ModelAndView(new ExcelBuilder(today + "_students_bypos(or)" + ".xlsx"), map);
 		return mav;

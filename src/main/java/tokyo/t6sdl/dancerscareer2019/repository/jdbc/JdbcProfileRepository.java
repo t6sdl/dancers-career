@@ -210,7 +210,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 		profile.setKana_last_name(resultSet.getString("kana_last_name"));
 		profile.setKana_first_name(resultSet.getString("kana_first_name"));
 		Date dateOfBirth = resultSet.getTimestamp("date_of_birth");
-		profile.setDate_of_birth(LocalDate.ofInstant(dateOfBirth.toInstant(), ZoneId.systemDefault()));
+		profile.setDate_of_birth(LocalDate.ofInstant(dateOfBirth.toInstant(), ZoneId.of("Asia/Tokyo")));
 		profile.setSex(resultSet.getString("sex"));
 		profile.setPhone_number(resultSet.getString("phone_number"));
 		profile.setMajor(resultSet.getString("major"));
