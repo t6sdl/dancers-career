@@ -53,18 +53,6 @@ public class GeneralController {
 		return "about/privacyPolicy";
 	}
 	
-	@RequestMapping("/about/terms")
-	public String getTermsOfUse(Model model) {
-		if (securityService.findLoggedInEmail().equals("")) {
-			model.addAttribute("header", "for-stranger");
-		} else if (securityService.findLoggedInAuthority()) {
-			model.addAttribute("header", "for-admin");
-		} else {
-			model.addAttribute("header", "for-user");
-		}
-		return "about/terms";
-	}
-	
 	@GetMapping("/about/contact")
 	public String getContact(Model model) {
 		String loggedInEmail = securityService.findLoggedInEmail();
