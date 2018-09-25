@@ -1,15 +1,20 @@
 package tokyo.t6sdl.dancerscareer2019.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -113,13 +118,18 @@ public class GeneralController {
 	
 	@RequestMapping("/line-notify/oauth/authorize")
 	public String postCode(@RequestParam(name="code", required=false) String code, @RequestParam(name="state", required=false) String state, @RequestParam(name="error", required=false) String error, @RequestParam(name="error_description", required=false) String error_description, Model model) {
-		logger.info("redirect is not wrong");
 		if (Objects.equals(code, null) || !(passwordEncoder.matches(securityService.findLoggedInEmail(), state))) {
 			throw new NotFound404();
 		} else {
+			logger.info("redirect is not wrong");
 			RestTemplate restTemplate = new RestTemplate();
-//			HttpHeaders headers = new HttpHeaders();
-//			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+			final List<HttpMessageConverter<?>> listHttpMessageConverters = new ArrayList< HttpMessageConverter<?> >(); 
+		    listHttpMessageConverters.add(new GsonHttpMessageConverter());
+		    listHttpMessageConverters.add(new FormHttpMessageConverter());
+		    listHttpMessageConverters.add(new StringHttpMessageConverter());
+		    restTemplate.setMessageConverters(listHttpMessageConverters);
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 			ParamForLineOAuth params = new ParamForLineOAuth("authorization_code", code, "https://dancers-career-2019-stg.herokuapp.com/line-notify/oauth/token", "hjr1WCDvkmDhaomQuOMwmD", "BmCuA1Ca9NPxbBCFhhp24QFr6cKc54sflO0Pl481eYy");
 			MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
 			map.add("grant_type", params.getGrant_type());
@@ -127,12 +137,12 @@ public class GeneralController {
 			map.add("redirect_uri", params.getRedirect_uri());
 			map.add("client_id", params.getClient_id());
 			map.add("client_secret", params.getClient_secret());
-//			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<MultiValueMap<String, String>>(map, headers);
-			AccessToken token = restTemplate.postForObject("https://notify-bot.line.me/oauth/token", map, AccessToken.class);
+			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+			ResponseEntity<AccessToken> response = restTemplate.exchange("https://notify-bot.line.me/oauth/token", HttpMethod.POST, entity, AccessToken.class);
+			AccessToken token = response.getBody();
 			logger.info(token.getAccess_token());
 			accountService.changeLineAccessToken(securityService.findLoggedInEmail(), token.getAccess_token());
 			model.addAttribute("access_token", token.getAccess_token());
-			return "index/index";
-		}
+			return "index/index";		}
 	}
 }
