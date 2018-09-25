@@ -7,13 +7,13 @@ li {
 }
 
 .header {
-  background-color: #203744;
+
   color: #fff;
   height: 100px;
-  /*
-  background: linear-gradient(-45deg, rgba(60, 145, 201, .5), rgba(86, 247, 239, .8)),url(../img/bg1.jpg);
+
+  background: linear-gradient(-45deg, rgba(60, 145, 201, .7), rgba(156, 206, 209, .7)),url(../img/bg1.jpg);
   background-size: cover;
-  */
+
 }
 
 .header-logo {
