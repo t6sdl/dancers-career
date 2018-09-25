@@ -1,0 +1,30 @@
+body {
+  font-family: "Avenir Next";
+}
+
+li {
+  list-style: none;
+}
+
+.header {
+  background:linear-gradient(-90deg, #CCF4FF, #99F0FF);
+  url(images/bg-cherrybrossam.jpg);
+  background-size: cover;
+  color: #fff;
+  height: 100px;
+}
+
+.header-logo {
+  float: left;
+  padding: 20px 40px;
+  width: 200px;
+}
+
+.header-list {
+  float: left;
+}
+
+.header-list li {
+  float: left;
+  padding: 20px 20px;
+}
