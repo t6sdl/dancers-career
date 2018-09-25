@@ -13,9 +13,9 @@
 <section>
 <p th:text="|こんにちは ${lastName == null ? '名無しさん' : lastName + 'さん'}|"></p>
 <p>お気に入りに登録されたES/体験記：<span th:text="${likes.size()}"></span>件</p>
-<article style="padding:1em;border:1px solid #333;" th:each="experience : ${experiences}" th:object="${experience}">
+<article th:each="experience : ${experiences}" th:object="${experience}">
 <div>
-<p><span th:each="pos : *{position}" th:text="${pos}" style="background:#ddd;padding:.5em;margin-right:.5em;"></span></p>
+<p><span th:each="pos : *{position}" th:text="${pos}"></span></p>
 <h1 th:text="*{university}"></h1>
 <p>内定先：<span th:each="off : *{offer}" th:text="${off} == '' ? '非公開' : ${off} + ' '"></span></p>
 </div>
