@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.json.GsonHttpMessageConverter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -124,7 +123,6 @@ public class GeneralController {
 			logger.info("redirect is not wrong");
 			RestTemplate restTemplate = new RestTemplate();
 			final List<HttpMessageConverter<?>> listHttpMessageConverters = new ArrayList< HttpMessageConverter<?> >(); 
-		    listHttpMessageConverters.add(new GsonHttpMessageConverter());
 		    listHttpMessageConverters.add(new FormHttpMessageConverter());
 		    listHttpMessageConverters.add(new StringHttpMessageConverter());
 		    restTemplate.setMessageConverters(listHttpMessageConverters);
