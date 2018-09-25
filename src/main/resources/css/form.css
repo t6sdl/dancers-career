@@ -8,10 +8,20 @@ body{
   text-align: center;
 }
 
+.form-text{
+  color: #c0c0c0;
+}
+
 h1{
   text-align: center;
 }
 
 .hazard{
   color: #d70035;
+}
+
+.button{
+  background-color:#dee7ec;
+  color:#889eab;
+
 }
