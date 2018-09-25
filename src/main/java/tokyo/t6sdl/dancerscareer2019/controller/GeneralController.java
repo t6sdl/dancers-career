@@ -108,27 +108,23 @@ public class GeneralController {
 		UriComponentsBuilder uri = UriComponentsBuilder.fromHttpUrl("https://notify-bot.line.me/oauth/authorize");
 		uri.queryParam("response_type", "code");
 		uri.queryParam("client_id", "hjr1WCDvkmDhaomQuOMwmD");
-		uri.queryParam("redirect_uri", "https://dancers-career-2019-stg.herokuapp.com/line-notify/oauth/authorize");
+		uri.queryParam("redirect_uri", "https://dancers-career-2019-stg.herokuapp.com/line-notify/oauth");
 		uri.queryParam("scope", "notify");
 		uri.queryParam("state", state);
 		logger.info("logger is working");
 		return "redirect:" + uri.toUriString();
 	}
 	
-	@RequestMapping("/line-notify/oauth/authorize")
+	@RequestMapping("/line-notify/oauth")
 	public String postCode(@RequestParam(name="code", required=false) String code, @RequestParam(name="state", required=false) String state, @RequestParam(name="error", required=false) String error, @RequestParam(name="error_description", required=false) String error_description, Model model) {
 		if (Objects.equals(code, null) || !(passwordEncoder.matches(securityService.findLoggedInEmail(), state))) {
 			throw new NotFound404();
 		} else {
 			logger.info("redirect is not wrong");
 			RestTemplate restTemplate = new RestTemplate();
-			final List<HttpMessageConverter<?>> listHttpMessageConverters = new ArrayList< HttpMessageConverter<?> >(); 
-		    listHttpMessageConverters.add(new FormHttpMessageConverter());
-		    listHttpMessageConverters.add(new StringHttpMessageConverter());
-		    restTemplate.setMessageConverters(listHttpMessageConverters);
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-			ParamForLineOAuth params = new ParamForLineOAuth("authorization_code", code, "https://dancers-career-2019-stg.herokuapp.com/line-notify/oauth/authorize", "hjr1WCDvkmDhaomQuOMwmD", "QrBCVmNvn79CfHmHfnK8yG44oxloL0llEQpSP7ZmrDo");
+			ParamForLineOAuth params = new ParamForLineOAuth("authorization_code", code, "https://dancers-career-2019-stg.herokuapp.com/line-notify/oauth", "hjr1WCDvkmDhaomQuOMwmD", "QrBCVmNvn79CfHmHfnK8yG44oxloL0llEQpSP7ZmrDo");
 			MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
 			map.add("grant_type", params.getGrant_type());
 			map.add("code", params.getCode());
@@ -136,8 +132,9 @@ public class GeneralController {
 			map.add("client_id", params.getClient_id());
 			map.add("client_secret", params.getClient_secret());
 			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<MultiValueMap<String, String>>(map, headers);
-			ResponseEntity<AccessToken> response = restTemplate.exchange("https://notify-bot.line.me/oauth/token", HttpMethod.POST, entity, AccessToken.class);
-			AccessToken token = response.getBody();
+//			ResponseEntity<AccessToken> response = restTemplate.exchange("https://notify-bot.line.me/oauth/token", HttpMethod.POST, entity, AccessToken.class);
+//			AccessToken token = response.getBody();
+			AccessToken token = restTemplate.postForObject("https://notify-bot.line.me/oauth/token", entity, AccessToken.class);
 			logger.info(token.getAccess_token());
 			accountService.changeLineAccessToken(securityService.findLoggedInEmail(), token.getAccess_token());
 			model.addAttribute("access_token", token.getAccess_token());
