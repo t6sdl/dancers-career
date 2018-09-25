@@ -143,6 +143,7 @@ public class GeneralController {
 			logger.info(token.getAccess_token());
 			accountService.changeLineAccessToken(securityService.findLoggedInEmail(), token.getAccess_token());
 			model.addAttribute("access_token", token.getAccess_token());
-			return "index/index";		}
+			return "index/index";
+		}
 	}
 }
