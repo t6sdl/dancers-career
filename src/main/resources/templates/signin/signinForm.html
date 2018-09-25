@@ -1,44 +1,50 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8">
-<title>ログイン｜ダンサーズキャリア</title>
+  <meta charset="utf-8">
+  <title>ログイン｜ダンサーズキャリア</title>
+  <link rel="stylesheet" type="text/css" href="../../css/form.css">
 </head>
+
 <body>
-<!-- ヘッダーは共通モジュール(header.html)を挿入します -->
-<header th:replace="common/header :: for-stranger"></header>
-<!-- formタグ外は色々いじってくれて大丈夫です、formタグ内もdivタグ追加したりとかしてくれて大丈夫です -->
-<form th:action="@{/login}" method="post">
-<h1>ログイン</h1>
-<p th:if="${param.error}">ログインに失敗しました</p>
-<div>
-<label th:for="email">メールアドレス</label>
-<input type="email" id="email" name="email">
-</div>
-<div>
-<label th:for="password">パスワード</label>
-<input type="password" id="password" name="password">
-</div>
-<div>
-<input type="checkbox" id="remember-me" name="remember-me">
-<label for="remember-me">ログインしたままにする</label>
-</div>
-<div>
-<input type="submit" value="ログイン">
-</div>
-</form>
-<div>
-<p><a th:href="@{/signin/forget-pwd}">パスワードをお忘れですか？</a></p>
-</div>
-<div>
-<p><a th:href="@{/signup}">アカウントをお持ちでない方はこちら</a></p>
-</div>
-<!-- フッターもヘッダー同様です -->
-<footer th:replace="common/footer :: footer"></footer>
-<script
+  <header th:replace="common/header :: for-stranger"></header>
+  <form th:action="@{/login}" method="post">
+    <div class="login-form">
+      <h1>ログイン</h1>
+      <p class="hazard" th:if="${param.error}">メールアドレスまたはパスワードに誤りがあります</p>
+      <div class="form-text">
+        <div>
+          <label th:for="email">メールアドレス</label>
+          <br>
+          <input type="email" id="email" name="email">
+        </div>
+        <div>
+          <label th:for="password">パスワード</label>
+          <br>
+          <input type="password" id="password" name="password">
+        </div>
+      </div>
+        <div>
+          <input type="checkbox" id="remember-me" name="remember-me">
+          <label for="remember-me">ログインしたままにする</label>
+        </div>
+        <div>
+          <input type="submit" value="ログイン" class="button">
+        </div>
+      </form>
+      <div>
+        <p class="linkblue"><a th:href="@{/signin/forget-pwd}">パスワードをお忘れですか？</a></p>
+      </div>
+      <div>
+        <p class="linkblue"><a th:href="@{/signup}">アカウントをお持ちでない方はこちら</a></p>
+      </div>
+  </div>
+  <!-- フッターもヘッダー同様です -->
+  <footer th:replace="common/footer :: footer"></footer>
+  <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
-<script th:src="@{/js/submit.js}"></script>
+  <script th:src="@{/js/submit.js}"></script>
 </body>
 </html>
