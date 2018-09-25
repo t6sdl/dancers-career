@@ -2,7 +2,7 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" type="text/css" href="../../css/main.css">
+  <link rel="stylesheet" type="text/css" href="../../css/common.css">
 </head>
 <body>
   <!-- 自由にいじっちゃってください -->
@@ -36,7 +36,9 @@
     </header>
 
     <header th:fragment="for-stranger"><!-- ログインしていない人用のヘッダー -->
-      <a th:href="@{/}"><img alt="ロゴ"></a><!-- ロゴ兼トップページへのリンク -->
+      <div class="header">
+      <a th:href="@{/}"><img alt="t6sdldclogo" src="../../img/logo1.png" class="header-logo"></a><!-- ロゴ兼トップページへのリンク -->
     </header>
+    </div>
   </body>
   </html>

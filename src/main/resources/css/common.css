@@ -7,11 +7,13 @@ li {
 }
 
 .header {
-  background:linear-gradient(-90deg, #CCF4FF, #99F0FF);
-  url(images/bg-cherrybrossam.jpg);
-  background-size: cover;
+  background-color: #203744;
   color: #fff;
   height: 100px;
+  /*
+  background: linear-gradient(-45deg, rgba(60, 145, 201, .5), rgba(86, 247, 239, .8)),url(../img/bg1.jpg);
+  background-size: cover;
+  */
 }
 
 .header-logo {
