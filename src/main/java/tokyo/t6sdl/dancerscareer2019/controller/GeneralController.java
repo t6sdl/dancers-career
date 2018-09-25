@@ -128,7 +128,7 @@ public class GeneralController {
 		    restTemplate.setMessageConverters(listHttpMessageConverters);
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-			ParamForLineOAuth params = new ParamForLineOAuth("authorization_code", code, "https://dancers-career-2019-stg.herokuapp.com/line-notify/oauth/token", "hjr1WCDvkmDhaomQuOMwmD", "BmCuA1Ca9NPxbBCFhhp24QFr6cKc54sflO0Pl481eYy");
+			ParamForLineOAuth params = new ParamForLineOAuth("authorization_code", code, "https://dancers-career-2019-stg.herokuapp.com/line-notify/oauth/authorize", "hjr1WCDvkmDhaomQuOMwmD", "QrBCVmNvn79CfHmHfnK8yG44oxloL0llEQpSP7ZmrDo");
 			MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
 			map.add("grant_type", params.getGrant_type());
 			map.add("code", params.getCode());
