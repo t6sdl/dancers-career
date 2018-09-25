@@ -23,6 +23,7 @@
           <br>
           <input type="password" id="password" name="password">
         </div>
+      </div>
         <div>
           <input type="checkbox" id="remember-me" name="remember-me">
           <label for="remember-me">ログインしたままにする</label>
@@ -32,12 +33,11 @@
         </div>
       </form>
       <div>
-        <p><a th:href="@{/signin/forget-pwd}">パスワードをお忘れですか？</a></p>
+        <p class="linkblue"><a th:href="@{/signin/forget-pwd}">パスワードをお忘れですか？</a></p>
       </div>
       <div>
-        <p><a th:href="@{/signup}">アカウントをお持ちでない方はこちら</a></p>
+        <p class="linkblue"><a th:href="@{/signup}">アカウントをお持ちでない方はこちら</a></p>
       </div>
-    </div>
   </div>
   <!-- フッターもヘッダー同様です -->
   <footer th:replace="common/footer :: footer"></footer>
