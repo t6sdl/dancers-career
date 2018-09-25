@@ -1,0 +1,17 @@
+body{
+  font-family: "Avenir Next";
+  background-color: #f5f5f5;
+}
+
+.login-form{
+  background-color:#fff;
+  text-align: center;
+}
+
+h1{
+  text-align: center;
+}
+
+.hazard{
+  color: #d70035;
+}
