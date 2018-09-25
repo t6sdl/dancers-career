@@ -125,7 +125,7 @@ public class GeneralController {
 			map.add("client_id", params.getClient_id());
 			map.add("client_secret", params.getClient_secret());
 			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<MultiValueMap<String, String>>(map, headers);
-			AccessToken token = restTemplate.postForObject("https://notify-bot.line.me/oauth/token?{grant_type}{code}{redirect_uri}{client_id}{client_secret}", entity, AccessToken.class);
+			AccessToken token = restTemplate.postForObject("https://notify-bot.line.me/oauth/token", entity, AccessToken.class);
 			logger.info(token.getAccess_token());
 			accountService.changeLineAccessToken(securityService.findLoggedInEmail(), token.getAccess_token());
 			model.addAttribute("access_token", token.getAccess_token());
