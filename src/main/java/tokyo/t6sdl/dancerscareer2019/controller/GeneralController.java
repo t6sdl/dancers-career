@@ -116,7 +116,12 @@ public class GeneralController {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 			ParamForLineOAuth params = new ParamForLineOAuth("authorization_code", code, "https://dancers-career-2019-stg.herokuapp.com/line-notify/oauth/token", "hjr1WCDvkmDhaomQuOMwmD", "BmCuA1Ca9NPxbBCFhhp24QFr6cKc54sflO0Pl481eYy");
-			UriComponentsBuilder body = UriComponentsBuilder.fromUriString(params.toString());
+			UriComponentsBuilder body = UriComponentsBuilder.newInstance();
+			body.queryParam("grant_type", params.getGrant_type());
+			body.queryParam("code", params.getCode());
+			body.queryParam("redirect_uri", params.getRedirect_uri());
+			body.queryParam("client_id", params.getClient_id());
+			body.queryParam("client_secret", params.getClient_secret());
 			logger.info(body.build().encode().toUriString());
 			HttpEntity<String> entity = new HttpEntity<String>(body.build().encode().toUriString(), headers);
 			AccessToken token = restTemplate.postForObject("https://notify-bot.line.me/oauth/token", entity, AccessToken.class);
