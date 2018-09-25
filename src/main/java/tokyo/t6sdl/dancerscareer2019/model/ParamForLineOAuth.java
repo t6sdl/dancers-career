@@ -2,6 +2,8 @@ package tokyo.t6sdl.dancerscareer2019.model;
 
 import java.lang.reflect.Field;
 
+import org.springframework.web.util.UriComponentsBuilder;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -14,18 +16,19 @@ public class ParamForLineOAuth {
 	private final String client_id;
 	private final String client_secret;
 	
-	@Override
-	public String toString() {
-		StringBuilder str = new StringBuilder();
+	public String toUriString() {
+		UriComponentsBuilder uri = UriComponentsBuilder.newInstance();
 		for (Field field: this.getClass().getDeclaredFields()) {
 			try {
 				field.setAccessible(true);
-				str.append(field.getName()).append("=").append(field.get(this)).append("&");
+				uri.queryParam(field.getName(), field.get(this));
 			} catch (IllegalArgumentException | IllegalAccessException e) {
 				return null;
 			}
 		}
-		str.deleteCharAt(str.lastIndexOf("&"));
+		StringBuilder str = new StringBuilder();
+		str.append(uri.build().encode().toUriString());
+		str.deleteCharAt(str.indexOf("?"));
 		return str.toString();
 	}
 }
