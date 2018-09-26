@@ -4,9 +4,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -21,6 +25,7 @@ import tokyo.t6sdl.dancerscareer2019.repository.ExperienceRepository;
 @Repository
 public class JdbcExperienceRepository implements ExperienceRepository {
 	private final JdbcTemplate jdbcTemplate;
+	private static final Logger logger = LoggerFactory.getLogger(JdbcExperienceRepository.class);
 	
 	private List<String> stringToList(String str) {
 		List<String> list = new ArrayList<String>();
@@ -130,19 +135,52 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 
 	@Override
 	public List<Experience> findByPosition(List<String> position, String method) {
-		StringBuffer like = new StringBuffer();
-		for (int i = 0; i < position.size(); i++) {
-			like.append("position LIKE '%").append(position.get(i)).append("%'");
-			if (i < position.size() - 1) {
-				like.append(" " + method + " ");
-			}
+		if (position.contains("")) {
+			return null;
+		} else if (position.size() == 1) {
+			method = "OR";
 		}
-		return jdbcTemplate.query(
-				"SELECT * FROM experiences WHERE " + like + " ORDER BY experience_id DESC", (resultSet, i) -> {
-					Experience experience = new Experience();
-					this.adjustDataToExperience(experience, resultSet, false);
-					return experience;
-				});
+		List<List<Integer>> results = new ArrayList<List<Integer>>();
+		position.forEach(pos -> {
+			List<Integer> result = jdbcTemplate.query(
+					"SELECT (id) FROM senior_positions WHERE position = ?", (resultSet, i) -> {
+						return resultSet.getInt("id");
+					}, pos);
+			if (!(Objects.equals(result, null))) {
+				results.add(result);
+			}
+		});
+		logger.info("results[0]: " + results.get(0).toString() + " in findByPosition()");
+		Set<Integer> ids = new HashSet<Integer>();
+		switch (method) {
+		case "OR":
+			results.forEach(result -> {
+				ids.addAll(result);
+			});
+			break;
+		case "AND":
+			results.get(0).forEach(id -> {
+				boolean isRepeated = true;
+				for (int i = 1; i < results.size(); i++) {
+					if (!(results.get(i).contains(id))) {
+						isRepeated = false;
+						break;
+					}
+				}
+				if (isRepeated) {
+					ids.add(id);
+				}
+			});
+			break;
+		default:
+			return null;
+		}
+		logger.info("ids: " + ids.toString() + " in findByPosition()");
+		List<Experience> experiences = new ArrayList<Experience>();
+		ids.forEach(id -> {
+			experiences.add(this.findOneById(id, false, false));
+		});
+		return experiences;
 	}
 	
 	@Override
@@ -184,15 +222,19 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 
 	@Override
 	public void insert(Experience newExperience) {
-		String position = this.listToString(newExperience.getPosition());
 		String club = this.listToString(newExperience.getClub());
 		String offer = this.listToString(newExperience.getOffer());
 		jdbcTemplate.update(
-				"INSERT INTO experiences (last_name, first_name, kana_last_name, kana_first_name, sex, major, prefecture, university, faculty, department, graduation, academic_degree, position, club, offer) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				"INSERT INTO experiences (last_name, first_name, kana_last_name, kana_first_name, sex, major, prefecture, university, faculty, department, graduation, academic_degree, club, offer) "
+				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				newExperience.getLast_name(), newExperience.getFirst_name(), newExperience.getKana_last_name(), newExperience.getKana_first_name(), newExperience.getSex(), newExperience.getMajor(), 
-				newExperience.getPrefecture(), newExperience.getUniversity(), newExperience.getFaculty(), newExperience.getDepartment(), newExperience.getGraduation(), newExperience.getAcademic_degree(), position, club, offer);
+				newExperience.getPrefecture(), newExperience.getUniversity(), newExperience.getFaculty(), newExperience.getDepartment(), newExperience.getGraduation(), newExperience.getAcademic_degree(), club, offer);
 		Integer id = jdbcTemplate.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
+		if (!(newExperience.getPosition().contains(""))) {
+			newExperience.getPosition().forEach(position -> {
+				jdbcTemplate.update("INSERT INTO senior_positions VALUES (?, ?)", newExperience.getExperience_id(), position);
+			});
+		}
 		if (!(newExperience.getEs().get(0).toString().isEmpty())) {
 			List<Es> es = newExperience.getEs();
 			for (int i = 0; i < es.size(); i++) {
@@ -213,6 +255,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 
 	@Override
 	public void delete(int experience_id) {
+		jdbcTemplate.update("DELETE FROM senior_positions WHERE id = ?", experience_id);
 		jdbcTemplate.update("DELETE FROM es WHERE id = ?", experience_id);
 		jdbcTemplate.update("DELETE FROM interview WHERE id = ?", experience_id);
 		jdbcTemplate.update("DELETE FROM experiences WHERE experience_id = ?", experience_id);
@@ -220,14 +263,20 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 
 	@Override
 	public void update(Experience experience) {
-		String position = this.listToString(experience.getPosition());
 		String club = this.listToString(experience.getClub());
 		String offer = this.listToString(experience.getOffer());
 		jdbcTemplate.update(
 				"UPDATE experiences SET last_name = ?, first_name = ?, kana_last_name = ?, kana_first_name = ?, sex = ?, major = ?, "
-				+ "prefecture = ?, university = ?, faculty = ?, department = ?, graduation = ?, academic_degree = ?, position = ?, club = ?, offer = ? WHERE experience_id = ?",
+				+ "prefecture = ?, university = ?, faculty = ?, department = ?, graduation = ?, academic_degree = ?, club = ?, offer = ? WHERE experience_id = ?",
 				experience.getLast_name(), experience.getFirst_name(), experience.getKana_last_name(), experience.getKana_first_name(), experience.getSex(), experience.getMajor(), 
-				experience.getPrefecture(), experience.getUniversity(), experience.getFaculty(), experience.getDepartment(), experience.getGraduation(), experience.getAcademic_degree(), position, club, offer, experience.getExperience_id());
+				experience.getPrefecture(), experience.getUniversity(), experience.getFaculty(), experience.getDepartment(), experience.getGraduation(), experience.getAcademic_degree(), club, offer, experience.getExperience_id());
+		jdbcTemplate.update("DELETE FROM senior_positions WHERE id = ?", experience.getExperience_id());
+		if (!(experience.getPosition().contains(""))) {
+			experience.getPosition().forEach(position -> {
+				jdbcTemplate.update("INSERT INTO senior_positions VALUES (?, ?)", experience.getExperience_id(), position);
+			});
+		}
+
 	}
 	
 	@Override
@@ -304,9 +353,12 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		experience.setDepartment(resultSet.getString("department"));
 		experience.setGraduation(resultSet.getString("graduation"));
 		experience.setAcademic_degree(resultSet.getString("academic_degree"));
-		experience.setPosition(this.stringToList(resultSet.getString("position")));
 		experience.setClub(this.stringToList(resultSet.getString("club")));
 		experience.setOffer(this.stringToList(resultSet.getString("offer")));
+		List<String> position = jdbcTemplate.query("SELECT (position) FROM senior_positions WHERE id = ?", (posSet, i) -> {
+			return posSet.getString("position");
+		}, experience.getExperience_id());
+		experience.setPosition(position);
 		if (all) {
 			experience.setEs(jdbcTemplate.query(
 					"SELECT * FROM es WHERE id = ?", (esSet, j) -> {

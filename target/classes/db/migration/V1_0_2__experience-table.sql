@@ -9,18 +9,23 @@ CREATE TABLE experiences (
   sex ENUM('男性', '女性', '') NOT NULL DEFAULT '',
   major ENUM('文系', '理系', '') NOT NULL DEFAULT '',
   prefecture VARCHAR(30) NOT NULL DEFAULT '',
-  university VARCHAR(255) NOT NULL DEFAULT '',
-  faculty VARCHAR(255) NOT NULL DEFAULT '',
-  department VARCHAR(255) NOT NULL DEFAULT '',
+  university VARCHAR(50) NOT NULL DEFAULT '',
+  faculty VARCHAR(50) NOT NULL DEFAULT '',
+  department VARCHAR(50) NOT NULL DEFAULT '',
   graduation CHAR(4) NOT NULL DEFAULT '',
   academic_degree VARCHAR(15) NOT NULL DEFAULT '',
-  position VARCHAR(315) NOT NULL DEFAULT '',
   club VARCHAR(255) NOT NULL DEFAULT '',
   offer VARCHAR(315) NOT NULL DEFAULT '',
   PRIMARY KEY (experience_id),
   KEY ix_name (kana_last_name, kana_first_name),
   KEY ix_univ (university, faculty),
-  Key ix_pos (position)
+);
+
+CREATE TABLE senior_positions (
+  id INTEGER NOT NULL,
+  position ENUM('代表', '副代表', '会計', '広報', '渉外・営業', 'ジャンルリーダー', '振付師', '公演舞台監督', '公演総合演出', '公演ストーリー制作', '音響制作', '照明制作', '映像制作', '衣装制作', 'イベントオーガナイザー', '新歓係', '合宿統括', '役職なし', 'その他') NOT NULL,
+  PRIMARY KEY (id, position),
+  FOREIGN KEY (id) REFERENCES experiences (experience_id) ON DELETE CASCADE
 );
 
 CREATE TABLE es (
@@ -47,6 +52,9 @@ CREATE TABLE interview (
 INSERT INTO experiences (experience_id, prefecture, university, faculty, graduation, position) VALUES (1, '東京都', '東京大学', '理学部', '2018', '代表,会計,イベント企画');
 INSERT INTO experiences (experience_id, prefecture, university, faculty, graduation, position) VALUES (2, '東京都', '慶應義塾大学', '法学部', '2018', '公演総合演出,音響制作');
 INSERT INTO experiences (experience_id, prefecture, university, faculty, graduation, position) VALUES (3, '神奈川県', '横浜国立大学', '', '2018', '副代表');
+INSERT INTO senior_positions VALUES (1, '代表'), (1, '会計'), (1, 'イベントオーガナイザー');
+INSERT INTO senior_positions VALUES (2, '公演総合演出'), (2, '音響制作');
+INSERT INTO senior_positions VALUES (3, '副代表');
 INSERT INTO es VALUES
 (1, 1, '', '', '学生時代頑張ったことは何ですか？', '私はアルバイト先の飲食店で新メニューを提案し、売上を1.2倍に伸ばしました。\nバイト先は近年売上が減少しており、私はお世話になっているお店に貢献したいと思いました。\n調査したところ原因が客単価の減少にあると突き止めたので、客単価を上げる新メニューを企画することにしました。\n企画にあたっては、来店客100人にヒアリングしてニーズを探るとともに、競合の10店舗を調査することで、今のメニューに足りない要素を分析しました。\n結果、この新メニューは人気メニューとなり、売上向上に貢献することができました。', 'なし'),
 (1, 2, '', '内定', '過去最大の失敗とそれを乗り越えた経験について記述してください。', '高校の野球部で肘を怪我したことである。原因は間違ったトレーニング方法や計画性のない過度の練習であった。\nそれまで朝夕練習時間を設けるなど誰よりも努力していたが、方法を間違っていたと気付いた。\nそこから効率的な方法論を探してから計画を立てて実行する習慣が身についた。\nこれによって大学受験時に塾、予備校に通わずに自ら勉強法・暗記法を学び、勉強計画を立て、実行することで第一志望校に合格することができた。', 'これはこうしたほうがいい。'),
