@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <title>ログイン｜ダンサーズキャリア</title>
-    <link rel="stylesheet" type="text/css" href="../../static/css/main.css">
+  <link rel="stylesheet" type="text/css" href="../../static/css/main.css">
   <link rel="stylesheet" type="text/css" href="../../static/css/form.css">
 </head>
 
 <body>
   <header th:replace="common/header :: for-stranger"></header>
   <form th:action="@{/login}" method="post">
-      <h1>ログイン</h1>
-      <div class="login-form">
+    <h1>ログイン</h1>
+    <div class="login-form">
       <p class="hazard" th:if="${param.error}">メールアドレスまたはパスワードに誤りがあります</p>
       <div class="form-text">
         <div>
@@ -25,20 +25,20 @@
           <input type="password" id="password" name="password">
         </div>
       </div>
-        <div>
-          <input type="checkbox" id="remember-me" name="remember-me">
-          <label for="remember-me">ログインしたままにする</label>
-        </div>
-        <div>
-          <input type="submit" value="ログイン" class="button">
-        </div>
-      </form>
       <div>
-        <p class="linkblue"><a th:href="@{/signin/forget-pwd}">パスワードをお忘れですか？</a></p>
+        <input type="checkbox" id="remember-me" name="remember-me">
+        <label for="remember-me">ログインしたままにする</label>
       </div>
       <div>
-        <p class="linkblue"><a th:href="@{/signup}">アカウントをお持ちでない方はこちら</a></p>
+        <input type="submit" value="ログイン" class="button">
       </div>
+    </form>
+    <div>
+      <p class="linkblue"><a th:href="@{/signin/forget-pwd}">パスワードをお忘れですか？</a></p>
+    </div>
+    <div>
+      <p class="linkblue"><a th:href="@{/signup}">アカウントをお持ちでない方はこちら</a></p>
+    </div>
   </div>
   <!-- フッターもヘッダー同様です -->
   <footer th:replace="common/footer :: footer"></footer>
