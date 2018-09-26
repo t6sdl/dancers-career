@@ -49,9 +49,9 @@ CREATE TABLE interview (
   FOREIGN KEY (id) REFERENCES experiences (experience_id) ON DELETE CASCADE
 );
 
-INSERT INTO experiences (experience_id, prefecture, university, faculty, graduation, position) VALUES (1, '東京都', '東京大学', '理学部', '2018', '代表,会計,イベント企画');
-INSERT INTO experiences (experience_id, prefecture, university, faculty, graduation, position) VALUES (2, '東京都', '慶應義塾大学', '法学部', '2018', '公演総合演出,音響制作');
-INSERT INTO experiences (experience_id, prefecture, university, faculty, graduation, position) VALUES (3, '神奈川県', '横浜国立大学', '', '2018', '副代表');
+INSERT INTO experiences (experience_id, prefecture, university, faculty, graduation) VALUES (1, '東京都', '東京大学', '理学部', '2018');
+INSERT INTO experiences (experience_id, prefecture, university, faculty, graduation) VALUES (2, '東京都', '慶應義塾大学', '法学部', '2018');
+INSERT INTO experiences (experience_id, prefecture, university, faculty, graduation) VALUES (3, '神奈川県', '横浜国立大学', '', '2018');
 INSERT INTO senior_positions VALUES (1, '代表'), (1, '会計'), (1, 'イベントオーガナイザー');
 INSERT INTO senior_positions VALUES (2, '公演総合演出'), (2, '音響制作');
 INSERT INTO senior_positions VALUES (3, '副代表');
