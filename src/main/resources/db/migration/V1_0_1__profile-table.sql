@@ -32,6 +32,6 @@ INSERT INTO profiles VALUES ('user1@t6sdl.tokyo', '大阪', '太郎', 'オオサ
 INSERT INTO profiles VALUES ('user2@t6sdl.tokyo', '東京', '文子', 'トウキョウ', 'フミコ', '1998-02-03', '女性', '09032914272', '文系', '東京都', '上智大学', '総合人間科学部', '社会学科', '2020/03', '学部卒', '');
 INSERT INTO profiles VALUES ('user3@t6sdl.tokyo', '東京', '太郎', 'トウキョウ', 'タロウ', '1996-12-28', '男性', '09098127434', '文系', '東京都', '慶應義塾大学', '商学部', '商学科', '2020/03', '学部卒', '');
 
-INSERT INTO position VALUES ('user1@t6sdl.tokyo', '会計'), ('user1@t6sdl.tokyo', '公演総合演出'), ('user1@t6sdl.tokyo', 'イベントオーガナイザー');
-INSERT INTO position VALUES ('user2@t6sdl.tokyo', '会計'), ('user2@t6sdl.tokyo', '音響制作'), ('user2@t6sdl.tokyo', '合宿統括'), ('user2@t6sdl.tokyo', 'その他');
-INSERT INTO position VALUES ('user3@t6sdl.tokyo', '代表'), ('user3@t6sdl.tokyo', '公演舞台監督'), ('user3@t6sdl.tokyo', '公演総合演出');
+INSERT INTO positions VALUES ('user1@t6sdl.tokyo', '会計'), ('user1@t6sdl.tokyo', '公演総合演出'), ('user1@t6sdl.tokyo', 'イベントオーガナイザー');
+INSERT INTO positions VALUES ('user2@t6sdl.tokyo', '会計'), ('user2@t6sdl.tokyo', '音響制作'), ('user2@t6sdl.tokyo', '合宿統括'), ('user2@t6sdl.tokyo', 'その他');
+INSERT INTO positions VALUES ('user3@t6sdl.tokyo', '代表'), ('user3@t6sdl.tokyo', '公演舞台監督'), ('user3@t6sdl.tokyo', '公演総合演出');
