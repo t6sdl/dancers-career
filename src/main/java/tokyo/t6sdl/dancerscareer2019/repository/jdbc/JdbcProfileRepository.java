@@ -143,7 +143,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 					"SELECT (email) FROM positions WHERE position = ?", (resultSet, i) -> {
 						return resultSet.getString("email");
 					}, pos);
-			if (Objects.equals(result, null)) {
+			if (!(Objects.equals(result, null))) {
 				results.add(result);
 			}
 		});
