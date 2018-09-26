@@ -18,7 +18,6 @@ CREATE TABLE profiles (
   PRIMARY KEY (email),
   KEY ix_name (kana_last_name, kana_first_name),
   KEY ix_univ (university, faculty),
-  KEY ix_pos (position),
   FOREIGN KEY (email) REFERENCES accounts (email) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
