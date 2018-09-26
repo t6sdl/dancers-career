@@ -7,17 +7,22 @@ body{
 
 .button{
   display: inline-block;
-      padding: 1em 3em;
-      text-decoration: none;
-      color: #67c5ff;
-      border: solid 2px #67c5ff;
-      border-radius: 3px;
-      transition: .4s;
+  padding: 1em 3em;
+  text-decoration: none;
+  color: #67c5ff;
+  border: solid 2px #67c5ff;
+  border-radius: 3px;
+  transition: .4s;
 }
 
 .button:hover {
-    background: #67c5ff;
-    color: white;
+  background: #67c5ff;
+  color: white;
+}
+
+.form:focus{
+  box-shadow: 0 0 7px #3498db;
+  border: 1px solid #3498db;
 }
 /* ----- common section ----- */
 
