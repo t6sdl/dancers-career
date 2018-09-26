@@ -6,7 +6,6 @@
 <link rel="stylesheet" type="text/css" th:href="@{/css/common.css}">
 </head>
 <body>
-<!-- ヘッダーは共通モジュール(header.html)を挿入します -->
 <header th:replace="common/header :: for-stranger"></header>
 <!-- formタグ外は色々いじってくれて大丈夫です、formタグ内もdivタグ追加したりとかしてくれて大丈夫です -->
 <form th:action="@{/signup}" method="post" th:object="${signupForm}">
@@ -37,7 +36,6 @@
 <div>
 <p><a th:href="@{/signin}">アカウントをお持ちの方はこちら</a></p>
 </div>
-<!-- フッターもヘッダー同様です -->
 <footer th:replace="common/footer :: footer"></footer>
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
