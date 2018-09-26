@@ -1,11 +1,28 @@
-.message1{
-  color: #fff;
-  font-size: 30px;
+#message{
+  position:relative;
+
 }
 
-#top{
-  margin: 0px;
+#message h1{
+  position:absolute;
+  top: 70%;
+  left: 5%;
+  color: #fff;
+  font-size: 50px;
+  font-weight: bold;
 }
+
+#message img{
+  width: 100%;
+}
+
+#d1 img{
+  float: right;
+
+}
+
+
+
 
 .discription{
   margin: 50px;
