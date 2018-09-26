@@ -8,7 +8,7 @@
   top: 70%;
   left: 5%;
   color: #fff;
-  font-size: 50px;
+  font-size: 40px;
   font-weight: bold;
 }
 
@@ -16,14 +16,18 @@
   width: 100%;
 }
 
-#d1 img{
-  float: right;
+
+.discription{
+  margin: 200px;
 
 }
 
+.discription p{
+  color:#808080;
 
+}
 
-
-.discription{
-  margin: 50px;
+#d1 img{
+  float: right;
+  width: 50%;
 }
