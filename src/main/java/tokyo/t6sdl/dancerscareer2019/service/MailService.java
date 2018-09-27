@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Objects;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -17,11 +18,13 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
+import tokyo.t6sdl.dancerscareer2019.repository.AccountRepository;
 
 @RequiredArgsConstructor
 @Service
 public class MailService {
 	private final JavaMailSender mailSender;
+	private final AccountRepository accountRepository;
 	
 	public void sendMail(Mail mail) {
 		try {
@@ -37,6 +40,10 @@ public class MailService {
 			helper.addInline("twitter", new ClassPathResource("static/img/mails/twitter.jpg"));
 			helper.addInline("instagram", new ClassPathResource("static/img/mails/instagram.jpg"));
 			mailSender.send(message);
+			String lineAccessToken = accountRepository.findLineAccessTokenByEmail(mail.getTo());
+			if (!(Objects.equals(lineAccessToken, null))) {
+				this.sendLineNotify(lineAccessToken);
+			}
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
@@ -104,5 +111,9 @@ public class MailService {
 		default:
 			throw new IllegalArgumentException();
 		}
+	}
+	
+	private void sendLineNotify(String lineAccessToken) {
+		
 	}
 }

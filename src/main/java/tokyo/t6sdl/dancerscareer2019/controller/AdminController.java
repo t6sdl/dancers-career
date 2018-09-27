@@ -535,4 +535,9 @@ public class AdminController {
 		model.addAttribute("experiences", experiences);
 		return "admin/experiences/search";
 	}
+	
+	@RequestMapping(value="/mail", params="develop")
+	public String redirectToIndex() {
+		return "redirect:/admin";
+	}
 }

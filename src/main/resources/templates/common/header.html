@@ -2,33 +2,54 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
+
+<link rel="stylesheet" type="text/css" href="../../static/css/main.css">
+
 </head>
 <body>
-<!-- 自由にいじっちゃってください -->
+
 <header th:fragment="for-user"><!-- 普通のユーザー用のヘッダー -->
-<a th:href="@{/}"><img alt="ロゴ"></a><!-- ロゴ兼トップページへのリンク -->
-<div>
-<ul>
-<li><a th:href="@{/}">ダンサーズキャリアとは</a></li>
-<li><a th:href="@{/experiences?all}">ES/体験記を探す</a></li>
-<li><a th:href="@{/user}">マイページ</a></li>
-<li><a th:href="@{/logout}">ログアウト</a></li>
-</ul>
-</div>
+  <div class="header">
+    <a th:href="@{/}"><img alt="t6sdldc" src="../../static/img/logo1.png" class="header-logo"></a><!-- ロゴ兼トップページへのリンク -->
+    <div class="header-list">
+      <ul>
+        <li><a th:href="@{/}">ダンサーズキャリアとは</a></li>
+        <li><a th:href="@{/experiences?all}">ES/体験記を探す</a></li>
+        <li><a th:href="@{/user}">マイページ</a></li>
+      </ul>
+    </div>
+    <div class="logout">
+      <ul>
+        <li><a th:href="@{/logout}">ログアウト</a></li>
+      </ul>
+    </div>
+  </div>
 </header>
+
 <header th:fragment="for-admin"><!-- 管理者アカウント用のヘッダー -->
-<a th:href="@{/}"><img alt="ロゴ"></a><!-- ロゴ兼トップページへのリンク -->
-<div>
-<ul>
-<li><a th:href="@{/admin/search/students?all}">登録学生検索</a></li>
-<li><a th:href="@{/admin/experiences/new}">ES/体験記【登録】</a></li>
-<li><a th:href="@{/admin/search/experiences?all}">ES/体験記【検索】</a></li>
-<li><a th:href="@{/logout}">ログアウト</a></li>
-</ul>
-</div>
+  <div class="header">
+    <a th:href="@{/}"><img alt="t6sdldc" src="../../static/img/logo1.png" class="header-logo"></a><!-- ロゴ兼トップページへのリンク -->
+    <div class="header-list">
+      <ul>
+        <li><a th:href="@{/admin/search/students?all}">登録学生検索</a></li>
+        <li><a th:href="@{/admin/experiences/new}">ES/体験記【登録】</a></li>
+        <li><a th:href="@{/admin/search/experiences?all}">ES/体験記【検索】</a></li>
+        <li><a th:href="@{/admin/mail?develop}">メール作成（開発中）</a></li>
+      </ul>
+    </div>
+    <div class="logout">
+      <ul>
+        <li><a th:href="@{/logout}">ログアウト</a></li>
+      </ul>
+    </div>
+    </div>
+
 </header>
+
 <header th:fragment="for-stranger"><!-- ログインしていない人用のヘッダー -->
-<a th:href="@{/}"><img alt="ロゴ"></a><!-- ロゴ兼トップページへのリンク -->
-</header>
+  <div class="header">
+    <a th:href="@{/}"><img alt="t6sdldc" src="../../static/img/logo1.png" class="header-logo"></a><!-- ロゴ兼トップページへのリンク -->
+  </header>
+</div>
 </body>
 </html>
