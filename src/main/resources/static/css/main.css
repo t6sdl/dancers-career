@@ -1,7 +1,9 @@
 body{
   font-family: "Avenir Next";
   background-color: #fefefe;
+
   margin: 50px;
+
   padding: 0px;
 }
 
@@ -24,10 +26,7 @@ body{
   box-shadow: 0 0 7px #3498db;
   border: 1px solid #3498db;
 }
-
-
-/* --------------- common section --------------- */
-
+/* ----- common section ----- */
 
 li {
   list-style: none;
