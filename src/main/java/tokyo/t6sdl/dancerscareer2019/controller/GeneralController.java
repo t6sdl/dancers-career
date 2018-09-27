@@ -2,14 +2,14 @@ package tokyo.t6sdl.dancerscareer2019.controller;
 
 import java.util.Objects;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +21,6 @@ import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.httpresponse.NotFound404;
 import tokyo.t6sdl.dancerscareer2019.model.AccessToken;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
-import tokyo.t6sdl.dancerscareer2019.model.ParamForLineOAuth;
 import tokyo.t6sdl.dancerscareer2019.model.form.ContactForm;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 import tokyo.t6sdl.dancerscareer2019.service.MailService;
@@ -34,9 +33,7 @@ public class GeneralController {
 	private final MailService mailService;
 	private final PasswordEncoder passwordEncoder;
 	private final AccountService accountService;
-	
-	private static final Logger logger = LoggerFactory.getLogger(GeneralController.class);
-	
+		
 	@RequestMapping("")
 	public String isndex(Model model) {
 		if (securityService.findLoggedInAuthority()) {
@@ -94,35 +91,60 @@ public class GeneralController {
 	}
 	
 	@RequestMapping("/line-notify/apply")
-	public String applyLineNotify() {
+	public String applyLineNotify(@RequestParam(name="from") String from) {
 		String state = passwordEncoder.encode(securityService.findLoggedInEmail());
 		UriComponentsBuilder uri = UriComponentsBuilder.fromHttpUrl("https://notify-bot.line.me/oauth/authorize");
 		uri.queryParam("response_type", "code");
 		uri.queryParam("client_id", "hjr1WCDvkmDhaomQuOMwmD");
-		uri.queryParam("redirect_uri", "https://dancers-career-2019-stg.herokuapp.com/line-notify/oauth/authorize");
+		if (from.equals("mypage")) {
+			uri.queryParam("redirect_uri", "https://dancers-career-2019-stg.herokuapp.com/line-notify/oauth/to-mypage");
+		} else {
+			uri.queryParam("redirect_uri", "https://dancers-career-2019-stg.herokuapp.com/line-notify/oauth/to-index");
+		}
 		uri.queryParam("scope", "notify");
 		uri.queryParam("state", state);
-		logger.info("logger is working");
-		return "redirect:" + uri.toUriString();
+		return "redirect:" + uri.build().toUriString();
 	}
 	
-	@RequestMapping("/line-notify/oauth/authorize")
+	@RequestMapping("/line-notify/oauth/to-index")
 	public String postCode(@RequestParam(name="code", required=false) String code, @RequestParam(name="state", required=false) String state, @RequestParam(name="error", required=false) String error, @RequestParam(name="error_description", required=false) String error_description, Model model) {
-		logger.info("redirect is not wrong");
 		if (Objects.equals(code, null) || !(passwordEncoder.matches(securityService.findLoggedInEmail(), state))) {
 			throw new NotFound404();
 		} else {
 			RestTemplate restTemplate = new RestTemplate();
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-			ParamForLineOAuth params = new ParamForLineOAuth("authorization_code", code, "https://dancers-career-2019-stg.herokuapp.com/line-notify/oauth/token", "hjr1WCDvkmDhaomQuOMwmD", "BmCuA1Ca9NPxbBCFhhp24QFr6cKc54sflO0Pl481eYy");
-			HttpEntity<String> entity = new HttpEntity<String>(params.toString(), headers);
-			logger.info(params.toString());
+			MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+			map.add("grant_type", "authorization_code");
+			map.add("code", code);
+			map.add("redirect_uri", "https://dancers-career-2019-stg.herokuapp.com/line-notify/oauth/to-index");
+			map.add("client_id", "hjr1WCDvkmDhaomQuOMwmD");
+			map.add("client_secret", "QrBCVmNvn79CfHmHfnK8yG44oxloL0llEQpSP7ZmrDo");
+			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<MultiValueMap<String, String>>(map, headers);
 			AccessToken token = restTemplate.postForObject("https://notify-bot.line.me/oauth/token", entity, AccessToken.class);
-			logger.info(token.getAccess_token());
 			accountService.changeLineAccessToken(securityService.findLoggedInEmail(), token.getAccess_token());
-			model.addAttribute("access_token", token.getAccess_token());
-			return "index/index";
+			return "redirect:/";
+		}
+	}
+	
+	@RequestMapping("/line-notify/oauth/to-mypage")
+	public String postCodeFromMypage(@RequestParam(name="code", required=false) String code, @RequestParam(name="state", required=false) String state, @RequestParam(name="error", required=false) String error, @RequestParam(name="error_description", required=false) String error_description, Model model) {
+		if (Objects.equals(code, null) || !(passwordEncoder.matches(securityService.findLoggedInEmail(), state))) {
+			throw new NotFound404();
+		} else {
+			RestTemplate restTemplate = new RestTemplate();
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+			MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+			map.add("grant_type", "authorization_code");
+			map.add("code", code);
+			map.add("redirect_uri", "https://dancers-career-2019-stg.herokuapp.com/line-notify/oauth/to-mypage");
+			map.add("client_id", "hjr1WCDvkmDhaomQuOMwmD");
+			map.add("client_secret", "QrBCVmNvn79CfHmHfnK8yG44oxloL0llEQpSP7ZmrDo");
+			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+			AccessToken token = restTemplate.postForObject("https://notify-bot.line.me/oauth/token", entity, AccessToken.class);
+			accountService.changeLineAccessToken(securityService.findLoggedInEmail(), token.getAccess_token());
+			return "redirect:/user/account";
 		}
 	}
 }

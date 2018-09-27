@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 public class Profile {
-	public static final List<String> POSITION_LIST = Arrays.asList("代表", "副代表", "会計", "広報", "渉外・営業", "ジャンルリーダー", "振付師", "公演舞台監督", "公演総合演出", "公演ストーリー制作", "音響制作", "照明制作", "映像制作", "衣装制作", "イベント企画", "新歓企画", "合宿統括", "その他");
+	public static final List<String> POSITION_LIST = Arrays.asList("代表", "副代表", "会計", "広報", "渉外・営業", "ジャンルリーダー", "振付師", "公演舞台監督", "公演総合演出", "公演ストーリー制作", "音響制作", "照明制作", "映像制作", "衣装制作", "イベントオーガナイザー", "新歓係", "合宿統括", "役職なし", "その他");
 	
 	private String email;
 	private String last_name;
