@@ -3,32 +3,23 @@
 <head>
   <meta charset="utf-8">
   <title>ダンサーズキャリア - ダンサーのための就活サイト</title>
-  <link rel="stylesheet" type="text/css" href="../../static/css/main.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
 </head>
-
 <body>
-
   <header th:replace="common/header :: for-user"></header>
   <main>
-    <div>
-      <a class="button" th:href="@{/line-notify/apply}"><button>APPLY LINE NOTIFY</button></a>
-    </div>
-    <p>Access Token: <span th:text="${access_token == null ? '' : access_token}"></span></p>
-
     <section>
       <div id="message">
-        <img src="../../static/img/top1.jpg">
+        <img th:src="@{/img/top1.jpg}">
         <h1>人事がナットクするダンスの伝え方。</h1>
       </div>
     </section>
-
     <section>
       <section class="discription" id="d1">
         <h2>ダンサーズキャリアとは？</h2>
-        <img src="../../static/img/index2.jpg">
+        <img th:src="@{/img/index2.jpg}">
         <p>このサイトは、大学生ストリートダンサーのESと面接事例を集約したサイトです。</p>
       </section>
-
       <section class="discription">
         <h2>このサイトの使い方</h2>
         <div>
@@ -48,7 +39,6 @@
           <p>ESに書いたことを体験記を参考にしながらより詳細に言語化して面接で話す</p>
         </div>
       </section>
-
       <section class="discription">
         <h2>こんな人にオススメ</h2>
         <p>これから就活をするけど、ダンスの経験をどのように人事に伝えたら良いのか分からないダンサー</p>
