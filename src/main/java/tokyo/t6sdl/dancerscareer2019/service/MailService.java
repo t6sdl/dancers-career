@@ -37,6 +37,7 @@ public class MailService {
 			helper.setSubject(mail.getSubject());
 			this.readContent(mail);
 			helper.setText(mail.getContent(), true);
+			helper.addInline("logo", new ClassPathResource("static/img/mails/logo.jpg"));
 			helper.addInline("twitter", new ClassPathResource("static/img/mails/twitter.jpg"));
 			helper.addInline("instagram", new ClassPathResource("static/img/mails/instagram.jpg"));
 			mailSender.send(message);
