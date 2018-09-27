@@ -1,25 +1,18 @@
-<<<<<<< HEAD
-=======
 
 body{
   font-family: "Avenir Next";
   background-color: #f5f5f5;
 }
 
->>>>>>> c8fa4ab2b82fc1422f666077d60f88d204972c5d
 .login-form{
   background-color:#fff;
   text-align: center;
 }
 
 .form-text{
-<<<<<<< HEAD
-  color: #808080;
-=======
 
   color: #808080;
 
->>>>>>> c8fa4ab2b82fc1422f666077d60f88d204972c5d
 }
 
 h1{
@@ -31,15 +24,12 @@ h1{
 }
 
 
-<<<<<<< HEAD
-=======
 .button{
   background-color:#dee7ec;
   color:#889eab;
 }
 
 
->>>>>>> c8fa4ab2b82fc1422f666077d60f88d204972c5d
 .linkblue{
   color:#4682b4;
 }

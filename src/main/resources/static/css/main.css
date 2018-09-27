@@ -1,11 +1,7 @@
 body{
   font-family: "Avenir Next";
   background-color: #fefefe;
-<<<<<<< HEAD
-  margin: 50px;
-=======
   margin: 0px;
->>>>>>> c8fa4ab2b82fc1422f666077d60f88d204972c5d
   padding: 0px;
 }
 
@@ -28,10 +24,7 @@ body{
   box-shadow: 0 0 7px #3498db;
   border: 1px solid #3498db;
 }
-
-
-/* --------------- common section --------------- */
-
+/* ----- common section ----- */
 
 li {
   list-style: none;
@@ -71,10 +64,7 @@ li {
   padding: 20px 20px;
 }
 
-<<<<<<< HEAD
-=======
 
->>>>>>> c8fa4ab2b82fc1422f666077d60f88d204972c5d
 .footer {
   background-color: #409ecc;
   color: #fff;
