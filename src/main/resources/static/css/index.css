@@ -1,0 +1,33 @@
+#message{
+  position:relative;
+
+}
+
+#message h1{
+  position:absolute;
+  top: 70%;
+  left: 5%;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+#message img{
+  width: 100%;
+}
+
+
+.discription{
+  margin: 200px;
+
+}
+
+.discription p{
+  color:#808080;
+
+}
+
+#d1 img{
+  float: right;
+  width: 50%;
+}

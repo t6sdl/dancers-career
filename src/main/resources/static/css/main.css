@@ -1,0 +1,90 @@
+body{
+  font-family: "Avenir Next";
+  background-color: #fefefe;
+  margin: 0px;
+  padding: 0px;
+}
+
+.button{
+  display: inline-block;
+  padding: 1em 3em;
+  text-decoration: none;
+  color: #67c5ff;
+  border: solid 2px #67c5ff;
+  border-radius: 3px;
+  transition: .4s;
+}
+
+.button:hover {
+  background: #67c5ff;
+  color: white;
+}
+
+.form:focus{
+  box-shadow: 0 0 7px #3498db;
+  border: 1px solid #3498db;
+}
+/* ----- common section ----- */
+
+li {
+  list-style: none;
+}
+
+.header {
+  background: linear-gradient(-135deg, #409ecc, #a1d8e2);
+  color: #fff;
+  height: 80px;
+  /*
+  background: linear-gradient(-45deg, rgba(60, 145, 201, .7), rgba(156, 206, 209, .7)),url(../img/bg1.jpg);
+  background-size: cover;
+  */
+}
+
+.header-logo {
+  float: left;
+  padding: 20px 40px;
+  width: 200px;
+}
+
+.header-list {
+  float: left;
+}
+
+.logout{
+  float: right;
+}
+
+.header-list li {
+  float: left;
+  padding: 20px 20px;
+}
+
+.logout li {
+  float: right;
+  padding: 20px 20px;
+}
+
+
+.footer {
+  background-color: #409ecc;
+  color: #fff;
+  height: 120px;
+  padding: 40px;
+}
+
+.copy{
+  float: right;
+}
+
+.footer-logo {
+  float: left;
+  font-size: 32px;
+}
+
+.footer-list {
+  float: left;
+}
+
+.footer-list li {
+  padding-bottom: 20px;
+}

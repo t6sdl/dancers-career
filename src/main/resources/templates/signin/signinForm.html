@@ -1,28 +1,30 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8">
-<title>ログイン｜ダンサーズキャリア</title>
-<link rel="stylesheet" type="text/css" th:href="@{/css/common.css}">
-<link rel="stylesheet" type="text/css" th:href="@{/css/form.css}">
+
+  <meta charset="utf-8">
+  <title>ログイン｜ダンサーズキャリア</title>
+  <link rel="stylesheet" type="text/css" href="../../static/css/main.css">
+  <link rel="stylesheet" type="text/css" href="../../static/css/form.css">
+
 </head>
 
 <body>
   <header th:replace="common/header :: for-stranger"></header>
   <form th:action="@{/login}" method="post">
+    <h1>ログイン</h1>
     <div class="login-form">
-      <h1>ログイン</h1>
       <p class="hazard" th:if="${param.error}">メールアドレスまたはパスワードに誤りがあります</p>
       <div class="form-text">
         <div>
           <label th:for="email">メールアドレス</label>
           <br>
-          <input type="email" id="email" name="email">
+          <input type="email" id="email" name="email" class="form">
         </div>
         <div>
           <label th:for="password">パスワード</label>
           <br>
-          <input type="password" id="password" name="password">
+          <input type="password" id="password" name="password" class="form">
         </div>
       </div>
         <div>
@@ -34,12 +36,17 @@
         </div>
         </div>
       </form>
-      <div>
-        <p class="linkblue"><a th:href="@{/signin/forget-pwd}">パスワードをお忘れですか？</a></p>
-      </div>
-      <div>
-        <p class="linkblue"><a th:href="@{/signup}">アカウントをお持ちでない方はこちら</a></p>
-      </div>
+
+
+    </form>
+    <div>
+      <p class="linkblue"><a th:href="@{/signin/forget-pwd}">パスワードをお忘れですか？</a></p>
+    </div>
+    <div>
+      <p class="linkblue"><a th:href="@{/signup}">アカウントをお持ちでない方はこちら</a></p>
+    </div>
+  </div>
+
   <!-- フッターもヘッダー同様です -->
   <footer th:replace="common/footer :: footer"></footer>
   <script
