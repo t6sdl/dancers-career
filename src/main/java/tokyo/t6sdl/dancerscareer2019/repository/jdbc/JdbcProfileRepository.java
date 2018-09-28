@@ -12,8 +12,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -26,7 +24,6 @@ import tokyo.t6sdl.dancerscareer2019.repository.ProfileRepository;
 @Repository
 public class JdbcProfileRepository implements ProfileRepository {
 	private final JdbcTemplate jdbcTemplate;
-	private static final Logger logger = LoggerFactory.getLogger(JdbcProfileRepository.class);
 	
 	private List<String> stringToList(String str) {
 		List<String> list = new ArrayList<String>();
@@ -147,7 +144,6 @@ public class JdbcProfileRepository implements ProfileRepository {
 				results.add(result);
 			}
 		});
-		logger.info("results[0]: " + results.get(0).toString() + " in findByPosition()");
 		Set<String> emails = new HashSet<String>();
 		switch (method) {
 		case "OR":
@@ -172,7 +168,6 @@ public class JdbcProfileRepository implements ProfileRepository {
 		default:
 			return null;
 		}
-		logger.info("emails: " + emails.toString() + " in findByPosition()");
 		List<Profile> profiles = new ArrayList<Profile>();
 		emails.forEach(email -> {
 			profiles.add(this.findOneByEmail(email));
@@ -270,6 +265,5 @@ public class JdbcProfileRepository implements ProfileRepository {
 			return posSet.getString("position");
 		}, profile.getEmail());
 		profile.setPosition(position);
-		logger.info("position: " + position.toString() + " in adjustDataToProfile()");
 	}
 }
