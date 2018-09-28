@@ -11,7 +11,6 @@
 <main>
 <article>
 <h1>アカウント</h1>
-<!-- アカウント情報 -->
 <table>
 <tr>
 <th align="right">メールアドレス：</th>
@@ -20,6 +19,10 @@
 <tr>
 <th align="right">パスワード：</th>
 <td>非表示</td>
+</tr>
+<tr>
+<th align="right">LINE連携：</th>
+<td><span th:text="${isConnected ? '連携済' : '未連携'}"></span> <a th:href="${isConnected ? #request.requestURI + '/line-notify/revoke' : #request.requestURI + '/line-notify/apply?from=mypage'"><button th:text="${isConnected ? '解除' : '連携'}"></button></a></td>
 </tr>
 </table>
 <div><a th:href="@{/user/account/verify}"><button>修正する</button></a></div>

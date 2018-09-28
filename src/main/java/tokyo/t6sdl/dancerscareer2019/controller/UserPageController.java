@@ -25,6 +25,7 @@ import tokyo.t6sdl.dancerscareer2019.model.form.ProfileForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.VerificationForm;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 import tokyo.t6sdl.dancerscareer2019.service.ExperienceService;
+import tokyo.t6sdl.dancerscareer2019.service.LineNotifyService;
 import tokyo.t6sdl.dancerscareer2019.service.MailService;
 import tokyo.t6sdl.dancerscareer2019.service.ProfileService;
 import tokyo.t6sdl.dancerscareer2019.service.SecurityService;
@@ -40,6 +41,7 @@ public class UserPageController {
 	private final MailService mailService;
 	private final PasswordEncoder passwordEncoder;
 	private final HttpSession session;
+	private final LineNotifyService lineNotify;
 		
 	@RequestMapping()
 	public String getMypage(Model model) {
@@ -71,6 +73,17 @@ public class UserPageController {
 	@RequestMapping("/account")
 	public String getAccountInfo(Model model) {
 		String loggedInEmail = securityService.findLoggedInEmail();
+		String accessToken = accountService.getLineAccessTokenByEmail(loggedInEmail);
+		if (!(Objects.equals(accessToken, null))) {
+			int tokenStatus = lineNotify.getTokenStatus(accessToken);
+			if (tokenStatus == 200) {
+				model.addAttribute("isConnected", true);
+			} else {
+				model.addAttribute("isConnected", false);
+			}
+		} else {
+			model.addAttribute("isConnected", false);
+		}
 		model.addAttribute("email", loggedInEmail);
 		model.addAttribute("validEmail", securityService.findLoggedInValidEmail());
 		return "user/account/account";

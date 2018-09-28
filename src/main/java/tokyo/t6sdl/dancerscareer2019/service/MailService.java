@@ -25,6 +25,7 @@ import tokyo.t6sdl.dancerscareer2019.repository.AccountRepository;
 public class MailService {
 	private final JavaMailSender mailSender;
 	private final AccountRepository accountRepository;
+	private final LineNotifyService lineNotify;
 	
 	public void sendMail(Mail mail) {
 		try {
@@ -41,9 +42,9 @@ public class MailService {
 			helper.addInline("twitter", new ClassPathResource("static/img/mails/twitter.jpg"));
 			helper.addInline("instagram", new ClassPathResource("static/img/mails/instagram.jpg"));
 			mailSender.send(message);
-			String lineAccessToken = accountRepository.findLineAccessTokenByEmail(mail.getTo());
-			if (!(Objects.equals(lineAccessToken, null))) {
-				this.sendLineNotify(lineAccessToken);
+			String accessToken = accountRepository.findLineAccessTokenByEmail(mail.getTo());
+			if (!(Objects.equals(accessToken, null))) {
+				lineNotify.notifyMessage(accessToken, lineNotify.getMessage(mail));
 			}
 		} catch (MessagingException e) {
 			e.printStackTrace();
@@ -112,9 +113,5 @@ public class MailService {
 		default:
 			throw new IllegalArgumentException();
 		}
-	}
-	
-	private void sendLineNotify(String lineAccessToken) {
-		
 	}
 }
