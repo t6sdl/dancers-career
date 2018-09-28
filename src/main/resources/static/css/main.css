@@ -1,11 +1,10 @@
 body{
   font-family: "Avenir Next";
   background-color: #fefefe;
-
   margin: 50px;
-
   padding: 0px;
 }
+
 
 .button{
   display: inline-block;
