@@ -78,7 +78,11 @@ public class SignupController {
 		}
 		Profile newProfile = profileService.convertProfileFormIntoProfile(form);
 		profileService.register(newProfile, securityService.findLoggedInEmail());
-		return "redirect:/";
+		if (form.isApplyLineNotify()) {
+			return "redirect:/line-notify/apply?from=profile";
+		} else {
+			return "redirect:/";
+		}
 	}
 	
 	@RequestMapping("/verify-email")

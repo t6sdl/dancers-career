@@ -2,27 +2,20 @@ package tokyo.t6sdl.dancerscareer2019.controller;
 
 import java.util.Objects;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.httpresponse.NotFound404;
-import tokyo.t6sdl.dancerscareer2019.model.AccessToken;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.model.form.ContactForm;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
+import tokyo.t6sdl.dancerscareer2019.service.LineNotifyService;
 import tokyo.t6sdl.dancerscareer2019.service.MailService;
 import tokyo.t6sdl.dancerscareer2019.service.SecurityService;
 
@@ -33,6 +26,8 @@ public class GeneralController {
 	private final MailService mailService;
 	private final PasswordEncoder passwordEncoder;
 	private final AccountService accountService;
+	private final LineNotifyService lineNotify;
+	private final String CONTEXT_PATH = "https://dancers-career-2019-stg.herokuapp.com";
 		
 	@RequestMapping("")
 	public String isndex(Model model) {
@@ -92,18 +87,13 @@ public class GeneralController {
 	
 	@RequestMapping("/line-notify/apply")
 	public String applyLineNotify(@RequestParam(name="from") String from) {
-		String state = passwordEncoder.encode(securityService.findLoggedInEmail());
-		UriComponentsBuilder uri = UriComponentsBuilder.fromHttpUrl("https://notify-bot.line.me/oauth/authorize");
-		uri.queryParam("response_type", "code");
-		uri.queryParam("client_id", "hjr1WCDvkmDhaomQuOMwmD");
 		if (from.equals("mypage")) {
-			uri.queryParam("redirect_uri", "https://dancers-career-2019-stg.herokuapp.com/line-notify/oauth/to-mypage");
+			String uri = lineNotify.generateRedirectUriToGetCode(this.CONTEXT_PATH + "/line-notify/oauth/to-mypage");
+			return "redirect:" + uri;
 		} else {
-			uri.queryParam("redirect_uri", "https://dancers-career-2019-stg.herokuapp.com/line-notify/oauth/to-index");
+			String uri = lineNotify.generateRedirectUriToGetCode(this.CONTEXT_PATH + "/line-notify/oauth/to-index");
+			return "redirect:" + uri;
 		}
-		uri.queryParam("scope", "notify");
-		uri.queryParam("state", state);
-		return "redirect:" + uri.build().toUriString();
 	}
 	
 	@RequestMapping("/line-notify/oauth/to-index")
@@ -111,18 +101,9 @@ public class GeneralController {
 		if (Objects.equals(code, null) || !(passwordEncoder.matches(securityService.findLoggedInEmail(), state))) {
 			throw new NotFound404();
 		} else {
-			RestTemplate restTemplate = new RestTemplate();
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-			MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
-			map.add("grant_type", "authorization_code");
-			map.add("code", code);
-			map.add("redirect_uri", "https://dancers-career-2019-stg.herokuapp.com/line-notify/oauth/to-index");
-			map.add("client_id", "hjr1WCDvkmDhaomQuOMwmD");
-			map.add("client_secret", "QrBCVmNvn79CfHmHfnK8yG44oxloL0llEQpSP7ZmrDo");
-			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<MultiValueMap<String, String>>(map, headers);
-			AccessToken token = restTemplate.postForObject("https://notify-bot.line.me/oauth/token", entity, AccessToken.class);
-			accountService.changeLineAccessToken(securityService.findLoggedInEmail(), token.getAccess_token());
+			String accessToken = lineNotify.getAccessToken(code, this.CONTEXT_PATH + "/line-notify/oauth/to-index");
+			accountService.changeLineAccessToken(securityService.findLoggedInEmail(), accessToken);
+			lineNotify.notifyMessage(accessToken, lineNotify.getMessage(new Mail(null, Mail.SUB_WELCOME_TO_US)));
 			return "redirect:/";
 		}
 	}
@@ -132,19 +113,19 @@ public class GeneralController {
 		if (Objects.equals(code, null) || !(passwordEncoder.matches(securityService.findLoggedInEmail(), state))) {
 			throw new NotFound404();
 		} else {
-			RestTemplate restTemplate = new RestTemplate();
-			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-			MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
-			map.add("grant_type", "authorization_code");
-			map.add("code", code);
-			map.add("redirect_uri", "https://dancers-career-2019-stg.herokuapp.com/line-notify/oauth/to-mypage");
-			map.add("client_id", "hjr1WCDvkmDhaomQuOMwmD");
-			map.add("client_secret", "QrBCVmNvn79CfHmHfnK8yG44oxloL0llEQpSP7ZmrDo");
-			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<MultiValueMap<String, String>>(map, headers);
-			AccessToken token = restTemplate.postForObject("https://notify-bot.line.me/oauth/token", entity, AccessToken.class);
-			accountService.changeLineAccessToken(securityService.findLoggedInEmail(), token.getAccess_token());
+			String accessToken = lineNotify.getAccessToken(code, this.CONTEXT_PATH + "/line-notify/oauth/to-mypage");
+			accountService.changeLineAccessToken(securityService.findLoggedInEmail(), accessToken);
+			lineNotify.notifyMessage(accessToken, lineNotify.getMessage(new Mail(null, Mail.SUB_WELCOME_TO_US)));
 			return "redirect:/user/account";
 		}
+	}
+	
+	@RequestMapping("/line-notify/revoke")
+	public String revokeLineNotify() {
+		String loggedInEmail = securityService.findLoggedInEmail();
+		String accessToken = accountService.getLineAccessTokenByEmail(loggedInEmail);
+		lineNotify.revoke(accessToken);
+		accountService.changeLineAccessToken(loggedInEmail, null);
+		return "redirect:/user/account";
 	}
 }

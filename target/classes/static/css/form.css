@@ -9,7 +9,7 @@ body{
 }
 
 .form-text{
-  color: #c0c0c0;
+  color: #808080;
 }
 
 h1{
@@ -19,6 +19,7 @@ h1{
 .hazard{
   color: #d70035;
 }
+
 
 .button{
   background-color:#dee7ec;

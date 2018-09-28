@@ -3,10 +3,11 @@
 <head>
   <meta charset="utf-8">
   <title>ログイン｜ダンサーズキャリア</title>
-  <link rel="stylesheet" type="text/css" href="../../static/css/main.css">
-  <link rel="stylesheet" type="text/css" href="../../static/css/form.css">
-</head>
 
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}">
+
+</head>
 <body>
   <header th:replace="common/header :: for-stranger"></header>
   <form th:action="@{/login}" method="post">
@@ -33,24 +34,18 @@
     </div>
   </form>
 
+  <div>
+    <p class="linkblue"><a th:href="@{/signin/forget-pwd}">パスワードをお忘れですか？</a></p>
+  </div>
+  <div>
+    <p class="linkblue"><a th:href="@{/signup}">アカウントをお持ちでない方はこちら</a></p>
+  </div>
+  <footer th:replace="common/footer :: footer"></footer>
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script th:src="@{/js/submit.js}"></script>
 
-
-
-</form>
-<div>
-  <p class="linkblue"><a th:href="@{/signin/forget-pwd}">パスワードをお忘れですか？</a></p>
-</div>
-<div>
-  <p class="linkblue"><a th:href="@{/signup}">アカウントをお持ちでない方はこちら</a></p>
-</div>
-</div>
-
-<!-- フッターもヘッダー同様です -->
-<footer th:replace="common/footer :: footer"></footer>
-<script
-src="https://code.jquery.com/jquery-3.3.1.min.js"
-integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-crossorigin="anonymous"></script>
-<script th:src="@{/js/submit.js}"></script>
 </body>
 </html>
