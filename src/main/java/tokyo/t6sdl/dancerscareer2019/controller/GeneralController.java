@@ -122,8 +122,10 @@ public class GeneralController {
 	
 	@RequestMapping("/line-notify/revoke")
 	public String revokeLineNotify() {
-		String accessToken = accountService.getLineAccessTokenByEmail(securityService.findLoggedInEmail());
+		String loggedInEmail = securityService.findLoggedInEmail();
+		String accessToken = accountService.getLineAccessTokenByEmail(loggedInEmail);
 		lineNotify.revoke(accessToken);
+		accountService.changeLineAccessToken(loggedInEmail, null);
 		return "redirect:/user/account";
 	}
 }
