@@ -22,7 +22,7 @@
 </tr>
 <tr>
 <th align="right">LINE連携：</th>
-<td><span th:text="${isConnected ? '連携済' : '未連携'}"></span> <a th:href="${isConnected ? #request.requestURI + '/line-notify/revoke' : #request.requestURI + '/line-notify/apply?from=mypage'}"><button th:text="${isConnected ? '解除' : '連携'}"></button></a></td>
+<td><span th:text="${isConnected ? '連携済' : '未連携'}"></span> <a th:href="${isConnected} ? @{/line-notify/revoke} : @{/line-notify/apply?from=mypage}"><button th:text="${isConnected ? '解除する' : '連携する'}"></button></a></td>
 </tr>
 </table>
 <div><a th:href="@{/user/account/verify}"><button>修正する</button></a></div>
