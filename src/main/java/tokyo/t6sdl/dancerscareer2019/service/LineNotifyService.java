@@ -100,7 +100,7 @@ public class LineNotifyService {
 		case Mail.SUB_WELCOME_TO_US:
 			draft.append("ダンサーズキャリアにご登録いただきありがとうございます！\n\n");
 			if (!(securityService.findLoggedInValidEmail())) {
-				draft.append("↓下記のURLからメールアドレスの確認をお済ませください。\n\n");
+				draft.append("↓下記のURLからメールアドレスの確認をお済ませください。\n");
 				draft.append(Mail.URI_VERIFY_EMAIL + securityService.findLoggedInEmailToken() + "\n\n");
 			}
 			break;
@@ -115,7 +115,7 @@ public class LineNotifyService {
 		default:
 			break;
 		}
-		draft.append("↓マイページはこちら\n");
+		draft.append("\n↓マイページはこちら\n");
 		draft.append(Mail.CONTEXT_PATH + "/user\n\n");
 		draft.append("↓お問い合わせはこちらから\n");
 		draft.append(Mail.CONTEXT_PATH + "/about/contact");
