@@ -1,4 +1,4 @@
-.login-form{
+.form{
   background-color:#fff;
   text-align: center;
 }
@@ -23,4 +23,12 @@ h1{
 
 .linkblue{
   color:#4682b4;
+}
+
+#email{
+  text-align: left;
+}
+
+#password{
+  text-align: left;
 }
