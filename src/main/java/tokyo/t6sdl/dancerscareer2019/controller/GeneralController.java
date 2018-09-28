@@ -27,7 +27,7 @@ public class GeneralController {
 	private final PasswordEncoder passwordEncoder;
 	private final AccountService accountService;
 	private final LineNotifyService lineNotify;
-	private final String CONTEXT_PATH = "http://dancers-career-2019-stg.herokuapp.com";
+	private final String CONTEXT_PATH = "https://dancers-career-2019-stg.herokuapp.com";
 		
 	@RequestMapping("")
 	public String isndex(Model model) {
