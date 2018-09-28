@@ -59,4 +59,5 @@ public class ProfileForm {
 	private String academicDegree;
 	@NotEmpty
 	private List<String> position;
+	private boolean applyLineNotify;
 }
