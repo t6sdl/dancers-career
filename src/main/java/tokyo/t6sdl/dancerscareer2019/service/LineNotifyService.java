@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -49,35 +50,47 @@ public class LineNotifyService {
 	}
 	
 	public int notifyMessage(String accessToken, String message) {
-		RestTemplate restTemplate = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-		headers.set("Authorization", "Bearer " + accessToken);
-		MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
-		map.add("message", message);
-		HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<MultiValueMap<String, String>>(map, headers);
-		Notify notify = restTemplate.postForObject("https://notify-api.line.me/api/notify", entity, Notify.class);
-		return notify.getStatus();
+		try {
+			RestTemplate restTemplate = new RestTemplate();
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+			headers.set("Authorization", "Bearer " + accessToken);
+			MultiValueMap<String, String> map = new LinkedMultiValueMap<String, String>();
+			map.add("message", message);
+			HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+			Notify notify = restTemplate.postForObject("https://notify-api.line.me/api/notify", entity, Notify.class);
+			return notify.getStatus();
+		} catch (HttpClientErrorException e) {
+			return e.getRawStatusCode();
+		}
 	}
 	
 	public int getTokenStatus(String accessToken) {
-		RestTemplate restTemplate = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("Authorization", "Bearer " + accessToken);
-		HttpEntity<?> entity = new HttpEntity<Object>(headers);
-		ResponseEntity<Notify> response = restTemplate.exchange("https://notify-api.line.me/api/status", HttpMethod.GET, entity, Notify.class);
-		Notify notify = response.getBody();
-		return notify.getStatus();
+		try {
+			RestTemplate restTemplate = new RestTemplate();
+			HttpHeaders headers = new HttpHeaders();
+			headers.set("Authorization", "Bearer " + accessToken);
+			HttpEntity<?> entity = new HttpEntity<Object>(headers);
+			ResponseEntity<Notify> response = restTemplate.exchange("https://notify-api.line.me/api/status", HttpMethod.GET, entity, Notify.class);
+			Notify notify = response.getBody();
+			return notify.getStatus();
+		} catch (HttpClientErrorException e) {
+			return e.getRawStatusCode();
+		}
 	}
 	
 	public int revoke(String accessToken) {
-		RestTemplate restTemplate = new RestTemplate();
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-		headers.set("Authorization", "Bearer " + accessToken);
-		HttpEntity<?> entity = new HttpEntity<Object>(headers);
-		Notify notify = restTemplate.postForObject("https://notify-api.line.me/api/revoke", entity, Notify.class);
-		return notify.getStatus();
+		try {
+			RestTemplate restTemplate = new RestTemplate();
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+			headers.set("Authorization", "Bearer " + accessToken);
+			HttpEntity<?> entity = new HttpEntity<Object>(headers);
+			Notify notify = restTemplate.postForObject("https://notify-api.line.me/api/revoke", entity, Notify.class);
+			return notify.getStatus();
+		} catch (HttpClientErrorException e) {
+			return e.getRawStatusCode();
+		}
 	}
 	
 	public String getMessage(Mail mail) {
