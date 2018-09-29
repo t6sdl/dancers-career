@@ -46,21 +46,26 @@ public class SignupController {
 		if (result.hasErrors()) {
 			return "signup/signupForm";
 		}
-		log.info("start controller's executing");
+		long start = System.currentTimeMillis();
+		log.info("start controller's executing at: " + (System.currentTimeMillis() - start));
 		Account newAccount = new Account();
 		newAccount.setEmail(form.getEmail());
+		log.info("start creating account at: " + (System.currentTimeMillis() - start));
 		accountService.create(newAccount, form.getPassword());
+		log.info("finish creating account at: " + (System.currentTimeMillis() - start));
+		log.info("start creating email token at: " + (System.currentTimeMillis() - start));
 		String emailToken = accountService.createEmailToken(form.getEmail());
 		if (emailToken == "") {
 			accountService.delete(form.getEmail());
 			return "redirect:/signup?error";
 		}
+		log.info("finish creating email token at: " + (System.currentTimeMillis() - start));
 		Mail mail = new Mail(form.getEmail(), Mail.SUB_WELCOME_TO_US);
 		mail.setUrl(Mail.URI_VERIFY_EMAIL + emailToken);
 		emailSender.sendMail(mail);
 		session.setAttribute("rawPassword", form.getPassword());
 		securityService.autoLogin(form.getEmail(), form.getPassword());
-		log.info("finish controller's executing");
+		log.info("finish controller's executing at: " + (System.currentTimeMillis() - start));
 		return "redirect:/signup/profile";
 	}
 	
