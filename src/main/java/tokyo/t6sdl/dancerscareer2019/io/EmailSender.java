@@ -25,7 +25,7 @@ import tokyo.t6sdl.dancerscareer2019.repository.AccountRepository;
 @Async
 @RequiredArgsConstructor
 @Component
-public class MailSender {
+public class EmailSender {
 	private final JavaMailSender mailSender;
 	private final AccountRepository accountRepository;
 	private final LineNotifyManager lineNotify;

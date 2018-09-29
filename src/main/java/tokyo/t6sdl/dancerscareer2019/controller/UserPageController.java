@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.io.LineNotifyManager;
-import tokyo.t6sdl.dancerscareer2019.io.MailSender;
+import tokyo.t6sdl.dancerscareer2019.io.EmailSender;
 import tokyo.t6sdl.dancerscareer2019.model.Experience;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.model.Profile;
@@ -38,7 +38,7 @@ public class UserPageController {
 	private final AccountService accountService;
 	private final ProfileService profileService;
 	private final ExperienceService experienceService;
-	private final MailSender mailSender;
+	private final EmailSender emailSender;
 	private final PasswordEncoder passwordEncoder;
 	private final HttpSession session;
 	private final LineNotifyManager lineNotify;
@@ -155,7 +155,7 @@ public class UserPageController {
 		accountService.changeValidEmail(form.getEmail(), false);
 		Mail mail = new Mail(form.getEmail(), Mail.SUB_VERIFY_EMAIL);
 		mail.setUrl(Mail.URI_VERIFY_EMAIL + emailToken);
-		mailSender.sendMail(mail);
+		emailSender.sendMail(mail);
 		String loggedInRawPassword = session.getAttribute("rawPassword").toString();
 		securityService.autoLogin(form.getEmail(), loggedInRawPassword);
 		return "redirect:/user/account";

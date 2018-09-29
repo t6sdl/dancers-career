@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.httpresponse.NotFound404;
 import tokyo.t6sdl.dancerscareer2019.io.LineNotifyManager;
-import tokyo.t6sdl.dancerscareer2019.io.MailSender;
+import tokyo.t6sdl.dancerscareer2019.io.EmailSender;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.model.form.ContactForm;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
@@ -23,11 +23,11 @@ import tokyo.t6sdl.dancerscareer2019.service.SecurityService;
 @Controller
 public class GeneralController {
 	private final SecurityService securityService;
-	private final MailSender mailSender;
+	private final EmailSender emailSender;
 	private final PasswordEncoder passwordEncoder;
 	private final AccountService accountService;
 	private final LineNotifyManager lineNotify;
-	private final String CONTEXT_PATH = "https://dancers-career-2019-stg.herokuapp.com";
+	private final String CONTEXT_PATH = Mail.CONTEXT_PATH;
 		
 	@RequestMapping("")
 	public String isndex(Model model) {
@@ -71,9 +71,9 @@ public class GeneralController {
 	public String postContact(ContactForm contactForm, Model model) {
 		Mail mail = new Mail(Mail.TO_SUPPORT, Mail.SUB_CONTACT);
 		mail.setContent(contactForm.getContent());
-		mailSender.receiveMail(mail);
+		emailSender.receiveMail(mail);
 		Mail reply = new Mail(contactForm.getFrom(), Mail.SUB_REPLY_TO_CONTACT);
-		mailSender.sendMail(reply);
+		emailSender.sendMail(reply);
 		if (securityService.findLoggedInEmail().equals("")) {
 			model.addAttribute("header", "for-stranger");
 		} else if (securityService.findLoggedInAuthority()) {
