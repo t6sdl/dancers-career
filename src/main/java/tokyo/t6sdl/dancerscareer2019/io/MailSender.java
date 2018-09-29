@@ -14,20 +14,25 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.repository.AccountRepository;
 
+@Slf4j
 @Async
 @RequiredArgsConstructor
+@Component
 public class MailSender {
 	private final JavaMailSender mailSender;
 	private final AccountRepository accountRepository;
 	private final LineNotifyManager lineNotify;
-	
+		
 	public void sendMail(Mail mail) {
 		try {
+			log.info("start sending mail");
 			MimeMessage message = mailSender.createMimeMessage();
 			message.setHeader("Content-type", "text/html");
 			message.setHeader("Errors-To", Mail.TO_ERROR);
@@ -38,6 +43,7 @@ public class MailSender {
 			this.readContent(mail);
 			helper.setText(mail.getContent(), true);
 			mailSender.send(message);
+			log.info("finish sending mail");
 			String accessToken = accountRepository.findLineAccessTokenByEmail(mail.getTo());
 			if (!(Objects.equals(accessToken, null))) {
 				lineNotify.notifyMessage(accessToken, lineNotify.getMessage(mail));
