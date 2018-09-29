@@ -53,16 +53,13 @@ public class SignupController {
 		log.info("start creating account at: " + (System.currentTimeMillis() - start));
 		accountService.create(newAccount, form.getPassword());
 		log.info("finish creating account at: " + (System.currentTimeMillis() - start));
-		log.info("start creating email token at: " + (System.currentTimeMillis() - start));
-		String emailToken = accountService.createEmailToken(form.getEmail());
-		if (emailToken.equals("")) {
-			accountService.delete(form.getEmail());
+		Mail mail = new Mail(form.getEmail(), Mail.SUB_WELCOME_TO_US);
+		try {
+			emailSender.sendMailWithToken(mail);
+		} catch (Exception e) {
+			accountService.delete(mail.getTo());
 			return "redirect:/signup?error";
 		}
-		log.info("finish creating email token at: " + (System.currentTimeMillis() - start));
-		Mail mail = new Mail(form.getEmail(), Mail.SUB_WELCOME_TO_US);
-		mail.setUrl(Mail.URI_VERIFY_EMAIL + emailToken);
-		emailSender.sendMail(mail);
 		session.setAttribute("rawPassword", form.getPassword());
 		securityService.autoLogin(form.getEmail(), form.getPassword());
 		log.info("finish controller's executing at: " + (System.currentTimeMillis() - start));
@@ -114,13 +111,12 @@ public class SignupController {
 	@RequestMapping("/reverify-email")
 	public String getReverifyEmail() {
 		String loggedInEmail = securityService.findLoggedInEmail();
-		String emailToken = accountService.createEmailToken(loggedInEmail);
-		if (emailToken.equals("")) {
+		Mail mail = new Mail(loggedInEmail, Mail.SUB_VERIFY_EMAIL);
+		try {
+			emailSender.sendMailWithToken(mail);
+		} catch (Exception e) {
 			return "redirect:/user/error";
 		}
-		Mail mail = new Mail(loggedInEmail, Mail.SUB_VERIFY_EMAIL);
-		mail.setUrl(Mail.URI_VERIFY_EMAIL + emailToken);
-		emailSender.sendMail(mail);
 		return "redirect:/user/account/help";
 	}
 }
