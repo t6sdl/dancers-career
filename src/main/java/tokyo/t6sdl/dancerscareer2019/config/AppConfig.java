@@ -7,6 +7,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -14,6 +15,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+
+import tokyo.t6sdl.dancerscareer2019.io.LineNotifyManager;
+import tokyo.t6sdl.dancerscareer2019.io.MailSender;
+import tokyo.t6sdl.dancerscareer2019.repository.AccountRepository;
 
 @EnableAsync
 @Configuration
@@ -54,5 +59,11 @@ public class AppConfig implements WebMvcConfigurer {
 		config.addDataSourceProperty("characterEncoding", "utf-8");
 		HikariDataSource dataSource = new HikariDataSource(config);
 		return dataSource;
+	}
+	
+	@Bean
+	@Autowired
+	public MailSender mailSender(JavaMailSender javaMailSender, AccountRepository accountRepository, LineNotifyManager lineNotifyManager) {
+		return new MailSender(javaMailSender, accountRepository, lineNotifyManager);
 	}
 }
