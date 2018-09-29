@@ -1,4 +1,4 @@
-package tokyo.t6sdl.dancerscareer2019.service;
+package tokyo.t6sdl.dancerscareer2019.io;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,7 +14,6 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
@@ -22,11 +21,10 @@ import tokyo.t6sdl.dancerscareer2019.repository.AccountRepository;
 
 @Async
 @RequiredArgsConstructor
-@Service
-public class MailService {
+public class MailSender {
 	private final JavaMailSender mailSender;
 	private final AccountRepository accountRepository;
-	private final LineNotifyService lineNotify;
+	private final LineNotifyManager lineNotify;
 	
 	public void sendMail(Mail mail) {
 		try {

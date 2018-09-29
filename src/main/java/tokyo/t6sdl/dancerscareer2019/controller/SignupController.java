@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.httpresponse.NotFound404;
+import tokyo.t6sdl.dancerscareer2019.io.MailSender;
 import tokyo.t6sdl.dancerscareer2019.model.Account;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.model.Profile;
 import tokyo.t6sdl.dancerscareer2019.model.form.ProfileForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.SignupForm;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
-import tokyo.t6sdl.dancerscareer2019.service.MailService;
 import tokyo.t6sdl.dancerscareer2019.service.ProfileService;
 import tokyo.t6sdl.dancerscareer2019.service.SecurityService;
 
@@ -30,7 +30,7 @@ public class SignupController {
 	private final AccountService accountService;
 	private final SecurityService securityService;
 	private final ProfileService profileService;
-	private final MailService mailService;
+	private final MailSender mailSender;
 	private final HttpSession session;
 	
 	@GetMapping
@@ -54,7 +54,7 @@ public class SignupController {
 		}
 		Mail mail = new Mail(form.getEmail(), Mail.SUB_WELCOME_TO_US);
 		mail.setUrl(Mail.URI_VERIFY_EMAIL + emailToken);
-		mailService.sendMail(mail);
+		mailSender.sendMail(mail);
 		session.setAttribute("rawPassword", form.getPassword());
 		securityService.autoLogin(form.getEmail(), form.getPassword());
 		return "redirect:/signup/profile";
@@ -111,7 +111,7 @@ public class SignupController {
 		}
 		Mail mail = new Mail(loggedInEmail, Mail.SUB_VERIFY_EMAIL);
 		mail.setUrl(Mail.URI_VERIFY_EMAIL + emailToken);
-		mailService.sendMail(mail);
+		mailSender.sendMail(mail);
 		return "redirect:/user/account/help";
 	}
 }
