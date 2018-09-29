@@ -55,7 +55,7 @@ public class SignupController {
 		log.info("finish creating account at: " + (System.currentTimeMillis() - start));
 		log.info("start creating email token at: " + (System.currentTimeMillis() - start));
 		String emailToken = accountService.createEmailToken(form.getEmail());
-		if (emailToken == "") {
+		if (emailToken.equals("")) {
 			accountService.delete(form.getEmail());
 			return "redirect:/signup?error";
 		}
@@ -115,7 +115,7 @@ public class SignupController {
 	public String getReverifyEmail() {
 		String loggedInEmail = securityService.findLoggedInEmail();
 		String emailToken = accountService.createEmailToken(loggedInEmail);
-		if (emailToken == "") {
+		if (emailToken.equals("")) {
 			return "redirect:/user/error";
 		}
 		Mail mail = new Mail(loggedInEmail, Mail.SUB_VERIFY_EMAIL);
