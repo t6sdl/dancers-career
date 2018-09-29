@@ -147,15 +147,14 @@ public class UserPageController {
 		}
 		String loggedInEmail = securityService.findLoggedInEmail();
 		accountService.changeEmail(loggedInEmail, form.getEmail());
-		String emailToken = accountService.createEmailToken(form.getEmail());
-		if (emailToken == "") {
+		Mail mail = new Mail(form.getEmail(), Mail.SUB_VERIFY_EMAIL);
+		try {
+			emailSender.sendMailWithToken(mail);
+		} catch (Exception e) {
 			accountService.changeEmail(form.getEmail(), loggedInEmail);
 			return "redirect:/user/error";
 		}
 		accountService.changeValidEmail(form.getEmail(), false);
-		Mail mail = new Mail(form.getEmail(), Mail.SUB_VERIFY_EMAIL);
-		mail.setUrl(Mail.URI_VERIFY_EMAIL + emailToken);
-		emailSender.sendMail(mail);
 		String loggedInRawPassword = session.getAttribute("rawPassword").toString();
 		securityService.autoLogin(form.getEmail(), loggedInRawPassword);
 		return "redirect:/user/account";

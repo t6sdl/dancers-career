@@ -56,10 +56,14 @@ public class SigninController {
 		if (result.hasErrors()) {
 			return "signin/forgetPassword";
 		}
-		String passwordToken = accountService.createPasswordToken(form.getEmail());
 		Mail mail = new Mail(form.getEmail(), Mail.SUB_RESET_PWD);
-		mail.setUrl(Mail.URI_RESET_PWD + passwordToken);
-		emailSender.sendMail(mail);
+		try {
+			emailSender.sendMailWithToken(mail);
+		} catch (Exception e) {
+			model.addAttribute("error", true);
+			return "signin/sentEmail";
+		}
+		model.addAttribute("error", false);
 		return "signin/sentEmail";
 	}
 		

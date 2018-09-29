@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
-import tokyo.t6sdl.dancerscareer2019.repository.AccountRepository;
+import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 
 @Slf4j
 @Async
@@ -27,7 +27,7 @@ import tokyo.t6sdl.dancerscareer2019.repository.AccountRepository;
 @Component
 public class EmailSender {
 	private final JavaMailSender mailSender;
-	private final AccountRepository accountRepository;
+	private final AccountService accountService;
 	private final LineNotifyManager lineNotify;
 		
 	public void sendMail(Mail mail) {
@@ -44,7 +44,49 @@ public class EmailSender {
 			helper.setText(mail.getContent(), true);
 			mailSender.send(message);
 			log.info("finish sending mail");
-			String accessToken = accountRepository.findLineAccessTokenByEmail(mail.getTo());
+			String accessToken = accountService.getLineAccessTokenByEmail(mail.getTo());
+			if (!(Objects.equals(accessToken, null))) {
+				lineNotify.notifyMessage(accessToken, lineNotify.getMessage(mail));
+			}
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendMailWithToken(Mail mail) throws Exception {
+		try {
+			log.info("start sending mail with token");
+			String token;
+			switch (mail.getSubject()) {
+			case Mail.SUB_WELCOME_TO_US:
+			case Mail.SUB_VERIFY_EMAIL:
+				token = accountService.createEmailToken(mail.getTo());
+				mail.setUrl(Mail.URI_VERIFY_EMAIL + token);
+				break;
+			case Mail.SUB_RESET_PWD:
+				token = accountService.createPasswordToken(mail.getTo());
+				mail.setUrl(Mail.URI_RESET_PWD + token);
+				break;
+			default:
+				throw new Exception();
+			}
+			if (token.isEmpty()) {
+				throw new Exception();
+			}
+			MimeMessage message = mailSender.createMimeMessage();
+			message.setHeader("Content-type", "text/html");
+			message.setHeader("Errors-To", Mail.TO_ERROR);
+			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+			helper.setFrom(Mail.TO_SUPPORT, Mail.NAME_OF_SUPPORT);
+			helper.setTo(mail.getTo());
+			helper.setSubject(mail.getSubject());
+			this.readContent(mail);
+			helper.setText(mail.getContent(), true);
+			mailSender.send(message);
+			log.info("finish sending mail with token");
+			String accessToken = accountService.getLineAccessTokenByEmail(mail.getTo());
 			if (!(Objects.equals(accessToken, null))) {
 				lineNotify.notifyMessage(accessToken, lineNotify.getMessage(mail));
 			}
