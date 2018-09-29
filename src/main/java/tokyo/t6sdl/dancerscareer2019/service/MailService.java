@@ -11,7 +11,6 @@ import java.util.Objects;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -38,9 +37,6 @@ public class MailService {
 			helper.setSubject(mail.getSubject());
 			this.readContent(mail);
 			helper.setText(mail.getContent(), true);
-			helper.addInline("logo", new ClassPathResource("static/img/mails/logo.jpg"));
-			helper.addInline("twitter", new ClassPathResource("static/img/mails/twitter.jpg"));
-			helper.addInline("instagram", new ClassPathResource("static/img/mails/instagram.jpg"));
 			mailSender.send(message);
 			String accessToken = accountRepository.findLineAccessTokenByEmail(mail.getTo());
 			if (!(Objects.equals(accessToken, null))) {
