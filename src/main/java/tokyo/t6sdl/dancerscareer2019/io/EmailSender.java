@@ -17,11 +17,9 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 
-@Slf4j
 @Async
 @RequiredArgsConstructor
 @Component
@@ -32,7 +30,6 @@ public class EmailSender {
 		
 	public void sendMail(Mail mail) {
 		try {
-			log.info("start sending mail");
 			MimeMessage message = mailSender.createMimeMessage();
 			message.setHeader("Content-type", "text/html");
 			message.setHeader("Errors-To", Mail.TO_ERROR);
@@ -43,7 +40,6 @@ public class EmailSender {
 			this.readContent(mail);
 			helper.setText(mail.getContent(), true);
 			mailSender.send(message);
-			log.info("finish sending mail");
 			String accessToken = accountService.getLineAccessTokenByEmail(mail.getTo());
 			if (!(Objects.equals(accessToken, null))) {
 				lineNotify.notifyMessage(accessToken, lineNotify.getMessage(mail));
@@ -57,7 +53,6 @@ public class EmailSender {
 	
 	public void sendMailWithToken(Mail mail) throws Exception {
 		try {
-			log.info("start sending mail with token");
 			String token;
 			switch (mail.getSubject()) {
 			case Mail.SUB_WELCOME_TO_US:
@@ -85,7 +80,6 @@ public class EmailSender {
 			this.readContent(mail);
 			helper.setText(mail.getContent(), true);
 			mailSender.send(message);
-			log.info("finish sending mail with token");
 			String accessToken = accountService.getLineAccessTokenByEmail(mail.getTo());
 			if (!(Objects.equals(accessToken, null))) {
 				lineNotify.notifyMessage(accessToken, lineNotify.getMessage(mail));
