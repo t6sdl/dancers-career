@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import tokyo.t6sdl.dancerscareer2019.httpresponse.NotFound404;
-import tokyo.t6sdl.dancerscareer2019.io.MailSender;
+import tokyo.t6sdl.dancerscareer2019.io.EmailSender;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.model.form.EmailForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.PasswordForm;
@@ -20,11 +20,11 @@ import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 @RequestMapping("/signin")
 public class SigninController {
 	private final AccountService accountService;
-	private final MailSender mailSender;
+	private final EmailSender emailSender;
 	
-	public SigninController(AccountService accountService, MailSender mailSender) {
+	public SigninController(AccountService accountService, EmailSender emailSender) {
 		this.accountService = accountService;
-		this.mailSender = mailSender;
+		this.emailSender = emailSender;
 	}
 	
 	@GetMapping
@@ -59,7 +59,7 @@ public class SigninController {
 		String passwordToken = accountService.createPasswordToken(form.getEmail());
 		Mail mail = new Mail(form.getEmail(), Mail.SUB_RESET_PWD);
 		mail.setUrl(Mail.URI_RESET_PWD + passwordToken);
-		mailSender.sendMail(mail);
+		emailSender.sendMail(mail);
 		return "signin/sentEmail";
 	}
 		
