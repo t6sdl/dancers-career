@@ -121,7 +121,7 @@ public class AccountService implements UserDetailsService {
 	private String createAccountToken() {
 		try {
 			SecureRandom random = SecureRandom.getInstanceStrong();
-			byte[] bytes = new byte[20];
+			byte[] bytes = new byte[16];
 			random.nextBytes(bytes);
 			StringBuffer s = new StringBuffer();
 			for (int i = 0; i < bytes.length; i++) {
