@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import tokyo.t6sdl.dancerscareer2019.httpresponse.NotFound404;
 import tokyo.t6sdl.dancerscareer2019.io.EmailSender;
 import tokyo.t6sdl.dancerscareer2019.model.Account;
@@ -24,7 +23,6 @@ import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 import tokyo.t6sdl.dancerscareer2019.service.ProfileService;
 import tokyo.t6sdl.dancerscareer2019.service.SecurityService;
 
-@Slf4j
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/signup")
@@ -46,13 +44,9 @@ public class SignupController {
 		if (result.hasErrors()) {
 			return "signup/signupForm";
 		}
-		long start = System.currentTimeMillis();
-		log.info("start controller's executing at: " + (System.currentTimeMillis() - start));
 		Account newAccount = new Account();
 		newAccount.setEmail(form.getEmail());
-		log.info("start creating account at: " + (System.currentTimeMillis() - start));
 		accountService.create(newAccount, form.getPassword());
-		log.info("finish creating account at: " + (System.currentTimeMillis() - start));
 		Mail mail = new Mail(form.getEmail(), Mail.SUB_WELCOME_TO_US);
 		try {
 			emailSender.sendMailWithToken(mail);
@@ -62,7 +56,6 @@ public class SignupController {
 		}
 		session.setAttribute("rawPassword", form.getPassword());
 		securityService.autoLogin(form.getEmail(), form.getPassword());
-		log.info("finish controller's executing at: " + (System.currentTimeMillis() - start));
 		return "redirect:/signup/profile";
 	}
 	
