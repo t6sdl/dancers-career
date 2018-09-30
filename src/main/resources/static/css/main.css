@@ -25,7 +25,7 @@ body{
   box-shadow: 0 0 7px #3498db;
   border: 1px solid #3498db;
 }
-/* ----- common section ----- */
+/* --------------- common section --------------- */
 
 li {
   list-style: none;
@@ -35,10 +35,7 @@ li {
   background-color: #fff;
   color: #000;
   height: 80px;
-  /*
-  background: linear-gradient(-45deg, rgba(60, 145, 201, .7), rgba(156, 206, 209, .7)),url(../img/bg1.jpg);
-  background-size: cover;
-  */
+
 }
 
 .header-logo {
@@ -60,6 +57,7 @@ li {
   text-align: center;
   font-size: 12px;
   color: #000;
+  text-decoration: none;
 }
 
 .header-list span{
