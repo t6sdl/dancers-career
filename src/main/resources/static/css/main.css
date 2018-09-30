@@ -40,8 +40,10 @@ li {
 
 .header-logo {
   float: left;
-  padding: 40px;
-  width: 200px;
+  padding-top: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+  width: 180px;
 }
 
 .header-list {
