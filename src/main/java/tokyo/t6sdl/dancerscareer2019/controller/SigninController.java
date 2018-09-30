@@ -21,22 +21,22 @@ import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 public class SigninController {
 	private final AccountService accountService;
 	private final EmailSender emailSender;
-	
+
 	public SigninController(AccountService accountService, EmailSender emailSender) {
 		this.accountService = accountService;
 		this.emailSender = emailSender;
 	}
-	
+
 	@GetMapping
 	public String getSignin() {
 		return "signin/signinForm";
 	}
-	
+
 	@PostMapping
 	public String postSignin() {
 		return "redirect:/";
 	}
-	
+
 	@GetMapping("/forget-pwd")
 	public String getFogetPassword(@RequestParam(name = "token", required = false) String token, Model model) {
 		if (token == "" || token == null) {
@@ -50,7 +50,7 @@ public class SigninController {
 			throw new NotFound404();
 		}
 	}
-	
+
 	@PostMapping("/forget-pwd")
 	public String postForgetPassword(@Validated EmailForm form, BindingResult result, Model model) {
 		if (result.hasErrors()) {
@@ -66,7 +66,7 @@ public class SigninController {
 		model.addAttribute("error", false);
 		return "signin/sentEmail";
 	}
-		
+
 	@PostMapping("/reset-pwd")
 	public String postResetPassword(@Validated PasswordForm form, BindingResult result, @RequestParam("token") String token, Model model) {
 		if (result.hasErrors()) {

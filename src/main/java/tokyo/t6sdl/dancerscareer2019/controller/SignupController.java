@@ -87,14 +87,6 @@ public class SignupController {
 	@RequestMapping("/verify-email")
 	public String getVerifyEmail(@RequestParam("token") String token, Model model) {
 		if (accountService.isValidEmailToken(token)) {
-			String loggedInEmail = securityService.findLoggedInEmail();
-			String loggedInRawPassword;
-			try {
-				loggedInRawPassword = session.getAttribute("rawPassword").toString();
-			} catch (NullPointerException e) {
-				loggedInRawPassword = "";
-			}
-			securityService.autoLogin(loggedInEmail, loggedInRawPassword);
 			return "signup/verifyEmail";
 		} else {
 			throw new NotFound404();
