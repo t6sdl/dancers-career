@@ -1,7 +1,7 @@
 body{
   font-family: "Avenir Next";
   background-color: #fefefe;
-  margin: 50px;
+  margin: 0px;
   padding: 0px;
 }
 
@@ -32,8 +32,8 @@ li {
 }
 
 .header {
-  background: linear-gradient(-135deg, #409ecc, #a1d8e2);
-  color: #fff;
+  background-color: #fff;
+  color: #000;
   height: 80px;
   /*
   background: linear-gradient(-45deg, rgba(60, 145, 201, .7), rgba(156, 206, 209, .7)),url(../img/bg1.jpg);
@@ -43,7 +43,7 @@ li {
 
 .header-logo {
   float: left;
-  padding: 20px 40px;
+  padding: 40px;
   width: 200px;
 }
 
@@ -51,13 +51,35 @@ li {
   float: left;
 }
 
-.logout{
-  float: right;
-}
-
-.header-list li {
+.header-list li{
   float: left;
   padding: 20px 20px;
+  border-right: solid 1px;
+  border-color: #dcdcdc;
+  width: 150px;
+  text-align: center;
+  font-size: 12px;
+  color: #000;
+}
+
+.header-list span{
+  font-size: 10px;
+}
+
+#lasli{
+  border-right: none;
+}
+
+.logout{
+  float: right;
+  color: #000;
+    padding: 20px 20px;
+
+    text-align: center;
+}
+
+.header-list li{
+
 }
 
 .logout li {
