@@ -3,6 +3,7 @@ package tokyo.t6sdl.dancerscareer2019.service;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
@@ -108,7 +109,7 @@ public class ProfileService {
 	}
 	
 	public ProfileForm convertProfileIntoProfileForm(Profile profile) {
-		if (profile.getEmail() == null) {
+		if (Objects.equals(profile, null)) {
 			ProfileForm form = new ProfileForm();
 			form.setUniversity("");
 			form.setFaculty("");
@@ -142,6 +143,9 @@ public class ProfileService {
 	}
 	
 	public Student convertProfileIntoStudent(Profile profile) {
+		if (Objects.equals(profile, null)) {
+			return new Student();
+		}
 		Student student = new Student();
 		student.setEmail(profile.getEmail());
 		student.setLast_name(profile.getLast_name());
@@ -164,6 +168,9 @@ public class ProfileService {
 	}
 	
 	public boolean isCompleteProfile(Profile profile) {
+		if (Objects.equals(profile, null)) {
+			return false;
+		}
 		ProfileForm form = this.convertProfileIntoProfileForm(profile);
 		for (Field field: form.getClass().getDeclaredFields()) {
 			try {
