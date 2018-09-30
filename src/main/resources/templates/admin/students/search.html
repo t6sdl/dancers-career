@@ -4,6 +4,11 @@
 <meta charset="utf-8">
 <title>登録学生検索｜ダンサーズキャリア</title>
 <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+<style>
+td {
+  padding: 0 .5em;
+}
+</style>
 </head>
 <body>
 <header th:replace="common/header :: for-admin"></header>
@@ -130,7 +135,7 @@
 <article><p>メールアドレス一覧</p><p th:text="${emails}"></p></article>
 <article th:each="student : ${students}">
 <div>
-<table border="1" style="width:100%;margin:2em 0;">
+<table border="1" style="width:96%;margin:2em auto;">
 <tr>
 <th colspan="2"><span th:text="|${student.last_name} ${student.first_name}|"></span>（<span th:text="|${student.kana_last_name} ${student.kana_first_name}|"></span>）
 最終ログイン：<span th:text="${student.last_login_for_display}"></span></th>
