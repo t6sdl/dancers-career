@@ -25,11 +25,17 @@ body{
   box-shadow: 0 0 7px #3498db;
   border: 1px solid #3498db;
 }
-/* --------------- common section --------------- */
 
-li {
+li{
   list-style: none;
 }
+
+ul{
+  margin: 0px;
+}
+/* --------------- common section --------------- */
+/* ----- Header ----- */
+
 
 .header {
   background-color: #fff;
@@ -51,6 +57,7 @@ li {
 }
 
 .header-list li{
+  text-decoration: none;
   font-weight: bold;
   float: left;
   padding: 20px 20px;
@@ -62,7 +69,6 @@ li {
 }
 
 .header-list a{
-  text-decoration: none;
   font-size: 12px;
   transition: .4s;
 }
@@ -87,8 +93,6 @@ li {
   text-align: center;
   font-size: 12px;
 }
-
-
 
 .square_btn{
   position: relative;
@@ -116,26 +120,27 @@ li {
 }
 
 
-
-
+/* ----- Footer ----- */
 .footer {
-  background-color: #409ecc;
-  color: #fff;
+  background-color: #fff;
   height: 120px;
   padding: 40px;
 }
 
 .copy{
   float: right;
+  font-size: 12px;
 }
 
 .footer-logo {
   float: left;
-  font-size: 32px;
+  font-size: 25px;
 }
 
 .footer-list {
+  margin: 10px;
   float: left;
+  font-size: 12px;
 }
 
 .footer-list li {
