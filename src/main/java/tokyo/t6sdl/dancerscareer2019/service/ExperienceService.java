@@ -175,6 +175,9 @@ public class ExperienceService {
 	}
 	
 	public ExperienceForm convertExperienceIntoExperienceForm(Experience experience) {
+		if (Objects.equals(experience, null)) {
+			return new ExperienceForm();
+		}
 		ExperienceForm form = new ExperienceForm();
 		form.setLastName(experience.getLast_name());
 		form.setFirstName(experience.getFirst_name());
@@ -199,6 +202,9 @@ public class ExperienceService {
 	}
 	
 	public List<EsForm> convertEsIntoEsForm(List<Es> es) {
+		if (Objects.equals(es, null)) {
+			return new ArrayList<EsForm>();
+		}
 		List<EsForm> form = new ArrayList<EsForm>();
 		es.forEach(esItem -> {;
 			EsForm formItem = new EsForm();
@@ -214,6 +220,9 @@ public class ExperienceService {
 	}
 	
 	public List<InterviewForm> convertInterviewIntoInterviewForm(List<Interview> interview) {
+		if (Objects.equals(interview, null)) {
+			return new ArrayList<InterviewForm>();
+		}
 		List<InterviewForm> form = new ArrayList<InterviewForm>();
 		interview.forEach(interviewItem -> {;
 			InterviewForm formItem = new InterviewForm();
@@ -226,6 +235,9 @@ public class ExperienceService {
 	}
 	
 	public EsForm convertEsIntoEsForm(Es es) {
+		if (Objects.equals(es, null)) {
+			return new EsForm();
+		}
 		EsForm form = new EsForm();
 		form.setEsId(es.getEs_id());
 		form.setCorp(es.getCorp());
@@ -237,6 +249,9 @@ public class ExperienceService {
 	}
 	
 	public InterviewForm convertInterviewIntoInterviewForm(Interview interview) {
+		if (Objects.equals(interview, null)) {
+			return new InterviewForm();
+		}
 		InterviewForm form = new InterviewForm();
 		form.setInterviewId(interview.getInterview_id());
 		form.setQuestion(interview.getQuestion());
