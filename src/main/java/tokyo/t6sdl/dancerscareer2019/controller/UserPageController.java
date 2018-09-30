@@ -15,6 +15,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.io.LineNotifyManager;
@@ -71,8 +72,11 @@ public class UserPageController {
 	}
 	
 	@RequestMapping("/account")
-	public String getAccountInfo(Model model) {
+	public String getAccountInfo(@RequestParam(name="autologin", required=false) String autologin, Model model) {
 		String loggedInEmail = securityService.findLoggedInEmail();
+		if (!(Objects.equals(session.getAttribute("rawPassword"), null) && !(Objects.equals(autologin, "done")))) {
+			securityService.autoLogin(loggedInEmail, session.getAttribute("rawPassword").toString());
+		}
 		String accessToken = accountService.getLineAccessTokenByEmail(loggedInEmail);
 		if (!(Objects.equals(accessToken, null))) {
 			int tokenStatus = lineNotify.getTokenStatus(accessToken);
@@ -132,12 +136,7 @@ public class UserPageController {
 			return "redirect:/user/account/verify?error";
 		}
 	}
-	
-	@GetMapping("/account/change")
-	public String getChangeAccount() {
-		return "redirect:/user/account/verify";
-	}
-	
+
 	@PostMapping(value="/account/changed", params="changeEmail")
 	public String postChangeEmail(@Validated AccountForm form, BindingResult result, Model model) {
 		if (result.hasFieldErrors("email")) {
@@ -157,7 +156,7 @@ public class UserPageController {
 		accountService.changeValidEmail(form.getEmail(), false);
 		String loggedInRawPassword = session.getAttribute("rawPassword").toString();
 		securityService.autoLogin(form.getEmail(), loggedInRawPassword);
-		return "redirect:/user/account";
+		return "redirect:/user/account?autologin=done";
 	}
 	
 	@PostMapping(value="/account/changed", params="changePassword")
@@ -171,7 +170,7 @@ public class UserPageController {
 		accountService.changePassword(loggedInEmail, form.getPassword());
 		session.setAttribute("rawPassword", form.getPassword());
 		securityService.autoLogin(loggedInEmail, form.getPassword());
-		return "redirect:/user/account";
+		return "redirect:/user/account?autologin=done";
 	}
 	
 	@RequestMapping("/profile")
