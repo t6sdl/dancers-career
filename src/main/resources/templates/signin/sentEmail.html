@@ -1,28 +1,28 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8">
-<title>パスワードの再設定｜ダンサーズキャリア</title>
-<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
-<link rel="stylesheet" type="text/css" th:href="@{/css/form.css}" href="../../static/css/form.css">
+  <meta charset="utf-8">
+  <title>パスワードの再設定｜ダンサーズキャリア</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}" href="../../static/css/form.css">
 
 </head>
 <body>
-<header th:replace="common/header :: for-stranger"></header>
-<main>
-<form th:action="@{/signin/forget-pwd}" method="post" th:object="${emailForm}">
-<h1>パスワードの再設定</h1>
-<p th:if="${error}">メールの送信に失敗しました<br>下のボタンより再度お試しください<br>解決しない場合はお問い合わせください</p>
-<p th:unless="${error}">メールを送信しました<br>再設定用のURLの有効期限は30分です<br>10分以上経ってもメールが届かない場合は再度送信ボタンを押してください<br>解決しない場合はお問い合わせください</p>
-<input type="hidden" th:field="*{email}">
-<input type="submit" value="再度送信する">
-</form>
-</main>
-<footer th:replace="common/footer :: footer"></footer>
-<script
+  <header th:replace="common/header :: for-stranger"></header>
+  <main>
+    <form th:action="@{/signin/forget-pwd}" method="post" th:object="${emailForm}" id="form">
+      <h1>パスワードの再設定</h1>
+      <p th:if="${error}">メールの送信に失敗しました<br>下のボタンより再度お試しください<br>解決しない場合はお問い合わせください</p>
+      <p th:unless="${error}">メールを送信しました<br>再設定用のURLの有効期限は30分です<br>10分以上経ってもメールが届かない場合は再度送信ボタンを押してください<br>解決しない場合はお問い合わせください</p>
+      <input type="hidden" th:field="*{email}">
+      <input type="submit" value="再度送信する" class="button">
+    </form>
+  </main>
+  <footer th:replace="common/footer :: footer"></footer>
+  <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
-<script th:src="@{/js/submit.js}"></script>
+  <script th:src="@{/js/submit.js}"></script>
 </body>
 </html>
