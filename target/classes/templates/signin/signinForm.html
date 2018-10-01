@@ -12,27 +12,31 @@
     <form name='form-login' th:action="@{/login}" method="post">
       <h1>ログイン</h1>
       <p class="hazard" th:if="${param.error}">メールアドレスまたはパスワードに誤りがあります</p>
-      <label for="email">
-        <input type="email" name="email" placeholder="Email" class="form">
-      </label>
-      <label for="password">
-        <input type="password" placeholder="Password" name="password" class="form">
-      </label>
+      <label th:for="email"></label>
+      <input type="email" placeholder="Email" name="email" class="form">
+      <br>
+      <label th:for="password"></label>
+      <input type="password" placeholder="Password" name="password" class="form">
+
       <div>
         <input type="checkbox" id="remember-me" name="remember-me">
         <label for="remember-me">ログインしたままにする</label>
       </div>
+
       <div>
         <input type="submit" value="ログイン" class="button">
       </div>
+
       <div>
         <p class="linkblue"><a th:href="@{/signin/forget-pwd}">パスワードをお忘れですか？</a></p>
       </div>
+
       <div>
         <p class="linkblue"><a th:href="@{/signup}">アカウントをお持ちでない方はこちら</a></p>
       </div>
     </form>
   </div>
+
   <footer th:replace="common/footer :: footer"></footer>
   <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -41,4 +45,3 @@
   <script th:src="@{/js/submit.js}"></script>
 </body>
 </html>
-
