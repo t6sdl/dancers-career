@@ -7,14 +7,15 @@
   <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}" href="../../static/css/form.css">
 </head>
 <body>
+  <header th:replace="common/header :: for-stranger"></header>
   <div id="login">
     <form name='form-login' th:action="@{/login}" method="post">
       <h1>ログイン</h1>
       <p class="hazard" th:if="${param.error}">メールアドレスまたはパスワードに誤りがあります</p>
-      <label th:for="email">
-        <input type="email" placeholder="Email" class="form">
+      <label for="email">
+        <input type="email" name="email" placeholder="Email" class="form">
       </label>
-      <label th:for="password">
+      <label for="password">
         <input type="password" placeholder="Password" name="password" class="form">
       </label>
       <div>
@@ -32,7 +33,6 @@
       </div>
     </form>
   </div>
-  <header th:replace="common/header :: for-stranger"></header>
   <footer th:replace="common/footer :: footer"></footer>
   <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -41,3 +41,4 @@
   <script th:src="@{/js/submit.js}"></script>
 </body>
 </html>
+
