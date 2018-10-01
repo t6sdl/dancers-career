@@ -24,7 +24,7 @@ ul{
   margin: 0px;
   background-color: #fff;
   color: #000;
-  height: 80px;
+  height: 120px;
 
 }
 
@@ -42,8 +42,6 @@ ul{
 }
 
 .header-list li{
-  text-decoration: none;
-  font-weight: bold;
   float: left;
   padding: 20px 20px;
   border-right: solid 2px;
@@ -54,6 +52,8 @@ ul{
 }
 
 .header-list a{
+    font-weight: bold;
+  text-decoration: none;
   font-size: 12px;
   transition: .4s;
   color: #000;
