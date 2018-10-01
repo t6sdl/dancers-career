@@ -12,6 +12,7 @@
 </head>
 
 <body>
+  <header th:replace="common/header :: for-stranger"></header>
   <div id="login">
     <form name='form-login' th:action="@{/login}" method="post">
       <h1>ログイン</h1>
@@ -36,17 +37,17 @@
       <div>
         <p class="linkblue"><a th:href="@{/signup}">アカウントをお持ちでない方はこちら</a></p>
       </div>
+    </div>
+
+  </form>
 
 
-    </form>
+  <footer th:replace="common/footer :: footer"></footer>
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script th:src="@{/js/submit.js}"></script>
 
-    <header th:replace="common/header :: for-stranger"></header>
-    <footer th:replace="common/footer :: footer"></footer>
-    <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-    <script th:src="@{/js/submit.js}"></script>
-
-  </body>
-  </html>
+</body>
+</html>
