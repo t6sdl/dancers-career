@@ -29,20 +29,25 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	
 	private List<String> stringToList(String str) {
 		List<String> list = new ArrayList<String>();
-		list = Arrays.asList(str.split(","));
+		Arrays.asList(str.split(",")).forEach(each -> {
+			if (each.startsWith("[") && each.endsWith("]")) {
+				StringBuilder sb = new StringBuilder(each);
+				each = sb.substring(1, sb.length() - 2);
+			}
+			list.add(each);
+		});;
 		return list;
 	}
 	
 	private String listToString(List<String> list) {
-		StringBuffer buf = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < list.size(); i++) {
-			buf.append(list.get(i));
+			sb.append("[").append(list.get(i)).append("]");
 			if (i < list.size() - 1) {
-				buf.append(",");
+				sb.append(",");
 			}
 		}
-		String str = buf.toString();
-		return str;
+		return sb.toString();
 	}
 
 	@Override

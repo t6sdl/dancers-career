@@ -2,13 +2,11 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
-
 </head>
 <body>
   <header th:fragment="for-user"><!-- 普通のユーザー用のヘッダー -->
     <div class="header">
       <a th:href="@{/}"><img alt="t6sdldc" th:src="@{/img/logo1.png}" class="header-logo"></a>
-
       <div class="header-list">
         <ul>
           <li><a th:href="@{/}">ダンサーズキャリアとは<br><span>About Dancers Career</span></a></li>
@@ -25,8 +23,6 @@
   <header th:fragment="for-admin"><!-- 管理者アカウント用のヘッダー -->
     <div class="header">
       <a th:href="@{/}"><img alt="t6sdldc" th:src="@{/img/logo1.png}" class="header-logo"></a><!-- ロゴ兼トップページへのリンク -->
-
-
       <div class="header-list">
         <ul>
           <li><a th:href="@{/admin/search/students?all}">登録学生検索</a></li>
@@ -43,11 +39,7 @@
 
   <header th:fragment="for-stranger"><!-- ログインしていない人用のヘッダー -->
     <div class="header">
-
-
       <a th:href="@{/}"><img alt="t6sdldc" th:src="@{/img/logo1.png}" class="header-logo"></a><!-- ロゴ兼トップページへのリンク -->
-
-
     </div>
   </header>
 </body>

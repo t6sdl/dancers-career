@@ -62,25 +62,27 @@ public class AccountService implements UserDetailsService {
 	}
 	
 	public String createEmailToken(String loggedInEmail) {
-		String emailToken;
-		emailToken = createAccountToken();
+		String emailToken = this.createAccountToken();
 		if (emailToken == "") {
 			return "";
-		} else {
-			accountRepository.recordEmailToken(loggedInEmail, emailToken);
-			return emailToken;
 		}
+		while (accountRepository.findOneByEmailToken(emailToken) instanceof Account) {
+			emailToken = this.createAccountToken();
+		}
+		accountRepository.recordEmailToken(loggedInEmail, emailToken);
+		return emailToken;
 	}
 	
 	public String createPasswordToken(String loggedInEmail) {
-		String passwordToken;
-		passwordToken = createAccountToken();
+		String passwordToken = this.createAccountToken();
 		if (passwordToken == "") {
 			return "";
-		} else {
-			accountRepository.recordPasswordToken(loggedInEmail, passwordToken);
-			return passwordToken;
 		}
+		while (accountRepository.findOneByPasswordToken(passwordToken) instanceof Account) {
+			passwordToken = this.createAccountToken();
+		}
+		accountRepository.recordPasswordToken(loggedInEmail, passwordToken);
+		return passwordToken;
 	}
 	
 	public boolean isValidEmailToken(String emailToken) {
@@ -119,7 +121,7 @@ public class AccountService implements UserDetailsService {
 	private String createAccountToken() {
 		try {
 			SecureRandom random = SecureRandom.getInstanceStrong();
-			byte[] bytes = new byte[20];
+			byte[] bytes = new byte[16];
 			random.nextBytes(bytes);
 			StringBuffer s = new StringBuffer();
 			for (int i = 0; i < bytes.length; i++) {
