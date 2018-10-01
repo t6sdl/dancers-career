@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <title>プロフィール登録｜ダンサーズキャリア</title>
-<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
+<link rel="stylesheet" type="text/css" th:href="@{/css/form.css}" href="../../static/css/form.css">
 </head>
 <body>
 <header th:replace="common/header :: for-stranger"></header>
@@ -14,24 +15,24 @@
 <p>氏名</p>
 <div>
 <label for="lastName">姓</label>
-<input type="text" th:field="*{lastName}" th:errorclass="error" required>
+<input type="text" th:field="*{lastName}" th:errorclass="error" required class="form">
 <label for="firstName">名</label>
-<input type="text" th:field="*{firstName}" th:errorclass="error" required>
+<input type="text" th:field="*{firstName}" th:errorclass="error" required class="form">
 <p th:if="${#fields.hasErrors('lastName') || #fields.hasErrors('firstName')}">入力してください</p>
 </div>
 </div>
 <p>氏名（カナ）</p>
 <div>
 <label for="kanaLastName">セイ</label>
-<input type="text" th:field="*{kanaLastName}" th:errorclass="error" required>
+<input type="text" th:field="*{kanaLastName}" th:errorclass="error" required class="form">
 <label for="kanaFirstName">メイ</label>
-<input type="text" th:field="*{kanaFirstName}" th:errorclass="error" required>
+<input type="text" th:field="*{kanaFirstName}" th:errorclass="error" required class="form">
 <p th:if="${#fields.hasErrors('kanaLastName') || #fields.hasErrors('kanaFirstName')}">カタカナで入力してください</p>
 </div>
 <div>
 <p>生年月日</p>
 <div>
-<select th:field="*{birthYear}" required>
+<select th:field="*{birthYear}" required >
 <option value="default">選択してください</option>
 <option value="1990">1990</option>
 <option value="1991">1991</option>
@@ -111,7 +112,7 @@
 </div>
 <div>
 <label for="phoneNumber">電話番号</label>
-<input type="tel" th:field="*{phoneNumber}" th:errorclass="error" required>
+<input type="tel" th:field="*{phoneNumber}" th:errorclass="error" required class="form">
 <p th:if="${#fields.hasErrors('phoneNumber')}">ハイフンなしの電話番号を入力してください</p>
 </div>
 <div>
