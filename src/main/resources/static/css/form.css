@@ -32,17 +32,13 @@ after { clear: both; }
 
 #login {
   margin: 50px auto;
-  width: 420px;
+  text-align: center;
 }
 
 #login form {
   margin: auto;
   padding: 22px 22px 22px 22px;
   width: 100%;
-  border-radius: 5px;
-  background: #dcdcdc;
-  border-top: 7px solid #426579;
-  border-bottom: 7px solid #426579;
 }
 
 #login form input[type="email"] {
@@ -58,7 +54,7 @@ after { clear: both; }
   border-radius: 3px 3px 3px 3px;
   color: #a9a9a9;
   margin-bottom: 1em;
-  padding: 0 16px;
+  padding: 0 15px;
   width: 385px;
   height: 50px;
 }
@@ -66,7 +62,7 @@ after { clear: both; }
 #login form input[type="submit"] {
   background: #89c3eb;
   border: 0;
-  width: 100%;
+  width: 385px;
   height: 40px;
   border-radius: 3px;
   color: white;

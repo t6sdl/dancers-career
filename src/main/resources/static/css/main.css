@@ -21,11 +21,9 @@ ul{
 /* --------------- common section --------------- */
 /* ----- Header ----- */
 .header {
-  margin: 0px;
+  margin: 20px 0px;
   background-color: #fff;
   color: #000;
-  height: 120px;
-
 }
 
 .header-logo {
@@ -44,18 +42,17 @@ ul{
 .header-list li{
   float: left;
   padding: 20px 20px;
-  border-right: solid 2px;
+  border-right: solid 1px;
   border-color: #426579;
-  border-radius: 2px;
   width: 180px;
   text-align: center;
 }
 
 .header-list a{
-    font-weight: bold;
-  text-decoration: none;
+  font-weight: bold;
   font-size: 12px;
   transition: .4s;
+  text-decoration: none;
   color: #000;
 }
 
@@ -78,6 +75,8 @@ ul{
   padding: 40px 20px;
   text-align: center;
   font-size: 12px;
+  text-decoration: none;
+  color: #000;
 }
 
 .square_btn{
@@ -109,7 +108,7 @@ ul{
 /* ----- Footer ----- */
 .footer {
   background-color: #fff;
-  height: 80px;
+  margin: 20px 0px;
   padding: 40px;
 }
 
@@ -134,5 +133,6 @@ ul{
 }
 
 .footer-list a{
+  text-decoration: none;
   color: #000;
 }
