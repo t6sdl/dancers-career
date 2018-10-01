@@ -3,22 +3,7 @@ body{
   background-color: #fefefe;
   margin: 0px;
   padding: 0px;
-}
-
-
-.button{
-  display: inline-block;
-  padding: 1em 3em;
-  text-decoration: none;
-  color: #67c5ff;
-  border: solid 2px #67c5ff;
-  border-radius: 3px;
-  transition: .4s;
-}
-
-.button:hover {
-  background: #67c5ff;
-  color: white;
+  color: #606468;
 }
 
 .form:focus{
@@ -35,9 +20,8 @@ ul{
 }
 /* --------------- common section --------------- */
 /* ----- Header ----- */
-
-
 .header {
+  margin: 10px;
   background-color: #fff;
   color: #000;
   height: 80px;
@@ -47,7 +31,7 @@ ul{
 .header-logo {
   float: left;
   padding-top: 40px;
-  padding-left: 20px;
+  padding-left: 40px;
   padding-right: 20px;
   width: 180px;
 }
@@ -62,7 +46,7 @@ ul{
   float: left;
   padding: 20px 20px;
   border-right: solid 1px;
-  border-color: #dcdcdc;
+  border-color: #426579;
   width: 180px;
   text-align: center;
   color: #000;
