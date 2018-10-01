@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <title>ダンサーズキャリア - ダンサーのための就活サイト</title>
   <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
-  <link rel="stylesheet" type="text/css" href="../../static/css/main.css">
-  <link rel="stylesheet" type="text/css" href="../../static/css/index.css">
-  <body>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
+</head>
+ <body>
     <header th:replace="common/header :: for-user"></header>
     <main>
       <section>
@@ -53,6 +53,5 @@
       </section>
     </main>
     <footer th:replace="common/footer :: footer"></footer>
-
-  </body>
-  </html>
+</body>
+</html>
