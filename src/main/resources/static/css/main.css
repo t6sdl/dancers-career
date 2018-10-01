@@ -30,8 +30,8 @@ ul{
 
 .header-logo {
   float: left;
-  padding-top: 40px;
-  padding-left: 40px;
+  padding-top: 30px;
+  padding-left: 30px;
   padding-right: 20px;
   width: 180px;
 }
@@ -45,8 +45,9 @@ ul{
   font-weight: bold;
   float: left;
   padding: 20px 20px;
-  border-right: solid 1px;
+  border-right: solid 2px;
   border-color: #426579;
+  border-radius: 2px;
   width: 180px;
   text-align: center;
   color: #000;
