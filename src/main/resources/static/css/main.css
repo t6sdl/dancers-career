@@ -3,6 +3,7 @@ body{
   background-color: #fefefe;
   margin: 0px;
   padding: 0px;
+    color: #606468;
 }
 
 
@@ -61,7 +62,7 @@ ul{
   float: left;
   padding: 20px 20px;
   border-right: solid 1px;
-  border-color: #dcdcdc;
+  border-color: #426579;
   width: 180px;
   text-align: center;
   color: #000;

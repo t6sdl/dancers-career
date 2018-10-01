@@ -5,28 +5,20 @@
   <title>ログイン｜ダンサーズキャリア</title>
   <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
   <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}">
-
-  <link rel="stylesheet" type="text/css" href="../../static/css/main.css">
-  <link rel="stylesheet" type="text/css" href="../../static/css/form.css">
-  
 </head>
 
 <body>
-  <header th:replace="common/header :: for-stranger"></header>
-  <form th:action="@{/login}" method="post">
-    <h1>ログイン</h1>
-    <div class="form">
+  <div id="login">
+    <form name='form-login' th:action="@{/login}" method="post">
+      <h1>ログイン</h1>
       <p class="hazard" th:if="${param.error}">メールアドレスまたはパスワードに誤りがあります</p>
-      <div class="form-text">
-        <div>
-          <label th:for="email"></label>
-          <input type="email" id="email" name="email" class="form" placeholder="Email">
-        </div>
-        <div>
-          <label th:for="password"></label>
-          <input type="password" id="password" name="password" class="form" placeholder="Password">
-        </div>
-      </div>
+
+      <span class="fontawesome-user"></span><label th:for="email"></label>
+      <input type="email" placeholder="Email" class="form">
+
+      <span class="fontawesome-lock"></span><label th:for="password"></label>
+      <input type="password" placeholder="Password" name="password" class="form">
+
       <div>
         <input type="checkbox" id="remember-me" name="remember-me">
         <label for="remember-me">ログインしたままにする</label>
@@ -34,21 +26,23 @@
       <div>
         <input type="submit" value="ログイン" class="button">
       </div>
-    </div>
-  </form>
+      <div>
+        <p class="linkblue"><a th:href="@{/signin/forget-pwd}">パスワードをお忘れですか？</a></p>
+      </div>
+      <div>
+        <p class="linkblue"><a th:href="@{/signup}">アカウントをお持ちでない方はこちら</a></p>
+      </div>
 
-  <div>
-    <p class="linkblue"><a th:href="@{/signin/forget-pwd}">パスワードをお忘れですか？</a></p>
-  </div>
-  <div>
-    <p class="linkblue"><a th:href="@{/signup}">アカウントをお持ちでない方はこちら</a></p>
-  </div>
-  <footer th:replace="common/footer :: footer"></footer>
-  <script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-  <script th:src="@{/js/submit.js}"></script>
 
-</body>
-</html>
+    </form>
+
+    <header th:replace="common/header :: for-stranger"></header>
+    <footer th:replace="common/footer :: footer"></footer>
+    <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+    <script th:src="@{/js/submit.js}"></script>
+
+  </body>
+  </html>
