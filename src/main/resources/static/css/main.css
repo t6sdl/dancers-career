@@ -21,7 +21,7 @@ ul{
 /* --------------- common section --------------- */
 /* ----- Header ----- */
 .header {
-  margin: 10px;
+  margin: 0px;
   background-color: #fff;
   color: #000;
   height: 80px;
@@ -38,6 +38,7 @@ ul{
 
 .header-list {
   float: left;
+  margin: 10px;
 }
 
 .header-list li{
@@ -50,12 +51,12 @@ ul{
   border-radius: 2px;
   width: 180px;
   text-align: center;
-  color: #000;
 }
 
 .header-list a{
   font-size: 12px;
   transition: .4s;
+  color: #000;
 }
 
 .header-list a:hover {
@@ -108,7 +109,7 @@ ul{
 /* ----- Footer ----- */
 .footer {
   background-color: #fff;
-  height: 120px;
+  height: 80px;
   padding: 40px;
 }
 
@@ -130,4 +131,8 @@ ul{
 
 .footer-list li {
   padding-bottom: 20px;
+}
+
+.footer-list a{
+  color: #000;
 }
