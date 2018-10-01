@@ -12,14 +12,12 @@
     <form name='form-login' th:action="@{/login}" method="post">
       <h1>ログイン</h1>
       <p class="hazard" th:if="${param.error}">メールアドレスまたはパスワードに誤りがあります</p>
-
-
       <label th:for="email"></label>
-        <input type="email" placeholder="Email" class="form">
-<br>
+      <input type="email" placeholder="Email" class="form">
+      <br>
       <label th:for="password"></label></label>
-        <input type="password" placeholder="Password" name="password" class="form">
-    
+      <input type="password" placeholder="Password" name="password" class="form">
+
       <div>
         <input type="checkbox" id="remember-me" name="remember-me">
         <label for="remember-me">ログインしたままにする</label>
