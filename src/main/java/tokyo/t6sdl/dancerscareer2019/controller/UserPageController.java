@@ -15,8 +15,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
+import tokyo.t6sdl.dancerscareer2019.io.LineNotifyManager;
+import tokyo.t6sdl.dancerscareer2019.io.EmailSender;
 import tokyo.t6sdl.dancerscareer2019.model.Experience;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.model.Profile;
@@ -25,8 +28,6 @@ import tokyo.t6sdl.dancerscareer2019.model.form.ProfileForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.VerificationForm;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 import tokyo.t6sdl.dancerscareer2019.service.ExperienceService;
-import tokyo.t6sdl.dancerscareer2019.service.LineNotifyService;
-import tokyo.t6sdl.dancerscareer2019.service.MailService;
 import tokyo.t6sdl.dancerscareer2019.service.ProfileService;
 import tokyo.t6sdl.dancerscareer2019.service.SecurityService;
 
@@ -38,10 +39,10 @@ public class UserPageController {
 	private final AccountService accountService;
 	private final ProfileService profileService;
 	private final ExperienceService experienceService;
-	private final MailService mailService;
+	private final EmailSender emailSender;
 	private final PasswordEncoder passwordEncoder;
 	private final HttpSession session;
-	private final LineNotifyService lineNotify;
+	private final LineNotifyManager lineNotify;
 		
 	@RequestMapping()
 	public String getMypage(Model model) {
@@ -71,8 +72,11 @@ public class UserPageController {
 	}
 	
 	@RequestMapping("/account")
-	public String getAccountInfo(Model model) {
+	public String getAccountInfo(@RequestParam(name="autologin", required=false) String autologin, Model model) {
 		String loggedInEmail = securityService.findLoggedInEmail();
+		if (!(Objects.equals(session.getAttribute("rawPassword"), null) && !(Objects.equals(autologin, "done")))) {
+			securityService.autoLogin(loggedInEmail, session.getAttribute("rawPassword").toString());
+		}
 		String accessToken = accountService.getLineAccessTokenByEmail(loggedInEmail);
 		if (!(Objects.equals(accessToken, null))) {
 			int tokenStatus = lineNotify.getTokenStatus(accessToken);
@@ -132,12 +136,7 @@ public class UserPageController {
 			return "redirect:/user/account/verify?error";
 		}
 	}
-	
-	@GetMapping("/account/change")
-	public String getChangeAccount() {
-		return "redirect:/user/account/verify";
-	}
-	
+
 	@PostMapping(value="/account/changed", params="changeEmail")
 	public String postChangeEmail(@Validated AccountForm form, BindingResult result, Model model) {
 		if (result.hasFieldErrors("email")) {
@@ -147,18 +146,17 @@ public class UserPageController {
 		}
 		String loggedInEmail = securityService.findLoggedInEmail();
 		accountService.changeEmail(loggedInEmail, form.getEmail());
-		String emailToken = accountService.createEmailToken(form.getEmail());
-		if (emailToken == "") {
+		Mail mail = new Mail(form.getEmail(), Mail.SUB_VERIFY_EMAIL);
+		try {
+			emailSender.sendMailWithToken(mail);
+		} catch (Exception e) {
 			accountService.changeEmail(form.getEmail(), loggedInEmail);
 			return "redirect:/user/error";
 		}
 		accountService.changeValidEmail(form.getEmail(), false);
-		Mail mail = new Mail(form.getEmail(), Mail.SUB_VERIFY_EMAIL);
-		mail.setUrl(Mail.URI_VERIFY_EMAIL + emailToken);
-		mailService.sendMail(mail);
 		String loggedInRawPassword = session.getAttribute("rawPassword").toString();
 		securityService.autoLogin(form.getEmail(), loggedInRawPassword);
-		return "redirect:/user/account";
+		return "redirect:/user/account?autologin=done";
 	}
 	
 	@PostMapping(value="/account/changed", params="changePassword")
@@ -172,7 +170,7 @@ public class UserPageController {
 		accountService.changePassword(loggedInEmail, form.getPassword());
 		session.setAttribute("rawPassword", form.getPassword());
 		securityService.autoLogin(loggedInEmail, form.getPassword());
-		return "redirect:/user/account";
+		return "redirect:/user/account?autologin=done";
 	}
 	
 	@RequestMapping("/profile")

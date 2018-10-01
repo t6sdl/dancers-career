@@ -1,4 +1,4 @@
-package tokyo.t6sdl.dancerscareer2019.service;
+package tokyo.t6sdl.dancerscareer2019.io;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -6,7 +6,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
@@ -17,10 +17,11 @@ import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.model.AccessToken;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.model.Notify;
+import tokyo.t6sdl.dancerscareer2019.service.SecurityService;
 
 @RequiredArgsConstructor
-@Service
-public class LineNotifyService {
+@Component
+public class LineNotifyManager {
 	private final SecurityService securityService;
 	private final PasswordEncoder passwordEncoder;
 	

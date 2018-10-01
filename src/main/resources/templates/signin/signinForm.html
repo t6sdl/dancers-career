@@ -3,22 +3,21 @@
 <head>
   <meta charset="utf-8">
   <title>ログイン｜ダンサーズキャリア</title>
-  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}">
-
-
-  <link rel="stylesheet" type="text/css" href="../../static/css/main.css">
-  <link rel="stylesheet" type="text/css" href="../../static/css/form.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}" href="../../static/css/form.css">
 </head>
-
 <body>
   <header th:replace="common/header :: for-stranger"></header>
   <div id="login">
     <form name='form-login' th:action="@{/login}" method="post">
       <h1>ログイン</h1>
       <p class="hazard" th:if="${param.error}">メールアドレスまたはパスワードに誤りがあります</p>
+<<<<<<< HEAD
 
       <label th:for="email"></label>
+=======
+      <label th:for="email">
+>>>>>>> 7a40cd8fa475a5d6cf73abfc6783fb013ec528d8
         <input type="email" placeholder="Email" class="form">
 
       <label th:for="password"></label>
@@ -41,9 +40,15 @@
         <p class="linkblue"><a th:href="@{/signup}">アカウントをお持ちでない方はこちら</a></p>
       </div>
 
+<<<<<<< HEAD
 
     </form>
   </div>
+=======
+    </form>
+  </div>
+  <header th:replace="common/header :: for-stranger"></header>
+>>>>>>> 7a40cd8fa475a5d6cf73abfc6783fb013ec528d8
 
   <footer th:replace="common/footer :: footer"></footer>
   <script
@@ -54,3 +59,4 @@
 
 </body>
 </html>
+
