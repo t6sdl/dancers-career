@@ -7,8 +7,8 @@
   <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}">
 
 
-    <link rel="stylesheet" type="text/css" href="../../static/css/main.css">
-    <link rel="stylesheet" type="text/css" href="../../static/css/form.css">
+  <link rel="stylesheet" type="text/css" href="../../static/css/main.css">
+  <link rel="stylesheet" type="text/css" href="../../static/css/form.css">
 </head>
 
 <body>
@@ -17,12 +17,12 @@
       <h1>ログイン</h1>
       <p class="hazard" th:if="${param.error}">メールアドレスまたはパスワードに誤りがあります</p>
 
-      <span class="fontawesome-user"></span><label th:for="email"></label>
-      <input type="email" placeholder="Email" class="form">
-
-      <span class="fontawesome-lock"></span><label th:for="password"></label>
-      <input type="password" placeholder="Password" name="password" class="form">
-
+      <label th:for="email">
+        <input type="email" placeholder="Email" class="form">
+      </label>
+      <label th:for="password">
+        <input type="password" placeholder="Password" name="password" class="form">
+      </label>
       <div>
         <input type="checkbox" id="remember-me" name="remember-me">
         <label for="remember-me">ログインしたままにする</label>
