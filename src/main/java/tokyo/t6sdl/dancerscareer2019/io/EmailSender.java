@@ -1,4 +1,4 @@
-package tokyo.t6sdl.dancerscareer2019.service;
+package tokyo.t6sdl.dancerscareer2019.io;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,23 +6,28 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Objects;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
+import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 
+@Async
 @RequiredArgsConstructor
-@Service
-public class MailService {
+@Component
+public class EmailSender {
 	private final JavaMailSender mailSender;
-	
+	private final AccountService accountService;
+	private final LineNotifyManager lineNotify;
+		
 	public void sendMail(Mail mail) {
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
@@ -34,9 +39,51 @@ public class MailService {
 			helper.setSubject(mail.getSubject());
 			this.readContent(mail);
 			helper.setText(mail.getContent(), true);
-			helper.addInline("twitter", new ClassPathResource("static/img/mails/twitter.jpg"));
-			helper.addInline("instagram", new ClassPathResource("static/img/mails/instagram.jpg"));
 			mailSender.send(message);
+			String accessToken = accountService.getLineAccessTokenByEmail(mail.getTo());
+			if (!(Objects.equals(accessToken, null))) {
+				lineNotify.notifyMessage(accessToken, lineNotify.getMessage(mail));
+			}
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void sendMailWithToken(Mail mail) throws Exception {
+		try {
+			String token;
+			switch (mail.getSubject()) {
+			case Mail.SUB_WELCOME_TO_US:
+			case Mail.SUB_VERIFY_EMAIL:
+				token = accountService.createEmailToken(mail.getTo());
+				mail.setUrl(Mail.URI_VERIFY_EMAIL + token);
+				break;
+			case Mail.SUB_RESET_PWD:
+				token = accountService.createPasswordToken(mail.getTo());
+				mail.setUrl(Mail.URI_RESET_PWD + token);
+				break;
+			default:
+				throw new Exception();
+			}
+			if (token.isEmpty()) {
+				throw new Exception();
+			}
+			MimeMessage message = mailSender.createMimeMessage();
+			message.setHeader("Content-type", "text/html");
+			message.setHeader("Errors-To", Mail.TO_ERROR);
+			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+			helper.setFrom(Mail.TO_SUPPORT, Mail.NAME_OF_SUPPORT);
+			helper.setTo(mail.getTo());
+			helper.setSubject(mail.getSubject());
+			this.readContent(mail);
+			helper.setText(mail.getContent(), true);
+			mailSender.send(message);
+			String accessToken = accountService.getLineAccessTokenByEmail(mail.getTo());
+			if (!(Objects.equals(accessToken, null))) {
+				lineNotify.notifyMessage(accessToken, lineNotify.getMessage(mail));
+			}
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {

@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <title>アカウント｜ダンサーズキャリア</title>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
 </head>
 <body>
 <header th:replace="common/header :: for-user"></header>
 <main>
 <article>
 <h1>アカウント</h1>
-<!-- アカウント情報 -->
 <table>
 <tr>
 <th align="right">メールアドレス：</th>
@@ -20,9 +20,13 @@
 <th align="right">パスワード：</th>
 <td>非表示</td>
 </tr>
+<tr>
+<th align="right">LINE連携：</th>
+<td><span th:text="${isConnected ? '連携済' : '未連携'}"></span> <a th:href="${isConnected} ? @{/line-notify/revoke} : @{/line-notify/apply?from=mypage}"><button th:text="${isConnected ? '解除する' : '連携する'}"></button></a></td>
+</tr>
 </table>
 <div><a th:href="@{/user/account/verify}"><button>修正する</button></a></div>
-<div><a th:href="@{/user/account/delete}"><button>アカウント削除</button></a></div>
+<div><a th:href="@{/user/account/delete}"><button>退会する</button></a></div>
 </article>
 <aside th:replace="user/common/tab :: tab"></aside>
 </main>
