@@ -5,11 +5,18 @@
 <title>利用規約｜ダンサーズキャリア</title>
 <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
 <style type="text/css">
+ol {
+  counter-reset: list;
+}
 li {
   list-style: decimal;
 }
 li > ol > li {
-  list-style: lower-alpha;
+  list-style: none;
+}
+li > ol > li:before {
+  content: "(" counter(list, lower-alpha) ") ";
+  counter-increment: list;
 }
 article {
   text-align: justify;
