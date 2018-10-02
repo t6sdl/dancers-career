@@ -79,6 +79,10 @@ ul{
   color: #000;
 }
 
+.logout a{
+  color: #000;
+}
+
 .square_btn{
   position: relative;
   display: inline-block;
