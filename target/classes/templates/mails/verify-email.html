@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width" />
   <style type="text/css">
     body {
-      font-size: 12px;
+      font-family: "メイリオ", Meiryo, Osaka, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
+      font-size: 16px;
       width: 100% !important;
       min-width: 100%;
       color: #333;
@@ -23,6 +24,7 @@
       margin: 0 auto;
     }
     td {
+      word-break: break-all;
       word-wrap: break-word;
       -webkit-hyphens: auto;
       -moz-hyphens: auto;
@@ -32,7 +34,7 @@
     table, tr, td {
       padding: 0;
       vertical-align: top;
-      text-align: left;
+      text-align: justify;
     }
     img {
       outline: none;
@@ -51,19 +53,31 @@
       display: block;
       border: none;
     }
+    .hr {
+      display: block;
+      background-color: #c1c1c1;
+      width: 60px;
+      height: 1px;
+      margin: 0 auto;
+    }
     .container {
       padding: 2rem 0;
     }
+    #main .container {
+      padding: 3rem 0;
+    }
     .container td {
-      padding: .5rem 0;
+      padding: 1rem 0;
     }
     #header {
       width: 100%;
-      background-color: #efefef;
-      color: #333;
     }
     .service {
-      text-align: center;
+      display: block;
+      box-sizing: border-box;
+      width: 100%;
+      max-width: 140px;
+      margin: 0 auto;
     }
     #main table {
       width: 94%;
@@ -73,7 +87,8 @@
     }
     #footer {
       width: 100%;
-      background-color: #efefef;
+      font-size: 14px;
+      background-color: #e5e5e5;
       color: #333;
     }
     .slogan {
@@ -96,25 +111,24 @@
       text-align: center;
     }
     .contact a {
-      color: skyblue;
+      color: #61c9ec;
     }
     .copy {
       text-align: center;
     }
     .button-container {
-      width: 280px;
-      height: 3.75rem;
-      font-size: 1.5rem;
+      width: 300px;
+      font-size: 1.2rem;
       margin: 0 auto;
     }
-    a.button {
+    .button {
       display: block;
       width: 100%;
       height: 100%;
       font-size: 1em;
       line-height: 2.5;
       text-align: center;
-      background-color: skyblue;
+      background-color: #61c9ec;
       color: white;
       border: none;
       border-radius: .8em;
@@ -151,13 +165,18 @@
           <table>
             <tr>
               <td>
-                <h1 class="service">（ロゴ）</h1>
+                <img class="service" th:src="${logo}" />
               </td>
             </tr>
           </table>
         </td>
       </tr>
     </thead>
+    <tr>
+      <td>
+        <span class="hr"></span>
+      </td>
+    </tr>
     <tbody id="main">
       <tr>
         <td class="container">
@@ -169,13 +188,18 @@
             </tr>
             <tr>
               <td>
-                <p>ご利用いただきありがとうございます。下のボタンからメールアドレスの確認を行うことができます。</p>
+                <p>ご利用いただきありがとうございます。</p>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <p>下のボタンからメールアドレスの確認を行うことができます。</p>
               </td>
             </tr>
             <tr>
               <td>
                 <div class="button-container">
-                  <a class="button" th:href="${url}">メールアドレスの確認</a>
+                  <a class="button" th:href="${button}">メールアドレスの確認</a>
                 </div>
               </td>
             </tr>
@@ -199,24 +223,24 @@
           <table>
             <tr>
               <td colspan="2">
-                <p class="slogan">ダンスに打ち込んだ自分をもっと誇ろう。</p>
+                <p class="slogan">人事がナットクするダンスの伝え方。</p>
               </td>
             </tr>
             <tr>
               <td>
                 <div class="sns" style="margin: 0 1rem 0 auto;">
-                  <a href="https://twitter.com/T6SDL"><img src="cid:twitter" /></a>
+                  <a href="https://twitter.com/T6SDL"><img th:src="${twitter}" /></a>
                 </div>
               </td>
               <td>
                 <div class="sns" style="margin: 0 auto 0 1rem;">
-                  <a href="https://www.instagram.com/t6sdl/"><img src="cid:instagram" /></a>
+                  <a href="https://www.instagram.com/t6sdl/"><img th:src="${instagram}" /></a>
                 </div>
               </td>
             </tr>
             <tr>
               <td colspan="2">
-                <p class="contact"><a href="#">お問い合わせ</a></p>
+                <p class="contact"><a th:href="${contact}">お問い合わせ</a></p>
               </td>
             </tr>
             <tr>
