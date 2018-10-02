@@ -101,6 +101,7 @@ ul{
 .square_btn:hover:before {
   top: -webkit-calc(100% - 3px);
   top: calc(100% - 3px);
+  background: #426579;
 }
 
 
@@ -124,7 +125,6 @@ ul{
 .footer-list {
   margin: 10px;
   float: left;
-  font-size: 12px;
 }
 
 .footer-list li {
@@ -132,6 +132,7 @@ ul{
 }
 
 .footer-list a{
+  font-size: 12px;
   text-decoration: none;
   color: #000;
 }
