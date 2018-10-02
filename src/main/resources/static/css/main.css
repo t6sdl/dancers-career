@@ -56,17 +56,16 @@ ul{
   color: #000;
 }
 
+#lasli{
+  border-right: none;
+}
+
 .header-list a:hover {
   font-size: 0.9em;
 }
 
 .header-list span{
   font-size: 10px;
-}
-
-
-#lasli{
-  border-right: none;
 }
 
 .logout{
