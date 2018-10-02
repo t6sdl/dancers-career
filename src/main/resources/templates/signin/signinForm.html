@@ -8,7 +8,7 @@
 </head>
 <body>
   <header th:replace="common/header :: for-stranger"></header>
-  <div id="login">
+  <div id="formdef">
     <form name='form-login' th:action="@{/login}" method="post">
       <h1>ログイン</h1>
       <p class="hazard" th:if="${param.error}">メールアドレスまたはパスワードに誤りがあります</p>
