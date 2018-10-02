@@ -79,16 +79,13 @@ ul{
   color: #000;
 }
 
-.logout a{
-  color: #000;
-}
-
 .square_btn{
   position: relative;
   display: inline-block;
   font-weight: bold;
   padding: 1px;
   text-decoration: none;
+  color: #000;
 }
 
 .square_btn:before{
