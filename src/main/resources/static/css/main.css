@@ -24,7 +24,7 @@ ul{
   margin: 0px 0px;
   background-color: #fff;
   color: #000;
-  height: 100px;
+  height: 110px;
 }
 
 .header-logo {
@@ -76,6 +76,10 @@ ul{
   text-align: center;
   font-size: 12px;
   text-decoration: none;
+  color: #000;
+}
+
+.logout a{
   color: #000;
 }
 
