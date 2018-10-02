@@ -119,12 +119,13 @@ ul{
   font-size: 12px;
 }
 
-.footer-logo {
+.footer-logo{
   float: left;
   font-size: 25px;
+  color:#000;
 }
 
-.footer-list {
+.footer-list{
   margin: 10px;
   float: left;
 }
