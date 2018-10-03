@@ -37,16 +37,16 @@ public class GeneralController {
 		return "index/index";
 	}
 	
-	@RequestMapping("/about/privacy")
+	@RequestMapping("/about/terms-of-use")
 	public String getPrivacyPolicy(Model model) {
-		if (securityService.findLoggedInEmail().equals("")) {
+		if (securityService.findLoggedInEmail().isEmpty()) {
 			model.addAttribute("header", "for-stranger");
 		} else if (securityService.findLoggedInAuthority()) {
 			model.addAttribute("header", "for-admin");
 		} else {
 			model.addAttribute("header", "for-user");
 		}
-		return "about/privacyPolicy";
+		return "about/termsOfUse";
 	}
 	
 	@GetMapping("/about/contact")

@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8">
+  <meta charset="utf-8">
 </head>
 <body>
-<!-- 要素を削除する以外は自由にいじっちゃってください -->
-<footer th:fragment="footer">
-<div>
-<a th:href="@{/about/privacy}">プライバシーポリシー</a>
-<a th:href="@{/about/contact}">お問い合わせ</a>
-<small>&copy; 2018 （一社）東京六大学ストリートダンス連盟</small>
-</div>
-</footer>
+  <footer th:fragment="footer">
+    <div class="footer">
+      <div class="footer-logo">
+        Dancers Career
+      </div>
+      <div class="footer-list">
+        <ul>
+          <li><a th:href="@{/about/terms-of-use}">利用規約</a></li>
+          <li><a th:href="@{/about/contact}">お問い合わせ</a></li>
+        </ul>
+      </div>
+      <div class="copy">
+        <small>&copy; 2018 （一社）東京六大学ストリートダンス連盟</small>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
