@@ -157,3 +157,7 @@ input::placeholder {
 .topwords{
   color: #426579;
 }
+
+#terms{
+  margin: 50px;
+}
