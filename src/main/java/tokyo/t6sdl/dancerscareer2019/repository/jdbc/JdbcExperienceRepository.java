@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -377,6 +378,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 						es.setAdvice(esSet.getString("advice"));
 						return es;
 					}, experience.getExperience_id()));
+			experience.getEs().sort(Comparator.comparing(Es::getCorp, Comparator.naturalOrder()));
 			experience.setInterview(jdbcTemplate.query(
 					"SELECT * FROM interview WHERE id = ?", (interviewSet, k) -> {
 						Interview interview = new Interview();

@@ -4,43 +4,47 @@
   <meta charset="utf-8">
   <title>アカウント作成｜ダンサーズキャリア</title>
   <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}" href="../../static/css/form.css">
 </head>
 <body>
   <header th:replace="common/header :: for-stranger"></header>
-  <form th:action="@{/signup}" method="post" th:object="${signupForm}" class="form">
-    <h1>アカウント作成</h1>
-    <p th:if="${param.error}">アカウントの作成に失敗しました<br>もう一度お試しください</p>
+  <div id="formdef">
+    <form th:action="@{/signup}" method="post" th:object="${signupForm}" class="form">
+      <h1>アカウント作成</h1>
+      <p th:if="${param.error}" class="hazard">アカウントの作成に失敗しました<br>もう一度お試しください</p>
+      <div>
+        <label for="email"></label>
+        <!-- th:errorclassの値は入力値が不正の場合に付与するクラスなので、この場合エラー時にinputタグにerrorクラスが付きます -->
+        <input type="email" th:field="*{email}" th:errorclass="error" required class="form" placeholder="メールアドレス">
+        <!-- エラーの内容を表示する部分で、エラーの数だけpタグが生成されます、ので、pタグじゃない方が良ければ変更します -->
+        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+      </div>
+      <div>
+        <label for="password"></label>
+        <input type="password" th:field="*{password}" th:errorclass="error" required class="form" placeholder="パスワード">
+        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+      </div>
+      <div>
+        <label for="confirmPassword"></label>
+        <input type="password" th:field="*{confirmPassword}" th:errorclass="error" required class="form" placeholder="パスワード(確認)">
+        <p th:if="${#fields.hasGlobalErrors()}" th:errors="*{global}"></p>
+      </div>
+      <div>
+        <p>パスワードの条件</p>
+        <ul>
+          <li>8文字以上</li>
+          <li>半角英数字と1文字以上の記号+.-_を含める</li>
+        </ul>
+      </div>
+      <div>
+        <p>アカウントを作成すると、ダンサーズキャリアの<a th:href="@{/about/terms-of-use}" target="_blank">利用規約</a>に同意したことになります。
+        <br>また、ご指定のメールアドレスに送られたメールからメールアドレスの確認を行い、登録を完了させてください。</p>
+        <input type="submit" value="プロフィール登録に進む" class="button">
+      </div>
+    </form>
     <div>
-      <label for="email">メールアドレス</label>
-      <!-- th:errorclassの値は入力値が不正の場合に付与するクラスなので、この場合エラー時にinputタグにerrorクラスが付きます -->
-      <input type="email" th:field="*{email}" th:errorclass="error" required class="form">
-      <!-- エラーの内容を表示する部分で、エラーの数だけpタグが生成されます、ので、pタグじゃない方が良ければ変更します -->
-      <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+      <p><a th:href="@{/signin}">アカウントをお持ちの方はこちら</a></p>
     </div>
-    <div>
-      <label for="password">パスワード</label>
-      <input type="password" th:field="*{password}" th:errorclass="error" required class="form">
-      <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
-    </div>
-    <div>
-      <label for="confirmPassword">パスワード(確認)</label>
-      <input type="password" th:field="*{confirmPassword}" th:errorclass="error" required class="form">
-      <p th:if="${#fields.hasGlobalErrors()}" th:errors="*{global}"></p>
-    </div>
-    <div>
-  	  <p>パスワードの条件</p>
-  	  <ul>
-  	    <li>8文字以上</li>
-  	    <li>半角英数字と1文字以上の記号+.-_を含める</li>
-   	  </ul>
-    </div>
-    <div>
-      <p>アカウントを作成すると、ダンサーズキャリアの<a th:href="@{/about/terms-of-use}" target="_blank">利用規約</a>に同意したことになります。また、ご指定のメールアドレスに送られたメールからメールアドレスの確認を行い、登録を完了させてください。</p>
-      <input type="submit" value="プロフィール登録に進む" class="button">
-    </div>
-  </form>
-  <div>
-    <p><a th:href="@{/signin}">アカウントをお持ちの方はこちら</a></p>
   </div>
   <footer th:replace="common/footer :: footer"></footer>
   <script

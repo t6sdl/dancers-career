@@ -2,12 +2,14 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
 </head>
 <body>
   <footer th:fragment="footer">
     <div class="footer">
       <div class="footer-logo">
-        Dancers Career
+        <a th:href="@{/}" class="footer-logo">Dancers Career</a>
       </div>
       <div class="footer-list">
         <ul>

@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8">
-<title>エラー｜ダンサーズキャリア</title>
-<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+  <meta charset="utf-8">
+  <title>エラー｜ダンサーズキャリア</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/exp.css}" href="../../static/css/exp.css">
 </head>
 <body>
-<header th:replace="common/header :: for-user"></header>
-<main>
-<h1>ES/体験記</h1>
-<p>メールアドレスの確認とプロフィールの記入はお済みですか？</p>
-<p><a th:href="@{/user/account}">メールアドレスの確認がされているかチェックする</a></p>
-<p><a th:href="@{/user/profile}">プロフィールの記入が完了しているかチェックする</a></p>
-</main>
-<footer th:replace="common/footer :: footer"></footer>
+  <header th:replace="common/header :: for-user"></header>
+  <main>
+    <h1>ES/体験記</h1>
+    <p>メールアドレスの確認とプロフィールの記入はお済みですか？</p>
+    <p><a th:href="@{/user/account}">メールアドレスの確認がされているかチェックする</a></p>
+    <p><a th:href="@{/user/profile}">プロフィールの記入が完了しているかチェックする</a></p>
+  </main>
+  <footer th:replace="common/footer :: footer"></footer>
 </body>
 </html>
