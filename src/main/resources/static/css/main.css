@@ -152,3 +152,8 @@ input::placeholder {
 .footer-logo{
   text-decoration: none;
 }
+
+/* ----- other ----- */
+.topwords{
+  color: #426579;
+}
