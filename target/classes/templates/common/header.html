@@ -2,11 +2,15 @@
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
 </head>
 <body>
-  <header th:fragment="for-user"><!-- 普通のユーザー用のヘッダー -->
+
+  <!-- 普通のユーザー用のヘッダー -->
+  <header th:fragment="for-user">
     <div class="header">
-      <a th:href="@{/}"><img alt="t6sdldc" th:src="@{/img/logo1.png}" class="header-logo"></a>
+      <a th:href="@{/}"><img alt="t6sdldc" th:src="@{/img/logo1.png}" src="../../static/img/logo1.png" class="header-logo"></a>
       <div class="header-list">
         <ul>
           <li><a th:href="@{/}">ダンサーズキャリアとは<br><span>About Dancers Career</span></a></li>
@@ -20,15 +24,16 @@
     </div>
   </header>
 
-  <header th:fragment="for-admin"><!-- 管理者アカウント用のヘッダー -->
+  <!-- 管理者アカウント用のヘッダー -->
+  <header th:fragment="for-admin">
     <div class="header">
-      <a th:href="@{/}"><img alt="t6sdldc" th:src="@{/img/logo1.png}" class="header-logo"></a>
+      <a th:href="@{/}"><img alt="t6sdldc" th:src="@{/img/logo1.png}" src="../../static/img/logo1.png" class="header-logo"></a>
       <div class="header-list">
         <ul>
-          <li><a th:href="@{/admin/search/students?all}">登録学生検索</a></li>
-          <li><a th:href="@{/admin/experiences/new}">ES/体験記【登録】</a></li>
-          <li><a th:href="@{/admin/search/experiences?all}">ES/体験記【検索】</a></li>
-          <li id="lasli"><a th:href="@{/admin/mail?develop}">メール作成（開発中）</a></li>
+          <li><a th:href="@{/admin/search/students?all}">登録学生検索<br><span>Search Students</span></a></li>
+          <li><a th:href="@{/admin/experiences/new}">ES/体験記【登録】<br><span>Register ES/Experiences</span></a></li>
+          <li><a th:href="@{/admin/search/experiences?all}">ES/体験記【検索】<br><span>Search ES/Experiences</span></a></li>
+          <li id="lasli"><a th:href="@{/admin/mail?develop}">メール作成<br><span>Write Emails</span></a></li>
         </ul>
       </div>
       <div class="logout">
@@ -37,9 +42,10 @@
     </div>
   </header>
 
-  <header th:fragment="for-stranger"><!-- ログインしていない人用のヘッダー -->
+  <!-- ログインしていない人用のヘッダー -->
+  <header th:fragment="for-stranger">
     <div class="header">
-      <a th:href="@{/}"><img alt="t6sdldc" th:src="@{/img/logo1.png}" class="header-logo"></a>
+      <a th:href="@{/}"><img alt="t6sdldc" th:src="@{/img/logo1.png}" src="../../static/img/logo1.png" class="header-logo"></a>
     </div>
   </header>
 </body>
