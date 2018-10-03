@@ -28,9 +28,9 @@
         <p><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'"></span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></p>
       </div>
       <div th:each="esItem, loop : *{es}">
-        <hr th:unless="*{es[__${loop.index}__].isRepeated}">
-        <p th:unless="*{es[__${loop.index}__].isRepeated}">提出先企業：<span th:text="*{es[__${loop.index}__].corp} == '' ? '非公開' : *{es[__${loop.index}__].corp}"></span></p>
-        <p th:unless="*{es[__${loop.index}__].isRepeated}">選考結果：<span th:text="*{es[__${loop.index}__].result} == '' ? '非公開' : *{es[__${loop.index}__].result}"></span></p>
+        <hr th:unless="*{es[__${loop.index}__].isRepeated()}">
+        <p th:unless="*{es[__${loop.index}__].isRepeated()}">提出先企業：<span th:text="*{es[__${loop.index}__].corp} == '' ? '非公開' : *{es[__${loop.index}__].corp}"></span></p>
+        <p th:unless="*{es[__${loop.index}__].isRepeated()}">選考結果：<span th:text="*{es[__${loop.index}__].result} == '' ? '非公開' : *{es[__${loop.index}__].result}"></span></p>
         <p>設問：<span th:text="*{es[__${loop.index}__].question} == '' ? '非公開' : *{es[__${loop.index}__].question}"></span></p>
         <p>回答：<br><span th:each="str, stat : *{es[__${loop.index}__].answer.split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
         <p>赤入れ：<br><span style="color:red;" th:each="str, stat : *{es[__${loop.index}__].advice.split('\n', -1)}"><th:block th:text="${str == '' ? 'なし' : str}"></th:block><br th:if="${!stat.last}"></span></p>
