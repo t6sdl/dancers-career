@@ -6,6 +6,7 @@ import lombok.Data;
 public class Es {
 	private int experience_id;
 	private int es_id;
+	private boolean isRepeated;
 	private String corp;
 	private String result;
 	private String question;
