@@ -23,6 +23,10 @@ ul{
   text-align: center;
   color: #ff0000;
 }
+
+input::placeholder {
+  color: #606468;
+}
 /* --------------- common section --------------- */
 /* ----- Header ----- */
 .header {
@@ -127,7 +131,7 @@ ul{
 .footer-logo{
   float: left;
   font-size: 25px;
-  color:#000;
+  color:#426579;
 }
 
 .footer-list{
@@ -147,4 +151,13 @@ ul{
 
 .footer-logo{
   text-decoration: none;
+}
+
+/* ----- other ----- */
+.topwords{
+  color: #426579;
+}
+
+#terms{
+  margin: 50px;
 }
