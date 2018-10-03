@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
+import tokyo.t6sdl.dancerscareer2019.model.Es;
 import tokyo.t6sdl.dancerscareer2019.model.Experience;
 import tokyo.t6sdl.dancerscareer2019.model.Profile;
 import tokyo.t6sdl.dancerscareer2019.model.form.SearchForm;
@@ -77,19 +78,7 @@ public class ExperiencesController {
 		} else {
 			model.addAttribute("isLiked", false);
 		}
-		if (securityService.findLoggedInAuthority()) {
-			model.addAttribute("header", "for-admin");
-			Experience experience = experienceService.getExperienceById(id, true, true);
-			model.addAttribute("experience", experience);
-			return "experiences/article";
-		} else if (!(securityService.findLoggedInValidEmail()) || !(profileService.isCompleteProfile(profileService.getProfileByEmail(securityService.findLoggedInEmail())))) {
-			return "experiences/error";
-		} else {
-			model.addAttribute("header", "for-user");
-			Experience experience = experienceService.getExperienceById(id, true, true);
-			model.addAttribute("experience", experience);
-			return "experiences/article";
-		}
+		return this.display(id, model);
 	}
 	
 	@RequestMapping(value="/{experienceId}", params="like")
@@ -108,19 +97,7 @@ public class ExperiencesController {
 			profileService.updateLikes(securityService.findLoggedInEmail(), likes);
 		}
 		model.addAttribute("isLiked", true);
-		if (securityService.findLoggedInAuthority()) {
-			model.addAttribute("header", "for-admin");
-			Experience experience = experienceService.getExperienceById(id, true, true);
-			model.addAttribute("experience", experience);
-			return "experiences/article";
-		} else if (!(securityService.findLoggedInValidEmail()) || !(profileService.isCompleteProfile(profileService.getProfileByEmail(securityService.findLoggedInEmail())))) {
-			return "experiences/error";
-		} else {
-			model.addAttribute("header", "for-user");
-			Experience experience = experienceService.getExperienceById(id, true, true);
-			model.addAttribute("experience", experience);
-			return "experiences/article";
-		}
+		return this.display(id, model);
 	}
 	
 	@RequestMapping(value="/{experienceId}", params="dislike")
@@ -138,9 +115,23 @@ public class ExperiencesController {
 			profileService.updateLikes(securityService.findLoggedInEmail(), likes);
 		}
 		model.addAttribute("isLiked", false);
+		return this.display(id, model);
+	}
+	
+	private String display(int id, Model model) {
 		if (securityService.findLoggedInAuthority()) {
 			model.addAttribute("header", "for-admin");
 			Experience experience = experienceService.getExperienceById(id, true, true);
+			List<Es> es = new ArrayList<Es>();
+			experience.getEs().forEach(e -> {
+				if (!(es.isEmpty()) && es.stream().filter(s -> s.getCorp().equals(e.getCorp())).count() > 0) {
+					e.setRepeated(true);
+				} else {
+					e.setRepeated(false);
+				}
+				es.add(e);
+			});
+			experience.setEs(es);
 			model.addAttribute("experience", experience);
 			return "experiences/article";
 		} else if (!(securityService.findLoggedInValidEmail()) || !(profileService.isCompleteProfile(profileService.getProfileByEmail(securityService.findLoggedInEmail())))) {
@@ -148,6 +139,16 @@ public class ExperiencesController {
 		} else {
 			model.addAttribute("header", "for-user");
 			Experience experience = experienceService.getExperienceById(id, true, true);
+			List<Es> es = new ArrayList<Es>();
+			experience.getEs().forEach(e -> {
+				if (!(es.isEmpty()) && es.stream().filter(s -> s.getCorp().equals(e.getCorp())).count() > 0) {
+					e.setRepeated(true);
+				} else {
+					e.setRepeated(false);
+				}
+				es.add(e);
+			});
+			experience.setEs(es);
 			model.addAttribute("experience", experience);
 			return "experiences/article";
 		}
