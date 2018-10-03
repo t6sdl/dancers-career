@@ -15,10 +15,6 @@ input{
   -webkit-appearance: none;
 }
 
-input::placeholder {
-  color: #606468;
-}
-
 after { clear: both; }
 
 #formdef {
