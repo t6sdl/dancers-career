@@ -18,6 +18,11 @@ li{
 ul{
   margin: 0px;
 }
+
+.hazard{
+  text-align: center;
+  color: #ff0000;
+}
 /* --------------- common section --------------- */
 /* ----- Header ----- */
 .header {
