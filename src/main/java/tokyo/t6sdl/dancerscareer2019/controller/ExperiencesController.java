@@ -141,7 +141,7 @@ public class ExperiencesController {
 			Experience experience = experienceService.getExperienceById(id, true, true);
 			List<Es> es = new ArrayList<Es>();
 			experience.getEs().forEach(e -> {
-				if (!(es.isEmpty()) && es.stream().filter(s -> s.getCorp().equals(e.getCorp())).count() > 0) {
+				if (!(es.isEmpty()) && !(e.getCorp().isEmpty()) && es.stream().filter(s -> s.getCorp().equals(e.getCorp())).count() > 0) {
 					e.setRepeated(true);
 				} else {
 					e.setRepeated(false);
