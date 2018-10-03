@@ -3,7 +3,7 @@ body{
   background-color: #f5f5f5;
   margin: 0px;
   padding: 0px;
-  color: #606468;
+  color: #000;
 }
 
 .form:focus{
@@ -18,12 +18,18 @@ li{
 ul{
   margin: 0px;
 }
+
+.hazard{
+  text-align: center;
+  color: #ff0000;
+}
 /* --------------- common section --------------- */
 /* ----- Header ----- */
 .header {
-  margin: 20px 0px;
+  margin: 0px 0px;
   background-color: #fff;
   color: #000;
+  height: 110px;
 }
 
 .header-logo {
@@ -56,17 +62,16 @@ ul{
   color: #000;
 }
 
+#lasli{
+  border-right: none;
+}
+
 .header-list a:hover {
   font-size: 0.9em;
 }
 
 .header-list span{
   font-size: 10px;
-}
-
-
-#lasli{
-  border-right: none;
 }
 
 .logout{
@@ -85,6 +90,7 @@ ul{
   font-weight: bold;
   padding: 1px;
   text-decoration: none;
+  color: #000;
 }
 
 .square_btn:before{
@@ -102,6 +108,7 @@ ul{
 .square_btn:hover:before {
   top: -webkit-calc(100% - 3px);
   top: calc(100% - 3px);
+  background: #426579;
 }
 
 
@@ -117,15 +124,15 @@ ul{
   font-size: 12px;
 }
 
-.footer-logo {
+.footer-logo{
   float: left;
   font-size: 25px;
+  color:#000;
 }
 
-.footer-list {
+.footer-list{
   margin: 10px;
   float: left;
-  font-size: 12px;
 }
 
 .footer-list li {
@@ -133,6 +140,11 @@ ul{
 }
 
 .footer-list a{
+  font-size: 12px;
   text-decoration: none;
   color: #000;
+}
+
+.footer-logo{
+  text-decoration: none;
 }

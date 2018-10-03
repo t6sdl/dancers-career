@@ -4,10 +4,11 @@
   <meta charset="utf-8">
   <title>アカウント作成｜ダンサーズキャリア</title>
   <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}" href="../../static/css/form.css"></head>
-  <body>
-    <header th:replace="common/header :: for-stranger"></header>
-    <div id="formdef">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}" href="../../static/css/form.css">
+</head>
+<body>
+  <header th:replace="common/header :: for-stranger"></header>
+  <div id="formdef">
     <form th:action="@{/signup}" method="post" th:object="${signupForm}" class="form">
       <h1>アカウント作成</h1>
       <p th:if="${param.error}" class="hazard">アカウントの作成に失敗しました<br>もう一度お試しください</p>
@@ -36,21 +37,20 @@
         </ul>
       </div>
       <div>
-        <p>アカウントを作成すると、ダンサーズキャリアの<a th:href="@{/about/privacy}" target="_blank">プライバシーポリシー</a>に同意したことになります。
-          <br>また、ご指定のメールアドレスに送られたメールからメールアドレスの確認を行い、登録を完了させてください。</p>
+        <p>アカウントを作成すると、ダンサーズキャリアの<a th:href="@{/about/terms-of-use}" target="_blank">利用規約</a>に同意したことになります。
+        <br>また、ご指定のメールアドレスに送られたメールからメールアドレスの確認を行い、登録を完了させてください。</p>
         <input type="submit" value="プロフィール登録に進む" class="button">
       </div>
     </form>
     <div>
       <p><a th:href="@{/signin}">アカウントをお持ちの方はこちら</a></p>
     </div>
-
   </div>
-    <footer th:replace="common/footer :: footer"></footer>
-    <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-    <script th:src="@{/js/submit.js}"></script>
-  </body>
-  </html>
+  <footer th:replace="common/footer :: footer"></footer>
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  <script th:src="@{/js/submit.js}"></script>
+</body>
+</html>

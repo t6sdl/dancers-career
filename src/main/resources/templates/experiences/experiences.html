@@ -15,38 +15,38 @@
         <th:block th:each="pos : ${positionList}">
         <input type="checkbox" th:field="*{position}" th:value="${pos}">
         <label th:for="${#ids.prev('position')}" th:text="${pos}"></label>
-      </th:block>
-    </div>
+        </th:block>
+      </div>
+      <div>
+        <input type="submit" name="by-position" value="検索" class="button">
+      </div>
+    </form>
+    <div><a th:href="@{/experiences?all}"><button class="button">絞り込み解除</button></a></div>
+    <hr>
     <div>
-      <input type="submit" name="by-position" value="検索" class="button">
+      <p>検索結果： <span th:text="${experiences.size()}"></span> 件</p>
     </div>
-  </form>
-  <div><a th:href="@{/experiences?all}"><button class="button">絞り込み解除</button></a></div>
-  <hr>
-  <div>
-    <p>検索結果： <span th:text="${experiences.size()}"></span> 件</p>
-  </div>
-  <section th:if="${experiences.size() == 0 ? false : true}">
-    <article th:each="experience : ${experiences}" th:object="${experience}">
-      <div>
-        <p><span th:each="pos : *{position}" th:text="${pos}"></span></p>
-        <h1 th:text="*{university}"></h1>
-        <p>内定先：<span th:each="off : *{offer}" th:text="${off} == '' ? '非公開' : ${off} + ' '"></span></p>
-      </div>
-      <div>
-        <p><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'"></span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></p>
-      </div>
-      <hr>
-      <div>
-        <a th:href="@{/experiences/{experienceId}(experienceId=*{experience_id})}"><button class="button">詳細を見る</button></a>
-      </div>
-    </article>
-  </section>
-  <section  th:unless="${experiences.size() == 0 ? false : true}">
-    <p>お探しのES/体験記は見つかりません</p>
-  </section>
-</main>
-<footer th:replace="common/footer :: footer"></footer>
+    <section th:if="${experiences.size() == 0 ? false : true}">
+      <article th:each="experience : ${experiences}" th:object="${experience}">
+        <div>
+          <p><span th:each="pos : *{position}" th:text="${pos}"></span></p>
+          <h1 th:text="*{university}"></h1>
+          <p>内定先：<span th:each="off : *{offer}" th:text="${off} == '' ? '非公開' : ${off} + ' '"></span></p>
+        </div>
+        <div>
+          <p><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'"></span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></p>
+        </div>
+        <hr>
+        <div>
+          <a th:href="@{/experiences/{experienceId}(experienceId=*{experience_id})}"><button class="button">詳細を見る</button></a>
+        </div>
+      </article>
+    </section>
+    <section  th:unless="${experiences.size() == 0 ? false : true}">
+      <p>お探しのES/体験記は見つかりません</p>
+    </section>
+  </main>
+  <footer th:replace="common/footer :: footer"></footer>
 <script
 src="https://code.jquery.com/jquery-3.3.1.min.js"
 integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
