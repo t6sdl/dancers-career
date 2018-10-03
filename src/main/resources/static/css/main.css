@@ -131,7 +131,7 @@ input::placeholder {
 .footer-logo{
   float: left;
   font-size: 25px;
-  color:#000;
+  color:#426579;
 }
 
 .footer-list{
@@ -151,4 +151,9 @@ input::placeholder {
 
 .footer-logo{
   text-decoration: none;
+}
+
+/* ----- other ----- */
+.topwords{
+  color: #426579;
 }
