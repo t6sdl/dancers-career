@@ -4,14 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -26,7 +23,6 @@ import tokyo.t6sdl.dancerscareer2019.repository.ExperienceRepository;
 @Repository
 public class JdbcExperienceRepository implements ExperienceRepository {
 	private final JdbcTemplate jdbcTemplate;
-	private static final Logger logger = LoggerFactory.getLogger(JdbcExperienceRepository.class);
 	
 	private List<String> stringToList(String str) {
 		List<String> list = new ArrayList<String>();
@@ -156,7 +152,6 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 				results.add(result);
 			}
 		});
-		logger.info("results[0]: " + results.get(0).toString() + " in findByPosition()");
 		Set<Integer> ids = new HashSet<Integer>();
 		switch (method) {
 		case "OR":
@@ -181,7 +176,6 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		default:
 			return null;
 		}
-		logger.info("ids: " + ids.toString() + " in findByPosition()");
 		List<Experience> experiences = new ArrayList<Experience>();
 		ids.forEach(id -> {
 			experiences.add(this.findOneById(id, false, false));
@@ -367,7 +361,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		experience.setPosition(position);
 		if (all) {
 			experience.setEs(jdbcTemplate.query(
-					"SELECT * FROM es WHERE id = ?", (esSet, j) -> {
+					"SELECT * FROM es WHERE id = ? ORDER BY corp DESC", (esSet, j) -> {
 						Es es = new Es();
 						es.setExperience_id(experience.getExperience_id());
 						es.setEs_id(esSet.getInt("es_id"));
@@ -378,9 +372,8 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 						es.setAdvice(esSet.getString("advice"));
 						return es;
 					}, experience.getExperience_id()));
-			experience.getEs().sort(Comparator.comparing(Es::getCorp, Comparator.naturalOrder()));
 			experience.setInterview(jdbcTemplate.query(
-					"SELECT * FROM interview WHERE id = ?", (interviewSet, k) -> {
+					"SELECT * FROM interview WHERE id = ? ORDER BY interview_id ASC", (interviewSet, k) -> {
 						Interview interview = new Interview();
 						interview.setExperience_id(experience.getExperience_id());
 						interview.setInterview_id(interviewSet.getInt("interview_id"));
