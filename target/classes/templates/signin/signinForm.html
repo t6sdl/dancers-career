@@ -8,7 +8,7 @@
 </head>
 <body>
   <header th:replace="common/header :: for-stranger"></header>
-  <div id="login">
+  <div id="formdef">
     <form name='form-login' th:action="@{/login}" method="post">
       <h1>ログイン</h1>
       <p class="hazard" th:if="${param.error}">メールアドレスまたはパスワードに誤りがあります</p>
@@ -17,7 +17,6 @@
       <br>
       <label th:for="password"></label>
       <input type="password" placeholder="Password" name="password" class="form">
-
       <div>
         <input type="checkbox" id="remember-me" name="remember-me">
         <label for="remember-me">ログインしたままにする</label>

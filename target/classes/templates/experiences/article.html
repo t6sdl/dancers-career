@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>ES/体験記｜ダンサーズキャリア</title>
   <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/exp.css}" href="../../static/css/exp.css">
 </head>
 <body>
   <header th:replace="common/header :: ${header}"></header>
@@ -16,9 +17,11 @@
       </div>
       <div>
         <p><span th:each="pos : *{position}" th:text="${pos}"></span></p><!-- 役職タグ -->
-        <h2><span th:text="*{university} == '' ? '非公開' : *{university}"></span>
+        <h2>
+          <span th:text="*{university} == '' ? '非公開' : *{university}"></span>
           <span th:text="*{faculty}"></span>
-          <span th:text="*{department}"></span></h2>
+          <span th:text="*{department}"></span>
+        </h2>
         <p th:if="*{last_name != '' && first_name != ''}" th:text="|*{last_name} *{first_name} さん|"></p>
         <p>所属サークル：<span th:each="cl : *{club}" th:text="|${cl == '' ? '非公開' : cl} |"></span></p>
         <p>内定先：<span th:each="off : *{offer}" th:text="|${off == '' ? '非公開' : off} |"></span></p>

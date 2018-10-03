@@ -3,20 +3,11 @@ h1{
   color: #426579;
 }
 
-.hazard{
-  text-align: center;
-  color: #d70035;
-}
-
 .linkblue{
-  color:#4682b4;
+  color:#4169e1;
 }
 
-body {
-  font: 87.5%/1.5em;
-}
-
-input {
+input{
   border: none;
   font-size: 12px;
   line-height: 1.5em;
@@ -24,41 +15,39 @@ input {
   -webkit-appearance: none;
 }
 
-p {
-  line-height: 1.5em;
+input::placeholder {
+  color: #606468;
 }
 
 after { clear: both; }
 
-#login {
+#formdef {
   margin: 50px auto;
   text-align: center;
 }
 
-#login form {
+#formdef form {
   margin: auto;
   width: 100%;
 }
 
-#login form input[type="email"] {
+#formdef form input[type="email"] {
   border-radius: 3px 3px 3px 3px;
-  color: #a9a9a9;
   margin-bottom: 1em;
   padding: 0 16px;
   width: 385px;
   height: 50px;
 }
 
-#login form input[type="password"] {
+#formdef form input[type="password"] {
   border-radius: 3px 3px 3px 3px;
-  color: #a9a9a9;
   margin-bottom: 1em;
   padding: 0 15px;
   width: 385px;
   height: 50px;
 }
 
-#login form input[type="submit"] {
+#formdef form input[type="submit"] {
   background: #89c3eb;
   border: 0;
   width: 385px;
@@ -69,6 +58,22 @@ after { clear: both; }
   transition: background 0.3s ease-in-out;
 }
 
-#login form input[type="submit"]:hover {
+#formdef form input[type="submit"]:hover {
   background: #426579;
+}
+
+#formdef form input[type="text"]{
+  border-radius: 3px 3px 3px 3px;
+  margin-bottom: 1em;
+  padding: 0 16px;
+  width: 250px;
+  height: 50px;
+}
+
+#formdef form input[type="tel"]{
+  border-radius: 3px 3px 3px 3px;
+  margin-bottom: 1em;
+  padding: 0 16px;
+  width: 250px;
+  height: 50px;
 }
