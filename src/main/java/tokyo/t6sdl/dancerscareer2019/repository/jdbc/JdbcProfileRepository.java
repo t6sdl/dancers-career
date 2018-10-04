@@ -51,7 +51,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 	@Override
 	public List<Profile> find() {
 		return jdbcTemplate.query(
-				"SELECT * FROM profiles ORDER BY email", (resultSet, i) -> {
+				"SELECT * FROM profiles ORDER BY email ASC", (resultSet, i) -> {
 					Profile profile = new Profile();
 					this.adjustDataToProfile(profile, resultSet);
 					return profile;
@@ -142,7 +142,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 		List<List<String>> results = new ArrayList<List<String>>();
 		position.forEach(pos -> {
 			List<String> result = jdbcTemplate.query(
-					"SELECT (email) FROM positions WHERE position = ?", (resultSet, i) -> {
+					"SELECT (email) FROM positions WHERE position = ? ORDER BY email ASC", (resultSet, i) -> {
 						return resultSet.getString("email");
 					}, pos);
 			if (!(Objects.equals(result, null))) {

@@ -5,6 +5,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -61,6 +62,7 @@ public class AdminController {
 			emails.add(student.getEmail());
 			student.convertForDisplay();
 		});
+		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
 		model.addAttribute("students", students);
 		model.addAttribute("emails", emails);
 		return "admin/students/search";
@@ -71,6 +73,7 @@ public class AdminController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<String> filter = Arrays.asList("なし");
 		List<Student> students = this.makeStudentOfProfile(profileService.getProfiles());
+		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
 		map.put("filter", filter);
 		map.put("students", students);
 		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
@@ -98,6 +101,7 @@ public class AdminController {
 			emails.add(student.getEmail());
 			student.convertForDisplay();
 		});
+		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
 		model.addAttribute("students", students);
 		model.addAttribute("emails", emails);
 		return "admin/students/search";
@@ -114,6 +118,7 @@ public class AdminController {
 			profiles = profileService.getProfilesByName(kanaLastName, kanaFirstName);
 		}
 		List<Student> students = this.makeStudentOfProfile(profiles);
+		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
 		map.put("filter", filter);
 		map.put("students", students);
 		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
@@ -151,6 +156,7 @@ public class AdminController {
 			emails.add(student.getEmail());
 			student.convertForDisplay();
 		});
+		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
 		model.addAttribute("students", students);
 		model.addAttribute("emails", emails);
 		return "admin/students/search";
@@ -171,6 +177,7 @@ public class AdminController {
 			profiles = profileService.getProfilesByPrefecture(prefecture);
 		}
 		List<Student> students = this.makeStudentOfProfile(profiles);
+		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
 		map.put("filter", filter);
 		map.put("students", students);
 		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
@@ -192,6 +199,7 @@ public class AdminController {
 			emails.add(student.getEmail());
 			student.convertForDisplay();
 		});
+		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
 		model.addAttribute("students", students);
 		model.addAttribute("emails", emails);
 		return "admin/students/search";
@@ -207,6 +215,7 @@ public class AdminController {
 			filter.add(position.get(i));
 		}
 		List<Student> students = this.makeStudentOfProfile(profileService.getProfilesByPosition(position, "AND"));
+		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
 		map.put("filter", filter);
 		map.put("students", students);
 		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
@@ -228,6 +237,7 @@ public class AdminController {
 			emails.add(student.getEmail());
 			student.convertForDisplay();
 		});
+		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
 		model.addAttribute("students", students);
 		model.addAttribute("emails", emails);
 		return "admin/students/search";
@@ -243,6 +253,7 @@ public class AdminController {
 			filter.add(position.get(i));
 		}
 		List<Student> students = this.makeStudentOfProfile(profileService.getProfilesByPosition(position, "OR"));
+		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
 		map.put("filter", filter);
 		map.put("students", students);
 		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));

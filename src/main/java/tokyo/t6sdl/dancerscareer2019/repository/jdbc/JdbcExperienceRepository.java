@@ -61,8 +61,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	public Experience findOneById(int experience_id, boolean all, boolean pv_count) {
 		try {
 			if (pv_count) {
-				Integer page_view = jdbcTemplate.queryForObject("SELECT (page_view) FROM experiences WHERE experience_id = ?", Integer.class, experience_id);
-				jdbcTemplate.update("UPDATE experiences SET page_view = ? WHERE experience_id = ?", page_view + 1, experience_id);
+				jdbcTemplate.update("UPDATE experiences SET page_view = page_view + 1 WHERE experience_id = ?", experience_id);
 			}
 			return jdbcTemplate.queryForObject(
 					"SELECT * FROM experiences WHERE experience_id = ?", (resultSet, i) -> {
@@ -145,7 +144,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		List<List<Integer>> results = new ArrayList<List<Integer>>();
 		position.forEach(pos -> {
 			List<Integer> result = jdbcTemplate.query(
-					"SELECT (id) FROM senior_positions WHERE position = ?", (resultSet, i) -> {
+					"SELECT (id) FROM senior_positions WHERE position = ? ORDER BY id DESC", (resultSet, i) -> {
 						return resultSet.getInt("id");
 					}, pos);
 			if (!(Objects.equals(result, null))) {
@@ -283,11 +282,11 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	public void updateLikes(int experience_id, boolean increment) {
 		Integer likes = jdbcTemplate.queryForObject("SELECT (likes) FROM experiences WHERE experience_id = ?", Integer.class, experience_id);
 		if (increment) {
-			jdbcTemplate.update("UPDATE experiences SET likes = ? WHERE experience_id = ?", likes + 1, experience_id);
+			jdbcTemplate.update("UPDATE experiences SET likes = likes + 1 WHERE experience_id = ?", experience_id);
 		} else if (likes > 0) {
-			jdbcTemplate.update("UPDATE experiences SET likes = ? WHERE experience_id = ?", likes - 1, experience_id);
+			jdbcTemplate.update("UPDATE experiences SET likes = likes - 1 WHERE experience_id = ?", experience_id);
 		} else {
-			jdbcTemplate.update("UPDATE experiences SET likes = ? WHERE experience_id = ?", 0, experience_id);
+			jdbcTemplate.update("UPDATE experiences SET likes = 0 WHERE experience_id = ?", experience_id);
 		}
 	}
 

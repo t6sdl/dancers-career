@@ -38,7 +38,7 @@ public class JdbcAccountRepository implements AccountRepository {
 	public Account findOneByEmail(String email) {
 		try {
 			Account result = jdbcTemplate.queryForObject(
-					"SELECT * FROM accounts WHERE email=?", (resultSet, i) -> {
+					"SELECT * FROM accounts WHERE email = ?", (resultSet, i) -> {
 						Account account = new Account();
 						this.adjustDataToAccount(account, resultSet);
 						return account;
@@ -185,15 +185,7 @@ public class JdbcAccountRepository implements AccountRepository {
 	
 	private void setLastLogin(List<Account> accounts) {
 		accounts.forEach(account -> {
-			List<LocalDateTime> lastLogins = jdbcTemplate.query(
-					"SELECT last_used FROM persistent_logins WHERE username = ? ORDER BY last_used DESC LIMIT 1", (resultSet, i) -> {
-						Date lastUsed = resultSet.getTimestamp("last_used");
-						LocalDateTime lastLogin = LocalDateTime.ofInstant(lastUsed.toInstant(), ZoneId.of("Asia/Tokyo"));
-						return lastLogin;
-					}, account.getEmail());
-			if (!(lastLogins.isEmpty()) && lastLogins.get(0).isAfter(account.getLast_login())) {
-				account.setLast_login(lastLogins.get(0));
-			}
+			this.setLastLogin(account);
 		});
 	}
 	
