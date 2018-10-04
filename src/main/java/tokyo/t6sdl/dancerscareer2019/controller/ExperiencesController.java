@@ -78,7 +78,7 @@ public class ExperiencesController {
 		} else {
 			model.addAttribute("isLiked", false);
 		}
-		return this.display(id, model);
+		return this.display(id, true, model);
 	}
 	
 	@RequestMapping(value="/{experienceId}", params="like")
@@ -97,7 +97,7 @@ public class ExperiencesController {
 			profileService.updateLikes(securityService.findLoggedInEmail(), likes);
 		}
 		model.addAttribute("isLiked", true);
-		return this.display(id, model);
+		return this.display(id, false, model);
 	}
 	
 	@RequestMapping(value="/{experienceId}", params="dislike")
@@ -115,13 +115,13 @@ public class ExperiencesController {
 			profileService.updateLikes(securityService.findLoggedInEmail(), likes);
 		}
 		model.addAttribute("isLiked", false);
-		return this.display(id, model);
+		return this.display(id, false, model);
 	}
 	
-	private String display(int id, Model model) {
+	private String display(int id, boolean pvCount, Model model) {
 		if (securityService.findLoggedInAuthority()) {
 			model.addAttribute("header", "for-admin");
-			Experience experience = experienceService.getExperienceById(id, true, true);
+			Experience experience = experienceService.getExperienceById(id, true, pvCount);
 			List<Es> es = new ArrayList<Es>();
 			experience.getEs().forEach(e -> {
 				if (!(es.isEmpty()) && es.stream().filter(s -> s.getCorp().equals(e.getCorp())).count() > 0) {
@@ -138,7 +138,7 @@ public class ExperiencesController {
 			return "experiences/error";
 		} else {
 			model.addAttribute("header", "for-user");
-			Experience experience = experienceService.getExperienceById(id, true, true);
+			Experience experience = experienceService.getExperienceById(id, true, pvCount);
 			List<Es> es = new ArrayList<Es>();
 			experience.getEs().forEach(e -> {
 				if (!(es.isEmpty()) && !(e.getCorp().isEmpty()) && es.stream().filter(s -> s.getCorp().equals(e.getCorp())).count() > 0) {
