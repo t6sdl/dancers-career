@@ -30,7 +30,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 		Arrays.asList(str.split(",")).forEach(each -> {
 			if (each.startsWith("[") && each.endsWith("]")) {
 				StringBuilder sb = new StringBuilder(each);
-				each = sb.substring(1, sb.length() - 2);
+				each = sb.substring(1, sb.length() - 1);
 			}
 			list.add(each);
 		});;
