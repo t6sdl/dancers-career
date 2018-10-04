@@ -15,9 +15,7 @@
         <th:block th:each="pos : ${positionList}">
         <input type="checkbox" th:field="*{position}" th:value="${pos}">
         <label th:for="${#ids.prev('position')}" th:text="${pos}"></label>
-
         </th:block>
-
       </div>
       <div>
         <input type="submit" name="by-position" value="検索" class="button">
