@@ -47,6 +47,7 @@ public class SignupController {
 		Account newAccount = new Account();
 		newAccount.setEmail(form.getEmail());
 		accountService.create(newAccount, form.getPassword());
+		securityService.autoLogin(form.getEmail(), form.getPassword());
 		Mail mail = new Mail(form.getEmail(), Mail.SUB_WELCOME_TO_US);
 		try {
 			emailSender.sendMailWithToken(mail);
@@ -55,7 +56,6 @@ public class SignupController {
 			return "redirect:/signup?error";
 		}
 		session.setAttribute("rawPassword", form.getPassword());
-		securityService.autoLogin(form.getEmail(), form.getPassword());
 		return "redirect:/signup/profile";
 	}
 	
