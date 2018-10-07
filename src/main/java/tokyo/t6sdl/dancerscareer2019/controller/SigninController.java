@@ -41,7 +41,7 @@ public class SigninController {
 
 	@GetMapping("/forget-pwd")
 	public String getFogetPassword(@RequestParam(name = "token", required = false) String token, Model model) {
-		if (token.isEmpty() || Objects.equals(token, null)) {
+		if (Objects.equals(token, null) || token.isEmpty()) {
 			model.addAttribute(new EmailForm());
 			return "signin/forgetPassword";
 		} else if (accountService.isValidPasswordToken(token)) {

@@ -36,13 +36,13 @@
 </td>
 </tr>
 <tr>
-<td>非表示</td>
+<td>セキュリティのため非表示</td>
 </tr>
 </tbody>
 <tbody>
 <tr>
 <th>LINE連携</th>
-<td><a th:href="${isConnected} ? @{/line-notify/revoke} : @{/line-notify/apply?from=mypage}"><button th:text="${isConnected ? '解除する' : '連携する'}"></button></a></td>
+<td rowspan="2"><a th:href="${isConnected} ? @{/line-notify/revoke} : @{/line-notify/apply?from=mypage}"><button th:text="${isConnected ? '解除する' : '連携する'}"></button></a></td>
 </tr>
 <tr>
 <td th:text="${isConnected ? '連携済' : '未連携'}"></td>
