@@ -11,21 +11,44 @@
 <main>
 <article>
 <h1>アカウント</h1>
+<p th:if="${param.change-email}">メールアドレスが変更されました</p>
+<p th:if="${param.change-password}">パスワードが変更されました</p>
 <table>
+<tbody>
 <tr>
-<th align="right">メールアドレス：</th>
-<td><span th:text="${email}"></span> <span th:unless="${validEmail}">メールアドレス未確認 <a th:href="@{/user/account/help}"><i class="far fa-question-circle"></i>メールが届かない</a></span><span th:if="${validEmail}">メールアドレス確認済</span></td>
+<th>メールアドレス</th>
+<td rowspan="3">
+<a th:href="@{/user/account/change/email}"><button>変更</button></a>
+</td>
 </tr>
 <tr>
-<th align="right">パスワード：</th>
+<td th:text="${email}"></td>
+</tr>
+<tr>
+<td><span th:unless="${validEmail}">メールアドレス未確認 <a th:href="@{/user/account/help}"><i class="far fa-question-circle"></i>メールが届かない</a></span><span th:if="${validEmail}">メールアドレス確認済</span></td>
+</tr>
+</tbody>
+<tbody>
+<tr>
+<th>パスワード</th>
+<td rowspan="2">
+<a th:href="@{/user/account/change/password}"><button>変更</button></a>
+</td>
+</tr>
+<tr>
 <td>非表示</td>
 </tr>
+</tbody>
+<tbody>
 <tr>
-<th align="right">LINE連携：</th>
-<td><span th:text="${isConnected ? '連携済' : '未連携'}"></span> <a th:href="${isConnected} ? @{/line-notify/revoke} : @{/line-notify/apply?from=mypage}"><button th:text="${isConnected ? '解除する' : '連携する'}"></button></a></td>
+<th>LINE連携</th>
+<td><a th:href="${isConnected} ? @{/line-notify/revoke} : @{/line-notify/apply?from=mypage}"><button th:text="${isConnected ? '解除する' : '連携する'}"></button></a></td>
 </tr>
+<tr>
+<td th:text="${isConnected ? '連携済' : '未連携'}"></td>
+</tr>
+</tbody>
 </table>
-<div><a th:href="@{/user/account/verify}"><button>修正する</button></a></div>
 <div><a th:href="@{/user/account/delete}"><button>退会する</button></a></div>
 </article>
 <aside th:replace="user/common/tab :: tab"></aside>

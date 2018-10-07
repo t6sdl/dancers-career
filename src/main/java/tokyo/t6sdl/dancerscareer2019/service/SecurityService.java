@@ -45,22 +45,4 @@ public class SecurityService {
 			return "";
 		}
 	}
-	
-	public boolean findLoggedInValidEmail() {
-		Object account = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (account instanceof Account) {
-			return ((Account) account).isValid_email();
-		} else {
-			return false;
-		}
-	}
-	
-	public boolean findLoggedInAuthority() {
-		Object account = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (account instanceof Account) {
-			return ((Account) account).getAuthority().equals("ROLE_ADMIN");
-		} else {
-			return false;
-		}
-	}
 }

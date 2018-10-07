@@ -5,25 +5,26 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.io.LineNotifyManager;
+import tokyo.t6sdl.dancerscareer2019.httpresponse.NotFound404;
 import tokyo.t6sdl.dancerscareer2019.io.EmailSender;
+import tokyo.t6sdl.dancerscareer2019.model.Account;
 import tokyo.t6sdl.dancerscareer2019.model.Experience;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.model.Profile;
-import tokyo.t6sdl.dancerscareer2019.model.form.AccountForm;
+import tokyo.t6sdl.dancerscareer2019.model.form.NewEmailForm;
+import tokyo.t6sdl.dancerscareer2019.model.form.NewPasswordForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.ProfileForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.VerificationForm;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
@@ -41,7 +42,6 @@ public class UserPageController {
 	private final ExperienceService experienceService;
 	private final EmailSender emailSender;
 	private final PasswordEncoder passwordEncoder;
-	private final HttpSession session;
 	private final LineNotifyManager lineNotify;
 		
 	@RequestMapping()
@@ -72,12 +72,9 @@ public class UserPageController {
 	}
 	
 	@RequestMapping("/account")
-	public String getAccountInfo(@RequestParam(name="autologin", required=false) String autologin, Model model) {
-		String loggedInEmail = securityService.findLoggedInEmail();
-		if (!(Objects.equals(session.getAttribute("rawPassword"), null) && !(Objects.equals(autologin, "done")))) {
-			securityService.autoLogin(loggedInEmail, session.getAttribute("rawPassword").toString());
-		}
-		String accessToken = accountService.getLineAccessTokenByEmail(loggedInEmail);
+	public String getAccountInfo(Model model) {
+		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
+		String accessToken = accountService.getLineAccessTokenByEmail(account.getEmail());
 		if (!(Objects.equals(accessToken, null))) {
 			int tokenStatus = lineNotify.getTokenStatus(accessToken);
 			if (tokenStatus == 200) {
@@ -88,8 +85,8 @@ public class UserPageController {
 		} else {
 			model.addAttribute("isConnected", false);
 		}
-		model.addAttribute("email", loggedInEmail);
-		model.addAttribute("validEmail", securityService.findLoggedInValidEmail());
+		model.addAttribute("email", account.getEmail());
+		model.addAttribute("validEmail", account.isValid_email());
 		return "user/account/account";
 	}
 	
@@ -98,18 +95,10 @@ public class UserPageController {
 		return "user/account/help";
 	}
 	
-	@RequestMapping("/account/verify")
-	public String getVerificationToChangeAccount(Model model) {
-		model.addAttribute("cod", "change");
-		model.addAttribute(new VerificationForm());
-		return "user/account/verification";
-	}
-	
 	@GetMapping("/account/delete")
 	public String getVerificationToDeleteAccount(Model model) {
-		model.addAttribute("cod", "delete");
 		model.addAttribute(new VerificationForm());
-		return "user/account/verification";
+		return "user/account/delete";
 	}
 	
 	@PostMapping("/account/delete")
@@ -124,53 +113,55 @@ public class UserPageController {
 		}
 	}
 	
-	@PostMapping("/account/change")
-	public String postVerificationToChangeAccount(VerificationForm form, Model model) {
-		if (passwordEncoder.matches(form.getPassword(), securityService.findLoggedInPassword())) {
-			session.setAttribute("rawPassword", form.getPassword());
-			model.addAttribute(new AccountForm());
-			model.addAttribute("emailError", false);
-			model.addAttribute("passwordError", false);
-			return "user/account/changeAccount";
+	@GetMapping("/account/change/{what}")
+	public String getChangeAccount(@PathVariable(name="what") String what, Model model) {
+		if (what.equals("email")) {
+			model.addAttribute(new NewEmailForm());
+			return "user/account/changeEmail";
+		} else if (what.equals("password")) {
+			model.addAttribute(new NewPasswordForm());
+			return "user/account/changePassword";
 		} else {
-			return "redirect:/user/account/verify?error";
+			throw new NotFound404();
 		}
 	}
 
-	@PostMapping(value="/account/changed", params="changeEmail")
-	public String postChangeEmail(@Validated AccountForm form, BindingResult result, Model model) {
-		if (result.hasFieldErrors("email")) {
-			model.addAttribute("emailError", true);
-			model.addAttribute("passwordError", false);
-			return "user/account/changeAccount";
+	@PostMapping(value="/account/change/email")
+	public String postChangeEmail(@Validated NewEmailForm form, BindingResult result, Model model) {
+		if (passwordEncoder.matches(form.getCurrentPassword(), securityService.findLoggedInPassword())) {
+			if (result.hasErrors()) {
+				return "user/account/changeEamil";
+			}
+			String loggedInEmail = securityService.findLoggedInEmail();
+			accountService.changeEmail(loggedInEmail, form.getNewEmail());
+			Mail mail = new Mail(form.getNewEmail(), Mail.SUB_VERIFY_EMAIL);
+			try {
+				emailSender.sendMailWithToken(mail);
+			} catch (Exception e) {
+				accountService.changeEmail(form.getNewEmail(), loggedInEmail);
+				return "redirect:/user/error";
+			}
+			accountService.changeValidEmail(form.getNewEmail(), false);
+			securityService.autoLogin(form.getNewEmail(), form.getCurrentPassword());
+			return "redirect:/user/account?change-email";
+		} else {
+			return "redirect:/user/account/change/email?error";
 		}
-		String loggedInEmail = securityService.findLoggedInEmail();
-		accountService.changeEmail(loggedInEmail, form.getEmail());
-		Mail mail = new Mail(form.getEmail(), Mail.SUB_VERIFY_EMAIL);
-		try {
-			emailSender.sendMailWithToken(mail);
-		} catch (Exception e) {
-			accountService.changeEmail(form.getEmail(), loggedInEmail);
-			return "redirect:/user/error";
-		}
-		accountService.changeValidEmail(form.getEmail(), false);
-		String loggedInRawPassword = session.getAttribute("rawPassword").toString();
-		securityService.autoLogin(form.getEmail(), loggedInRawPassword);
-		return "redirect:/user/account?autologin=done";
 	}
 	
-	@PostMapping(value="/account/changed", params="changePassword")
-	public String postChangePassword(@Validated AccountForm form, BindingResult result, Model model) {
-		if (result.hasFieldErrors("password") || result.hasGlobalErrors()) {
-			model.addAttribute("emailError", false);
-			model.addAttribute("passwordError", true);
-			return "user/account/changeAccount";
+	@PostMapping(value="/account/change/password")
+	public String postChangePassword(@Validated NewPasswordForm form, BindingResult result, Model model) {
+		if (passwordEncoder.matches(form.getCurrentPassword(), securityService.findLoggedInPassword())) {
+			if (result.hasErrors() || result.hasGlobalErrors()) {
+				return "user/account/changePassword";
+			}
+			String loggedInEmail = securityService.findLoggedInEmail();
+			accountService.changePassword(loggedInEmail, form.getNewPassword());
+			securityService.autoLogin(loggedInEmail, form.getNewPassword());
+			return "redirect:/user/account?change-password";
+		} else {
+			return "redirect:/user/account/change/password?error";
 		}
-		String loggedInEmail = securityService.findLoggedInEmail();
-		accountService.changePassword(loggedInEmail, form.getPassword());
-		session.setAttribute("rawPassword", form.getPassword());
-		securityService.autoLogin(loggedInEmail, form.getPassword());
-		return "redirect:/user/account?autologin=done";
 	}
 	
 	@RequestMapping("/profile")
@@ -186,40 +177,25 @@ public class UserPageController {
 		return "user/profile/profile";
 	}
 	
-	@RequestMapping("/profile/verify")
-	public String getVerificationToChangeProfile(Model model) {
-		model.addAttribute(new VerificationForm());
-		return "user/profile/verification";
+	@GetMapping("/profile/change")
+	public String getChangeProfile(Model model) {
+		model.addAttribute("positionList", Profile.POSITION_LIST);
+		Profile profile = profileService.getProfileByEmail(securityService.findLoggedInEmail());
+		ProfileForm form;
+		if (Objects.equals(profile, null)) {
+			form = new ProfileForm();
+		} else {
+			form = profileService.convertProfileIntoProfileForm(profile);
+		}
+		model.addAttribute(form);
+		model.addAttribute("hiddenUniv", form.getUniversity());
+		model.addAttribute("hiddenFac", form.getFaculty());
+		model.addAttribute("hiddenDep", form.getDepartment());
+		return "user/profile/changeProfile";
 	}
 	
 	@PostMapping("/profile/change")
-	public String postVerificationToChangeProfile(VerificationForm verificationForm, Model model) {
-		if (passwordEncoder.matches(verificationForm.getPassword(), securityService.findLoggedInPassword())) {
-			model.addAttribute("positionList", Profile.POSITION_LIST);
-			Profile profile = profileService.getProfileByEmail(securityService.findLoggedInEmail());
-			ProfileForm form;
-			if (Objects.equals(profile, null)) {
-				form = new ProfileForm();
-			} else {
-				form = profileService.convertProfileIntoProfileForm(profile);
-			}
-			model.addAttribute(form);
-			model.addAttribute("hiddenUniv", form.getUniversity());
-			model.addAttribute("hiddenFac", form.getFaculty());
-			model.addAttribute("hiddenDep", form.getDepartment());
-			return "user/profile/changeProfile";
-		} else {
-			return "redirect:/user/profile/verify?error";
-		}
-	}
-	
-	@GetMapping("/profile/change")
-	public String getChangeProfile() {
-		return "redirect:/user/profile/verify";
-	}
-	
-	@PostMapping("/profile/changed")
-	public String postChangedProfile(@Validated ProfileForm form, BindingResult result, Model model) {
+	public String postChangeProfile(@Validated ProfileForm form, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			model.addAttribute("hiddenUniv", form.getUniversity());
 			model.addAttribute("hiddenFac", form.getFaculty());
@@ -234,7 +210,7 @@ public class UserPageController {
 			} else {
 				profileService.update(updatedProfile, loggedInEmail);
 			}
-			return "redirect:/user/profile";
+			return "redirect:/user/profile?modified";
 		}
 	}
 }
