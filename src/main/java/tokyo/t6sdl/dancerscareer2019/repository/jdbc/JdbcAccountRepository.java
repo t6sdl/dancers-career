@@ -83,6 +83,24 @@ public class JdbcAccountRepository implements AccountRepository {
 	}
 	
 	@Override
+	public String findEmailTokenByEmail(String email) {
+		try {
+			return jdbcTemplate.queryForObject("SELECT (email_token) FROM accounts WHERE email = ?", String.class, email);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+	}
+	
+	@Override
+	public String findPasswordTokenByEmail(String email) {
+		try {
+			return jdbcTemplate.queryForObject("SELECT (password_token) FROM accounts WHERE email = ?", String.class, email);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+	}
+	
+	@Override
 	public String findLineAccessTokenByEmail(String email) {
 		try {
 			return jdbcTemplate.queryForObject("SELECT (line_access_token) FROM accounts WHERE email = ?", String.class, email);

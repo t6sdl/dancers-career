@@ -63,22 +63,4 @@ public class SecurityService {
 			return false;
 		}
 	}
-	
-	public String findLoggedInEmailToken() {
-		Object account = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (account instanceof Account) {
-			return ((Account) account).getEmail_token();
-		} else {
-			return "";
-		}
-	}
-	
-	public String findLoggedInPasswordToken() {
-		Object account = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (account instanceof Account) {
-			return ((Account) account).getPassword_token();
-		} else {
-			return "";
-		}
-	}
 }
