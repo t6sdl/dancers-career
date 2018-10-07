@@ -31,7 +31,7 @@ public class GeneralController {
 	private final String CONTEXT_PATH = Mail.CONTEXT_PATH;
 		
 	@RequestMapping("")
-	public String isndex(Model model) {
+	public String index(Model model) {
 		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
 		if (account.isAdmin()) {
 			return "redirect:/admin";
@@ -105,9 +105,10 @@ public class GeneralController {
 		if (Objects.equals(code, null) || !(passwordEncoder.matches(securityService.findLoggedInEmail(), state))) {
 			throw new NotFound404();
 		} else {
+			String loggedInEmail = securityService.findLoggedInEmail();
 			String accessToken = lineNotify.getAccessToken(code, this.CONTEXT_PATH + "/line-notify/oauth/to-index");
-			accountService.changeLineAccessToken(securityService.findLoggedInEmail(), accessToken);
-			lineNotify.notifyMessage(accessToken, lineNotify.getMessage(new Mail(null, Mail.SUB_WELCOME_TO_US)));
+			accountService.changeLineAccessToken(loggedInEmail, accessToken);
+			lineNotify.notifyMessage(accessToken, lineNotify.getMessage(new Mail(loggedInEmail, Mail.SUB_WELCOME_TO_US)));
 			return "redirect:/";
 		}
 	}
