@@ -71,7 +71,7 @@ public class AccountService implements UserDetailsService {
 	
 	public String createEmailToken(String loggedInEmail) {
 		String emailToken = this.createAccountToken();
-		if (emailToken == "") {
+		if (emailToken.isEmpty()) {
 			return "";
 		}
 		while (accountRepository.findOneByEmailToken(emailToken) instanceof Account) {
@@ -83,7 +83,7 @@ public class AccountService implements UserDetailsService {
 	
 	public String createPasswordToken(String loggedInEmail) {
 		String passwordToken = this.createAccountToken();
-		if (passwordToken == "") {
+		if (passwordToken.isEmpty()) {
 			return "";
 		}
 		while (accountRepository.findOneByPasswordToken(passwordToken) instanceof Account) {
@@ -95,7 +95,7 @@ public class AccountService implements UserDetailsService {
 	
 	public boolean isValidEmailToken(String emailToken) {
 		Account account = accountRepository.findOneByEmailToken(emailToken);
-		if (account == null) {
+		if (!(account instanceof Account)) {
 			return false;
 		}
 		accountRepository.refreshEmailToken(account.getEmail());
@@ -105,7 +105,7 @@ public class AccountService implements UserDetailsService {
 	
 	public boolean isValidPasswordToken(String passwordToken) {
 		Account account = accountRepository.findOneByPasswordToken(passwordToken);
-		if (account == null) {
+		if (!(account instanceof Account)) {
 			return false;
 		}
 		LocalDateTime expiration = account.getUpdated_at().plusMinutes(30);
@@ -119,7 +119,7 @@ public class AccountService implements UserDetailsService {
 	
 	public String completeResetPassword(String passwordToken) {
 		Account account = accountRepository.findOneByPasswordToken(passwordToken);
-		if (account == null) {
+		if (!(account instanceof Account)) {
 			return "";
 		}
 		accountRepository.refreshPasswordToken(account.getEmail());
