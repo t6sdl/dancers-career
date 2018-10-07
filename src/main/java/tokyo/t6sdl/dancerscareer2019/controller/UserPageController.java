@@ -143,7 +143,7 @@ public class UserPageController {
 			}
 			accountService.changeValidEmail(form.getNewEmail(), false);
 			securityService.autoLogin(form.getNewEmail(), form.getCurrentPassword());
-			return "redirect:/user/account?change-email";
+			return "redirect:/user/account?changedemail";
 		} else {
 			return "redirect:/user/account/change/email?error";
 		}
@@ -158,7 +158,7 @@ public class UserPageController {
 			String loggedInEmail = securityService.findLoggedInEmail();
 			accountService.changePassword(loggedInEmail, form.getNewPassword());
 			securityService.autoLogin(loggedInEmail, form.getNewPassword());
-			return "redirect:/user/account?change-password";
+			return "redirect:/user/account?changedpassword";
 		} else {
 			return "redirect:/user/account/change/password?error";
 		}
