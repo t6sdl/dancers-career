@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.model.AccessToken;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.model.Notify;
+import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 import tokyo.t6sdl.dancerscareer2019.service.SecurityService;
 
 @RequiredArgsConstructor
@@ -24,6 +25,7 @@ import tokyo.t6sdl.dancerscareer2019.service.SecurityService;
 public class LineNotifyManager {
 	private final SecurityService securityService;
 	private final PasswordEncoder passwordEncoder;
+	private final AccountService accountService;
 	
 	public String generateRedirectUriToGetCode(String callback) {
 		UriComponentsBuilder uri = UriComponentsBuilder.fromHttpUrl("https://notify-bot.line.me/oauth/authorize");
@@ -99,18 +101,19 @@ public class LineNotifyManager {
 		draft.append("\n");
 		switch (mail.getSubject()) {
 		case Mail.SUB_WELCOME_TO_US:
-			draft.append("ダンサーズキャリアにご登録いただきありがとうございます！\n\n");
+			draft.append("ダンサーズキャリアにご登録いただきありがとうございます！\n");
+			draft.append("今後はダンサーズキャリアからのメールが届くと、LINEへもメッセージが届きます！\n\n");
 			if (!(securityService.findLoggedInValidEmail())) {
 				draft.append("↓下記のURLからメールアドレスの確認をお済ませください。\n");
-				draft.append(Mail.URI_VERIFY_EMAIL + securityService.findLoggedInEmailToken() + "\n\n");
+				draft.append(Mail.URI_VERIFY_EMAIL + accountService.getEmailTokenByEmail(mail.getTo()) + "\n\n");
 			}
 			break;
 		case Mail.SUB_VERIFY_EMAIL:
 			draft.append("↓下記のURLからメールアドレスの確認をお済ませください。\n\n");
-			draft.append(Mail.URI_VERIFY_EMAIL + securityService.findLoggedInEmailToken() + "\n\n");
+			draft.append(Mail.URI_VERIFY_EMAIL + accountService.getEmailTokenByEmail(mail.getTo()) + "\n\n");
 		case Mail.SUB_RESET_PWD:
 			draft.append("↓下記のURLからパスワードの再設定ができます。\nURLの有効期限は30分です。\n\n");
-			draft.append(Mail.URI_VERIFY_EMAIL + securityService.findLoggedInPasswordToken() + "\n\n");
+			draft.append(Mail.URI_VERIFY_EMAIL + accountService.getPasswordTokenByEmail(mail.getTo()) + "\n\n");
 		case Mail.SUB_REPLY_TO_CONTACT:
 			draft.append("お問い合わせいただきありがとうございます。\nお返事に数日程度かかる場合もございます。ご了承ください。\n\n");
 		default:
@@ -119,7 +122,8 @@ public class LineNotifyManager {
 		draft.append("\n↓マイページはこちら\n");
 		draft.append(Mail.CONTEXT_PATH + "/user\n\n");
 		draft.append("↓お問い合わせはこちらから\n");
-		draft.append(Mail.CONTEXT_PATH + "/about/contact");
+		draft.append(Mail.CONTEXT_PATH + "/about/contact\n\n");
+		draft.append("※こちらは「送信専用」です。ダンサーズキャリアへの問い合わせは上記アドレスからお願いいたします。");
 		return draft.toString();
 	}
 }

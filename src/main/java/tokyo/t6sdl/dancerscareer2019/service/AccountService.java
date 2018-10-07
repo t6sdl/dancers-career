@@ -26,6 +26,14 @@ public class AccountService implements UserDetailsService {
 		return accountRepository.findOneByEmail(email);
 	}
 	
+	public String getEmailTokenByEmail(String email) {
+		return accountRepository.findEmailTokenByEmail(email);
+	}
+	
+	public String getPasswordTokenByEmail(String email) {
+		return accountRepository.findPasswordTokenByEmail(email);
+	}
+	
 	public String getLineAccessTokenByEmail(String email) {
 		return accountRepository.findLineAccessTokenByEmail(email);
 	}
