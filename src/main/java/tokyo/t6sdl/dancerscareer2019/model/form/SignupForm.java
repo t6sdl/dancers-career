@@ -15,9 +15,9 @@ public class SignupForm {
 	@NotEmpty
 	@Email
 	@UniqueEmail
-	private String email;
+	private String newEmail;
 	@Size(min=8)
 	@Pattern(message="半角英数字と記号（.-+_のうち少なくとも１つ）を必ず含めてください", regexp="^(?=[a-zA-Z0-9]*(\\.|\\-|\\+|_))(?=([a-zA-Z]|\\.|\\-|\\+|_)*[0-9])(?=([0-9]|\\.|\\-|\\+|_)*[a-zA-Z])(\\w|\\.|\\-|\\+|_)*$")
-	private String password;
-	private String confirmPassword;
+	private String newPassword;
+	private String confirm;
 }

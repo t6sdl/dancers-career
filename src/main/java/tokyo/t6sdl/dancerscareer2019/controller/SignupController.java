@@ -45,17 +45,17 @@ public class SignupController {
 			return "signup/signupForm";
 		}
 		Account newAccount = new Account();
-		newAccount.setEmail(form.getEmail());
-		accountService.create(newAccount, form.getPassword());
-		securityService.autoLogin(form.getEmail(), form.getPassword());
-		Mail mail = new Mail(form.getEmail(), Mail.SUB_WELCOME_TO_US);
+		newAccount.setEmail(form.getNewEmail());
+		accountService.create(newAccount, form.getNewPassword());
+		securityService.autoLogin(form.getNewEmail(), form.getNewPassword());
+		Mail mail = new Mail(form.getNewEmail(), Mail.SUB_WELCOME_TO_US);
 		try {
 			emailSender.sendMailWithToken(mail);
 		} catch (Exception e) {
 			accountService.delete(mail.getTo());
 			return "redirect:/signup?error";
 		}
-		session.setAttribute("rawPassword", form.getPassword());
+		session.setAttribute("rawPassword", form.getNewPassword());
 		return "redirect:/signup/profile";
 	}
 	
