@@ -15,6 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.model.AccessToken;
+import tokyo.t6sdl.dancerscareer2019.model.Account;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.model.Notify;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
@@ -97,23 +98,24 @@ public class LineNotifyManager {
 	}
 	
 	public String getMessage(Mail mail) {
+		Account account = accountService.getAccountByEmail(mail.getTo());
 		StringBuilder draft = new StringBuilder();
 		draft.append("\n");
 		switch (mail.getSubject()) {
 		case Mail.SUB_WELCOME_TO_US:
 			draft.append("ダンサーズキャリアにご登録いただきありがとうございます！\n");
 			draft.append("今後はダンサーズキャリアからのメールが届くと、LINEへもメッセージが届きます！\n\n");
-			if (!(securityService.findLoggedInValidEmail())) {
+			if (!(account.isValid_email())) {
 				draft.append("↓下記のURLからメールアドレスの確認をお済ませください。\n");
-				draft.append(Mail.URI_VERIFY_EMAIL + accountService.getEmailTokenByEmail(mail.getTo()) + "\n\n");
+				draft.append(Mail.URI_VERIFY_EMAIL + account.getEmail_token() + "\n\n");
 			}
 			break;
 		case Mail.SUB_VERIFY_EMAIL:
 			draft.append("↓下記のURLからメールアドレスの確認をお済ませください。\n\n");
-			draft.append(Mail.URI_VERIFY_EMAIL + accountService.getEmailTokenByEmail(mail.getTo()) + "\n\n");
+			draft.append(Mail.URI_VERIFY_EMAIL + account.getEmail_token() + "\n\n");
 		case Mail.SUB_RESET_PWD:
 			draft.append("↓下記のURLからパスワードの再設定ができます。\nURLの有効期限は30分です。\n\n");
-			draft.append(Mail.URI_VERIFY_EMAIL + accountService.getPasswordTokenByEmail(mail.getTo()) + "\n\n");
+			draft.append(Mail.URI_VERIFY_EMAIL + account.getEmail_token() + "\n\n");
 		case Mail.SUB_REPLY_TO_CONTACT:
 			draft.append("お問い合わせいただきありがとうございます。\nお返事に数日程度かかる場合もございます。ご了承ください。\n\n");
 		default:

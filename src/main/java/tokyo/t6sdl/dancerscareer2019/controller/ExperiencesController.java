@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
+import tokyo.t6sdl.dancerscareer2019.model.Account;
 import tokyo.t6sdl.dancerscareer2019.model.Es;
 import tokyo.t6sdl.dancerscareer2019.model.Experience;
 import tokyo.t6sdl.dancerscareer2019.model.Profile;
 import tokyo.t6sdl.dancerscareer2019.model.form.SearchForm;
+import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 import tokyo.t6sdl.dancerscareer2019.service.ExperienceService;
 import tokyo.t6sdl.dancerscareer2019.service.ProfileService;
 import tokyo.t6sdl.dancerscareer2019.service.SecurityService;
@@ -23,20 +25,22 @@ import tokyo.t6sdl.dancerscareer2019.service.SecurityService;
 @Controller
 @RequestMapping("/experiences")
 public class ExperiencesController {
+	private final AccountService accountService;
 	private final SecurityService securityService;
 	private final ProfileService profileService;
 	private final ExperienceService experienceService;
 	
 	@RequestMapping(params="all")
 	public String getExperiences(Model model) {
-		if (securityService.findLoggedInAuthority()) {
+		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
+		if (account.isAdmin()) {
 			model.addAttribute("header", "for-admin");
 			model.addAttribute("posistionList", Profile.POSITION_LIST);
 			model.addAttribute(new SearchForm());
 			List<Experience> experiences = experienceService.getExperiences();
 			model.addAttribute("experiences", experiences);
 			return "experiences/experiences";
-		} else if (!(securityService.findLoggedInValidEmail()) || !(profileService.isCompleteProfile(profileService.getProfileByEmail(securityService.findLoggedInEmail())))) {
+		} else if (!(account.isValid_email()) || !(profileService.isCompleteProfile(profileService.getProfileByEmail(securityService.findLoggedInEmail())))) {
 			return "experiences/error";
 		} else {
 			model.addAttribute("header", "for-user");
@@ -50,14 +54,15 @@ public class ExperiencesController {
 	
 	@RequestMapping(params="by-position")
 	public String getExperiencesByPosition(@RequestParam(name="position") List<String> position, SearchForm form, Model model) {
-		if (securityService.findLoggedInAuthority()) {
+		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
+		if (account.isAdmin()) {
 			model.addAttribute("header", "for-admin");
 			model.addAttribute("posistionList", Profile.POSITION_LIST);
 			model.addAttribute(form);
 			List<Experience> experiences = experienceService.getExperiencesByPosition(position, "OR");
 			model.addAttribute("experiences", experiences);
 			return "experiences/experiences";
-		} else if (!(securityService.findLoggedInValidEmail()) || !(profileService.isCompleteProfile(profileService.getProfileByEmail(securityService.findLoggedInEmail())))) {
+		} else if (!(account.isValid_email()) || !(profileService.isCompleteProfile(profileService.getProfileByEmail(securityService.findLoggedInEmail())))) {
 			return "experiences/error";
 		} else {
 			model.addAttribute("header", "for-user");
@@ -119,7 +124,8 @@ public class ExperiencesController {
 	}
 	
 	private String display(int id, boolean pvCount, Model model) {
-		if (securityService.findLoggedInAuthority()) {
+		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
+		if (account.isAdmin()) {
 			model.addAttribute("header", "for-admin");
 			Experience experience = experienceService.getExperienceById(id, true, pvCount);
 			List<Es> es = new ArrayList<Es>();
@@ -134,7 +140,7 @@ public class ExperiencesController {
 			experience.setEs(es);
 			model.addAttribute("experience", experience);
 			return "experiences/article";
-		} else if (!(securityService.findLoggedInValidEmail()) || !(profileService.isCompleteProfile(profileService.getProfileByEmail(securityService.findLoggedInEmail())))) {
+		} else if (!(account.isValid_email()) || !(profileService.isCompleteProfile(profileService.getProfileByEmail(securityService.findLoggedInEmail())))) {
 			return "experiences/error";
 		} else {
 			model.addAttribute("header", "for-user");

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.io.LineNotifyManager;
 import tokyo.t6sdl.dancerscareer2019.io.EmailSender;
+import tokyo.t6sdl.dancerscareer2019.model.Account;
 import tokyo.t6sdl.dancerscareer2019.model.Experience;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.model.Profile;
@@ -41,7 +42,6 @@ public class UserPageController {
 	private final ExperienceService experienceService;
 	private final EmailSender emailSender;
 	private final PasswordEncoder passwordEncoder;
-	private final HttpSession session;
 	private final LineNotifyManager lineNotify;
 		
 	@RequestMapping()
@@ -73,11 +73,8 @@ public class UserPageController {
 	
 	@RequestMapping("/account")
 	public String getAccountInfo(@RequestParam(name="autologin", required=false) String autologin, Model model) {
-		String loggedInEmail = securityService.findLoggedInEmail();
-		if (!(Objects.equals(session.getAttribute("rawPassword"), null) && !(Objects.equals(autologin, "done")))) {
-			securityService.autoLogin(loggedInEmail, session.getAttribute("rawPassword").toString());
-		}
-		String accessToken = accountService.getLineAccessTokenByEmail(loggedInEmail);
+		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
+		String accessToken = accountService.getLineAccessTokenByEmail(account.getEmail());
 		if (!(Objects.equals(accessToken, null))) {
 			int tokenStatus = lineNotify.getTokenStatus(accessToken);
 			if (tokenStatus == 200) {
@@ -88,8 +85,8 @@ public class UserPageController {
 		} else {
 			model.addAttribute("isConnected", false);
 		}
-		model.addAttribute("email", loggedInEmail);
-		model.addAttribute("validEmail", securityService.findLoggedInValidEmail());
+		model.addAttribute("email", account.getEmail());
+		model.addAttribute("validEmail", account.isValid_email());
 		return "user/account/account";
 	}
 	
@@ -127,7 +124,6 @@ public class UserPageController {
 	@PostMapping("/account/change")
 	public String postVerificationToChangeAccount(VerificationForm form, Model model) {
 		if (passwordEncoder.matches(form.getPassword(), securityService.findLoggedInPassword())) {
-			session.setAttribute("rawPassword", form.getPassword());
 			model.addAttribute(new AccountForm());
 			model.addAttribute("emailError", false);
 			model.addAttribute("passwordError", false);
@@ -154,7 +150,6 @@ public class UserPageController {
 			return "redirect:/user/error";
 		}
 		accountService.changeValidEmail(form.getEmail(), false);
-		String loggedInRawPassword = session.getAttribute("rawPassword").toString();
 		securityService.autoLogin(form.getEmail(), loggedInRawPassword);
 		return "redirect:/user/account?autologin=done";
 	}
@@ -168,7 +163,6 @@ public class UserPageController {
 		}
 		String loggedInEmail = securityService.findLoggedInEmail();
 		accountService.changePassword(loggedInEmail, form.getPassword());
-		session.setAttribute("rawPassword", form.getPassword());
 		securityService.autoLogin(loggedInEmail, form.getPassword());
 		return "redirect:/user/account?autologin=done";
 	}

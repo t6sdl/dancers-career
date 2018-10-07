@@ -24,6 +24,10 @@ public class Account implements UserDetails {
 	private String email_token;
 	private String password_token;
 	
+	public boolean isAdmin() {
+		return this.getAuthority().equals("ROLE_ADMIN");
+	}
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> authorities = new ArrayList<>();
