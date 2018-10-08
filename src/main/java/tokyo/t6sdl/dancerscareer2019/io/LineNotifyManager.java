@@ -14,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import tokyo.t6sdl.dancerscareer2019.model.AccessToken;
 import tokyo.t6sdl.dancerscareer2019.model.Account;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
@@ -22,7 +21,6 @@ import tokyo.t6sdl.dancerscareer2019.model.Notify;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 import tokyo.t6sdl.dancerscareer2019.service.SecurityService;
 
-@Slf4j
 @RequiredArgsConstructor
 @Component
 public class LineNotifyManager {
@@ -109,13 +107,11 @@ public class LineNotifyManager {
 			draft.append("今後はダンサーズキャリアからのメールが届くと、LINEへもメッセージが届きます！\n\n");
 			if (!(account.isValid_email())) {
 				draft.append("↓下記のURLからメールアドレスの確認をお済ませください。\n");
-				log.info("set url");
 				draft.append(Mail.URI_VERIFY_EMAIL + account.getEmail_token() + "\n\n");
 			}
 			break;
 		case Mail.SUB_VERIFY_EMAIL:
 			draft.append("↓下記のURLからメールアドレスの確認をお済ませください。\n\n");
-			log.info("set url");
 			draft.append(Mail.URI_VERIFY_EMAIL + account.getEmail_token() + "\n\n");
 			break;
 		case Mail.SUB_RESET_PWD:
