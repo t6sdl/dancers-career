@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.httpresponse.NotFound404;
 import tokyo.t6sdl.dancerscareer2019.io.EmailSender;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
@@ -18,16 +19,12 @@ import tokyo.t6sdl.dancerscareer2019.model.form.EmailForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.NewPasswordForm;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/signin")
 public class SigninController {
 	private final AccountService accountService;
 	private final EmailSender emailSender;
-
-	public SigninController(AccountService accountService, EmailSender emailSender) {
-		this.accountService = accountService;
-		this.emailSender = emailSender;
-	}
 
 	@GetMapping
 	public String getSignin() {

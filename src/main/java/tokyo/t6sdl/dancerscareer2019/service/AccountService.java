@@ -1,7 +1,5 @@
 package tokyo.t6sdl.dancerscareer2019.service;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
@@ -70,25 +68,13 @@ public class AccountService implements UserDetailsService {
 	}
 	
 	public String createEmailToken(String loggedInEmail) {
-		String emailToken = this.createAccountToken();
-		if (emailToken.isEmpty()) {
-			return "";
-		}
-		while (accountRepository.findOneByEmailToken(emailToken) instanceof Account) {
-			emailToken = this.createAccountToken();
-		}
+		String emailToken = passwordEncoder.encode(loggedInEmail);
 		accountRepository.recordEmailToken(loggedInEmail, emailToken);
 		return emailToken;
 	}
 	
 	public String createPasswordToken(String loggedInEmail) {
-		String passwordToken = this.createAccountToken();
-		if (passwordToken.isEmpty()) {
-			return "";
-		}
-		while (accountRepository.findOneByPasswordToken(passwordToken) instanceof Account) {
-			passwordToken = this.createAccountToken();
-		}
+		String passwordToken = passwordEncoder.encode(loggedInEmail);
 		accountRepository.recordPasswordToken(loggedInEmail, passwordToken);
 		return passwordToken;
 	}
@@ -98,8 +84,9 @@ public class AccountService implements UserDetailsService {
 		if (!(account instanceof Account)) {
 			return false;
 		}
-		accountRepository.refreshEmailToken(account.getEmail());
-		accountRepository.updateValidEmail(account.getEmail(), true);
+		if (!(account.isValid_email())) {
+			accountRepository.updateValidEmail(account.getEmail(), true);
+		}
 		return true;
 	}
 	
@@ -126,20 +113,9 @@ public class AccountService implements UserDetailsService {
 		return account.getEmail();
 	}
 	
-	private String createAccountToken() {
-		try {
-			SecureRandom random = SecureRandom.getInstanceStrong();
-			byte[] bytes = new byte[16];
-			random.nextBytes(bytes);
-			StringBuffer s = new StringBuffer();
-			for (int i = 0; i < bytes.length; i++) {
-				s.append(String.format("%02x", bytes[i]));
-			}
-			String token = s.toString();
-			return token;
-		} catch (NoSuchAlgorithmException e) {
-			return "";
-		}
+	public void refreshToken(String loggedInEmail) {
+		accountRepository.refreshEmailToken(loggedInEmail);
+		accountRepository.refreshPasswordToken(loggedInEmail);
 	}
 
 	@Override
