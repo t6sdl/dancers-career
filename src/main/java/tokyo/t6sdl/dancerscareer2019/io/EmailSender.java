@@ -17,9 +17,11 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 
+@Slf4j
 @Async
 @RequiredArgsConstructor
 @Component
@@ -58,11 +60,9 @@ public class EmailSender {
 			case Mail.SUB_WELCOME_TO_US:
 			case Mail.SUB_VERIFY_EMAIL:
 				token = accountService.createEmailToken(mail.getTo());
-				mail.setUrl(Mail.URI_VERIFY_EMAIL + token);
 				break;
 			case Mail.SUB_RESET_PWD:
 				token = accountService.createPasswordToken(mail.getTo());
-				mail.setUrl(Mail.URI_RESET_PWD + token);
 				break;
 			default:
 				throw new Exception();
@@ -114,9 +114,12 @@ public class EmailSender {
 		URL url = null;
 		InputStreamReader isr = null;
 		try {
+			log.info("start reading content");
 			url = new URL(Mail.CONTEXT_PATH + this.getHtmlSource(mail));
+			log.info("url set");
 			InputStream is = url.openStream();
 			isr = new InputStreamReader(is, "UTF-8");
+			log.info("now reading...");
 			while (true) {
 				int i = isr.read();
 				if (i == -1) {
@@ -135,17 +138,18 @@ public class EmailSender {
 				e.printStackTrace();
 			}
 		}
+		log.info("finish reading content");
 		mail.setContent(draft.toString());
 	}
 	
 	private String getHtmlSource(Mail mail) {
 		switch (mail.getSubject()) {
 		case Mail.SUB_WELCOME_TO_US:
-			return "/mails/welcome-to-us?url=" + mail.getUrl();
+			return "/mails/welcome-to-us?to=" + mail.getTo();
 		case Mail.SUB_VERIFY_EMAIL:
-			return "/mails/verify-email?url=" + mail.getUrl();
+			return "/mails/verify-email?to=" + mail.getTo();
 		case Mail.SUB_RESET_PWD:
-			return "/mails/forget-pwd?url=" + mail.getUrl();
+			return "/mails/forget-pwd?to=" + mail.getTo();
 		case Mail.SUB_REPLY_TO_CONTACT:
 			return "/mails/reply-to-contact";
 		default:
