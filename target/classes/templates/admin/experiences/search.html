@@ -123,7 +123,7 @@
 <div><a th:href="@{/admin/search/experiences?all}"><button>絞り込み解除</button></a></div>
 <hr>
 <div>
-<p style="text-align:center;">検索結果： <span th:text="${experiences.size()}"></span> 件</p>
+<p style="text-align:center;">検索結果： <span th:text="${count}"></span> 件</p>
 </div>
 <section th:if="${experiences.size() == 0 ? false : true}">
 <article style="width:94%;padding:1em;border:1px solid #333;margin:2em auto;" th:each="experience : ${experiences}" th:object="${experience}">

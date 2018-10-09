@@ -4,10 +4,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -46,16 +46,6 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		}
 		return sb.toString();
 	}
-
-	@Override
-	public List<Experience> find() {
-		return jdbcTemplate.query(
-				"SELECT * FROM experiences ORDER BY experience_id DESC", (resultSet, i) -> {
-					Experience experience = new Experience();
-					this.adjustDataToExperience(experience, resultSet, false);
-					return experience;
-				});
-	}
 	
 	@Override
 	public Experience findOneById(int experience_id, boolean all, boolean pv_count) {
@@ -73,115 +63,166 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 			return null;
 		}
 	}
+	
+	@Override
+	public Map<String, Object> find() {
+		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM experiences", Integer.class);
+		List<Experience> experiences = jdbcTemplate.query(
+				"SELECT * FROM experiences ORDER BY experience_id DESC", (resultSet, i) -> {
+					Experience experience = new Experience();
+					this.adjustDataToExperience(experience, resultSet, false);
+					return experience;
+				});
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("count", count);
+		result.put("experiences", experiences);
+		return result;
+	}
 
 	@Override
-	public List<Experience> findByName(String kanaLastName, String kanaFirstName) {
-		return jdbcTemplate.query(
+	public Map<String, Object> findByName(String kanaLastName, String kanaFirstName) {
+		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM experiences WHERE kana_last_name = ? AND kana_first_name = ?", Integer.class, kanaLastName, kanaFirstName);
+		List<Experience> experiences = jdbcTemplate.query(
 				"SELECT * FROM experiences WHERE kana_last_name = ? AND kana_first_name = ? ORDER BY experience_id DESC", (resultSet, i) -> {
 					Experience experience = new Experience();
 					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;
 				}, kanaLastName, kanaFirstName);
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("count", count);
+		result.put("experiences", experiences);
+		return result;
 	}
 
 	@Override
-	public List<Experience> findByLastName(String kanaLastName) {
-		return jdbcTemplate.query(
+	public Map<String, Object> findByLastName(String kanaLastName) {
+		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM experiences WHERE kana_last_name = ?", Integer.class, kanaLastName);
+		List<Experience> experiences = jdbcTemplate.query(
 				"SELECT * FROM experiences WHERE kana_last_name = ? ORDER BY experience_id DESC", (resultSet, i) -> {
 					Experience experience = new Experience();
 					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;
 				}, kanaLastName);
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("count", count);
+		result.put("experiences", experiences);
+		return result;
 	}
 
 	@Override
-	public List<Experience> findByPrefecture(String prefecture) {
-		return jdbcTemplate.query(
+	public Map<String, Object> findByPrefecture(String prefecture) {
+		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM experiences WHERE prefecture = ?", Integer.class, prefecture);
+		List<Experience> experiences = jdbcTemplate.query(
 				"SELECT * FROM experiences WHERE prefecture = ? ORDER BY experience_id DESC", (resultSet, i) -> {
 					Experience experience = new Experience();
 					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;
 				}, prefecture);
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("count", count);
+		result.put("experiences", experiences);
+		return result;
 	}
 
 	@Override
-	public List<Experience> findByUniversity(String prefecture, String university) {
-		return jdbcTemplate.query(
+	public Map<String, Object> findByUniversity(String prefecture, String university) {
+		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM experiences WHERE prefecture = ? AND university = ?", Integer.class, prefecture, university);
+		List<Experience> experiences = jdbcTemplate.query(
 				"SELECT * FROM experiences WHERE prefecture = ? AND university = ? ORDER BY experience_id DESC", (resultSet, i) -> {
 					Experience experience = new Experience();
 					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;
 				}, prefecture, university);
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("count", count);
+		result.put("experiences", experiences);
+		return result;
 	}
 
 	@Override
-	public List<Experience> findByFaculty(String prefecture, String university, String faculty) {
-		return jdbcTemplate.query(
+	public Map<String, Object> findByFaculty(String prefecture, String university, String faculty) {
+		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM experiences WHERE prefecture = ? AND university = ? AND faculty = ?", Integer.class, prefecture, university, faculty);
+		List<Experience> experiences = jdbcTemplate.query(
 				"SELECT * FROM experiences WHERE prefecture = ? AND university = ? AND faculty = ? ORDER BY experience_id DESC", (resultSet, i) -> {
 					Experience experience = new Experience();
 					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;
 				}, prefecture, university, faculty);
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("count", count);
+		result.put("experiences", experiences);
+		return result;
 	}
 
 	@Override
-	public List<Experience> findByDepartment(String prefecture, String university, String faculty, String department) {
-		return jdbcTemplate.query(
+	public Map<String, Object> findByDepartment(String prefecture, String university, String faculty, String department) {
+		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM experiences WHERE prefecture = ? AND university = ? AND faculty = ? AND department = ?", Integer.class, prefecture, university, faculty, department);
+		List<Experience> experiences = jdbcTemplate.query(
 				"SELECT * FROM experiences WHERE prefecture = ? AND university = ? AND faculty = ? AND department = ? ORDER BY experience_id DESC", (resultSet, i) -> {
 					Experience experience = new Experience();
 					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;
 				}, prefecture, university, faculty, department);
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("count", count);
+		result.put("experiences", experiences);
+		return result;
 	}
 
 	@Override
-	public List<Experience> findByPosition(List<String> position, String method) {
+	public Map<String, Object> findByPosition(List<String> position, boolean andSearch) {
 		if (position.contains("")) {
 			return null;
-		} else if (position.size() == 1) {
-			method = "OR";
 		}
-		List<List<Integer>> results = new ArrayList<List<Integer>>();
-		position.forEach(pos -> {
-			List<Integer> result = jdbcTemplate.query(
-					"SELECT (id) FROM senior_positions WHERE position = ? ORDER BY id DESC", (resultSet, i) -> {
-						return resultSet.getInt("id");
-					}, pos);
-			if (!(Objects.equals(result, null))) {
-				results.add(result);
+		StringBuilder posStr = new StringBuilder();
+		for (int i = 0; i < position.size(); i++) {
+			posStr.append("'" + position.get(i) + "'");
+			if (i < position.size() - 1) {
+				posStr.append(", ");
 			}
-		});
-		Set<Integer> ids = new HashSet<Integer>();
-		switch (method) {
-		case "OR":
-			results.forEach(result -> {
-				ids.addAll(result);
-			});
-			break;
-		case "AND":
-			results.get(0).forEach(id -> {
-				boolean isRepeated = true;
-				for (int i = 1; i < results.size(); i++) {
-					if (!(results.get(i).contains(id))) {
-						isRepeated = false;
-						break;
-					}
-				}
-				if (isRepeated) {
-					ids.add(id);
-				}
-			});
-			break;
-		default:
+		}
+		List<Integer> ids = new ArrayList<Integer>();
+		if (andSearch) {
+			ids = jdbcTemplate.query(
+					"SELECT id FROM senior_positions WHERE position IN (?) GROUP BY id HAVING COUNT(*) = ?", (resultSet, i) -> {
+						return resultSet.getInt("id");
+					}, posStr.toString(), position.size());
+		} else {
+			ids = jdbcTemplate.query(
+					"SELECT id FROM senior_positions WHERE position IN (?) GROUP BY id", (resultSet, i) -> {
+						return resultSet.getInt("id");
+					}, posStr.toString());
+		}
+		if (Objects.equals(ids, null) || ids.isEmpty()) {
 			return null;
 		}
-		List<Experience> experiences = new ArrayList<Experience>();
-		ids.forEach(id -> {
-			experiences.add(this.findOneById(id, false, false));
-		});
-		return experiences;
+		List<Experience> experiences = this.findById(ids);
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("count", ids.size());
+		result.put("experiences", experiences);
+		return result;
 	}
-	
+
+	@Override
+	public List<Experience> findById(List<Integer> ids) {
+		if (Objects.equals(ids, null) || ids.isEmpty()) {
+			return null;
+		}
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < ids.size(); i++) {
+			builder.append(String.valueOf(ids.get(i)));
+			if (i < ids.size() - 1) {
+				builder.append(", ");
+			}
+		}
+		return jdbcTemplate.query(
+				"SELECT * FROM experiences WHERE experience_id IN (?)", (resultSet, i) -> {
+					Experience experience = new Experience();
+					this.adjustDataToExperience(experience, resultSet, false);
+					return experience;
+				}, builder.toString());
+	}
+
 	@Override
 	public Es findEsById(int experience_id, int es_id) {
 		try {

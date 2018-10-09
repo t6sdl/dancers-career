@@ -24,7 +24,7 @@
     <div><a th:href="@{/experiences?all}"><button class="button">絞り込み解除</button></a></div>
     <hr>
     <div>
-      <p>検索結果： <span th:text="${experiences.size()}"></span> 件</p>
+      <p>検索結果： <span th:text="${count}"></span> 件</p>
     </div>
     <section th:if="${experiences.size() == 0 ? false : true}">
       <article th:each="experience : ${experiences}" th:object="${experience}">
