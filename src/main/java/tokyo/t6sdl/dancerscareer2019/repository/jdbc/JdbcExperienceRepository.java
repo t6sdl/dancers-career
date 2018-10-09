@@ -181,24 +181,26 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		}
 		log.info("position: " + position);
 		StringBuilder posStr = new StringBuilder();
+		posStr.append("(");
 		for (int i = 0; i < position.size(); i++) {
 			posStr.append("'" + position.get(i) + "'");
 			if (i < position.size() - 1) {
 				posStr.append(", ");
 			}
 		}
+		posStr.append(")");
 		List<Integer> ids = new ArrayList<Integer>();
 		if (andSearch) {
-			log.info("SELECT id FROM senior_positions WHERE position IN (" + posStr.toString() + ") GROUP BY id HAVING COUNT(id) = " + position.size());
+			log.info("SELECT id FROM senior_positions WHERE position IN " + posStr.toString() + " GROUP BY id HAVING COUNT(id) = " + position.size());
 			ids.addAll(jdbcTemplate.query(
-					"SELECT id FROM senior_positions WHERE position IN (?) GROUP BY id HAVING COUNT(id) = ?", (resultSet, i) -> {
+					"SELECT id FROM senior_positions WHERE position IN ? GROUP BY id HAVING COUNT(id) = ?", (resultSet, i) -> {
 						log.info("id: " + resultSet.getInt("id"));
 						return resultSet.getInt("id");
 					}, posStr.toString(), position.size()));
 		} else {
 			log.info("SELECT id FROM senior_positions WHERE position IN (" + posStr.toString() + ") GROUP BY id");
 			ids.addAll(jdbcTemplate.query(
-					"SELECT id FROM senior_positions WHERE position IN (?) GROUP BY id", (resultSet, i) -> {
+					"SELECT id FROM senior_positions WHERE position IN ? GROUP BY id", (resultSet, i) -> {
 						log.info("id: " + resultSet.getInt("id"));
 						return resultSet.getInt("id");
 					}, posStr.toString()));
