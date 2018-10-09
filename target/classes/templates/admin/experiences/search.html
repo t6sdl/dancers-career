@@ -125,7 +125,7 @@
 <div>
 <p style="text-align:center;">検索結果： <span th:text="${count}"></span> 件</p>
 </div>
-<section th:if="${experiences.size() == 0 ? false : true}">
+<section th:if="${count == 0 ? false : true}">
 <article style="width:94%;padding:1em;border:1px solid #333;margin:2em auto;" th:each="experience : ${experiences}" th:object="${experience}">
 <div>
 <p><span th:each="pos : *{position}" th:text="${pos}" style="background:#ddd;padding:.5em;margin-right:.5em;"></span></p>
@@ -145,7 +145,7 @@
 </div>
 </article>
 </section>
-<section  th:unless="${experiences.size() == 0 ? false : true}">
+<section  th:unless="${count == 0 ? false : true}">
 <p>お探しのES/体験記は見つかりません</p>
 </section>
 </main>
