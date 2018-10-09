@@ -19,14 +19,14 @@ CREATE TABLE profiles (
   KEY ix_name (kana_last_name, kana_first_name),
   KEY ix_univ (university, faculty),
   FOREIGN KEY (email) REFERENCES accounts (email) ON DELETE CASCADE ON UPDATE CASCADE
-);
+) CHARACTER SET utf8;
 
 CREATE TABLE positions (
   email VARCHAR(150) NOT NULL COLLATE utf8_bin,
   position ENUM('代表', '副代表', '会計', '広報', '渉外・営業', 'ジャンルリーダー', '振付師', '公演舞台監督', '公演総合演出', '公演ストーリー制作', '音響制作', '照明制作', '映像制作', '衣装制作', 'イベントオーガナイザー', '新歓係', '合宿統括', '役職なし', 'その他') NOT NULL,
   PRIMARY KEY (email, position),
   FOREIGN KEY (email) REFERENCES profiles (email) ON DELETE CASCADE ON UPDATE CASCADE
-);
+) CHARACTER SET utf8;
 
 INSERT INTO profiles VALUES ('user1@t6sdl.tokyo', '大阪', '太郎', 'オオサカ', 'タロウ', '1995-09-11', '男性', '09032721323', '理系', '大阪府', '大阪大学', '工学部', '応用理工学科', '2020/03', '修士卒', '');
 INSERT INTO profiles VALUES ('user2@t6sdl.tokyo', '東京', '文子', 'トウキョウ', 'フミコ', '1998-02-03', '女性', '09032914272', '文系', '東京都', '上智大学', '総合人間科学部', '社会学科', '2020/03', '学部卒', '');
