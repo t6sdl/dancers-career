@@ -14,11 +14,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tokyo.t6sdl.dancerscareer2019.model.Es;
 import tokyo.t6sdl.dancerscareer2019.model.Experience;
 import tokyo.t6sdl.dancerscareer2019.model.Interview;
 import tokyo.t6sdl.dancerscareer2019.repository.ExperienceRepository;
 
+@Slf4j
 @RequiredArgsConstructor
 @Repository
 public class JdbcExperienceRepository implements ExperienceRepository {
@@ -171,9 +173,13 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 
 	@Override
 	public Map<String, Object> findByPosition(List<String> position, boolean andSearch) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("count", 0);
+		result.put("experiences", null);
 		if (position.contains("")) {
-			return null;
+			return result;
 		}
+		log.info("position: " + position);
 		StringBuilder posStr = new StringBuilder();
 		for (int i = 0; i < position.size(); i++) {
 			posStr.append("'" + position.get(i) + "'");
@@ -184,7 +190,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		List<Integer> ids = new ArrayList<Integer>();
 		if (andSearch) {
 			ids = jdbcTemplate.query(
-					"SELECT id FROM senior_positions WHERE position IN (?) GROUP BY id HAVING COUNT(*) = ?", (resultSet, i) -> {
+					"SELECT id FROM senior_positions WHERE position IN (?) GROUP BY id HAVING COUNT(id) = ?", (resultSet, i) -> {
 						return resultSet.getInt("id");
 					}, posStr.toString(), position.size());
 		} else {
@@ -193,13 +199,14 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 						return resultSet.getInt("id");
 					}, posStr.toString());
 		}
+		log.info("ids: " + ids);
 		if (Objects.equals(ids, null) || ids.isEmpty()) {
-			return null;
+			return result;
 		}
 		List<Experience> experiences = this.findById(ids);
-		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("count", ids.size());
-		result.put("experiences", experiences);
+		log.info("experiences: " + experiences);
+		result.replace("count", ids.size());
+		result.replace("experiences", experiences);
 		return result;
 	}
 
