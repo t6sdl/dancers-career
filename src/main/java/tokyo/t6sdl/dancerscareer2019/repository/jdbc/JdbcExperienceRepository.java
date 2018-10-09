@@ -189,13 +189,17 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		}
 		List<Integer> ids = new ArrayList<Integer>();
 		if (andSearch) {
+			log.info("SELECT id FROM senior_positions WHERE position IN (" + posStr.toString() + ") GROUP BY id HAVING COUNT(id) = " + position.size());
 			ids = jdbcTemplate.query(
 					"SELECT id FROM senior_positions WHERE position IN (?) GROUP BY id HAVING COUNT(id) = ?", (resultSet, i) -> {
+						log.info("id: " + resultSet.getInt("id"));
 						return resultSet.getInt("id");
 					}, posStr.toString(), position.size());
 		} else {
+			log.info("SELECT id FROM senior_positions WHERE position IN (" + posStr.toString() + ") GROUP BY id");
 			ids = jdbcTemplate.query(
 					"SELECT id FROM senior_positions WHERE position IN (?) GROUP BY id", (resultSet, i) -> {
+						log.info("id: " + resultSet.getInt("id"));
 						return resultSet.getInt("id");
 					}, posStr.toString());
 		}
