@@ -19,14 +19,14 @@ CREATE TABLE experiences (
   PRIMARY KEY (experience_id),
   KEY ix_name (kana_last_name, kana_first_name),
   KEY ix_univ (university, faculty)
-);
+) CHARACTER SET utf8;
 
 CREATE TABLE senior_positions (
   id INTEGER NOT NULL,
   position ENUM('代表', '副代表', '会計', '広報', '渉外・営業', 'ジャンルリーダー', '振付師', '公演舞台監督', '公演総合演出', '公演ストーリー制作', '音響制作', '照明制作', '映像制作', '衣装制作', 'イベントオーガナイザー', '新歓係', '合宿統括', '役職なし', 'その他') NOT NULL,
   PRIMARY KEY (id, position),
   FOREIGN KEY (id) REFERENCES experiences (experience_id) ON DELETE CASCADE
-);
+) CHARACTER SET utf8;
 
 CREATE TABLE es (
   id INTEGER NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE es (
   advice TEXT NOT NULL,
   PRIMARY KEY (id, es_id),
   FOREIGN KEY (id) REFERENCES experiences (experience_id) ON DELETE CASCADE
-);
+) CHARACTER SET utf8;
 
 CREATE TABLE interview (
   id INTEGER NOT NULL,
@@ -47,7 +47,7 @@ CREATE TABLE interview (
   answer TEXT NOT NULL,
   PRIMARY KEY (id, interview_id),
   FOREIGN KEY (id) REFERENCES experiences (experience_id) ON DELETE CASCADE
-);
+) CHARACTER SET utf8;
 
 INSERT INTO experiences (experience_id, prefecture, university, faculty, graduation) VALUES (1, '東京都', '東京大学', '理学部', '2018');
 INSERT INTO experiences (experience_id, prefecture, university, faculty, graduation) VALUES (2, '東京都', '慶應義塾大学', '法学部', '2018');
