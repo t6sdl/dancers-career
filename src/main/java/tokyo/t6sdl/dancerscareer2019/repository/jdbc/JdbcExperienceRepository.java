@@ -181,29 +181,27 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		}
 		log.info("position: " + position);
 		StringBuilder posStr = new StringBuilder();
-		posStr.append("(");
 		for (int i = 0; i < position.size(); i++) {
 			posStr.append("'" + position.get(i) + "'");
 			if (i < position.size() - 1) {
 				posStr.append(", ");
 			}
 		}
-		posStr.append(")");
 		List<Integer> ids = new ArrayList<Integer>();
 		if (andSearch) {
-			log.info("SELECT id FROM senior_positions WHERE position IN " + posStr.toString() + " GROUP BY id HAVING COUNT(id) = " + position.size());
+			log.info("SELECT id FROM senior_positions WHERE position IN (" + posStr.toString() + ") GROUP BY id HAVING COUNT(id) = " + position.size());
 			ids.addAll(jdbcTemplate.query(
-					"SELECT id FROM senior_positions WHERE position IN ? GROUP BY id HAVING COUNT(id) = ?", (resultSet, i) -> {
+					"SELECT id FROM senior_positions WHERE position IN (" + posStr.toString() + ") GROUP BY id HAVING COUNT(id) = ? ORDER BY id DESC", (resultSet, i) -> {
 						log.info("id: " + resultSet.getInt("id"));
 						return resultSet.getInt("id");
-					}, posStr.toString(), position.size()));
+					}, position.size()));
 		} else {
 			log.info("SELECT id FROM senior_positions WHERE position IN (" + posStr.toString() + ") GROUP BY id");
 			ids.addAll(jdbcTemplate.query(
-					"SELECT id FROM senior_positions WHERE position IN ? GROUP BY id", (resultSet, i) -> {
+					"SELECT id FROM senior_positions WHERE position IN (" + posStr.toString() + ") GROUP BY id ORDER BY id DESC", (resultSet, i) -> {
 						log.info("id: " + resultSet.getInt("id"));
 						return resultSet.getInt("id");
-					}, posStr.toString()));
+					}));
 		}
 		log.info("ids: " + ids);
 		if (Objects.equals(ids, null) || ids.isEmpty()) {
@@ -221,19 +219,19 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		if (Objects.equals(ids, null) || ids.isEmpty()) {
 			return null;
 		}
-		StringBuilder builder = new StringBuilder();
+		StringBuilder idsStr = new StringBuilder();
 		for (int i = 0; i < ids.size(); i++) {
-			builder.append(String.valueOf(ids.get(i)));
+			idsStr.append(String.valueOf(ids.get(i)));
 			if (i < ids.size() - 1) {
-				builder.append(", ");
+				idsStr.append(", ");
 			}
 		}
 		return jdbcTemplate.query(
-				"SELECT * FROM experiences WHERE experience_id IN (?)", (resultSet, i) -> {
+				"SELECT * FROM experiences WHERE experience_id IN (" + idsStr.toString() + ") ORDER BY experience_id DESC", (resultSet, i) -> {
 					Experience experience = new Experience();
 					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;
-				}, builder.toString());
+				});
 	}
 
 	@Override
