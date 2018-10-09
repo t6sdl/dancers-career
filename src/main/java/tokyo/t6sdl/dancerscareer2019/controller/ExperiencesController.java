@@ -3,6 +3,7 @@ package tokyo.t6sdl.dancerscareer2019.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,21 +36,17 @@ public class ExperiencesController {
 		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
 		if (account.isAdmin()) {
 			model.addAttribute("header", "for-admin");
-			model.addAttribute("posistionList", Profile.POSITION_LIST);
-			model.addAttribute(new SearchForm());
-			List<Experience> experiences = experienceService.getExperiences();
-			model.addAttribute("experiences", experiences);
-			return "experiences/experiences";
 		} else if (!(account.isValid_email()) || !(profileService.isCompleteProfile(profileService.getProfileByEmail(securityService.findLoggedInEmail())))) {
 			return "experiences/error";
 		} else {
 			model.addAttribute("header", "for-user");
-			model.addAttribute("positionList", Profile.POSITION_LIST);
-			model.addAttribute(new SearchForm());
-			List<Experience> experiences = experienceService.getExperiences();
-			model.addAttribute("experiences", experiences);
-			return "experiences/experiences";
 		}
+		model.addAttribute("positionList", Profile.POSITION_LIST);
+		model.addAttribute(new SearchForm());
+		Map<String, Object> result = experienceService.getExperiences();
+		model.addAttribute("count", result.get("count"));
+		model.addAttribute("experiences", result.get("experiences"));
+		return "experiences/experiences";
 	}
 	
 	@RequestMapping(params="by-position")
@@ -57,21 +54,17 @@ public class ExperiencesController {
 		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
 		if (account.isAdmin()) {
 			model.addAttribute("header", "for-admin");
-			model.addAttribute("posistionList", Profile.POSITION_LIST);
-			model.addAttribute(form);
-			List<Experience> experiences = experienceService.getExperiencesByPosition(position, "OR");
-			model.addAttribute("experiences", experiences);
-			return "experiences/experiences";
 		} else if (!(account.isValid_email()) || !(profileService.isCompleteProfile(profileService.getProfileByEmail(securityService.findLoggedInEmail())))) {
 			return "experiences/error";
 		} else {
 			model.addAttribute("header", "for-user");
-			model.addAttribute("positionList", Profile.POSITION_LIST);
-			model.addAttribute(form);
-			List<Experience> experiences = experienceService.getExperiencesByPosition(position, "OR");
-			model.addAttribute("experiences", experiences);
-			return "experiences/experiences";
 		}
+		model.addAttribute("posistionList", Profile.POSITION_LIST);
+		model.addAttribute(form);
+		Map<String, Object> result = experienceService.getExperiencesByPosition(position, false);
+		model.addAttribute("count", result.get("count"));
+		model.addAttribute("experiences", result.get("experiences"));
+		return "experiences/experiences";
 	}
 	
 	@RequestMapping("/{experienceId}")
@@ -127,36 +120,23 @@ public class ExperiencesController {
 		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
 		if (account.isAdmin()) {
 			model.addAttribute("header", "for-admin");
-			Experience experience = experienceService.getExperienceById(id, true, pvCount);
-			List<Es> es = new ArrayList<Es>();
-			experience.getEs().forEach(e -> {
-				if (!(es.isEmpty()) && es.stream().filter(s -> s.getCorp().equals(e.getCorp())).count() > 0) {
-					e.setRepeated(true);
-				} else {
-					e.setRepeated(false);
-				}
-				es.add(e);
-			});
-			experience.setEs(es);
-			model.addAttribute("experience", experience);
-			return "experiences/article";
 		} else if (!(account.isValid_email()) || !(profileService.isCompleteProfile(profileService.getProfileByEmail(securityService.findLoggedInEmail())))) {
 			return "experiences/error";
 		} else {
 			model.addAttribute("header", "for-user");
-			Experience experience = experienceService.getExperienceById(id, true, pvCount);
-			List<Es> es = new ArrayList<Es>();
-			experience.getEs().forEach(e -> {
-				if (!(es.isEmpty()) && !(e.getCorp().isEmpty()) && es.stream().filter(s -> s.getCorp().equals(e.getCorp())).count() > 0) {
-					e.setRepeated(true);
-				} else {
-					e.setRepeated(false);
-				}
-				es.add(e);
-			});
-			experience.setEs(es);
-			model.addAttribute("experience", experience);
-			return "experiences/article";
 		}
+		Experience experience = experienceService.getExperienceById(id, true, pvCount);
+		List<Es> es = new ArrayList<Es>();
+		experience.getEs().forEach(e -> {
+			if (!(es.isEmpty()) && !(e.getCorp().isEmpty()) && es.stream().filter(s -> s.getCorp().equals(e.getCorp())).count() > 0) {
+				e.setRepeated(true);
+			} else {
+				e.setRepeated(false);
+			}
+			es.add(e);
+		});
+		experience.setEs(es);
+		model.addAttribute("experience", experience);
+		return "experiences/article";
 	}
 }

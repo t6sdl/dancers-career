@@ -476,8 +476,9 @@ public class AdminController {
 	public String getSearchExperiences(Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		model.addAttribute(new SearchForm());
-		List<Experience> experiences = experienceService.getExperiences();
-		model.addAttribute("experiences", experiences);
+		Map<String, Object> result = experienceService.getExperiences();
+		model.addAttribute("count", result.get("count"));
+		model.addAttribute("experiences", result.get("experiences"));
 		return "admin/experiences/search";
 	}
 	
@@ -488,13 +489,14 @@ public class AdminController {
 		form.setKanaLastName(kanaLastName);
 		form.setKanaFirstName(kanaFirstName);
 		model.addAttribute(form);
-		List<Experience> experiences = new ArrayList<Experience>();
+		Map<String, Object> result = new HashMap<String, Object>();
 		if (kanaFirstName.isEmpty()) {
-			experiences = experienceService.getExperiencesByLastName(kanaLastName);
+			result = experienceService.getExperiencesByLastName(kanaLastName);
 		} else {
-			experiences = experienceService.getExperiencesByName(kanaLastName, kanaFirstName);
+			result = experienceService.getExperiencesByName(kanaLastName, kanaFirstName);
 		}
-		model.addAttribute("experiences", experiences);
+		model.addAttribute("count", result.get("count"));
+		model.addAttribute("experiences", result.get("experiences"));
 		return "admin/experiences/search";
 	}
 	
@@ -511,17 +513,18 @@ public class AdminController {
 		model.addAttribute("hiddenFac", faculty);
 		model.addAttribute("hiddenDep", department);
 		model.addAttribute(form);
-		List<Experience> experiences = new ArrayList<Experience>();
+		Map<String, Object> result = new HashMap<String, Object>();
 		if (!(department.isEmpty())) {
-			experiences = experienceService.getExperiencesByDepartment(prefecture, university, faculty, department);
+			result = experienceService.getExperiencesByDepartment(prefecture, university, faculty, department);
 		} else if (!(faculty.isEmpty())) {
-			experiences = experienceService.getExperiencesByFaculty(prefecture, university, faculty);
+			result = experienceService.getExperiencesByFaculty(prefecture, university, faculty);
 		} else if (!(university.isEmpty())) {
-			experiences = experienceService.getExperiencesByUniversity(prefecture, university);
+			result = experienceService.getExperiencesByUniversity(prefecture, university);
 		} else {
-			experiences = experienceService.getExperiencesByPrefecture(prefecture);
+			result = experienceService.getExperiencesByPrefecture(prefecture);
 		}
-		model.addAttribute("experiences", experiences);
+		model.addAttribute("count", result.get("count"));
+		model.addAttribute("experiences", result.get("experiences"));
 		return "admin/experiences/search";
 	}
 	
@@ -531,8 +534,9 @@ public class AdminController {
 		SearchForm form = new SearchForm();
 		form.setPosition(position);
 		model.addAttribute(form);
-		List<Experience> experiences = experienceService.getExperiencesByPosition(position, "AND");
-		model.addAttribute("experiences", experiences);
+		Map<String, Object> result = experienceService.getExperiencesByPosition(position, true);
+		model.addAttribute("count", result.get("count"));
+		model.addAttribute("experiences", result.get("experiences"));
 		return "admin/experiences/search";
 	}
 	
@@ -542,8 +546,9 @@ public class AdminController {
 		SearchForm form = new SearchForm();
 		form.setPosition(position);
 		model.addAttribute(form);
-		List<Experience> experiences = experienceService.getExperiencesByPosition(position, "OR");
-		model.addAttribute("experiences", experiences);
+		Map<String, Object> result = experienceService.getExperiencesByPosition(position, false);
+		model.addAttribute("count", result.get("count"));
+		model.addAttribute("experiences", result.get("experiences"));
 		return "admin/experiences/search";
 	}
 	

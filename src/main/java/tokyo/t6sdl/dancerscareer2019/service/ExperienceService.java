@@ -2,6 +2,7 @@ package tokyo.t6sdl.dancerscareer2019.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.springframework.stereotype.Service;
@@ -20,40 +21,40 @@ import tokyo.t6sdl.dancerscareer2019.repository.ExperienceRepository;
 public class ExperienceService {
 	private final ExperienceRepository experienceRepository;
 	
-	public List<Experience> getExperiences() {
-		return experienceRepository.find();
-	}
-	
 	public Experience getExperienceById(int experienceId, boolean all, boolean pvCount) {
 		return experienceRepository.findOneById(experienceId, all, pvCount);
 	}
 	
-	public List<Experience> getExperiencesByName(String kanaLastName, String kanaFirstName) {
+	public Map<String, Object> getExperiences() {
+		return experienceRepository.find();
+	}
+	
+	public Map<String, Object> getExperiencesByName(String kanaLastName, String kanaFirstName) {
 		return experienceRepository.findByName(kanaLastName, kanaFirstName);
 	}
 	
-	public List<Experience> getExperiencesByLastName(String kanaLastName) {
+	public Map<String, Object> getExperiencesByLastName(String kanaLastName) {
 		return experienceRepository.findByLastName(kanaLastName);
 	}
 	
-	public List<Experience> getExperiencesByPrefecture(String prefecture) {
+	public Map<String, Object> getExperiencesByPrefecture(String prefecture) {
 		return experienceRepository.findByPrefecture(prefecture);
 	}
 	
-	public List<Experience> getExperiencesByUniversity(String prefecture, String university) {
+	public Map<String, Object> getExperiencesByUniversity(String prefecture, String university) {
 		return experienceRepository.findByUniversity(prefecture, university);
 	}
 	
-	public List<Experience> getExperiencesByFaculty(String prefecture, String university, String faculty) {
+	public Map<String, Object> getExperiencesByFaculty(String prefecture, String university, String faculty) {
 		return experienceRepository.findByFaculty(prefecture, university, faculty);
 	}
 	
-	public List<Experience> getExperiencesByDepartment(String prefecture, String university, String faculty, String department) {
+	public Map<String, Object> getExperiencesByDepartment(String prefecture, String university, String faculty, String department) {
 		return experienceRepository.findByDepartment(prefecture, university, faculty, department);
 	}
 	
-	public List<Experience> getExperiencesByPosition(List<String> position, String method) {
-		return experienceRepository.findByPosition(position, method);
+	public Map<String, Object> getExperiencesByPosition(List<String> position, boolean andSearch) {
+		return experienceRepository.findByPosition(position, andSearch);
 	}
 	
 	public Es getEsById(int experienceId, int esId) {
