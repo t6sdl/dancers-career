@@ -39,7 +39,7 @@ public class JdbcAccountRepository implements AccountRepository {
 	public Account findOneByEmail(String email) {
 		try {
 			Account result = jdbcTemplate.queryForObject(
-					this.selectAccountIn("WHERE authority = 'ROLE_USER' AND email = ?", false), (resultSet, i) -> {
+					this.selectAccountIn("WHERE email = ?", false), (resultSet, i) -> {
 						Account account = new Account();
 						this.adjustDataToAccount(account, resultSet);
 						return account;

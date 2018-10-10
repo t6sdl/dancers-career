@@ -57,7 +57,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 	public Profile findOneByEmail(String email) {
 		 try {
 				return jdbcTemplate.queryForObject(
-						"SELECT last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, prefecture, university, faculty, department, graduation, academic_degree, likes, " + this.POSITION + " FROM profiles LEFT OUTER JOIN positions ON profiles.email = positions.email WHERE email = ? GROUP BY last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, prefecture, university, faculty, department, graduation, academic_degree, likes", (resultSet, i) -> {
+						"SELECT last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, prefecture, university, faculty, department, graduation, academic_degree, likes, " + this.POSITION + " FROM profiles LEFT OUTER JOIN positions ON profiles.email = positions.email WHERE profiles.email = ? GROUP BY last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, prefecture, university, faculty, department, graduation, academic_degree, likes", (resultSet, i) -> {
 							Profile profile = new Profile();
 							this.adjustDataToProfile(profile, resultSet);
 							return profile;
@@ -311,7 +311,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 			}
 		}
 		return jdbcTemplate.query(
-				this.selectStudentIn("WHERE authority = 'ROLE_USER' AND email IN (" + emailsStr.toString() + ")"), (resultSet, i) -> {
+				this.selectStudentIn("WHERE authority = 'ROLE_USER' AND accounts.email IN (" + emailsStr.toString() + ")"), (resultSet, i) -> {
 					Student student = new Student();
 					this.adjustDataToStudent(student, resultSet);
 					return student;
