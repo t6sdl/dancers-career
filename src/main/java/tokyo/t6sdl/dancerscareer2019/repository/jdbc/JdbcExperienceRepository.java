@@ -14,11 +14,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tokyo.t6sdl.dancerscareer2019.model.Es;
 import tokyo.t6sdl.dancerscareer2019.model.Experience;
 import tokyo.t6sdl.dancerscareer2019.model.Interview;
 import tokyo.t6sdl.dancerscareer2019.repository.ExperienceRepository;
 
+@Slf4j
 @RequiredArgsConstructor
 @Repository
 public class JdbcExperienceRepository implements ExperienceRepository {
@@ -403,6 +405,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		experience.setPosition(this.stringToList(resultSet.getString("position")));
 		if (all) {
 			List<String> esData = this.stringToList(resultSet.getString("es"));
+			log.info(esData.toString());
 			List<Es> es = new ArrayList<Es>();
 			for (int i = 0; i < esData.size() % 6; i++) {
 				Es e = new Es();
@@ -426,6 +429,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 			}
 			experience.setEs(es);
 			List<String> interviewData = this.stringToList(resultSet.getString("interview"));
+			log.info(interviewData.toString());
 			List<Interview> interview = new ArrayList<Interview>();
 			for (int i = 0; i < interviewData.size() % 6; i++) {
 				Interview in = new Interview();
