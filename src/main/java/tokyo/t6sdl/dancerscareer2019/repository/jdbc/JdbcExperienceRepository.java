@@ -405,6 +405,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		experience.setPosition(this.stringToList(resultSet.getString("position")));
 		if (all) {
 			List<String> esData = this.stringToList(resultSet.getString("es"));
+			log.info(resultSet.getString("es"));
 			log.info(esData.toString());
 			List<Es> es = new ArrayList<Es>();
 			for (int i = 0; i < esData.size() % 6; i++) {
@@ -429,6 +430,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 			}
 			experience.setEs(es);
 			List<String> interviewData = this.stringToList(resultSet.getString("interview"));
+			log.info(resultSet.getString("interview"));
 			log.info(interviewData.toString());
 			List<Interview> interview = new ArrayList<Interview>();
 			for (int i = 0; i < interviewData.size() % 6; i++) {
