@@ -366,6 +366,6 @@ public class JdbcProfileRepository implements ProfileRepository {
 	}
 	
 	private String selectStudentIn(String condition) {
-		return "SELECT " + this.QUERIED_VALUE + ", " + this.POSITION + ", " + this.LAST_LOGIN + " FROM accounts LEFT OUTER JOIN profiles ON accounts.email = profiles.email LEFT OUTER JOIN positions ON profiles.email = positions.email " + condition + " GROUP BY " + this.QUERIED_VALUE + " ORDER BY last_login DESC";
+		return "SELECT " + this.QUERIED_VALUE + ", " + this.POSITION + ", " + this.LAST_LOGIN + " FROM accounts LEFT OUTER JOIN persistent_logins ON accounts.email = persistent_logins.username LEFT OUTER JOIN profiles ON accounts.email = profiles.email LEFT OUTER JOIN positions ON profiles.email = positions.email " + condition + " GROUP BY " + this.QUERIED_VALUE + " ORDER BY last_login DESC";
 	}
 }

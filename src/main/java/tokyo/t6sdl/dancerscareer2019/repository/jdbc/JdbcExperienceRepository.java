@@ -25,8 +25,8 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	private final JdbcTemplate jdbcTemplate;
 	private final String QUERIED_VALUE = "experience_id, page_view, likes, last_name, first_name, kana_last_name, kana_first_name, sex, major, prefecture, university, faculty, department, graduation, academic_degree, club, offer";
 	private final String POSITION = "GROUP_CONCAT(CONCAT('[', position, ']') SEPARATOR ',') AS position";
-	private final String ES = "GROUP_CONCAT(CONCAT('[', es_id, ']'), CONCAT('[', corp, ']'), CONCAT('[', result, ']'), CONCAT('[', es.question, ']'), CONCAT('[', es.answer, ']'), CONCAT('[', advice, ']') SEPARATOR ',') AS es";
-	private final String INTERVIEW = "GROUP_CONCAT(CONCAT('[', interview_id, ']'), CONCAT('[', interview.question, ']'), CONCAT('[', interview.answer, ']') SEPARATOR ',') AS interview";
+	private final String ES = "GROUP_CONCAT(CONCAT('[', es_id, '],'), CONCAT('[', corp, '],'), CONCAT('[', result, '],'), CONCAT('[', es.question, '],'), CONCAT('[', es.answer, '],'), CONCAT('[', advice, ']') SEPARATOR ',') AS es";
+	private final String INTERVIEW = "GROUP_CONCAT(CONCAT('[', interview_id, '],'), CONCAT('[', interview.question, '],'), CONCAT('[', interview.answer, ']') SEPARATOR ',') AS interview";
 
 	private List<String> stringToList(String str) {
 		List<String> list = new ArrayList<String>();
