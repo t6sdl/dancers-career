@@ -110,7 +110,7 @@ public class JdbcAccountRepository implements AccountRepository {
 	@Override
 	public void insert(Account newAccount) {
 		jdbcTemplate.update(
-				"INSERT INTO accounts (email, password, updated_at, created_at, last_login) VALUES (?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)",
+				"INSERT INTO accounts (email, password, updated_at, created_at, loggedin_at) VALUES (?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)",
 				newAccount.getEmail(), newAccount.getPassword());
 	}
 
@@ -145,7 +145,7 @@ public class JdbcAccountRepository implements AccountRepository {
 	@Override
 	public void updateLastLogin(String loggedInEmail) {
 		jdbcTemplate.update(
-				"UPDATE accounts SET last_login = CURRENT_TIMESTAMP WHERE email = ?",
+				"UPDATE accounts SET loggedin_at = CURRENT_TIMESTAMP WHERE email = ?",
 				loggedInEmail);
 	}
 	
