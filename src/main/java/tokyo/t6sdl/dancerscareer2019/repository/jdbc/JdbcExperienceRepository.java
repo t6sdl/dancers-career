@@ -14,18 +14,20 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import tokyo.t6sdl.dancerscareer2019.model.Es;
 import tokyo.t6sdl.dancerscareer2019.model.Experience;
 import tokyo.t6sdl.dancerscareer2019.model.Interview;
 import tokyo.t6sdl.dancerscareer2019.repository.ExperienceRepository;
 
-@Slf4j
 @RequiredArgsConstructor
 @Repository
 public class JdbcExperienceRepository implements ExperienceRepository {
 	private final JdbcTemplate jdbcTemplate;
-	
+	private final String QUERIED_VALUE = "experience_id, page_view, likes, last_name, first_name, kana_last_name, kana_first_name, sex, major, prefecture, university, faculty, department, graduation, academic_degree, club, offer";
+	private final String POSITION = "GROUP_CONCAT(CONCAT('[', position, ']') SEPARATOR ',') AS position";
+	private final String ES = "GROUP_CONCAT(CONCAT('[', es_id, ']'), CONCAT('[', corp, ']'), CONCAT('[', result, ']'), CONCAT('[', es.question, ']'), CONCAT('[', es.answer, ']'), CONCAT('[', advice, ']') SEPARATOR ',') AS es";
+	private final String INTERVIEW = "GROUP_CONCAT(CONCAT('[', interview_id, ']'), CONCAT('[', interview.question, ']'), CONCAT('[', interview.answer, ']') SEPARATOR ',') AS interview";
+
 	private List<String> stringToList(String str) {
 		List<String> list = new ArrayList<String>();
 		Arrays.asList(str.split(",")).forEach(each -> {
@@ -56,7 +58,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 				jdbcTemplate.update("UPDATE experiences SET page_view = page_view + 1 WHERE experience_id = ?", experience_id);
 			}
 			return jdbcTemplate.queryForObject(
-					"SELECT * FROM experiences WHERE experience_id = ?", (resultSet, i) -> {
+					this.selectExperienceIn("WHERE experience_id = ?", all, false), (resultSet, i) -> {
 						Experience experience = new Experience();
 						this.adjustDataToExperience(experience, resultSet, all);
 						return experience;
@@ -70,7 +72,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	public Map<String, Object> find() {
 		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM experiences", Integer.class);
 		List<Experience> experiences = jdbcTemplate.query(
-				"SELECT * FROM experiences ORDER BY experience_id DESC", (resultSet, i) -> {
+				this.selectExperienceIn("", false, true), (resultSet, i) -> {
 					Experience experience = new Experience();
 					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;
@@ -85,7 +87,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	public Map<String, Object> findByName(String kanaLastName, String kanaFirstName) {
 		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM experiences WHERE kana_last_name = ? AND kana_first_name = ?", Integer.class, kanaLastName, kanaFirstName);
 		List<Experience> experiences = jdbcTemplate.query(
-				"SELECT * FROM experiences WHERE kana_last_name = ? AND kana_first_name = ? ORDER BY experience_id DESC", (resultSet, i) -> {
+				this.selectExperienceIn("WHERE kana_last_name = ? AND kana_first_name = ?", false, true), (resultSet, i) -> {
 					Experience experience = new Experience();
 					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;
@@ -100,7 +102,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	public Map<String, Object> findByLastName(String kanaLastName) {
 		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM experiences WHERE kana_last_name = ?", Integer.class, kanaLastName);
 		List<Experience> experiences = jdbcTemplate.query(
-				"SELECT * FROM experiences WHERE kana_last_name = ? ORDER BY experience_id DESC", (resultSet, i) -> {
+				this.selectExperienceIn("WHERE kana_last_name = ?", false, true), (resultSet, i) -> {
 					Experience experience = new Experience();
 					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;
@@ -115,7 +117,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	public Map<String, Object> findByPrefecture(String prefecture) {
 		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM experiences WHERE prefecture = ?", Integer.class, prefecture);
 		List<Experience> experiences = jdbcTemplate.query(
-				"SELECT * FROM experiences WHERE prefecture = ? ORDER BY experience_id DESC", (resultSet, i) -> {
+				this.selectExperienceIn("WHERE prefecture = ?", false, true), (resultSet, i) -> {
 					Experience experience = new Experience();
 					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;
@@ -130,7 +132,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	public Map<String, Object> findByUniversity(String prefecture, String university) {
 		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM experiences WHERE prefecture = ? AND university = ?", Integer.class, prefecture, university);
 		List<Experience> experiences = jdbcTemplate.query(
-				"SELECT * FROM experiences WHERE prefecture = ? AND university = ? ORDER BY experience_id DESC", (resultSet, i) -> {
+				this.selectExperienceIn("WHERE prefecture = ? AND university = ?", false, true), (resultSet, i) -> {
 					Experience experience = new Experience();
 					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;
@@ -145,7 +147,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	public Map<String, Object> findByFaculty(String prefecture, String university, String faculty) {
 		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM experiences WHERE prefecture = ? AND university = ? AND faculty = ?", Integer.class, prefecture, university, faculty);
 		List<Experience> experiences = jdbcTemplate.query(
-				"SELECT * FROM experiences WHERE prefecture = ? AND university = ? AND faculty = ? ORDER BY experience_id DESC", (resultSet, i) -> {
+				this.selectExperienceIn("WHERE prefecture = ? AND university = ? AND faculty = ?", false, true), (resultSet, i) -> {
 					Experience experience = new Experience();
 					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;
@@ -160,7 +162,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	public Map<String, Object> findByDepartment(String prefecture, String university, String faculty, String department) {
 		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM experiences WHERE prefecture = ? AND university = ? AND faculty = ? AND department = ?", Integer.class, prefecture, university, faculty, department);
 		List<Experience> experiences = jdbcTemplate.query(
-				"SELECT * FROM experiences WHERE prefecture = ? AND university = ? AND faculty = ? AND department = ? ORDER BY experience_id DESC", (resultSet, i) -> {
+				this.selectExperienceIn("WHERE prefecture = ? AND university = ? AND faculty = ? AND department = ?", false, true), (resultSet, i) -> {
 					Experience experience = new Experience();
 					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;
@@ -179,7 +181,6 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		if (position.contains("")) {
 			return result;
 		}
-		log.info("position: " + position);
 		StringBuilder posStr = new StringBuilder();
 		for (int i = 0; i < position.size(); i++) {
 			posStr.append("'" + position.get(i) + "'");
@@ -189,49 +190,23 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		}
 		List<Integer> ids = new ArrayList<Integer>();
 		if (andSearch) {
-			log.info("SELECT id FROM senior_positions WHERE position IN (" + posStr.toString() + ") GROUP BY id HAVING COUNT(id) = " + position.size());
 			ids.addAll(jdbcTemplate.query(
 					"SELECT id FROM senior_positions WHERE position IN (" + posStr.toString() + ") GROUP BY id HAVING COUNT(id) = ? ORDER BY id DESC", (resultSet, i) -> {
-						log.info("id: " + resultSet.getInt("id"));
 						return resultSet.getInt("id");
 					}, position.size()));
 		} else {
-			log.info("SELECT id FROM senior_positions WHERE position IN (" + posStr.toString() + ") GROUP BY id");
 			ids.addAll(jdbcTemplate.query(
 					"SELECT id FROM senior_positions WHERE position IN (" + posStr.toString() + ") GROUP BY id ORDER BY id DESC", (resultSet, i) -> {
-						log.info("id: " + resultSet.getInt("id"));
 						return resultSet.getInt("id");
 					}));
 		}
-		log.info("ids: " + ids);
 		if (Objects.equals(ids, null) || ids.isEmpty()) {
 			return result;
 		}
 		List<Experience> experiences = this.findById(ids);
-		log.info("experiences: " + experiences);
 		result.replace("count", ids.size());
 		result.replace("experiences", experiences);
 		return result;
-	}
-
-	@Override
-	public List<Experience> findById(List<Integer> ids) {
-		if (Objects.equals(ids, null) || ids.isEmpty()) {
-			return null;
-		}
-		StringBuilder idsStr = new StringBuilder();
-		for (int i = 0; i < ids.size(); i++) {
-			idsStr.append(String.valueOf(ids.get(i)));
-			if (i < ids.size() - 1) {
-				idsStr.append(", ");
-			}
-		}
-		return jdbcTemplate.query(
-				"SELECT * FROM experiences WHERE experience_id IN (" + idsStr.toString() + ") ORDER BY experience_id DESC", (resultSet, i) -> {
-					Experience experience = new Experience();
-					this.adjustDataToExperience(experience, resultSet, false);
-					return experience;
-				});
 	}
 
 	@Override
@@ -388,6 +363,25 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 				interview.getQuestion(), interview.getAnswer(), interview.getExperience_id(), interview.getInterview_id());
 	}
 
+	protected List<Experience> findById(List<Integer> ids) {
+		if (Objects.equals(ids, null) || ids.isEmpty()) {
+			return null;
+		}
+		StringBuilder idsStr = new StringBuilder();
+		for (int i = 0; i < ids.size(); i++) {
+			idsStr.append(String.valueOf(ids.get(i)));
+			if (i < ids.size() - 1) {
+				idsStr.append(", ");
+			}
+		}
+		return jdbcTemplate.query(
+				this.selectExperienceIn("WHERE experience_id IN (" + idsStr.toString() + ")", false, true), (resultSet, i) -> {
+					Experience experience = new Experience();
+					this.adjustDataToExperience(experience, resultSet, false);
+					return experience;
+				});
+	}
+
 	private void adjustDataToExperience(Experience experience, ResultSet resultSet, boolean all) throws SQLException {
 		experience.setExperience_id(resultSet.getInt("experience_id"));
 		experience.setPage_view(resultSet.getInt("page_view"));
@@ -406,32 +400,58 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		experience.setAcademic_degree(resultSet.getString("academic_degree"));
 		experience.setClub(this.stringToList(resultSet.getString("club")));
 		experience.setOffer(this.stringToList(resultSet.getString("offer")));
-		List<String> position = jdbcTemplate.query("SELECT (position) FROM senior_positions WHERE id = ?", (posSet, i) -> {
-			return posSet.getString("position");
-		}, experience.getExperience_id());
-		experience.setPosition(position);
+		experience.setPosition(this.stringToList(resultSet.getString("position")));
 		if (all) {
-			experience.setEs(jdbcTemplate.query(
-					"SELECT * FROM es WHERE id = ? ORDER BY corp DESC", (esSet, j) -> {
-						Es es = new Es();
-						es.setExperience_id(experience.getExperience_id());
-						es.setEs_id(esSet.getInt("es_id"));
-						es.setCorp(esSet.getString("corp"));
-						es.setResult(esSet.getString("result"));
-						es.setQuestion(esSet.getString("question"));
-						es.setAnswer(esSet.getString("answer"));
-						es.setAdvice(esSet.getString("advice"));
-						return es;
-					}, experience.getExperience_id()));
-			experience.setInterview(jdbcTemplate.query(
-					"SELECT * FROM interview WHERE id = ? ORDER BY interview_id ASC", (interviewSet, k) -> {
-						Interview interview = new Interview();
-						interview.setExperience_id(experience.getExperience_id());
-						interview.setInterview_id(interviewSet.getInt("interview_id"));
-						interview.setQuestion(interviewSet.getString("question"));
-						interview.setAnswer(interviewSet.getString("answer"));
-						return interview;
-					}, experience.getExperience_id()));
+			List<String> esData = this.stringToList(resultSet.getString("es"));
+			List<Es> es = new ArrayList<Es>();
+			for (int i = 0; i < esData.size() % 6; i++) {
+				Es e = new Es();
+				e.setExperience_id(experience.getExperience_id());
+				for (int j = 0; j < 6; j++) {
+					if (j % 6 == 0) {
+						e.setEs_id(Integer.parseInt(esData.get(6 * i)));
+					} else if (j % 6 == 1) {
+						e.setCorp(esData.get(6 * i + 1));
+					} else if (j % 6 == 2) {
+						e.setResult(esData.get(6 * i + 2));
+					} else if (j % 6 == 3) {
+						e.setQuestion(esData.get(6 * i + 3));
+					} else if (j % 6 == 4) {
+						e.setAnswer(esData.get(6 * i + 4));
+					} else if (j % 6 == 5) {
+						e.setAdvice(esData.get(6 * i + 5));
+					}
+				}
+				es.add(e);
+			}
+			experience.setEs(es);
+			List<String> interviewData = this.stringToList(resultSet.getString("interview"));
+			List<Interview> interview = new ArrayList<Interview>();
+			for (int i = 0; i < interviewData.size() % 6; i++) {
+				Interview in = new Interview();
+				in.setExperience_id(experience.getExperience_id());
+				for (int j = 0; j < 6; j++) {
+					if (j % 6 == 0) {
+						in.setInterview_id(Integer.parseInt(interviewData.get(6 * i)));
+					} else if (j % 6 == 1) {
+						in.setQuestion(interviewData.get(6 * i + 1));
+					} else if (j % 6 == 2) {
+						in.setAnswer(interviewData.get(6 * i + 2));
+					}
+				}
+				interview.add(in);
+			}
+			experience.setInterview(interview);
+		}
+	}
+	
+	private String selectExperienceIn(String condition, boolean all, boolean multiple) {
+		if (all) {
+			return "SELECT " + this.QUERIED_VALUE + ", " + this.POSITION + ", " + this.ES + ", " + this.INTERVIEW + " FROM experiences LEFT OUTER JOIN senior_positions ON experience_id = senior_positions.id LEFT OUTER JOIN es ON experience_id = es.id LEFT OUTER JOIN interview ON experience_id = interview.id " + condition + " GROUP BY " + this.QUERIED_VALUE;
+		} else if (multiple) {
+			return "SELECT " + this.QUERIED_VALUE + ", " + this.POSITION + " FROM experiences LEFT OUTER JOIN senior_positions ON experience_id = senior_positions.id " + condition + " GROUP BY " + this.QUERIED_VALUE + " ORDER BY experience_id DESC";
+		} else {
+			return "SELECT " + this.QUERIED_VALUE + ", " + this.POSITION + " FROM experiences LEFT OUTER JOIN senior_positions ON experience_id = senior_positions.id " + condition + " GROUP BY " + this.QUERIED_VALUE;
 		}
 	}
 }

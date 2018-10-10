@@ -170,8 +170,6 @@ public class UserPageController {
 		Profile profile = profileService.getProfileByEmail(loggedInEmail);
 		if (Objects.equals(profile, null)) {
 			profile = new Profile();
-		} else {
-			profile.convertForDisplay();
 		}
 		model.addAttribute("profile", profile);
 		return "user/profile/profile";

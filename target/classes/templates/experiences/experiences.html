@@ -26,7 +26,7 @@
     <div>
       <p>検索結果： <span th:text="${count}"></span> 件</p>
     </div>
-    <section th:if="${experiences.size() == 0 ? false : true}">
+    <section th:if="${count == 0 ? false : true}">
       <article th:each="experience : ${experiences}" th:object="${experience}">
         <div>
           <p><span th:each="pos : *{position}" th:text="${pos}"></span></p>
@@ -43,7 +43,7 @@
         <hr>
       </article>
     </section>
-    <section  th:unless="${experiences.size() == 0 ? false : true}">
+    <section  th:unless="${count == 0 ? false : true}">
       <p>お探しのES/体験記は見つかりません</p>
     </section>
   </main>

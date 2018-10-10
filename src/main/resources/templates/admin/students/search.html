@@ -128,9 +128,9 @@ td, th {
 <div><a th:href="@{/admin/search/students?all}"><button>絞り込み解除</button></a></div>
 <hr>
 <div>
-<p style="text-align:center;">検索結果： <span th:text="${students.size()}"></span> 件</p>
+<p style="text-align:center;">検索結果： <span th:text="${count}"></span> 件</p>
 </div>
-<section th:if="${students.size() == 0 ? false : true}">
+<section th:if="${count == 0 ? false : true}">
 <div th:with="downloadURL=(${#request.requestURI + '/download?' + #strings.defaultString(#request.queryString, '')})"><a th:href="@{__${downloadURL}__}"><button>Excel形式で出力</button></a></div>
 <article><p>メールアドレス一覧</p><p th:text="${emails}"></p></article>
 <article th:each="student : ${students}">
@@ -187,7 +187,7 @@ td, th {
 </div>
 </article>
 </section>
-<section  th:unless="${students.size() == 0 ? false : true}">
+<section  th:unless="${count == 0 ? false : true}">
 <p>お探しの学生は見つかりません</p>
 </section>
 </main>

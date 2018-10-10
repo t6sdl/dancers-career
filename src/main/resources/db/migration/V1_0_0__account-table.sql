@@ -5,7 +5,7 @@ CREATE TABLE accounts (
   valid_email BOOLEAN NOT NULL DEFAULT false,
   updated_at TIMESTAMP NULL,
   created_at TIMESTAMP NULL,
-  last_login TIMESTAMP NULL,
+  loggedin_at TIMESTAMP NULL,
   email_token CHAR(60) DEFAULT NULL UNIQUE,
   password_token CHAR(60) DEFAULT NULL UNIQUE,
   line_access_token VARCHAR(60) DEFAULT NULL,
