@@ -406,7 +406,9 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		if (all) {
 			List<String> esData = this.stringToList(resultSet.getString("es"));
 			log.info(resultSet.getString("es"));
-			log.info(esData.toString());
+			for (int i = 0; i < esData.size(); i++) {
+				log.info("esData[" + i + "]: " + esData.get(i));
+			}
 			List<Es> es = new ArrayList<Es>();
 			for (int i = 0; i < esData.size() % 6; i++) {
 				Es e = new Es();
