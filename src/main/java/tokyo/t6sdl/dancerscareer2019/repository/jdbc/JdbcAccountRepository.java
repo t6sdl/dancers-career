@@ -17,6 +17,8 @@ import tokyo.t6sdl.dancerscareer2019.repository.AccountRepository;
 @Repository
 public class JdbcAccountRepository implements AccountRepository {
 	private final JdbcTemplate jdbcTemplate;
+	private final String QUERIED_VALUE = "email, password, authority, valid_email, updated_at, created_at, email_token, password_token";
+	private final String LAST_LOGIN = "MAX(CASE WHEN persistent_logins.last_used = NULL THEN accounts.loggedin_at WHEN persistent_logins.last_used > accounts.loggedin_at THEN persistent_logins.last_used ELSE accounts.loggedin_at END) AS last_login";
 	
 	public JdbcAccountRepository (JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
@@ -25,12 +27,11 @@ public class JdbcAccountRepository implements AccountRepository {
 	@Override
 	public List<Account> find() {
 		List<Account> results = jdbcTemplate.query(
-				"SELECT * FROM accounts ORDER BY created_at ASC", (resultSet, i) -> {
+				this.selectAccountIn("WHERE authority = 'ROLE_USER'", true), (resultSet, i) -> {
 					Account account = new Account();
 					this.adjustDataToAccount(account, resultSet);
 					return account;
 		});
-		this.setLastLogin(results);
 		return results;
 	}
 
@@ -38,12 +39,11 @@ public class JdbcAccountRepository implements AccountRepository {
 	public Account findOneByEmail(String email) {
 		try {
 			Account result = jdbcTemplate.queryForObject(
-					"SELECT * FROM accounts WHERE email = ?", (resultSet, i) -> {
+					this.selectAccountIn("WHERE authority = 'ROLE_USER' AND email = ?", false), (resultSet, i) -> {
 						Account account = new Account();
 						this.adjustDataToAccount(account, resultSet);
 						return account;
 					}, email);
-			this.setLastLogin(result);
 			return result;
 		} catch (EmptyResultDataAccessException e) {
 			return null;
@@ -54,12 +54,11 @@ public class JdbcAccountRepository implements AccountRepository {
 	public Account findOneByEmailToken(String emailToken) {
 		try {
 			Account result = jdbcTemplate.queryForObject(
-					"SELECT * FROM accounts WHERE email_token = ?", (resultSet, i) -> {
+					this.selectAccountIn("WHERE authority = 'ROLE_USER' AND email_token = ?", false), (resultSet, i) -> {
 						Account account = new Account();
 						this.adjustDataToAccount(account, resultSet);
 						return account;
 					}, emailToken);
-			this.setLastLogin(result);
 			return result;
 		} catch (EmptyResultDataAccessException e) {
 			return null;
@@ -70,12 +69,11 @@ public class JdbcAccountRepository implements AccountRepository {
 	public Account findOneByPasswordToken(String passwordToken) {
 		try {
 			Account result = jdbcTemplate.queryForObject(
-					"SELECT * FROM accounts WHERE password_token = ?", (resultSet, i) -> {
+					this.selectAccountIn("WHERE authority = 'ROLE_USER' AND password_token = ?", false), (resultSet, i) -> {
 						Account account = new Account();
 						this.adjustDataToAccount(account, resultSet);
 						return account;
 					}, passwordToken);
-			this.setLastLogin(result);
 			return result;
 		} catch (EmptyResultDataAccessException e) {
 			return null;
@@ -201,21 +199,11 @@ public class JdbcAccountRepository implements AccountRepository {
 		account.setPassword_token(resultSet.getString("password_token"));
 	}
 	
-	private void setLastLogin(List<Account> accounts) {
-		accounts.forEach(account -> {
-			this.setLastLogin(account);
-		});
-	}
-	
-	private void setLastLogin(Account account) {
-		List<LocalDateTime> lastLogins = jdbcTemplate.query(
-				"SELECT last_used FROM persistent_logins WHERE username = ? ORDER BY last_used DESC LIMIT 1", (resultSet, i) -> {
-					Date lastUsed = resultSet.getTimestamp("last_used");
-					LocalDateTime lastLogin = LocalDateTime.ofInstant(lastUsed.toInstant(), ZoneId.of("Asia/Tokyo"));
-					return lastLogin;
-				}, account.getEmail());
-		if (!(lastLogins.isEmpty()) && lastLogins.get(0).isAfter(account.getLast_login())) {
-			account.setLast_login(lastLogins.get(0));
+	private String selectAccountIn(String conditions, boolean multiple) {
+		if (multiple) {
+			return "SELECT " + this.QUERIED_VALUE + ", " + this.LAST_LOGIN + " FROM accounts LEFT OUTER JOIN persistent_logins ON accounts.email = persistent_logins.username " + conditions + " GROUP BY " + this.QUERIED_VALUE + " ORDER BY last_login DESC";
+		} else {
+			return "SELECT " + this.QUERIED_VALUE + ", " + this.LAST_LOGIN + " FROM accounts LEFT OUTER JOIN persistent_logins ON accounts.email = persistent_logins.username " + conditions + " GROUP BY " + this.QUERIED_VALUE;
 		}
 	}
 }

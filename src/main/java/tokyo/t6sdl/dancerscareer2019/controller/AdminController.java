@@ -24,7 +24,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.io.ExcelBuilder;
-import tokyo.t6sdl.dancerscareer2019.model.Account;
 import tokyo.t6sdl.dancerscareer2019.model.Es;
 import tokyo.t6sdl.dancerscareer2019.model.Experience;
 import tokyo.t6sdl.dancerscareer2019.model.Interview;
@@ -34,7 +33,6 @@ import tokyo.t6sdl.dancerscareer2019.model.form.EsForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.ExperienceForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.InterviewForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.SearchForm;
-import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 import tokyo.t6sdl.dancerscareer2019.service.ExperienceService;
 import tokyo.t6sdl.dancerscareer2019.service.ProfileService;
 
@@ -43,7 +41,6 @@ import tokyo.t6sdl.dancerscareer2019.service.ProfileService;
 @RequestMapping("/admin")
 public class AdminController {
 	private final ProfileService profileService;
-	private final AccountService accountService;
 	private final ExperienceService experienceService;
 	
 	@RequestMapping()
@@ -55,16 +52,10 @@ public class AdminController {
 	public String getSearchStudents(Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		model.addAttribute(new SearchForm());
-		List<Profile> profiles = profileService.getProfiles();
-		List<Student> students = this.makeStudentOfProfile(profiles);
-		List<String> emails = new ArrayList<String>();
-		students.forEach(student -> {
-			emails.add(student.getEmail());
-			student.convertForDisplay();
-		});
-		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
-		model.addAttribute("students", students);
-		model.addAttribute("emails", emails);
+		Map<String, Object> result = profileService.getProfiles();
+		model.addAttribute("count", result.get("count"));
+		model.addAttribute("emails", result.get("emails"));
+		model.addAttribute("students", result.get("students"));
 		return "admin/students/search";
 	}
 	
@@ -72,8 +63,8 @@ public class AdminController {
 	public ModelAndView getStudentsData() {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<String> filter = Arrays.asList("なし");
-		List<Student> students = this.makeStudentOfProfile(profileService.getProfiles());
-		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
+		@SuppressWarnings("unchecked")
+		List<Student> students = (List<Student>) profileService.getProfiles().get("students");
 		map.put("filter", filter);
 		map.put("students", students);
 		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
@@ -89,36 +80,29 @@ public class AdminController {
 		form.setKanaLastName(kanaLastName);
 		form.setKanaFirstName(kanaFirstName);
 		model.addAttribute(form);
-		List<Profile> profiles = new ArrayList<Profile>();
+		Map<String, Object> result = new HashMap<String, Object>();
 		if (kanaFirstName.isEmpty()) {
-			profiles = profileService.getProfilesByLastName(kanaLastName);
+			result = profileService.getProfilesByLastName(kanaLastName);
 		} else {
-			profiles = profileService.getProfilesByName(kanaLastName, kanaFirstName);
+			result = profileService.getProfilesByName(kanaLastName, kanaFirstName);
 		}
-		List<Student> students = this.makeStudentOfProfile(profiles);
-		List<String> emails = new ArrayList<String>();
-		students.forEach(student -> {
-			emails.add(student.getEmail());
-			student.convertForDisplay();
-		});
-		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
-		model.addAttribute("students", students);
-		model.addAttribute("emails", emails);
+		model.addAttribute("count", result.get("count"));
+		model.addAttribute("emails", result.get("emails"));
+		model.addAttribute("students", result.get("students"));
 		return "admin/students/search";
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/search/students/download", params="by-name")
 	public ModelAndView getStudentsDataByName(@RequestParam(name="kanaLastName") String kanaLastName, @RequestParam(name="kanaFirstName", required=false) String kanaFirstName) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<String> filter = Arrays.asList("氏名(カナ)", "セイ", kanaLastName, "メイ", kanaFirstName);
-		List<Profile> profiles = new ArrayList<Profile>();
+		List<Student> students = new ArrayList<Student>();
 		if (kanaFirstName.isEmpty()) {
-			profiles = profileService.getProfilesByLastName(kanaLastName);
+			students = (List<Student>) profileService.getProfilesByLastName(kanaLastName).get("students");
 		} else {
-			profiles = profileService.getProfilesByName(kanaLastName, kanaFirstName);
+			students = (List<Student>) profileService.getProfilesByName(kanaLastName, kanaFirstName).get("students");
 		}
-		List<Student> students = this.makeStudentOfProfile(profiles);
-		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
 		map.put("filter", filter);
 		map.put("students", students);
 		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
@@ -140,44 +124,37 @@ public class AdminController {
 		model.addAttribute("hiddenFac", faculty);
 		model.addAttribute("hiddenDep", department);
 		model.addAttribute(form);
-		List<Profile> profiles = new ArrayList<Profile>();
+		Map<String, Object> result = new HashMap<String, Object>();
 		if (!(department.isEmpty())) {
-			profiles = profileService.getProfilesByDepartment(prefecture, university, faculty, department);
+			result = profileService.getProfilesByDepartment(prefecture, university, faculty, department);
 		} else if (!(faculty.isEmpty())) {
-			profiles = profileService.getProfilesByFaculty(prefecture, university, faculty);
+			result = profileService.getProfilesByFaculty(prefecture, university, faculty);
 		} else if (!(university.isEmpty())) {
-			profiles = profileService.getProfilesByUniversity(prefecture, university);
+			result = profileService.getProfilesByUniversity(prefecture, university);
 		} else {
-			profiles = profileService.getProfilesByPrefecture(prefecture);
+			result = profileService.getProfilesByPrefecture(prefecture);
 		}
-		List<Student> students = this.makeStudentOfProfile(profiles);
-		List<String> emails = new ArrayList<String>();
-		students.forEach(student -> {
-			emails.add(student.getEmail());
-			student.convertForDisplay();
-		});
-		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
-		model.addAttribute("students", students);
-		model.addAttribute("emails", emails);
+		model.addAttribute("count", result.get("count"));
+		model.addAttribute("emails", result.get("emails"));
+		model.addAttribute("students", result.get("students"));
 		return "admin/students/search";
 	}
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value="/search/students/download", params="by-university")
 	public ModelAndView getStudentsDataByUniveristy(@RequestParam(name="prefecture") String prefecture, @RequestParam(name="university", required=false) String university, @RequestParam(name="faculty", required=false) String faculty, @RequestParam(name="department", required=false) String department) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<String> filter = Arrays.asList("大学", "大学所在地", prefecture, "大学名", university, "学部名", faculty, "学科名", department);
-		List<Profile> profiles = new ArrayList<Profile>();
+		List<Student> students = new ArrayList<Student>();
 		if (!(department.isEmpty())) {
-			profiles = profileService.getProfilesByDepartment(prefecture, university, faculty, department);
+			students = (List<Student>) profileService.getProfilesByDepartment(prefecture, university, faculty, department).get("students");
 		} else if (!(faculty.isEmpty())) {
-			profiles = profileService.getProfilesByFaculty(prefecture, university, faculty);
+			students = (List<Student>) profileService.getProfilesByFaculty(prefecture, university, faculty).get("students");
 		} else if (!(university.isEmpty())) {
-			profiles = profileService.getProfilesByUniversity(prefecture, university);
+			students = (List<Student>) profileService.getProfilesByUniversity(prefecture, university).get("students");
 		} else {
-			profiles = profileService.getProfilesByPrefecture(prefecture);
+			students = (List<Student>) profileService.getProfilesByPrefecture(prefecture).get("students");
 		}
-		List<Student> students = this.makeStudentOfProfile(profiles);
-		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
 		map.put("filter", filter);
 		map.put("students", students);
 		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
@@ -192,16 +169,10 @@ public class AdminController {
 		SearchForm form = new SearchForm();
 		form.setPosition(position);
 		model.addAttribute(form);
-		List<Profile> profiles = profileService.getProfilesByPosition(position, "AND");
-		List<Student> students = this.makeStudentOfProfile(profiles);
-		List<String> emails = new ArrayList<String>();
-		students.forEach(student -> {
-			emails.add(student.getEmail());
-			student.convertForDisplay();
-		});
-		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
-		model.addAttribute("students", students);
-		model.addAttribute("emails", emails);
+		Map<String, Object> result = profileService.getProfilesByPosition(position, true);
+		model.addAttribute("count", result.get("count"));
+		model.addAttribute("emails", result.get("emails"));
+		model.addAttribute("students", result.get("students"));
 		return "admin/students/search";
 	}
 	
@@ -214,8 +185,8 @@ public class AdminController {
 			filter.add("役職 " + num);
 			filter.add(position.get(i));
 		}
-		List<Student> students = this.makeStudentOfProfile(profileService.getProfilesByPosition(position, "AND"));
-		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
+		@SuppressWarnings("unchecked")
+		List<Student> students = (List<Student>) profileService.getProfilesByPosition(position, true).get("students");
 		map.put("filter", filter);
 		map.put("students", students);
 		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
@@ -230,16 +201,10 @@ public class AdminController {
 		SearchForm form = new SearchForm();
 		form.setPosition(position);
 		model.addAttribute(form);
-		List<Profile> profiles = profileService.getProfilesByPosition(position, "OR");
-		List<Student> students = this.makeStudentOfProfile(profiles);
-		List<String> emails = new ArrayList<String>();
-		students.forEach(student -> {
-			emails.add(student.getEmail());
-			student.convertForDisplay();
-		});
-		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
-		model.addAttribute("students", students);
-		model.addAttribute("emails", emails);
+		Map<String, Object> result = profileService.getProfilesByPosition(position, false);
+		model.addAttribute("count", result.get("count"));
+		model.addAttribute("emails", result.get("emails"));
+		model.addAttribute("students", result.get("students"));
 		return "admin/students/search";
 	}
 	
@@ -252,7 +217,8 @@ public class AdminController {
 			filter.add("役職 " + num);
 			filter.add(position.get(i));
 		}
-		List<Student> students = this.makeStudentOfProfile(profileService.getProfilesByPosition(position, "OR"));
+		@SuppressWarnings("unchecked")
+		List<Student> students = (List<Student>) profileService.getProfilesByPosition(position, false).get("students");
 		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
 		map.put("filter", filter);
 		map.put("students", students);
@@ -260,18 +226,6 @@ public class AdminController {
 		String today = now.format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm"));
 		ModelAndView mav = new ModelAndView(new ExcelBuilder(today + "_students_bypos(or)" + ".xlsx"), map);
 		return mav;
-	}
-		
-	private List<Student> makeStudentOfProfile(List<Profile> profiles) {
-		List<Student> students = new ArrayList<Student>();
-		profiles.forEach(profile -> {
-			Student student = profileService.convertProfileIntoStudent(profile);
-			Account account = accountService.getAccountByEmail(profile.getEmail());
-			student.setValid_email(account.isValid_email());
-			student.setLast_login(account.getLast_login());
-			students.add(student);
-		});
-		return students;
 	}
 	
 	@GetMapping(value="/experiences/{experienceId}")

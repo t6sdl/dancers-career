@@ -17,7 +17,6 @@ public interface ExperienceRepository {
 	Map<String, Object> findByFaculty(String prefecture, String university, String faculty);
 	Map<String, Object> findByDepartment(String prefecture, String university, String faculty, String department);
 	Map<String, Object> findByPosition(List<String> position, boolean andSearch);
-	List<Experience> findById(List<Integer> ids);
 	Es findEsById(int experience_id, int es_id);
 	Interview findInterviewById(int experience_id, int interview_id);
 	void insert(Experience newExperience);
