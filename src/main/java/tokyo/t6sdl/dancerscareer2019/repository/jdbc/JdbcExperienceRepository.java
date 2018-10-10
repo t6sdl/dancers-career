@@ -413,7 +413,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 						return es;
 					}, experience.getExperience_id()));
 			experience.setInterview(jdbcTemplate.query(
-					"SELECT interview_id, question, answer FROM interview WHERE id = ? ORDER BY corp ASC", (interviewSet, i) -> {
+					"SELECT interview_id, question, answer FROM interview WHERE id = ? ORDER BY interview_id ASC", (interviewSet, i) -> {
 						Interview interview = new Interview();
 						interview.setExperience_id(experience.getExperience_id());
 						interview.setInterview_id(interviewSet.getInt("interview_id"));
