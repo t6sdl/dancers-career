@@ -57,7 +57,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 	public Profile findOneByEmail(String email) {
 		 try {
 				return jdbcTemplate.queryForObject(
-						"SELECT last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, prefecture, university, faculty, department, graduation, academic_degree, likes, " + this.POSITION + " FROM profiles LEFT OUTER JOIN positions ON profiles.email = positions.email WHERE profiles.email = ? GROUP BY last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, prefecture, university, faculty, department, graduation, academic_degree, likes", (resultSet, i) -> {
+						"SELECT profiles.email, last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, prefecture, university, faculty, department, graduation, academic_degree, likes, " + this.POSITION + " FROM profiles LEFT OUTER JOIN positions ON profiles.email = positions.email WHERE profiles.email = ? GROUP BY profiles.email, last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, prefecture, university, faculty, department, graduation, academic_degree, likes", (resultSet, i) -> {
 							Profile profile = new Profile();
 							this.adjustDataToProfile(profile, resultSet);
 							return profile;
