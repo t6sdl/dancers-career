@@ -9,11 +9,13 @@ import java.util.Objects;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tokyo.t6sdl.dancerscareer2019.model.Profile;
 import tokyo.t6sdl.dancerscareer2019.model.Student;
 import tokyo.t6sdl.dancerscareer2019.model.form.ProfileForm;
 import tokyo.t6sdl.dancerscareer2019.repository.ProfileRepository;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class ProfileService {
@@ -116,6 +118,7 @@ public class ProfileService {
 		}
 		ProfileForm form = new ProfileForm();
 		String[] split = profile.getGraduation().split("/");
+		log.info(profile.getGraduation() + " -> " + split);
 		if (split[1].charAt(0) == '0') {
 			split[1] = String.valueOf(split[1].charAt(1));
 		}
