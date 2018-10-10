@@ -18,10 +18,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tokyo.t6sdl.dancerscareer2019.model.Profile;
 import tokyo.t6sdl.dancerscareer2019.model.Student;
 import tokyo.t6sdl.dancerscareer2019.repository.ProfileRepository;
 
+@Slf4j
 @RequiredArgsConstructor
 @Repository
 public class JdbcProfileRepository implements ProfileRepository {
@@ -333,6 +335,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 		profile.setUniversity(resultSet.getString("university"));
 		profile.setFaculty(resultSet.getString("faculty"));
 		profile.setDepartment(resultSet.getString("department"));
+		log.info(resultSet.getString("graduation"));
 		profile.setGraduation(resultSet.getString("graduation"));
 		profile.setAcademic_degree(resultSet.getString("academic_degree"));
 		profile.setLikes(this.stringToList(resultSet.getString("likes")));

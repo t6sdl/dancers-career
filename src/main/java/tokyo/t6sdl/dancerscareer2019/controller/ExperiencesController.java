@@ -36,7 +36,7 @@ public class ExperiencesController {
 		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
 		if (account.isAdmin()) {
 			model.addAttribute("header", "for-admin");
-		} else if (!(account.isValid_email()) || !(profileService.isCompleteProfile(profileService.getProfileByEmail(securityService.findLoggedInEmail())))) {
+		} else if (!(account.isValid_email()) || !(profileService.isCompleteProfile(profileService.getProfileByEmail(account.getEmail())))) {
 			return "experiences/error";
 		} else {
 			model.addAttribute("header", "for-user");
