@@ -15,6 +15,10 @@ public class SearchForm {
 	private List<String> position;
 	private String sort;
 	
+	public SearchForm(String sort) {
+		this.setSort(sort);
+	}
+	
 	public void clean() {
 		this.setKanaLastName(null);
 		this.setKanaFirstName(null);
