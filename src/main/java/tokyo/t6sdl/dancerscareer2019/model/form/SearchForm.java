@@ -13,6 +13,7 @@ public class SearchForm {
 	private String faculty;
 	private String department;
 	private List<String> position;
+	private String sort;
 	
 	public void clean() {
 		this.setKanaLastName(null);
