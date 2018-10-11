@@ -430,7 +430,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 			sort = 0;
 		}
 		if (multiple) {
-			return "SELECT " + this.QUERIED_VALUE + ", " + this.POSITION + " FROM experiences LEFT OUTER JOIN senior_positions ON experience_id = senior_positions.id " + condition + " GROUP BY " + this.QUERIED_VALUE + " ORDER BY " + SORT_LIST.get(sort);
+			return "SELECT " + this.QUERIED_VALUE + ", " + this.POSITION + " FROM experiences LEFT OUTER JOIN senior_positions ON experience_id = senior_positions.id " + condition + " GROUP BY " + this.QUERIED_VALUE + " ORDER BY " + this.SORT_LIST.get(sort);
 		} else {
 			return "SELECT " + this.QUERIED_VALUE + ", " + this.POSITION + " FROM experiences LEFT OUTER JOIN senior_positions ON experience_id = senior_positions.id " + condition + " GROUP BY " + this.QUERIED_VALUE;
 		}

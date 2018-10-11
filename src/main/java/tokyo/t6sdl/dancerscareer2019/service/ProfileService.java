@@ -41,36 +41,36 @@ public class ProfileService {
 		return profileRepository.findOneByEmail(email);
 	}
 	
-	public Map<String, Object> getProfiles() {
-		return profileRepository.find();
+	public Map<String, Object> getProfiles(int sort) {
+		return profileRepository.find(sort);
 	}
 	
-	public Map<String, Object> getProfilesByName(String kanaLastName, String kanaFirstName) {
-		return profileRepository.findByName(kanaLastName, kanaFirstName);
+	public Map<String, Object> getProfilesByName(int sort, String kanaLastName, String kanaFirstName) {
+		return profileRepository.findByName(sort, kanaLastName, kanaFirstName);
 	}
 	
-	public Map<String, Object> getProfilesByLastName(String kanaLastName) {
-		return profileRepository.findByLastName(kanaLastName);
+	public Map<String, Object> getProfilesByLastName(int sort, String kanaLastName) {
+		return profileRepository.findByLastName(sort, kanaLastName);
 	}
 	
-	public Map<String, Object> getProfilesByPrefecture(String prefecture) {
-		return profileRepository.findByPrefecture(prefecture);
+	public Map<String, Object> getProfilesByPrefecture(int sort, String prefecture) {
+		return profileRepository.findByPrefecture(sort, prefecture);
 	}
 	
-	public Map<String, Object> getProfilesByUniversity(String prefecture, String university) {
-		return profileRepository.findByUniversity(prefecture, university);
+	public Map<String, Object> getProfilesByUniversity(int sort, String prefecture, String university) {
+		return profileRepository.findByUniversity(sort, prefecture, university);
 	}
 	
-	public Map<String, Object> getProfilesByFaculty(String prefecture, String university, String faculty) {
-		return profileRepository.findByFaculty(prefecture, university, faculty);
+	public Map<String, Object> getProfilesByFaculty(int sort, String prefecture, String university, String faculty) {
+		return profileRepository.findByFaculty(sort, prefecture, university, faculty);
 	}
 	
-	public Map<String, Object> getProfilesByDepartment(String prefecture, String university, String faculty, String department) {
-		return profileRepository.findByDepartment(prefecture, university, faculty, department);
+	public Map<String, Object> getProfilesByDepartment(int sort, String prefecture, String university, String faculty, String department) {
+		return profileRepository.findByDepartment(sort, prefecture, university, faculty, department);
 	}
 	
-	public Map<String, Object> getProfilesByPosition(List<String> position, boolean andSearch) {
-		return profileRepository.findByPosition(position, andSearch);
+	public Map<String, Object> getProfilesByPosition(int sort, List<String> position, boolean andSearch) {
+		return profileRepository.findByPosition(sort, position, andSearch);
 	}
 	
 	public String getLastNameByEmail(String email) {

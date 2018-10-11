@@ -44,9 +44,7 @@ public class ExperiencesController {
 			model.addAttribute("header", "for-user");
 		}
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		SearchForm form = new SearchForm();
-		form.setSort(sort);
-		model.addAttribute(form);
+		model.addAttribute(new SearchForm(sort));
 		int sortId;
 		try {
 			sortId = Integer.parseInt(sort);
