@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
+import tokyo.t6sdl.dancerscareer2019.httpresponse.NotFound404;
 import tokyo.t6sdl.dancerscareer2019.model.Account;
 import tokyo.t6sdl.dancerscareer2019.model.Es;
 import tokyo.t6sdl.dancerscareer2019.model.Experience;
@@ -32,7 +33,7 @@ public class ExperiencesController {
 	private final ExperienceService experienceService;
 	
 	@RequestMapping(params="all")
-	public String getExperiences(Model model) {
+	public String getExperiences(@RequestParam(name="sort") String sort, Model model) {
 		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
 		if (account.isAdmin()) {
 			model.addAttribute("header", "for-admin");
@@ -43,14 +44,20 @@ public class ExperiencesController {
 		}
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		model.addAttribute(new SearchForm());
-		Map<String, Object> result = experienceService.getExperiences();
+		int sortId;
+		try {
+			sortId = Integer.parseInt(sort);
+		} catch (NumberFormatException e) {
+			throw new NotFound404();
+		}
+		Map<String, Object> result = experienceService.getExperiences(sortId);
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("experiences", result.get("experiences"));
 		return "experiences/experiences";
 	}
 	
 	@RequestMapping(params="by-position")
-	public String getExperiencesByPosition(@RequestParam(name="position") List<String> position, SearchForm form, Model model) {
+	public String getExperiencesByPosition(@RequestParam(name="sort") String sort, @RequestParam(name="position") List<String> position, SearchForm form, Model model) {
 		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
 		if (account.isAdmin()) {
 			model.addAttribute("header", "for-admin");
@@ -61,7 +68,13 @@ public class ExperiencesController {
 		}
 		model.addAttribute("posistionList", Profile.POSITION_LIST);
 		model.addAttribute(form);
-		Map<String, Object> result = experienceService.getExperiencesByPosition(position, false);
+		int sortId;
+		try {
+			sortId = Integer.parseInt(sort);
+		} catch (NumberFormatException e) {
+			throw new NotFound404();
+		}
+		Map<String, Object> result = experienceService.getExperiencesByPosition(sortId, position, false);
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("experiences", result.get("experiences"));
 		return "experiences/experiences";
