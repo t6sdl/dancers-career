@@ -117,10 +117,15 @@
 <input type="submit" value="OR検索" name="or-search-by-position">
 </div>
 </fieldset>
+<select name="sort">
+<option value="0">新着順</option>
+<option value="1">名前順</option>
+<option value="2">大学名順</option>
+</select>
 <input type="hidden" id="contextPath" th:value="@{/}">
 <input type="hidden" name="start" value="1">
+<input type="submit" value="絞り込み解除" name="all">
 </form>
-<div><a th:href="@{/admin/search/experiences?all}"><button>絞り込み解除</button></a></div>
 <hr>
 <div>
 <p style="text-align:center;">検索結果： <span th:text="${count}"></span> 件</p>
