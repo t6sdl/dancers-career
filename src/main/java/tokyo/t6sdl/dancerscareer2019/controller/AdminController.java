@@ -430,7 +430,9 @@ public class AdminController {
 	@RequestMapping(value="/search/experiences", params="all")
 	public String getSearchExperiences(@RequestParam(name="sort") String sort, Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute(new SearchForm());
+		SearchForm form = new SearchForm();
+		form.setSort(sort);
+		model.addAttribute(form);
 		int sortId;
 		try {
 			sortId = Integer.parseInt(sort);
@@ -444,23 +446,23 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/search/experiences", params="by-name")
-	public String getSearchExperiencesByName(@RequestParam(name="sort") String sort, @RequestParam(name="kanaLastName") String kanaLastName, @RequestParam(name="kanaFirstName", required=false) String kanaFirstName, Model model) {
+	public String getSearchExperiencesByName(SearchForm form, Model model) {
+		if (form.getKanaLastName().isEmpty()) {
+			return "forward:/admin/search/experiences?all&sort=" + form.getSort();
+		}
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		SearchForm form = new SearchForm();
-		form.setKanaLastName(kanaLastName);
-		form.setKanaFirstName(kanaFirstName);
 		model.addAttribute(form);
 		int sortId;
 		try {
-			sortId = Integer.parseInt(sort);
+			sortId = Integer.parseInt(form.getSort());
 		} catch (NumberFormatException e) {
 			throw new NotFound404();
 		}
 		Map<String, Object> result = new HashMap<String, Object>();
-		if (kanaFirstName.isEmpty()) {
-			result = experienceService.getExperiencesByLastName(sortId, kanaLastName);
+		if (form.getKanaFirstName().isEmpty()) {
+			result = experienceService.getExperiencesByLastName(sortId, form.getKanaLastName());
 		} else {
-			result = experienceService.getExperiencesByName(sortId, kanaLastName, kanaFirstName);
+			result = experienceService.getExperiencesByName(sortId, form.getKanaLastName(), form.getKanaFirstName());
 		}
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("experiences", result.get("experiences"));
@@ -468,33 +470,31 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/search/experiences", params="by-university")
-	public String getSearchExperiencesByUniveristy(@RequestParam(name="sort") String sort, @RequestParam(name="prefecture") String prefecture, @RequestParam(name="university", required=false) String university, @RequestParam(name="faculty", required=false) String faculty, @RequestParam(name="department", required=false) String department, Model model) {
+	public String getSearchExperiencesByUniveristy(SearchForm form, Model model) {
+		if (form.getPrefecture().isEmpty()) {
+			return "forward:/admin/search/experiences?all&sort=" + form.getSort();
+		}
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		SearchForm form = new SearchForm();
-		form.setPrefecture(prefecture);
-		form.setUniversity(university);
-		form.setFaculty(faculty);
-		form.setDepartment(department);
-		model.addAttribute("hiddenPref", prefecture);
-		model.addAttribute("hiddenUniv", university);
-		model.addAttribute("hiddenFac", faculty);
-		model.addAttribute("hiddenDep", department);
+		model.addAttribute("hiddenPref", form.getPrefecture());
+		model.addAttribute("hiddenUniv", form.getUniversity());
+		model.addAttribute("hiddenFac", form.getFaculty());
+		model.addAttribute("hiddenDep", form.getDepartment());
 		model.addAttribute(form);
 		int sortId;
 		try {
-			sortId = Integer.parseInt(sort);
+			sortId = Integer.parseInt(form.getSort());
 		} catch (NumberFormatException e) {
 			throw new NotFound404();
 		}
 		Map<String, Object> result = new HashMap<String, Object>();
-		if (!(department.isEmpty())) {
-			result = experienceService.getExperiencesByDepartment(sortId, prefecture, university, faculty, department);
-		} else if (!(faculty.isEmpty())) {
-			result = experienceService.getExperiencesByFaculty(sortId, prefecture, university, faculty);
-		} else if (!(university.isEmpty())) {
-			result = experienceService.getExperiencesByUniversity(sortId, prefecture, university);
+		if (!(form.getDepartment().isEmpty())) {
+			result = experienceService.getExperiencesByDepartment(sortId, form.getFaculty(), form.getUniversity(), form.getFaculty(), form.getDepartment());
+		} else if (!(form.getFaculty().isEmpty())) {
+			result = experienceService.getExperiencesByFaculty(sortId, form.getPrefecture(), form.getUniversity(), form.getFaculty());
+		} else if (!(form.getUniversity().isEmpty())) {
+			result = experienceService.getExperiencesByUniversity(sortId, form.getPrefecture(), form.getUniversity());
 		} else {
-			result = experienceService.getExperiencesByPrefecture(sortId, prefecture);
+			result = experienceService.getExperiencesByPrefecture(sortId, form.getPrefecture());
 		}
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("experiences", result.get("experiences"));
@@ -502,36 +502,38 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="/search/experiences", params="and-search-by-position")
-	public String getAndSearchExperiencesByPosition(@RequestParam(name="sort") String sort, @RequestParam(name="position") List<String> position, Model model) {
+	public String getAndSearchExperiencesByPosition(SearchForm form, Model model) {
+		if (form.getPosition().isEmpty() || form.getPosition().get(0).isEmpty()) {
+			return "forward:/admin/search/experiences?all&sort=" + form.getSort();
+		}
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		SearchForm form = new SearchForm();
-		form.setPosition(position);
 		model.addAttribute(form);
 		int sortId;
 		try {
-			sortId = Integer.parseInt(sort);
+			sortId = Integer.parseInt(form.getSort());
 		} catch (NumberFormatException e) {
 			throw new NotFound404();
 		}
-		Map<String, Object> result = experienceService.getExperiencesByPosition(sortId, position, true);
+		Map<String, Object> result = experienceService.getExperiencesByPosition(sortId, form.getPosition(), true);
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("experiences", result.get("experiences"));
 		return "admin/experiences/search";
 	}
 	
 	@RequestMapping(value="/search/experiences", params="or-search-by-position")
-	public String getOrSearchExperiencesByPosition(@RequestParam(name="sort") String sort, @RequestParam(name="position") List<String> position, Model model) {
+	public String getOrSearchExperiencesByPosition(SearchForm form, Model model) {
+		if (form.getPosition().isEmpty() || form.getPosition().get(0).isEmpty()) {
+			return "forward:/admin/search/experiences?all&sort=" + form.getSort();
+		}
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		SearchForm form = new SearchForm();
-		form.setPosition(position);
 		model.addAttribute(form);
 		int sortId;
 		try {
-			sortId = Integer.parseInt(sort);
+			sortId = Integer.parseInt(form.getSort());
 		} catch (NumberFormatException e) {
 			throw new NotFound404();
 		}
-		Map<String, Object> result = experienceService.getExperiencesByPosition(sortId, position, false);
+		Map<String, Object> result = experienceService.getExperiencesByPosition(sortId, form.getPosition(), false);
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("experiences", result.get("experiences"));
 		return "admin/experiences/search";

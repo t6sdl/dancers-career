@@ -68,6 +68,11 @@ public class ExperiencesController {
 		} else {
 			model.addAttribute("header", "for-user");
 		}
+		if (form.getPosition().isEmpty()) {
+			return "forward:/experiences?all&sort=0";
+		}
+		model.addAttribute("posistionList", Profile.POSITION_LIST);
+		model.addAttribute(form);
 		int sortId;
 		try {
 			sortId = Integer.parseInt(form.getSort());
@@ -77,8 +82,6 @@ public class ExperiencesController {
 		Map<String, Object> result = experienceService.getExperiencesByPosition(sortId, form.getPosition(), false);
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("experiences", result.get("experiences"));
-		model.addAttribute("posistionList", Profile.POSITION_LIST);
-		model.addAttribute(form);
 		return "experiences/experiences";
 	}
 	
