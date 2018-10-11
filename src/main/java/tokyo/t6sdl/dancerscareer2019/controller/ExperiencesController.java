@@ -2,6 +2,7 @@ package tokyo.t6sdl.dancerscareer2019.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -68,9 +69,6 @@ public class ExperiencesController {
 		} else {
 			model.addAttribute("header", "for-user");
 		}
-		if (form.getPosition().isEmpty()) {
-			return "forward:/experiences?all&sort=0";
-		}
 		model.addAttribute("posistionList", Profile.POSITION_LIST);
 		model.addAttribute(form);
 		int sortId;
@@ -79,7 +77,12 @@ public class ExperiencesController {
 		} catch (NumberFormatException e) {
 			throw new NotFound404();
 		}
-		Map<String, Object> result = experienceService.getExperiencesByPosition(sortId, form.getPosition(), false);
+		Map<String, Object> result = new HashMap<String, Object>();
+		if (!(form.getPosition().isEmpty()) && !(form.getPosition().get(0).isEmpty())) {
+			result = experienceService.getExperiencesByPosition(sortId, form.getPosition(), false);
+		} else {
+			result = experienceService.getExperiences(sortId);
+		}
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("experiences", result.get("experiences"));
 		return "experiences/experiences";
