@@ -448,7 +448,7 @@ public class AdminController {
 	@RequestMapping(value="/search/experiences", params="by-name")
 	public String getSearchExperiencesByName(SearchForm form, Model model) {
 		if (form.getKanaLastName().isEmpty()) {
-			return "forward:/admin/search/experiences?all&sort=" + form.getSort();
+			return "forward:getSearchExperiences";
 		}
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		model.addAttribute(form);
@@ -472,7 +472,7 @@ public class AdminController {
 	@RequestMapping(value="/search/experiences", params="by-university")
 	public String getSearchExperiencesByUniveristy(SearchForm form, Model model) {
 		if (form.getPrefecture().isEmpty()) {
-			return "forward:/admin/search/experiences?all&sort=" + form.getSort();
+			return "forward:getSearchExperiences";
 		}
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		model.addAttribute("hiddenPref", form.getPrefecture());
@@ -504,7 +504,7 @@ public class AdminController {
 	@RequestMapping(value="/search/experiences", params="and-search-by-position")
 	public String getAndSearchExperiencesByPosition(SearchForm form, Model model) {
 		if (form.getPosition().isEmpty() || form.getPosition().get(0).isEmpty()) {
-			return "forward:/admin/search/experiences?all&sort=" + form.getSort();
+			return "forward:getSearchExperiences";
 		}
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		model.addAttribute(form);
@@ -523,7 +523,7 @@ public class AdminController {
 	@RequestMapping(value="/search/experiences", params="or-search-by-position")
 	public String getOrSearchExperiencesByPosition(SearchForm form, Model model) {
 		if (form.getPosition().isEmpty() || form.getPosition().get(0).isEmpty()) {
-			return "forward:/admin/search/experiences?all&sort=" + form.getSort();
+			return "forward:getSearchExperiences";
 		}
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		model.addAttribute(form);
