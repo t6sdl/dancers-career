@@ -43,7 +43,9 @@ public class ExperiencesController {
 			model.addAttribute("header", "for-user");
 		}
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute(new SearchForm());
+		SearchForm form = new SearchForm();
+		form.setSort(sort);
+		model.addAttribute(form);
 		int sortId;
 		try {
 			sortId = Integer.parseInt(sort);
@@ -57,7 +59,7 @@ public class ExperiencesController {
 	}
 	
 	@RequestMapping(params="by-position")
-	public String getExperiencesByPosition(@RequestParam(name="sort") String sort, @RequestParam(name="position") List<String> position, SearchForm form, Model model) {
+	public String getExperiencesByPosition(SearchForm form, Model model) {
 		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
 		if (account.isAdmin()) {
 			model.addAttribute("header", "for-admin");
@@ -66,17 +68,17 @@ public class ExperiencesController {
 		} else {
 			model.addAttribute("header", "for-user");
 		}
-		model.addAttribute("posistionList", Profile.POSITION_LIST);
-		model.addAttribute(form);
 		int sortId;
 		try {
-			sortId = Integer.parseInt(sort);
+			sortId = Integer.parseInt(form.getSort());
 		} catch (NumberFormatException e) {
 			throw new NotFound404();
 		}
-		Map<String, Object> result = experienceService.getExperiencesByPosition(sortId, position, false);
+		Map<String, Object> result = experienceService.getExperiencesByPosition(sortId, form.getPosition(), false);
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("experiences", result.get("experiences"));
+		model.addAttribute("posistionList", Profile.POSITION_LIST);
+		model.addAttribute(form);
 		return "experiences/experiences";
 	}
 	
