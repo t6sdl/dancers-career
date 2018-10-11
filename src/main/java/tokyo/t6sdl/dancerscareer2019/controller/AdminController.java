@@ -211,7 +211,7 @@ public class AdminController {
 			throw new NotFound404();
 		}
 		Map<String, Object> result = new HashMap<String, Object>();
-		if (!(form.getPosition().isEmpty()) || !(form.getPosition().get(0).isEmpty())) {
+		if (!(form.getPosition().isEmpty()) && !(form.getPosition().get(0).isEmpty())) {
 			result = profileService.getProfilesByPosition(sortId, form.getPosition(), true);
 		} else {
 			result = profileService.getProfiles(sortId);
@@ -239,7 +239,7 @@ public class AdminController {
 			filter.add(position.get(i));
 		}
 		List<Student> students = new ArrayList<Student>();
-		if (!(position.isEmpty()) || !(position.get(0).isEmpty())) {
+		if (!(position.isEmpty()) && !(position.get(0).isEmpty())) {
 			students = (List<Student>) profileService.getProfilesByPosition(sortId, position, true).get("students");
 		} else {
 			students = (List<Student>) profileService.getProfiles(sortId);
@@ -263,7 +263,7 @@ public class AdminController {
 			throw new NotFound404();
 		}
 		Map<String, Object> result = new HashMap<String, Object>();
-		if (!(form.getPosition().isEmpty()) || !(form.getPosition().get(0).isEmpty())) {
+		if (!(form.getPosition().isEmpty()) && !(form.getPosition().get(0).isEmpty())) {
 			result = profileService.getProfilesByPosition(sortId, form.getPosition(), false);
 		} else {
 			result = profileService.getProfiles(sortId);
@@ -291,7 +291,7 @@ public class AdminController {
 			filter.add(position.get(i));
 		}
 		List<Student> students = new ArrayList<Student>();
-		if (!(position.isEmpty()) || !(position.get(0).isEmpty())) {
+		if (!(position.isEmpty()) && !(position.get(0).isEmpty())) {
 			students = (List<Student>) profileService.getProfilesByPosition(sortId, position, true).get("students");
 		} else {
 			students = (List<Student>) profileService.getProfiles(sortId);
