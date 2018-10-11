@@ -67,7 +67,7 @@ public class ExperiencesController {
 		} else {
 			model.addAttribute("header", "for-user");
 		}
-		model.addAttribute("posistionList", Profile.POSITION_LIST);
+		model.addAttribute("positionList", Profile.POSITION_LIST);
 		model.addAttribute(form);
 		int sortId;
 		try {
