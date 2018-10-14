@@ -6,6 +6,7 @@ body{
   color: #000;
 }
 
+
 .form:focus{
   box-shadow: 0 0 7px #3498db;
   border: 1px solid #3498db;
@@ -64,6 +65,15 @@ input::placeholder {
   transition: .4s;
   text-decoration: none;
   color: #000;
+}
+@media screen and (max-width:480px)　{
+  .header-list a{
+    font-weight: bold;
+    font-size: 120px;
+    transition: .4s;
+    text-decoration: none;
+    color: #666666;
+  }
 }
 
 #lasli{
