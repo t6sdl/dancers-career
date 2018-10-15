@@ -72,7 +72,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	
 	@Override
 	public Map<String, Object> find(int sort) {
-		Integer count = jdbcTemplate.queryForObject("SELECT value FROM counts WHERE key = 'experiences'", Integer.class);
+		Integer count = jdbcTemplate.queryForObject("SELECT count FROM counts WHERE name = 'experiences'", Integer.class);
 		List<Experience> experiences = jdbcTemplate.query(
 				this.selectExperienceIn("", true, sort), (resultSet, i) -> {
 					Experience experience = new Experience();
@@ -271,7 +271,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 						id, j + 1, interview.get(j).getQuestion(), interview.get(j).getAnswer());
 			}
 		}
-		jdbcTemplate.update("UPDATE counts SET value = value + 1 WHERE key = 'experiences'");
+		jdbcTemplate.update("UPDATE counts SET count = count + 1 WHERE name = 'experiences'");
 	}
 
 	@Override
@@ -280,7 +280,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		jdbcTemplate.update("DELETE FROM es WHERE id = ?", experience_id);
 		jdbcTemplate.update("DELETE FROM interview WHERE id = ?", experience_id);
 		jdbcTemplate.update("DELETE FROM experiences WHERE experience_id = ?", experience_id);
-		jdbcTemplate.update("UPDATE counts SET value = value - 1 WHERE key = 'experiences'");
+		jdbcTemplate.update("UPDATE counts SET count = CASE WHEN count = 0 THEN 0 ELSE count - 1 END WHERE name = 'experiences'");
 	}
 
 	@Override
