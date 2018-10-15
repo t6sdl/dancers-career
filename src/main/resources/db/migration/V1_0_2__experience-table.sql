@@ -19,7 +19,7 @@ CREATE TABLE experiences (
   offer VARCHAR(315) NOT NULL DEFAULT '',
   PRIMARY KEY (experience_id),
   KEY ix_name (kana_last_name, kana_first_name),
-  KEY ix_univ (prefecture, university, faculty, department),
+  KEY ix_univ (prefecture, university, faculty, department)
 ) CHARACTER SET utf8;
 
 CREATE TABLE senior_positions (
