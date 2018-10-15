@@ -69,7 +69,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 
 	@Override
 	public Map<String, Object> find(int sort) {
-		Integer count = jdbcTemplate.queryForObject("SELECT value FROM counts WHERE key = 'profiles'", Integer.class);
+		Integer count = jdbcTemplate.queryForObject("SELECT count FROM counts WHERE name = 'profiles'", Integer.class);
 		List<String> emails = new ArrayList<String>();
 		List<Student> students = jdbcTemplate.query(
 				this.selectStudentIn("WHERE authority = 'ROLE_USER'", sort), (resultSet, i) -> {
@@ -252,14 +252,14 @@ public class JdbcProfileRepository implements ProfileRepository {
 			String insertPos = this.listToString(newProfile.getPosition(), "('", "', '" + newProfile.getEmail() + "')", ", ");
 			jdbcTemplate.update("INSERT INTO positions VALUES " + insertPos);
 		}
-		jdbcTemplate.update("UPDATE counts SET value = value + 1 WHERE key = 'profiles'");
+		jdbcTemplate.update("UPDATE counts SET count = count + 1 WHERE name = 'profiles'");
 	}
 
 	@Override
 	public void delete(String email) {
 		jdbcTemplate.update("DELETE FROM positions WHERE email = ?", email);
 		jdbcTemplate.update("DELETE FROM profiles WHERE email = ?", email);
-		jdbcTemplate.update("UPDATE counts SET value = value - 1 WHERE key = 'profiles'");
+		jdbcTemplate.update("UPDATE counts SET count = CASE WHEN count = 0 THEN 0 ELSE count - 1 END WHERE name = 'profiles'");
 	}
 
 	@Override

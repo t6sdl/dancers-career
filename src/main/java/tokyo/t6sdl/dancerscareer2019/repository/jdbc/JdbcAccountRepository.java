@@ -111,7 +111,7 @@ public class JdbcAccountRepository implements AccountRepository {
 		jdbcTemplate.update(
 				"INSERT INTO accounts (email, password, updated_at, created_at, last_login) VALUES (?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)",
 				newAccount.getEmail(), newAccount.getPassword());
-		jdbcTemplate.update("UPDATE counts SET value = value + 1 WHERE key = 'accounts'");
+		jdbcTemplate.update("UPDATE counts SET count = count + 1 WHERE name = 'accounts'");
 	}
 
 	@Override
@@ -119,7 +119,7 @@ public class JdbcAccountRepository implements AccountRepository {
 		jdbcTemplate.update(
 				"DELETE FROM accounts WHERE email = ?",
 				loggedInEmail);
-		jdbcTemplate.update("UPDATE counts SET value = value - 1 WHERE key = 'accounts'");
+		jdbcTemplate.update("UPDATE counts SET count = CASE WHEN count = 0 THEN 0 ELSE count - 1 END WHERE name = 'accounts'");
 	}
 
 	@Override
