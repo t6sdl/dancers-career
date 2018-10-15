@@ -26,30 +26,29 @@ import tokyo.t6sdl.dancerscareer2019.repository.ProfileRepository;
 @Repository
 public class JdbcProfileRepository implements ProfileRepository {
 	private final JdbcTemplate jdbcTemplate;
-	private final String QUERIED_VALUE = "accounts.email, valid_email, last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, prefecture, university, faculty, department, graduation, academic_degree, likes";
-	private final String POSITION = "GROUP_CONCAT(CONCAT('[', position, ']') SEPARATOR ',') AS position";
-	private final String LAST_LOGIN = "MAX(CASE WHEN persistent_logins.last_used = NULL THEN accounts.loggedin_at WHEN persistent_logins.last_used > accounts.loggedin_at THEN persistent_logins.last_used ELSE accounts.loggedin_at END) AS last_login";
+	private final String QUERIED_VALUE = "accounts.email, valid_email, last_login, last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, prefecture, university, faculty, department, graduation, academic_degree, position, likes";
 	private final List<String> SORT_LIST = Arrays.asList("last_login DESC", "kana_last_name ASC, kana_first_name ASC", "prefecture ASC, university ASC, faculty ASC, department ASC");
 	
 	private List<String> stringToList(String str) {
 		List<String> list = new ArrayList<String>();
-		Arrays.asList(str.split(",")).forEach(each -> {
-			if (each.startsWith("[") && each.endsWith("]")) {
-				StringBuilder sb = new StringBuilder(each);
-				each = sb.substring(1, sb.length() - 1);
-			}
-			list.add(each);
-		});;
+		list.addAll(Arrays.asList(str.split(",")));
 		return list;
 	}
 	
 	private String listToString(List<String> list) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < list.size(); i++) {
-			sb.append("[").append(list.get(i)).append("]");
-			if (i < list.size() - 1) {
-				sb.append(",");
-			}
+			sb.append(list.get(i));
+			if (i < list.size() - 1) sb.append(",");
+		}
+		return sb.toString();
+	}
+	
+	private String listToString(List<String> list, String prefix, String suffix, String separator) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			sb.append(prefix).append(list.get(i)).append(suffix);
+			if (i < list.size() - 1) sb.append(separator);
 		}
 		return sb.toString();
 	}
@@ -58,7 +57,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 	public Profile findOneByEmail(String email) {
 		 try {
 				return jdbcTemplate.queryForObject(
-						"SELECT profiles.email, last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, prefecture, university, faculty, department, graduation, academic_degree, likes, " + this.POSITION + " FROM profiles LEFT OUTER JOIN positions ON profiles.email = positions.email WHERE profiles.email = ? GROUP BY profiles.email, last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, prefecture, university, faculty, department, graduation, academic_degree, likes", (resultSet, i) -> {
+						"SELECT email, last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, prefecture, university, faculty, department, graduation, academic_degree, position, likes FROM profiles WHERE email = ?", (resultSet, i) -> {
 							Profile profile = new Profile();
 							this.adjustDataToProfile(profile, resultSet);
 							return profile;
@@ -70,7 +69,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 
 	@Override
 	public Map<String, Object> find(int sort) {
-		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM accounts WHERE authority = 'ROLE_USER'", Integer.class);
+		Integer count = jdbcTemplate.queryForObject("SELECT value FROM counts WHERE key = 'profiles'", Integer.class);
 		List<String> emails = new ArrayList<String>();
 		List<Student> students = jdbcTemplate.query(
 				this.selectStudentIn("WHERE authority = 'ROLE_USER'", sort), (resultSet, i) -> {
@@ -200,31 +199,21 @@ public class JdbcProfileRepository implements ProfileRepository {
 		result.put("count", 0);
 		result.put("emails", null);
 		result.put("students", null);
-		if (position.contains("")) {
-			return result;
-		}
-		StringBuilder posStr = new StringBuilder();
-		for (int i = 0; i < position.size(); i++) {
-			posStr.append("'" + position.get(i) + "'");
-			if (i < position.size() - 1) {
-				posStr.append(", ");
-			}
-		}
+		if (position.contains("")) return result;
+		String posStr = this.listToString(position, "'", "'", ", ");
 		List<String> emails = new ArrayList<String>();
 		if (andSearch) {
 			emails.addAll(jdbcTemplate.query(
-					"SELECT email FROM positions WHERE position IN (" + posStr.toString() + ") GROUP BY email HAVING COUNT(email) = ? ORDER BY email DESC", (resultSet, i) -> {
+					"SELECT email FROM positions WHERE position IN (" + posStr + ") GROUP BY email HAVING COUNT(email) = ? ORDER BY email DESC", (resultSet, i) -> {
 						return resultSet.getString("email");
 					}, position.size()));
 		} else {
 			emails.addAll(jdbcTemplate.query(
-					"SELECT email FROM positions WHERE position IN (" + posStr.toString() + ") GROUP BY email ORDER BY email DESC", (resultSet, i) -> {
+					"SELECT email FROM positions WHERE position IN (" + posStr + ") GROUP BY email ORDER BY email DESC", (resultSet, i) -> {
 						return resultSet.getString("email");
 					}));
 		}
-		if (Objects.equals(emails, null) || emails.isEmpty()) {
-			return result;
-		}
+		if (Objects.equals(emails, null) || emails.isEmpty()) return result;
 		List<Student> students = this.findByEmail(sort, emails);
 		result.replace("count", emails.size());
 		result.replace("emails", emails);
@@ -235,7 +224,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 	@Override
 	public String findLastNameByEmail(String email) {
 		try {
-			return jdbcTemplate.queryForObject("SELECT (last_name) FROM profiles WHERE email = ?", String.class, email);
+			return jdbcTemplate.queryForObject("SELECT last_name FROM profiles WHERE email = ?", String.class, email);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -244,7 +233,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 	@Override
 	public List<String> findLikesByEmail(String email) {
 		try {
-			String likesData = jdbcTemplate.queryForObject("SELECT (likes) FROM profiles WHERE email = ?", String.class, email);
+			String likesData = jdbcTemplate.queryForObject("SELECT likes FROM profiles WHERE email = ?", String.class, email);
 			return this.stringToList(likesData);
 		} catch (EmptyResultDataAccessException e) {
 			return new ArrayList<String>(Arrays.asList(""));
@@ -255,37 +244,48 @@ public class JdbcProfileRepository implements ProfileRepository {
 	public void insert(Profile newProfile) {
 		Date date_of_birth = Date.from(newProfile.getDate_of_birth().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		jdbcTemplate.update(
-				"INSERT INTO profiles VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				"INSERT INTO profiles VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				newProfile.getEmail(), newProfile.getLast_name(), newProfile.getFirst_name(), newProfile.getKana_last_name(), newProfile.getKana_first_name(),
 				date_of_birth, newProfile.getSex(), newProfile.getPhone_number(), newProfile.getMajor(), newProfile.getPrefecture(), newProfile.getUniversity(),
-				newProfile.getFaculty(), newProfile.getDepartment(), newProfile.getGraduation(), newProfile.getAcademic_degree(), "");
+				newProfile.getFaculty(), newProfile.getDepartment(), newProfile.getGraduation(), newProfile.getAcademic_degree(), this.listToString(newProfile.getPosition()), "");
 		if (!(newProfile.getPosition().contains(""))) {
-			newProfile.getPosition().forEach(position -> {
-				jdbcTemplate.update("INSERT INTO positions VALUES (?, ?)", newProfile.getEmail(), position);
-			});
+			String insertPos = this.listToString(newProfile.getPosition(), "('", "', '" + newProfile.getEmail() + "')", ", ");
+			jdbcTemplate.update("INSERT INTO positions VALUES " + insertPos);
 		}
+		jdbcTemplate.update("UPDATE counts SET value = value + 1 WHERE key = 'profiles'");
 	}
 
 	@Override
 	public void delete(String email) {
 		jdbcTemplate.update("DELETE FROM positions WHERE email = ?", email);
 		jdbcTemplate.update("DELETE FROM profiles WHERE email = ?", email);
+		jdbcTemplate.update("UPDATE counts SET value = value - 1 WHERE key = 'profiles'");
 	}
 
 	@Override
 	public void updateAny(Profile profile) {
+		List<String> oldPos = this.stringToList(jdbcTemplate.queryForObject("SELECT position FROM profiles WHERE email = ?", String.class, profile.getEmail()));
+		List<String> newPos = profile.getPosition();
 		Date date_of_birth = Date.from(profile.getDate_of_birth().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		jdbcTemplate.update(
 				"UPDATE profiles SET last_name = ?, first_name = ?, kana_last_name = ?, kana_first_name = ?, date_of_birth = ?, sex = ?, phone_number = ?, "
-				+ "major = ?, prefecture = ?, university = ?, faculty = ?, department = ?, graduation = ?, academic_degree = ? WHERE email = ?",
+				+ "major = ?, prefecture = ?, university = ?, faculty = ?, department = ?, graduation = ?, academic_degree = ?, position = ? WHERE email = ?",
 				profile.getLast_name(), profile.getFirst_name(), profile.getKana_last_name(), profile.getKana_first_name(),
 				date_of_birth, profile.getSex(), profile.getPhone_number(), profile.getMajor(), profile.getPrefecture(), profile.getUniversity(),
-				profile.getFaculty(), profile.getDepartment(), profile.getGraduation(), profile.getAcademic_degree(), profile.getEmail());
-		jdbcTemplate.update("DELETE FROM positions WHERE email = ?", profile.getEmail());
-		if (!(profile.getPosition().contains(""))) {
-			profile.getPosition().forEach(position -> {
-				jdbcTemplate.update("INSERT INTO positions VALUES (?, ?)", profile.getEmail(), position);
-			});
+				profile.getFaculty(), profile.getDepartment(), profile.getGraduation(), profile.getAcademic_degree(), this.listToString(newPos), profile.getEmail());
+		oldPos.forEach(pos -> {
+			if (newPos.contains(pos)) {
+				newPos.remove(pos);
+				oldPos.remove(pos);
+			}
+		});
+		if (!(oldPos.isEmpty())) {
+			String deletePos = this.listToString(oldPos, "'", "'", ", ");
+			jdbcTemplate.update("DELETE FROM positions WHERE position IN (" + deletePos + ") AND email = ?", profile.getEmail());
+		}
+		if (!(newPos.isEmpty())) {
+			String insertPos = this.listToString(newPos, "('", "', '" + profile.getEmail() + "')", ", ");
+			jdbcTemplate.update("INSERT INTO positions VALUES " + insertPos);
 		}
 	}
 	
@@ -304,15 +304,9 @@ public class JdbcProfileRepository implements ProfileRepository {
 		if (Objects.equals(emails, null) || emails.isEmpty()) {
 			return null;
 		}
-		StringBuilder emailsStr = new StringBuilder();
-		for (int i = 0; i < emails.size(); i++) {
-			emailsStr.append("'" + emails.get(i) + "'");
-			if (i < emails.size() - 1) {
-				emailsStr.append(", ");
-			}
-		}
+		 String emailsStr = this.listToString(emails, "'", "'", ", ");
 		return jdbcTemplate.query(
-				this.selectStudentIn("WHERE authority = 'ROLE_USER' AND accounts.email IN (" + emailsStr.toString() + ")", sort), (resultSet, i) -> {
+				this.selectStudentIn("WHERE authority = 'ROLE_USER' AND accounts.email IN (" + emailsStr + ")", sort), (resultSet, i) -> {
 					Student student = new Student();
 					this.adjustDataToStudent(student, resultSet);
 					return student;
@@ -366,9 +360,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 	}
 	
 	private String selectStudentIn(String condition, int sort) {
-		if (sort > 2) {
-			sort = 0;
-		}
-		return "SELECT " + this.QUERIED_VALUE + ", " + this.POSITION + ", " + this.LAST_LOGIN + " FROM accounts LEFT OUTER JOIN persistent_logins ON accounts.email = persistent_logins.username LEFT OUTER JOIN profiles ON accounts.email = profiles.email LEFT OUTER JOIN positions ON profiles.email = positions.email " + condition + " GROUP BY " + this.QUERIED_VALUE + " ORDER BY " + this.SORT_LIST.get(sort);
+		if (sort > 2) sort = 0;
+		return "SELECT " + this.QUERIED_VALUE + " FROM accounts LEFT OUTER JOIN profiles ON accounts.email = profiles.email " + condition + " GROUP BY " + this.QUERIED_VALUE + " ORDER BY " + this.SORT_LIST.get(sort);
 	}
 }
