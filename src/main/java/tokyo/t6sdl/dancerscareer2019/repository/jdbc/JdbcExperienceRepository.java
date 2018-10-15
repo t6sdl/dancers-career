@@ -285,7 +285,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 
 	@Override
 	public void update(Experience experience) {
-		List<String> oldPos = this.stringToList(jdbcTemplate.queryForObject("SELECT position FROM profiles WHERE experience_id = ?", String.class, experience.getExperience_id()));
+		List<String> oldPos = this.stringToList(jdbcTemplate.queryForObject("SELECT position FROM experiences WHERE experience_id = ?", String.class, experience.getExperience_id()));
 		List<String> newPos = experience.getPosition();
 		String position = this.listToString(experience.getPosition());
 		String club = this.listToString(experience.getClub());
