@@ -82,21 +82,21 @@
 <div>
 <label for="university">大学</label>
 <select th:field="*{university}">
-<option value="">選択してください</option>
+<option value="">指定なし</option>
 </select>
 <input type="hidden" id="hiddenUniv" th:value="${hiddenUniv == null ? '' : hiddenUniv}">
 </div>
 <div>
 <label for="faculty">学部</label>
 <select th:field="*{faculty}">
-<option value="">選択してください</option>
+<option value="">指定なし</option>
 </select>
 <input type="hidden" id="hiddenFac" th:value="${hiddenFac == null ? '' : hiddenFac}">
 </div>
 <div>
 <label for="department">学科</label>
 <select th:field="*{department}">
-<option value="">選択してください</option>
+<option value="">指定なし</option>
 </select>
 <input type="hidden" id="hiddenDep" th:value="${hiddenDep == null ? '' : hiddenDep}">
 </div>
