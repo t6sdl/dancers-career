@@ -1,40 +1,252 @@
+/* ----- common ----- */
+
 body{
-  font-family: "Avenir Next";
-  background-color: #f5f5f5;
   margin: 0px;
   padding: 0px;
-  color: #000;
+  font-family: "Avenir Next";
+  background-color: #f5f5f5;
+  font-size: 18px;
+  line-height: 2;
+  color: #333;
+  -webkit-text-size-adjust: none;
 }
 
-
-.form:focus{
-  box-shadow: 0 0 7px #3498db;
-  border: 1px solid #3498db;
+a {
+	color: #333;	/*リンクテキストの色*/
+	transition: 0.5s;	/*マウスオン時の移り変わるまでの時間設定。0.5秒。*/
+}
+a:hover {
+	color: #426579;			/*マウスオン時の文字色*/
+	text-decoration: none;	/*マウスオン時に下線を消す設定。残したいならこの１行削除。*/
 }
 
-li{
-  list-style: none;
-}
-
-ul{
-  margin: 0px;
-}
-
-.hazard{
-  text-align: center;
-  color: #ff0000;
-}
-
-input::placeholder {
-  color: #606468;
-}
-/* --------------- common section --------------- */
 /* ----- Header ----- */
+.inner {
+	margin: 0 auto;
+}
 
+header {
+	border-top: 3px solid #426579;
+  background-color: #fff;
+}
+
+header .inner {
+	position: relative;
+	height: 140px;
+}
+
+header #logo img {
+	width: 180px;
+	position: absolute;
+	left: 3%;
+	top: 20px;
+}
+
+
+/* ----- logout button ----- */
+
+#logout {
+	position: absolute;
+	right: 3%;		/*header のinnerに対して右から3%の場所に配置*/
+	top: 15px;	/*header のinnerに対して下から15pxの場所に配置*/
+  float: left;	/*左に回り込み*/
+
+  margin-top: 5px;
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.square_btn{
+  position: relative;
+  display: inline-block;
+  font-weight: bold;
+  padding: 1px;
+  text-decoration: none;
+}
+
+.square_btn:before{
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 2px;
+  top:100%;
+  left: 0;
+  border-radius: 3px;
+  background:#dcdcdc;
+  transition: .2s;
+}
+
+.square_btn:hover:before {
+  top: -webkit-calc(100% - 3px);
+  top: calc(100% - 3px);
+  background: #426579;
+}
+
+/* ----- menu ----- */
+
+#menubar {
+	clear: both;overflow: hidden;
+  font-size: 12px;
+  padding: 20px 200px;
+}
+
+#menubar li{
+  float: left;
+  width: 25%;
+  height:55px;
+  top: 30px;
+  border-right: solid 1px;
+  border-color: #426579;
+  text-align: center;
+}
+
+#menubar #lastli{
+  border-right:none;
+}
+
+#menubar li a{
+  font-weight: bold;
+  font-size: 12px;
+  transition: .4s;
+  text-decoration: none;
+  color: #000;
+  padding: 15px 0;
+}
+
+#menubar li a:hover {
+  font-size: 1.2em;
+}
+
+#menubar span{
+  font-size: 10px;
+}
+
+/*スマホ用メニューを表示させない*/
+#menubar-s {display: none;}
+/*３本バーアイコンを表示させない*/
+#menubar_hdr {display: none;}
+
+/*ドロップダウンメニュー用
+----------------------------------------------------------------------------------------------------------------------------------*/
+/*メニューブロック*/
+#menubar ul.ddmenu {
+	position:absolute;visibility: hidden;z-index: 10;margin-top: 1px;
+	width: 20%;	/*幅。上の「#menubar li」と合わせる。*/
+}
+/*メニュー１個あたりの設定*/
+#menubar ul.ddmenu li {
+	float: none;
+	width: 100%;
+}
+#menubar ul.ddmenu li a {
+	width: 100%;border: none;
+	background: #4c4c4c;	/*背景色（古いブラウザ用）*/
+	background: rgba(0,0,0,0.7);	/*背景グラデーション。0,0,0は黒の事で0.7は透明度70%の事。*/
+	color: #fff;	/*文字色*/
+	padding: 6px 0;	/*上下、左右へのボックス内の余白*/
+	border-bottom: 1px solid #fff;	/*下の線の幅、線種、色*/
+}
+/*マウスオン時*/
+#menubar ul.ddmenu li a:hover {
+	background: #6badc2;	/*背景色*/
+}
+
+
+
+
+
+/*画面幅800px以下の設定
+------------------------------------------------------------------------------------------------------------------------------------------------------*/
+@media screen and (max-width:800px){
+
+/*inner共通
+---------------------------------------------------------------------------*/
+.inner {
+	width: auto;
+}
+
+/*ヘッダー（ロゴが入った最上段のブロック）
+---------------------------------------------------------------------------*/
+/*ロゴ画像*/
+header #logo img {
+	width: 250px;	/*画像幅*/
+}
+
+
+
+#menubar-s {
+	display: block;overflow: hidden;
+	position: absolute;
+	border-top: 1px solid #fff;
+	width: 100%;
+	z-index: 10;
+	animation-name: menu1;		/*上のkeyframesの名前*/
+	animation-duration: 0.5S;	/*アニメーションの実行時間。0.5秒。*/
+	animation-fill-mode: both;	/*アニメーションの完了後、最後のキーフレームを維持する*/
+}
+/*メニュー１個あたりの設定*/
+#menubar-s li a {
+	display: block;text-decoration: none;
+	padding: 15px 5%;
+	border-bottom: 1px solid #fff;
+	background: #6badc2;
+	color: #fff;
+	font-size: 150%;
+}
+/*PC用メニューを非表示にする*/
+#menubar {
+	display: none;
+}
+
+/*３本バーアイコン設定
+---------------------------------------------------------------------------*/
+/*３本バーブロック*/
+#menubar_hdr {
+	display: block;
+	position: absolute;
+	top: 3%;	/*上から3%の場所に配置*/
+	right: 3%;	/*右から3%の場所に配置*/
+}
+/*アイコン共通設定*/
+#menubar_hdr.close,
+#menubar_hdr.open {
+	width: 50px;	/*幅*/
+	height: 50px;	/*高さ*/
+	border: 1px solid #000;	/*枠線の幅、線種、色*/
+}
+/*三本バーアイコン*/
+#menubar_hdr.close {
+	background: #fff url(../images/icon_menu.png) no-repeat center top/50px;
+}
+/*閉じるアイコン*/
+#menubar_hdr.open {
+	background: #fff url(../images/icon_menu.png) no-repeat center bottom/50px;
+}
+}
+
+@media screen and (max-width:480px){
+
+/*全体の設定
+---------------------------------------------------------------------------*/
+body {
+	font-size: 12px;	/*文字サイズ*/
+}
+
+/*ヘッダー（ロゴが入った最上段のブロック）
+---------------------------------------------------------------------------*/
+/*ロゴ画像*/
+header #logo img {
+	width: 50%;	/*画像幅*/
+	min-width: 200px;
+	top: 20%;	/*ヘッダーに対して上から20%の場所に配置*/
+}
+}
+
+/*
 
 .header {
   margin: 0px 0px;
-  background-color: #fff;
+
   color: #000;
   border-top: 3px solid #426579;
 }
@@ -92,33 +304,35 @@ input::placeholder {
   color: #000;
 }
 
-.square_btn{
-  position: relative;
-  display: inline-block;
-  font-weight: bold;
-  padding: 1px;
-  text-decoration: none;
-  color: #000;
+
+
+*/
+
+
+
+
+
+.form:focus{
+  box-shadow: 0 0 7px #3498db;
+  border: 1px solid #3498db;
 }
 
-.square_btn:before{
-  position: absolute;
-  content: '';
-  width: 100%;
-  height: 2px;
-  top:100%;
-  left: 0;
-  border-radius: 3px;
-  background:#dcdcdc;
-  transition: .2s;
+li{
+  list-style: none;
 }
 
-.square_btn:hover:before {
-  top: -webkit-calc(100% - 3px);
-  top: calc(100% - 3px);
-  background: #426579;
+ul{
+  margin: 0px;
 }
 
+.hazard{
+  text-align: center;
+  color: #ff0000;
+}
+
+input::placeholder {
+  color: #606468;
+}
 
 /* ----- Footer ----- */
 .footer {
