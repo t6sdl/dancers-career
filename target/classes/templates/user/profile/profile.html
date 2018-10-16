@@ -10,7 +10,7 @@
 <main>
 <article>
 <h1>プロフィール</h1>
-<!-- プロフィール情報 -->
+<p th:if="${param.modified}">修正が保存されました</p>
 <table th:object="${profile}">
 <tr>
 <th align="right">氏名：</th>
@@ -53,7 +53,7 @@
 <td><span th:each="pos : *{position == null ? '' : position}" th:text="|${pos} |"></span></td>
 </tr>
 </table>
-<div><a th:href="@{/user/profile/verify}"><button>修正する</button></a></div>
+<div><a th:href="@{/user/profile/change}"><button>修正する</button></a></div>
 </article>
 <aside th:replace="user/common/tab :: tab"></aside>
 </main>

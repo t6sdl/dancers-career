@@ -1,5 +1,7 @@
 package tokyo.t6sdl.dancerscareer2019.controller;
 
+import java.util.Objects;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,23 +11,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.httpresponse.NotFound404;
 import tokyo.t6sdl.dancerscareer2019.io.EmailSender;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.model.form.EmailForm;
-import tokyo.t6sdl.dancerscareer2019.model.form.PasswordForm;
+import tokyo.t6sdl.dancerscareer2019.model.form.NewPasswordForm;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/signin")
 public class SigninController {
 	private final AccountService accountService;
 	private final EmailSender emailSender;
-
-	public SigninController(AccountService accountService, EmailSender emailSender) {
-		this.accountService = accountService;
-		this.emailSender = emailSender;
-	}
 
 	@GetMapping
 	public String getSignin() {
@@ -39,11 +38,11 @@ public class SigninController {
 
 	@GetMapping("/forget-pwd")
 	public String getFogetPassword(@RequestParam(name = "token", required = false) String token, Model model) {
-		if (token == "" || token == null) {
+		if (Objects.equals(token, null) || token.isEmpty()) {
 			model.addAttribute(new EmailForm());
 			return "signin/forgetPassword";
 		} else if (accountService.isValidPasswordToken(token)) {
-			model.addAttribute(new PasswordForm());
+			model.addAttribute(new NewPasswordForm());
 			model.addAttribute("token", token);
 			return "signin/resetPassword";
 		} else {
@@ -68,13 +67,13 @@ public class SigninController {
 	}
 
 	@PostMapping("/reset-pwd")
-	public String postResetPassword(@Validated PasswordForm form, BindingResult result, @RequestParam("token") String token, Model model) {
+	public String postResetPassword(@Validated NewPasswordForm form, BindingResult result, @RequestParam("token") String token, Model model) {
 		if (result.hasErrors()) {
 			model.addAttribute("token", token);
 			return "signin/resetPassword";
 		}
 		String email = accountService.completeResetPassword(token);
-		accountService.changePassword(email, form.getPassword());
+		accountService.changePassword(email, form.getNewPassword());
 		return "signin/completeResetPassword";
 	}
 }

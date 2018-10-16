@@ -1,6 +1,9 @@
 package tokyo.t6sdl.dancerscareer2019.config;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Objects;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +27,12 @@ public class SigninSuccessHandler implements AuthenticationSuccessHandler {
 		Object account = authentication.getPrincipal();
 		if (account instanceof Account) {
 			accountService.changeLastLogin(((Account) account).getEmail());
-			if (((Account) account).getAuthority().equals("ROLE_ADMIN")) {
+			LocalDateTime updatedAt = ((Account) account).getUpdated_at();
+			LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
+			if (now.isAfter(updatedAt.plusMinutes(30)) && (!(Objects.equals(((Account) account).getEmail_token(), null)) || !(Objects.equals(((Account) account).getPassword_token(), null)))) {
+				accountService.refreshToken(((Account) account).getEmail());
+			}
+			if (((Account) account).isAdmin()) {
 				response.sendRedirect("/admin");
 			} else {
 				response.sendRedirect("/");

@@ -1,19 +1,20 @@
 package tokyo.t6sdl.dancerscareer2019.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import tokyo.t6sdl.dancerscareer2019.model.Profile;
 
 public interface ProfileRepository {
-	List<Profile> find();
 	Profile findOneByEmail(String email);
-	List<Profile> findByName(String kanaLastName, String kanaFirstName);
-	List<Profile> findByLastName(String kanaLastName);
-	List<Profile> findByPrefecture(String prefecture);
-	List<Profile> findByUniversity(String prefecture, String university);
-	List<Profile> findByFaculty(String prefecture, String university, String faculty);
-	List<Profile> findByDepartment(String prefecture, String university, String faculty, String department);
-	List<Profile> findByPosition(List<String> position, String method);
+	Map<String, Object> find(int sort);
+	Map<String, Object> findByName(int sort, String kanaLastName, String kanaFirstName);
+	Map<String, Object> findByLastName(int sort, String kanaLastName);
+	Map<String, Object> findByPrefecture(int sort, String prefecture);
+	Map<String, Object> findByUniversity(int sort, String prefecture, String university);
+	Map<String, Object> findByFaculty(int sort, String prefecture, String university, String faculty);
+	Map<String, Object> findByDepartment(int sort, String prefecture, String university, String faculty, String department);
+	Map<String, Object> findByPosition(int sort, List<String> position, boolean andSearch);
 	String findLastNameByEmail(String email);
 	List<String> findLikesByEmail(String email);
 	void insert(Profile newProfile);

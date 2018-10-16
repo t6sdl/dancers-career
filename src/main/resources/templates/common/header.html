@@ -9,6 +9,7 @@
 <body>
   <!-- 普通のユーザー用のヘッダー -->
   <header th:fragment="for-user">
+
     <div class="inner">
       <h1 id="logo"><a th:href="@{/}"><img alt="t6sdldc" th:src="@{/img/logo1.png}" src="../../static/img/logo1.png" class="header-logo"></a>
         <nav id="menubar">
@@ -29,8 +30,12 @@
         <div id="logout">
           <a th:href="@{/logout}" class="square_btn">ログアウト</a>
         </div>
+
+ 
       </div>
     </header>
+
+
 
 
 

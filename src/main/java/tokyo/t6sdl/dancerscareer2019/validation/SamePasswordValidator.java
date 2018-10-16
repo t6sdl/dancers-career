@@ -11,8 +11,8 @@ public class SamePasswordValidator implements ConstraintValidator<SamePassword, 
 	@Override
 	public boolean isValid(Object value, ConstraintValidatorContext context) {
 		BeanWrapper beanWrapper = new BeanWrapperImpl(value);
-		String password = beanWrapper.getPropertyValue("password").toString();
-		String confirmPassword = beanWrapper.getPropertyValue("confirmPassword").toString();
+		String password = beanWrapper.getPropertyValue("newPassword").toString();
+		String confirmPassword = beanWrapper.getPropertyValue("confirm").toString();
 		if (password.equals(confirmPassword)) {
 			return true;
 		} else {
