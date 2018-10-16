@@ -273,12 +273,12 @@ public class JdbcProfileRepository implements ProfileRepository {
 				profile.getLast_name(), profile.getFirst_name(), profile.getKana_last_name(), profile.getKana_first_name(),
 				date_of_birth, profile.getSex(), profile.getPhone_number(), profile.getMajor(), profile.getPrefecture(), profile.getUniversity(),
 				profile.getFaculty(), profile.getDepartment(), profile.getGraduation(), profile.getAcademic_degree(), this.listToString(newPos), profile.getEmail());
+		List<String> duplication = new ArrayList<String>();
 		oldPos.forEach(pos -> {
-			if (newPos.contains(pos)) {
-				newPos.remove(pos);
-				oldPos.remove(pos);
-			}
+			if (newPos.contains(pos)) duplication.add(pos);
 		});
+		oldPos.removeAll(duplication);
+		newPos.removeAll(duplication);
 		if (!(oldPos.isEmpty())) {
 			String deletePos = this.listToString(oldPos, "'", "'", ", ");
 			jdbcTemplate.update("DELETE FROM positions WHERE position IN (" + deletePos + ") AND email = ?", profile.getEmail());
