@@ -30,11 +30,13 @@ input::placeholder {
 }
 /* --------------- common section --------------- */
 /* ----- Header ----- */
+
+
 .header {
   margin: 0px 0px;
   background-color: #fff;
   color: #000;
-  height: 110px;
+  border-top: 3px solid #426579;
 }
 
 .header-logo {
