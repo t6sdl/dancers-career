@@ -295,12 +295,12 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 				+ "prefecture = ?, university = ?, faculty = ?, department = ?, graduation = ?, academic_degree = ?, position = ?, club = ?, offer = ? WHERE experience_id = ?",
 				experience.getLast_name(), experience.getFirst_name(), experience.getKana_last_name(), experience.getKana_first_name(), experience.getSex(), experience.getMajor(), 
 				experience.getPrefecture(), experience.getUniversity(), experience.getFaculty(), experience.getDepartment(), experience.getGraduation(), experience.getAcademic_degree(), position, club, offer, experience.getExperience_id());
+		List<String> duplication = new ArrayList<String>();
 		oldPos.forEach(pos -> {
-			if (newPos.contains(pos)) {
-				newPos.remove(pos);
-				oldPos.remove(pos);
-			}
+			if (newPos.contains(pos)) duplication.add(pos);
 		});
+		oldPos.removeAll(duplication);
+		newPos.removeAll(duplication);
 		if (!(oldPos.isEmpty())) {
 			String deletePos = this.listToString(oldPos, "'", "'", ", ");
 			jdbcTemplate.update("DELETE FROM senior_positions WHERE position IN (" + deletePos + ") AND id = ?", experience.getExperience_id());
