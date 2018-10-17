@@ -181,6 +181,11 @@ header #logo img {
 	font-size: 12px;
   text-align: center;
 }
+
+#menubar-s span{
+  font-size: 10px;
+}
+
 /*PC用メニューを非表示にする*/
 #menubar {
 	display: none;
@@ -205,7 +210,7 @@ header #logo img {
 	width: 50px;	/*幅*/
 	height: 50px;	/*高さ*/
 	border: 1px solid #333;	/*枠線の幅、線種、色*/
-  border-radius: 3px;
+  border-radius: 5px;
 }
 /*三本バーアイコン*/
 #menubar_hdr.close {
