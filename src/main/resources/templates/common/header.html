@@ -12,7 +12,7 @@
   <header th:fragment="for-user">
 
     <div class="inner">
-      <h1 id="logo"><a th:href="@{/}"><img alt="t6sdldc" th:src="@{/img/logo1.png}" src="../../static/img/logo1.png"></a>
+      <h1 id="logo"><a th:href="@{/}"><img alt="t6sdldc" th:src="@{/img/logo1.png}" src="../../static/img/logo1.png"></a></h1>
         <nav id="menubar">
           <ul class="inner">
             <li><a th:href="@{/}">ダンサーズキャリアとは<br><span>About Dancers Career</span></a></li>
@@ -26,7 +26,7 @@
             <li><a th:href="@{/}">ダンサーズキャリアとは<br><span>About Dancers Career</span></a></li>
             <li><a th:href="@{/experiences?all}">ES/体験記を探す<br><span>Find ES/Experiences</span></a></li>
             <li><a th:href="@{/user}">マイページ<br><span>My Page</span></a></li>
-            <li><a th:href="@{/logout}">ログアウト<br><span>Logout<span></a></li>
+            <li><a th:href="@{/logout}">ログアウト<br><span>Logout</span></a></li>
           </ul>
         </nav>
         <div id="menubar_hdr" class="close"></div>
@@ -35,12 +35,11 @@
         if (OCwindowWidth() <= 800) {
           open_close("menubar_hdr", "menubar-s");
         }
-      </script>
+        </script>
         <div id="logout">
           <a th:href="@{/logout}" class="square_btn">ログアウト</a>
         </div>
 
- 
       </div>
     </header>
 
