@@ -6,6 +6,7 @@ body{
   color: #000;
 }
 
+
 .form:focus{
   box-shadow: 0 0 7px #3498db;
   border: 1px solid #3498db;
@@ -22,6 +23,10 @@ ul{
 .hazard{
   text-align: center;
   color: #ff0000;
+}
+
+input::placeholder {
+  color: #606468;
 }
 /* --------------- common section --------------- */
 /* ----- Header ----- */
@@ -61,6 +66,7 @@ ul{
   text-decoration: none;
   color: #000;
 }
+
 
 #lasli{
   border-right: none;
@@ -127,7 +133,7 @@ ul{
 .footer-logo{
   float: left;
   font-size: 25px;
-  color:#000;
+  color:#426579;
 }
 
 .footer-list{
@@ -147,4 +153,13 @@ ul{
 
 .footer-logo{
   text-decoration: none;
+}
+
+/* ----- other ----- */
+.topwords{
+  color: #426579;
+}
+
+#terms{
+  margin: 50px;
 }

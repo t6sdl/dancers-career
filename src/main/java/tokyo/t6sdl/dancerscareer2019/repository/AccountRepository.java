@@ -9,6 +9,8 @@ public interface AccountRepository {
 	Account findOneByEmail(String email);
 	Account findOneByEmailToken(String emailToken);
 	Account findOneByPasswordToken(String passwordToken);
+	String findEmailTokenByEmail(String email);
+	String findPasswordTokenByEmail(String email);
 	String findLineAccessTokenByEmail(String email);
 	void insert(Account newAccount);
 	void delete(String email);

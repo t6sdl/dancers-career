@@ -58,11 +58,9 @@ public class EmailSender {
 			case Mail.SUB_WELCOME_TO_US:
 			case Mail.SUB_VERIFY_EMAIL:
 				token = accountService.createEmailToken(mail.getTo());
-				mail.setUrl(Mail.URI_VERIFY_EMAIL + token);
 				break;
 			case Mail.SUB_RESET_PWD:
 				token = accountService.createPasswordToken(mail.getTo());
-				mail.setUrl(Mail.URI_RESET_PWD + token);
 				break;
 			default:
 				throw new Exception();
@@ -141,11 +139,11 @@ public class EmailSender {
 	private String getHtmlSource(Mail mail) {
 		switch (mail.getSubject()) {
 		case Mail.SUB_WELCOME_TO_US:
-			return "/mails/welcome-to-us?url=" + mail.getUrl();
+			return "/mails/welcome-to-us?to=" + mail.getTo();
 		case Mail.SUB_VERIFY_EMAIL:
-			return "/mails/verify-email?url=" + mail.getUrl();
+			return "/mails/verify-email?to=" + mail.getTo();
 		case Mail.SUB_RESET_PWD:
-			return "/mails/forget-pwd?url=" + mail.getUrl();
+			return "/mails/forget-pwd?to=" + mail.getTo();
 		case Mail.SUB_REPLY_TO_CONTACT:
 			return "/mails/reply-to-contact";
 		default:

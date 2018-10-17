@@ -15,10 +15,6 @@ input{
   -webkit-appearance: none;
 }
 
-input::placeholder {
-  color: #606468;
-}
-
 after { clear: both; }
 
 #formdef {
@@ -76,4 +72,45 @@ after { clear: both; }
   padding: 0 16px;
   width: 250px;
   height: 50px;
+}
+
+/* ----- Contact  Form ----- */
+#contactForm{
+  margin: 50px;
+}
+
+#contact{
+  text-align: left;
+  color: #426579;
+}
+
+#contactForm form input[type="email"]{
+  border-radius: 3px 3px 3px 3px;
+  margin-bottom: 1em;
+  padding: 0 16px;
+  width: 250px;
+  height: 50px;
+}
+
+#contactForm form textarea{
+  border-radius: 3px 3px 3px 3px;
+  margin-bottom: 1em;
+  padding: 0 16px;
+  width: 350px;
+  height: 150px;
+}
+
+#contactForm form input[type="submit"] {
+  background: #89c3eb;
+  border: 0;
+  width: 385px;
+  height: 40px;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+#contactForm form input[type="submit"]:hover {
+  background: #426579;
 }

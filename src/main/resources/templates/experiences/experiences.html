@@ -15,20 +15,21 @@
         <th:block th:each="pos : ${positionList}">
         <input type="checkbox" th:field="*{position}" th:value="${pos}">
         <label th:for="${#ids.prev('position')}" th:text="${pos}"></label>
-
         </th:block>
-
       </div>
       <div>
         <input type="submit" name="by-position" value="検索" class="button">
       </div>
+      <div>
+        <input type="submit" name="all" value="絞り込み解除" class="button">
+      </div>
+      <input type="hidden" name="sort" value="0">
     </form>
-    <div><a th:href="@{/experiences?all}"><button class="button">絞り込み解除</button></a></div>
     <hr>
     <div>
-      <p>検索結果： <span th:text="${experiences.size()}"></span> 件</p>
+      <p>検索結果： <span th:text="${count}"></span> 件</p>
     </div>
-    <section th:if="${experiences.size() == 0 ? false : true}">
+    <section th:if="${count == 0 ? false : true}">
       <article th:each="experience : ${experiences}" th:object="${experience}">
         <div>
           <p><span th:each="pos : *{position}" th:text="${pos}"></span></p>
@@ -45,7 +46,7 @@
         <hr>
       </article>
     </section>
-    <section  th:unless="${experiences.size() == 0 ? false : true}">
+    <section  th:unless="${count == 0 ? false : true}">
       <p>お探しのES/体験記は見つかりません</p>
     </section>
   </main>

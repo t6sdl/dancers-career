@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.httpresponse.NotFound404;
 import tokyo.t6sdl.dancerscareer2019.io.LineNotifyManager;
 import tokyo.t6sdl.dancerscareer2019.io.EmailSender;
+import tokyo.t6sdl.dancerscareer2019.model.Account;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.model.form.ContactForm;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
@@ -30,8 +31,9 @@ public class GeneralController {
 	private final String CONTEXT_PATH = Mail.CONTEXT_PATH;
 		
 	@RequestMapping("")
-	public String isndex(Model model) {
-		if (securityService.findLoggedInAuthority()) {
+	public String index(Model model) {
+		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
+		if (account.isAdmin()) {
 			return "redirect:/admin";
 		}
 		return "index/index";
@@ -39,9 +41,10 @@ public class GeneralController {
 	
 	@RequestMapping("/about/terms-of-use")
 	public String getPrivacyPolicy(Model model) {
-		if (securityService.findLoggedInEmail().isEmpty()) {
+		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
+		if (Objects.equals(account, null)) {
 			model.addAttribute("header", "for-stranger");
-		} else if (securityService.findLoggedInAuthority()) {
+		} else if (account.isAdmin()) {
 			model.addAttribute("header", "for-admin");
 		} else {
 			model.addAttribute("header", "for-user");
@@ -51,19 +54,19 @@ public class GeneralController {
 	
 	@GetMapping("/about/contact")
 	public String getContact(Model model) {
-		String loggedInEmail = securityService.findLoggedInEmail();
-		ContactForm contactForm = new ContactForm();
-		contactForm.setFrom(loggedInEmail);
-		if (securityService.findLoggedInEmail().equals("")) {
+		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
+		if (Objects.equals(account, null)) {
 			model.addAttribute("header", "for-stranger");
-		} else if (securityService.findLoggedInAuthority()) {
+			model.addAttribute(new ContactForm());
+			model.addAttribute("isLoggedIn", false);
+		} else if (account.isAdmin()) {
 			model.addAttribute("header", "for-admin");
+			return "redirect:/admin";
 		} else {
 			model.addAttribute("header", "for-user");
+			model.addAttribute(new ContactForm(account.getEmail()));
+			model.addAttribute("isLoggedIn", true);
 		}
-		model.addAttribute(contactForm);
-		boolean isLoggedIn = !(loggedInEmail.equals(""));
-		model.addAttribute("isLoggedIn", isLoggedIn);
 		return "about/contact/contact";
 	}
 	
@@ -74,9 +77,10 @@ public class GeneralController {
 		emailSender.receiveMail(mail);
 		Mail reply = new Mail(contactForm.getFrom(), Mail.SUB_REPLY_TO_CONTACT);
 		emailSender.sendMail(reply);
-		if (securityService.findLoggedInEmail().equals("")) {
+		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
+		if (Objects.equals(account, null)) {
 			model.addAttribute("header", "for-stranger");
-		} else if (securityService.findLoggedInAuthority()) {
+		} else if (account.isAdmin()) {
 			model.addAttribute("header", "for-admin");
 		} else {
 			model.addAttribute("header", "for-user");
@@ -101,9 +105,10 @@ public class GeneralController {
 		if (Objects.equals(code, null) || !(passwordEncoder.matches(securityService.findLoggedInEmail(), state))) {
 			throw new NotFound404();
 		} else {
+			String loggedInEmail = securityService.findLoggedInEmail();
 			String accessToken = lineNotify.getAccessToken(code, this.CONTEXT_PATH + "/line-notify/oauth/to-index");
-			accountService.changeLineAccessToken(securityService.findLoggedInEmail(), accessToken);
-			lineNotify.notifyMessage(accessToken, lineNotify.getMessage(new Mail(null, Mail.SUB_WELCOME_TO_US)));
+			accountService.changeLineAccessToken(loggedInEmail, accessToken);
+			lineNotify.notifyMessage(accessToken, lineNotify.getMessage(new Mail(loggedInEmail, Mail.SUB_WELCOME_TO_US)));
 			return "redirect:/";
 		}
 	}
@@ -113,9 +118,10 @@ public class GeneralController {
 		if (Objects.equals(code, null) || !(passwordEncoder.matches(securityService.findLoggedInEmail(), state))) {
 			throw new NotFound404();
 		} else {
+			String loggedInEmail = securityService.findLoggedInEmail();
 			String accessToken = lineNotify.getAccessToken(code, this.CONTEXT_PATH + "/line-notify/oauth/to-mypage");
-			accountService.changeLineAccessToken(securityService.findLoggedInEmail(), accessToken);
-			lineNotify.notifyMessage(accessToken, lineNotify.getMessage(new Mail(null, Mail.SUB_WELCOME_TO_US)));
+			accountService.changeLineAccessToken(loggedInEmail, accessToken);
+			lineNotify.notifyMessage(accessToken, lineNotify.getMessage(new Mail(loggedInEmail, Mail.SUB_WELCOME_TO_US)));
 			return "redirect:/user/account";
 		}
 	}

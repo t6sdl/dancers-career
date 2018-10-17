@@ -264,7 +264,7 @@
       </div>
       <div>
         <input type="checkbox" th:field="*{applyLineNotify}">
-        <label for="applyLineNotify">LINE通知を受け取る</label>
+        <label th:for="${#ids.prev('applyLineNotify')}">LINE通知を受け取る</label>
         <p>LINE通知を受け取ると、ダンサーズキャリアからのメールを受信した際にLINEにも同じ内容の文章が届きます。</p>
       </div>
       <div>

@@ -12,12 +12,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import lombok.RequiredArgsConstructor;
+import tokyo.t6sdl.dancerscareer2019.repository.jdbc.JdbcLoginRepository;
 
 @RequiredArgsConstructor
 @Configuration
@@ -50,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.and()
 			.rememberMe()
 			.rememberMeParameter("remember-me")
+			.useSecureCookie(true)
 			.tokenRepository(createTokenRepository())
 		.and()
 			.csrf().csrfTokenRepository(new CookieCsrfTokenRepository())
@@ -62,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 	@Bean
 	public PersistentTokenRepository createTokenRepository() {
-		JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
+		JdbcLoginRepository db = new JdbcLoginRepository();
 		db.setDataSource(dataSource);
 		return db;
 	}

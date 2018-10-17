@@ -82,21 +82,21 @@
 <div>
 <label for="university">大学</label>
 <select th:field="*{university}">
-<option value="">選択してください</option>
+<option value="">指定なし</option>
 </select>
 <input type="hidden" id="hiddenUniv" th:value="${hiddenUniv == null ? '' : hiddenUniv}">
 </div>
 <div>
 <label for="faculty">学部</label>
 <select th:field="*{faculty}">
-<option value="">選択してください</option>
+<option value="">指定なし</option>
 </select>
 <input type="hidden" id="hiddenFac" th:value="${hiddenFac == null ? '' : hiddenFac}">
 </div>
 <div>
 <label for="department">学科</label>
 <select th:field="*{department}">
-<option value="">選択してください</option>
+<option value="">指定なし</option>
 </select>
 <input type="hidden" id="hiddenDep" th:value="${hiddenDep == null ? '' : hiddenDep}">
 </div>
@@ -117,16 +117,21 @@
 <input type="submit" value="OR検索" name="or-search-by-position">
 </div>
 </fieldset>
+<select th:field="*{sort}">
+<option value="0">新着順</option>
+<option value="1">名前順</option>
+<option value="2">大学名順</option>
+</select>
 <input type="hidden" id="contextPath" th:value="@{/}">
 <input type="hidden" name="start" value="1">
+<input type="submit" value="絞り込み解除" name="all">
 </form>
-<div><a th:href="@{/admin/search/experiences?all}"><button>絞り込み解除</button></a></div>
 <hr>
 <div>
-<p style="text-align:center;">検索結果： <span th:text="${experiences.size()}"></span> 件</p>
+<p style="text-align:center;">検索結果： <span th:text="${count}"></span> 件</p>
 </div>
-<section th:if="${experiences.size() == 0 ? false : true}">
-<article style="padding:1em;border:1px solid #333;" th:each="experience : ${experiences}" th:object="${experience}">
+<section th:if="${count == 0 ? false : true}">
+<article style="width:94%;padding:1em;border:1px solid #333;margin:2em auto;" th:each="experience : ${experiences}" th:object="${experience}">
 <div>
 <p><span th:each="pos : *{position}" th:text="${pos}" style="background:#ddd;padding:.5em;margin-right:.5em;"></span></p>
 <h1 th:text="*{university}"></h1>
@@ -145,7 +150,7 @@
 </div>
 </article>
 </section>
-<section  th:unless="${experiences.size() == 0 ? false : true}">
+<section  th:unless="${count == 0 ? false : true}">
 <p>お探しのES/体験記は見つかりません</p>
 </section>
 </main>

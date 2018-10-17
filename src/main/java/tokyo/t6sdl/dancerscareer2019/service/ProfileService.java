@@ -3,6 +3,7 @@ package tokyo.t6sdl.dancerscareer2019.service;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.springframework.stereotype.Service;
@@ -36,43 +37,40 @@ public class ProfileService {
 		profileRepository.updateLikes(email, likes);
 	}
 	
-	public List<Profile> getProfiles() {
-		return profileRepository.find();
-	}
-	
 	public Profile getProfileByEmail(String email) {
 		return profileRepository.findOneByEmail(email);
 	}
 	
-	public List<Profile> getProfilesByName(String kanaLastName, String kanaFirstName) {
-		return profileRepository.findByName(kanaLastName, kanaFirstName);
+	public Map<String, Object> getProfiles(int sort) {
+		return profileRepository.find(sort);
 	}
 	
-	public List<Profile> getProfilesByLastName(String kanaLastName) {
-		return profileRepository.findByLastName(kanaLastName);
+	public Map<String, Object> getProfilesByName(int sort, String kanaLastName, String kanaFirstName) {
+		return profileRepository.findByName(sort, kanaLastName, kanaFirstName);
 	}
 	
-	public List<Profile> getProfilesByPrefecture(String prefecture) {
-		return profileRepository.findByPrefecture(prefecture);
+	public Map<String, Object> getProfilesByLastName(int sort, String kanaLastName) {
+		return profileRepository.findByLastName(sort, kanaLastName);
 	}
 	
-	public List<Profile> getProfilesByUniversity(String prefecture, String university) {
-		return profileRepository.findByUniversity(prefecture, university);
+	public Map<String, Object> getProfilesByPrefecture(int sort, String prefecture) {
+		return profileRepository.findByPrefecture(sort, prefecture);
 	}
 	
-	public List<Profile> getProfilesByFaculty(String prefecture, String university, String faculty) {
-		return profileRepository.findByFaculty(prefecture, university, faculty);
+	public Map<String, Object> getProfilesByUniversity(int sort, String prefecture, String university) {
+		return profileRepository.findByUniversity(sort, prefecture, university);
 	}
 	
-	public List<Profile> getProfilesByDepartment(String prefecture, String university, String faculty, String department) {
-		return profileRepository.findByDepartment(prefecture, university, faculty, department);
+	public Map<String, Object> getProfilesByFaculty(int sort, String prefecture, String university, String faculty) {
+		return profileRepository.findByFaculty(sort, prefecture, university, faculty);
 	}
 	
-	public List<Profile> getProfilesByPosition(List<String> position, String method) {
-		if (!(method.equals("AND")) && !(method.equals("OR"))) {
-			return null;
-		}
-		return profileRepository.findByPosition(position, method);
+	public Map<String, Object> getProfilesByDepartment(int sort, String prefecture, String university, String faculty, String department) {
+		return profileRepository.findByDepartment(sort, prefecture, university, faculty, department);
+	}
+	
+	public Map<String, Object> getProfilesByPosition(int sort, List<String> position, boolean andSearch) {
+		return profileRepository.findByPosition(sort, position, andSearch);
 	}
 	
 	public String getLastNameByEmail(String email) {

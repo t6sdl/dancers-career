@@ -13,20 +13,20 @@
       <h1>アカウント作成</h1>
       <p th:if="${param.error}" class="hazard">アカウントの作成に失敗しました<br>もう一度お試しください</p>
       <div>
-        <label for="email"></label>
+        <label for="newEmail"></label>
         <!-- th:errorclassの値は入力値が不正の場合に付与するクラスなので、この場合エラー時にinputタグにerrorクラスが付きます -->
-        <input type="email" th:field="*{email}" th:errorclass="error" required class="form" placeholder="メールアドレス">
+        <input type="email" th:field="*{newEmail}" th:errorclass="error" required class="form" placeholder="メールアドレス">
         <!-- エラーの内容を表示する部分で、エラーの数だけpタグが生成されます、ので、pタグじゃない方が良ければ変更します -->
-        <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+        <p th:if="${#fields.hasErrors('newEmail')}" th:errors="*{newEmail}"></p>
       </div>
       <div>
-        <label for="password"></label>
-        <input type="password" th:field="*{password}" th:errorclass="error" required class="form" placeholder="パスワード">
-        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+        <label for="newPassword"></label>
+        <input type="password" th:field="*{newPassword}" th:errorclass="error" required class="form" placeholder="パスワード">
+        <p th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}"></p>
       </div>
       <div>
-        <label for="confirmPassword"></label>
-        <input type="password" th:field="*{confirmPassword}" th:errorclass="error" required class="form" placeholder="パスワード(確認)">
+        <label for="confirm"></label>
+        <input type="password" th:field="*{confirm}" th:errorclass="error" required class="form" placeholder="パスワード(確認)">
         <p th:if="${#fields.hasGlobalErrors()}" th:errors="*{global}"></p>
       </div>
       <div>

@@ -6,13 +6,14 @@ CREATE TABLE accounts (
   updated_at TIMESTAMP NULL,
   created_at TIMESTAMP NULL,
   last_login TIMESTAMP NULL,
-  email_token CHAR(32) DEFAULT NULL UNIQUE,
-  password_token CHAR(32) DEFAULT NULL UNIQUE,
+  email_token CHAR(60) DEFAULT NULL UNIQUE,
+  password_token CHAR(60) DEFAULT NULL UNIQUE,
   line_access_token VARCHAR(60) DEFAULT NULL,
-  PRIMARY KEY (email)
+  PRIMARY KEY (email),
+  KEY ix_auth (authority),
+  KEY ix_last_login (last_login),
+  KEY ix_ltoken (line_access_token)
 ) CHARACTER SET utf8 COLLATE utf8_bin;
-
-CREATE UNIQUE INDEX ix_auth_email on accounts (email);
 
 CREATE TABLE persistent_logins (
   username VARCHAR(255) NOT NULL,

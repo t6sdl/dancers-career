@@ -9,15 +9,16 @@
 <header th:replace="common/header :: for-user"></header>
 <main>
 <article>
-<h1>パスワード確認</h1>
+<h1>本当に退会しますか？</h1>
+<p>アカウントを削除すると全てのデータが消去されます。アカウント削除のためにはパスワードの入力が必要です。</p>
 <p th:if="${param.error}">パスワードが異なります</p>
-<form th:action="@{/user/profile/change}" method="post" th:object="${verificationForm}">
+<form th:action="@{/user/account/delete}" method="post" th:object="${verificationForm}">
 <div>
 <label for="password">パスワード</label>
 <input type="password" th:field="*{password}">
 </div>
 <div>
-<input type="submit" value="確認">
+<input type="submit" value="退会">
 </div>
 </form>
 </article>
