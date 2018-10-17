@@ -1,5 +1,4 @@
 /* ----- common ----- */
-
 body{
   margin: 0px;
   padding: 0px;
@@ -175,6 +174,7 @@ header #logo img {
 
   #menubar-s li a {
     display: block;text-decoration: none;
+    font-weight: bold;
     padding: 15px 5%;
     border: 1px solid #426579;
     border-bottom: none;
@@ -203,7 +203,7 @@ header #logo img {
   #menubar_hdr {
     display: block;
     position: absolute;
-    top: 6%;
+    top: 30px;
     right: 3%;
   }
 
@@ -224,6 +224,7 @@ header #logo img {
   }
 }
 
+/* ----- 480px ----- */
 @media screen and (max-width:480px){
 
   body {
@@ -232,6 +233,7 @@ header #logo img {
 
   #menubar-s {
     display: block;overflow: hidden;
+    font-weight: bold;
     position: absolute;
     width: 100%;
     z-index: 10;
