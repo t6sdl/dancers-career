@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
+  <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../static/js/openclose.js"></script>
 </head>
 
 <body>
@@ -11,7 +12,7 @@
   <header th:fragment="for-user">
 
     <div class="inner">
-      <h1 id="logo"><a th:href="@{/}"><img alt="t6sdldc" th:src="@{/img/logo1.png}" src="../../static/img/logo1.png" class="header-logo"></a>
+      <h1 id="logo"><a th:href="@{/}"><img alt="t6sdldc" th:src="@{/img/logo1.png}" src="../../static/img/logo1.png"></a>
         <nav id="menubar">
           <ul class="inner">
             <li><a th:href="@{/}">ダンサーズキャリアとは<br><span>About Dancers Career</span></a></li>
@@ -24,9 +25,17 @@
           <ul>
             <li><a th:href="@{/}">ダンサーズキャリアとは<br><span>About Dancers Career</span></a></li>
             <li><a th:href="@{/experiences?all}">ES/体験記を探す<br><span>Find ES/Experiences</span></a></li>
-            <li id="lasli"><a th:href="@{/user}">マイページ<br><span>My Page</span></a></li>
+            <li><a th:href="@{/user}">マイページ<br><span>My Page</span></a></li>
+            <li><a th:href="@{/logout}">ログアウト<br><span>Logout<span></a></li>
           </ul>
         </nav>
+        <div id="menubar_hdr" class="close"></div>
+
+        <script type="text/javascript">
+        if (OCwindowWidth() <= 800) {
+          open_close("menubar_hdr", "menubar-s");
+        }
+      </script>
         <div id="logout">
           <a th:href="@{/logout}" class="square_btn">ログアウト</a>
         </div>
