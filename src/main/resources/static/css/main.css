@@ -33,6 +33,7 @@ li{
 
 ul{
   margin: 0px;
+  padding: 0px;
 }
 
 .hazard{
@@ -112,6 +113,7 @@ header #logo img {
   font-size: 12px;
   padding: 20px 20px;
   padding-left: 20%;
+  margin: 0 25px;
 }
 
 #menubar li{
@@ -134,7 +136,6 @@ header #logo img {
   transition: .4s;
   text-decoration: none;
   color: #000;
-  padding: 15px 0;
 }
 
 #menubar li a:hover {
@@ -165,28 +166,32 @@ header #logo img {
 #menubar-s {
 	display: block;overflow: hidden;
 	position: absolute;
-	width: 50%;
+	width: 100%;
 	z-index: 10;
-	animation-name: menu1;		/*上のkeyframesの名前*/
-	animation-duration: 0.7S;	/*アニメーションの実行時間。0.5秒。*/
-	animation-fill-mode: both;	/*アニメーションの完了後、最後のキーフレームを維持する*/
+	animation-name: menu1;
+	animation-duration: 0.75S;
+	animation-fill-mode: both;
 }
-/*メニュー１個あたりの設定*/
+
 #menubar-s li a {
 	display: block;text-decoration: none;
 	padding: 15px 5%;
 	border: 1px solid #426579;
+  border-bottom: none;
 	background: #fff;
 	color: #333;
 	font-size: 12px;
   text-align: center;
 }
 
+#menubar-s #lastli {
+  border-bottom: 1px solid #426579;
+}
+
 #menubar-s span{
   font-size: 10px;
 }
 
-/*PC用メニューを非表示にする*/
 #menubar {
 	display: none;
 }
@@ -195,13 +200,10 @@ header #logo img {
 	display: none;
 }
 
-/*３本バーアイコン設定
----------------------------------------------------------------------------*/
-/*３本バーブロック*/
 #menubar_hdr {
 	display: block;
 	position: absolute;
-	top: 3%;	/*上から3%の場所に配置*/
+	top: 6%;
 	right: 3%;	/*右から3%の場所に配置*/
 }
 /*アイコン共通設定*/
@@ -209,7 +211,7 @@ header #logo img {
 #menubar_hdr.open {
 	width: 50px;	/*幅*/
 	height: 50px;	/*高さ*/
-	border: 1px solid #333;	/*枠線の幅、線種、色*/
+	border: 3px solid #333;	/*枠線の幅、線種、色*/
   border-radius: 5px;
 }
 /*三本バーアイコン*/
@@ -231,14 +233,7 @@ body {
 	font-size: 12px;	/*文字サイズ*/
 }
 
-/*ヘッダー（ロゴが入った最上段のブロック）
----------------------------------------------------------------------------*/
-/*ロゴ画像*/
-header #logo img {
-	width: 40%;	/*画像幅*/
-	min-width: 20px;
-	top: 30%;	/*ヘッダーに対して上から20%の場所に配置*/
-}
+
 
 #menubar-s {
 	display: block;overflow: hidden;
