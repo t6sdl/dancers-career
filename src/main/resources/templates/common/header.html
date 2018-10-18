@@ -8,9 +8,9 @@
 </head>
 
 <body>
+
   <!-- 普通のユーザー用のヘッダー -->
   <header th:fragment="for-user">
-
     <div class="inner">
       <h1 id="logo"><a th:href="@{/}"><img alt="t6sdldc" th:src="@{/img/logo1.png}" src="../../static/img/logo1.png"></a>
         <nav id="menubar">
@@ -20,12 +20,9 @@
             <li id="lastli"><a th:href="@{/user}">マイページ<br><span>My Page</span></a></li>
           </ul>
         </nav>
-
         <div id="logout">
           <a th:href="@{/logout}" class="square_btn">ログアウト</a>
         </div>
-
-
       </div>
       <div id="menubar_hdr" class="close"></div>
       <nav id="menubar-s">
@@ -36,8 +33,6 @@
           <li id="lastli"><a th:href="@{/logout}">ログアウト<br><span>Logout<span></a></li>
           </ul>
         </nav>
-
-
         <script type="text/javascript">
         if (OCwindowWidth() <= 800) {
           open_close("menubar_hdr", "menubar-s");
@@ -45,15 +40,8 @@
         </script>
       </header>
 
-
-
-
-
       <!-- 管理者アカウント用のヘッダー -->
-
-
       <header th:fragment="for-admin">
-
         <div class="inner">
           <h1 id="logo"><a th:href="@{/}"><img alt="t6sdldc" th:src="@{/img/logo1.png}" src="../../static/img/logo1.png"></a>
             <nav id="menubar">
@@ -64,12 +52,9 @@
                 <li id="lastli"><a th:href="@{/admin/mail?develop}">メール作成<br><span>Write Emails</span></a></li>
               </ul>
             </nav>
-
             <div id="logout">
               <a th:href="@{/logout}" class="square_btn">ログアウト</a>
             </div>
-
-
           </div>
           <div id="menubar_hdr" class="close"></div>
           <nav id="menubar-s">
@@ -81,8 +66,6 @@
               <li id="lastli"><a th:href="@{/logout}">ログアウト<br><span>Logout<span></a></li>
               </ul>
             </nav>
-
-
             <script type="text/javascript">
             if (OCwindowWidth() <= 800) {
               open_close("menubar_hdr", "menubar-s");
@@ -100,6 +83,5 @@
                 </nav>
               </div>
             </header>
-
           </body>
           </html>
