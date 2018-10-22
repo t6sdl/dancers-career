@@ -64,9 +64,15 @@ header #logo img {
   position: absolute;
   left: 3%;
   top: 20px;
+  transition: .2s;
 }
 
-
+header #logo img:hover {
+  width: 200px;
+  position: absolute;
+  left: 2%;
+  top: 20px;
+}
 /* ----- logout button ----- */
 
 #logout {
@@ -149,6 +155,53 @@ header #logo img {
 
 #menubar_hdr {display: none;}
 
+/* ----- Footer ----- */
+.footer {
+  background-color: #fff;
+  height: 80px;
+  padding: 40px;
+}
+
+.copy{
+  float: right;
+  font-size: 12px;
+}
+
+.footer-logo{
+  float: left;
+  font-size: 25px;
+  color:#426579;
+}
+
+.footer-list{
+  margin: 10px;
+  float: left;
+}
+
+.footer-list li {
+  padding-bottom: 20px;
+}
+
+.footer-list a{
+  font-size: 12px;
+  text-decoration: none;
+  color: #000;
+}
+
+.footer-logo{
+  text-decoration: none;
+}
+
+/* ----- other ----- */
+.topwords{
+  color: #426579;
+}
+
+#terms{
+  margin: 50px;
+}
+
+
 
 /* ----- 800px - 480px ----- */
 @media screen and (max-width:800px){
@@ -157,6 +210,7 @@ header #logo img {
     width: auto;
   }
 
+/* ----- Header ----- */
   @keyframes menu1 {
     0% {opacity: 0;}
     100% {opacity: 1;}
@@ -211,8 +265,7 @@ header #logo img {
   #menubar_hdr.open {
     width: 50px;
     height: 50px;
-    border: 3px solid #333;
-    border-radius: 5px;
+
   }
 
   #menubar_hdr.close {
@@ -222,34 +275,7 @@ header #logo img {
   #menubar_hdr.open {
     background: #fff url(../img/icon_menu.png) no-repeat center bottom/50px;
   }
-}
-
-/* ----- 480px ----- */
-@media screen and (max-width:480px){
-
-  body {
-    font-size: 12px;
-  }
-
-  #menubar-s {
-    display: block;overflow: hidden;
-    font-weight: bold;
-    position: absolute;
-    width: 100%;
-    z-index: 10;
-    animation-name: menu1;
-    animation-duration: 0.7S;
-    animation-fill-mode: both;
-  }
-}
-
 /* ----- Footer ----- */
-.footer {
-  background-color: #fff;
-  height: 80px;
-  padding: 40px;
-}
-
 .copy{
   float: right;
   font-size: 12px;
@@ -262,6 +288,7 @@ header #logo img {
 }
 
 .footer-list{
+  position:relative;
   margin: 10px;
   float: left;
 }
@@ -280,11 +307,25 @@ header #logo img {
   text-decoration: none;
 }
 
-/* ----- other ----- */
-.topwords{
-  color: #426579;
+
 }
 
-#terms{
-  margin: 50px;
+/* ----- 480px ----- */
+@media screen and (max-width:480px){
+
+  body {
+    font-size: 12px;
+  }
+
+/* ----- Header ----- */
+  #menubar-s {
+    display: block;overflow: hidden;
+    font-weight: bold;
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+    animation-name: menu1;
+    animation-duration: 0.7S;
+    animation-fill-mode: both;
+  }
 }
