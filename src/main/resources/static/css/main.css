@@ -40,6 +40,7 @@ ul{
 .hazard{
   text-align: center;
   color: #ff0000;
+  margin-top: 0px;
 }
 
 input::placeholder {
@@ -222,7 +223,8 @@ after { clear: both; }
 
 .formbg{
   z-index:0;
-  overflow: hidden;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   background-color: rgb(255,255,255);
 }
 
@@ -232,10 +234,10 @@ after { clear: both; }
   opacity: 0.9;
   filter: blur(7px);
   position: absolute;
-  top: -8px;
-  left: -8px;
-  right: -8px;
-  bottom: -8px;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
   background-size: cover;
   z-index: -1;
 }
@@ -254,7 +256,7 @@ after { clear: both; }
 
 #formdef form {
   margin: auto;
-  padding-bottom: 20px;
+  padding: 20px 0;
   width: 80%;
   height: auto;
 }
