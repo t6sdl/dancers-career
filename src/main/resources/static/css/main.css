@@ -24,6 +24,7 @@ a:hover {
 h1{
   text-align: center;
   color: #426579;
+  margin:auto;
 }
 
 li{
@@ -237,7 +238,7 @@ after { clear: both; }
 
 #formdef {
   margin: 100px auto;
-  padding: 0px 0px 0px 10px;
+  padding:10px;
   text-align: center;
   background-color:  #f5f5f5;
   width: 40%;
@@ -338,6 +339,8 @@ after { clear: both; }
 .logb:hover {
   background: #426579;
 }
+
+
 /* ----- Contact  Form ----- */
 #contactForm{
   margin: 50px;
