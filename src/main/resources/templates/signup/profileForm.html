@@ -17,20 +17,20 @@
         <div>
           <p>氏名</p>
           <div>
-            <label for="lastName">姓</label>
-            <input type="text" th:field="*{lastName}" th:errorclass="error" required>
-            <label for="firstName">名</label>
-            <input type="text" th:field="*{firstName}" th:errorclass="error" required>
-            <p th:if="${#fields.hasErrors('lastName') || #fields.hasErrors('firstName')}">入力してください</p>
+            <label for="lastName"></label>
+            <input type="text" th:field="*{lastName}" th:errorclass="error" required placeholder="姓">
+            <label for="firstName"></label>
+            <input type="text" th:field="*{firstName}" th:errorclass="error" required placeholder="名">
+            <p th:if="${#fields.hasErrors('lastName') || #fields.hasErrors('firstName')}" class="hazard">入力してください</p>
           </div>
         </div>
         <p>氏名（カナ）</p>
         <div>
-          <label for="kanaLastName">セイ</label>
-          <input type="text" th:field="*{kanaLastName}" th:errorclass="error" required>
-          <label for="kanaFirstName">メイ</label>
-          <input type="text" th:field="*{kanaFirstName}" th:errorclass="error" required>
-          <p th:if="${#fields.hasErrors('kanaLastName') || #fields.hasErrors('kanaFirstName')}">カタカナで入力してください</p>
+          <label for="kanaLastName"></label>
+          <input type="text" th:field="*{kanaLastName}" th:errorclass="error" required placeholder="セイ">
+          <label for="kanaFirstName"></label>
+          <input type="text" th:field="*{kanaFirstName}" th:errorclass="error" required placeholder="メイ">
+          <p th:if="${#fields.hasErrors('kanaLastName') || #fields.hasErrors('kanaFirstName')}" class="hazard">カタカナで入力してください</p>
         </div>
         <div>
           <p>生年月日</p>
@@ -100,7 +100,7 @@
               <option value="31">31</option>
             </select>
             <label for="birthDay">日</label>
-            <p th:if="${#fields.hasErrors('birthYear') || #fields.hasErrors('birthMonth') || #fields.hasErrors('birthDay')}">必須項目です</p>
+            <p th:if="${#fields.hasErrors('birthYear') ||#fields.hasErrors('birthMonth') || #fields.hasErrors('birthDay')}" class="hazard">必須項目です</p>
           </div>
         </div>
         <div>
@@ -110,13 +110,13 @@
             <label th:for="${#ids.prev('sex')}">男性</label>
             <input type="radio" th:field="*{sex}" value="女性">
             <label th:for="${#ids.prev('sex')}">女性</label>
-            <p th:if="${#fields.hasErrors('sex')}">必須項目です</p>
+            <p th:if="${#fields.hasErrors('sex')}" class="hazard">必須項目です</p>
           </div>
         </div>
         <div>
           <label for="phoneNumber">電話番号</label>
           <input type="tel" th:field="*{phoneNumber}" th:errorclass="error" required>
-          <p th:if="${#fields.hasErrors('phoneNumber')}">ハイフンなしの電話番号を入力してください</p>
+          <p th:if="${#fields.hasErrors('phoneNumber')}"  class="hazard">ハイフンなしの電話番号を入力してください</p>
         </div>
         <div>
           <p>文理</p>
@@ -125,7 +125,7 @@
             <label th:for="${#ids.prev('major')}">文系</label>
             <input type="radio" th:field="*{major}" value="理系">
             <label th:for="${#ids.prev('major')}">理系</label>
-            <p th:if="${#fields.hasErrors('major')}">必須項目です</p>
+            <p th:if="${#fields.hasErrors('major')}"  class="hazard">必須項目です</p>
           </div>
         </div>
         <div>
@@ -183,7 +183,7 @@
                 <option value="鹿児島県">鹿児島県</option>
                 <option value="沖縄県">沖縄県</option>
               </select>
-              <p th:if="${#fields.hasErrors('prefecture')}">必須項目です</p>
+              <p th:if="${#fields.hasErrors('prefecture')}"  class="hazard">必須項目です</p>
             </div>
             <div>
               <label for="university">大学</label>
@@ -191,7 +191,7 @@
                 <option value="default">選択してください</option>
               </select>
               <input type="hidden" id="hiddenUniv" th:value="${hiddenUniv == null ? 'default' : hiddenUniv}">
-              <p th:if="${#fields.hasErrors('university')}">必須項目です</p>
+              <p th:if="${#fields.hasErrors('university')}"  class="hazard">必須項目です</p>
             </div>
             <div>
               <label for="faculty">学部</label>
@@ -199,7 +199,7 @@
                 <option value="default">選択してください</option>
               </select>
               <input type="hidden" id="hiddenFac" th:value="${hiddenFac == null ? 'default' : hiddenFac}">
-              <p th:if="${#fields.hasErrors('faculty')}">必須項目です</p>
+              <p th:if="${#fields.hasErrors('faculty')}"  class="hazard">必須項目です</p>
             </div>
             <div>
               <label for="department">学科</label>
@@ -207,7 +207,7 @@
                 <option value="default">選択してください</option>
               </select>
               <input type="hidden" id="hiddenDep" th:value="${hiddenDep == null ? 'default' : hiddenDep}">
-              <p th:if="${#fields.hasErrors('department')}">必須項目です</p>
+              <p th:if="${#fields.hasErrors('department')}"  class="hazard">必須項目です</p>
             </div>
           </div>
         </div>
@@ -239,7 +239,7 @@
             </select>
             <label for="graduationMonth">月</label>
             <span>卒業予定</span>
-            <p th:if="${#fields.hasErrors('graduationYear') || #fields.hasErrors('graduationMonth')}">必須項目です</p>
+            <p th:if="${#fields.hasErrors('graduationYear') || #fields.hasErrors('graduationMonth')}"  class="hazard">必須項目です</p>
           </div>
         </div>
         <div>
@@ -251,7 +251,7 @@
             <label th:for="${#ids.prev('academicDegree')}">修士卒</label>
             <input type="radio" th:field="*{academicDegree}" value="博士卒">
             <label th:for="${#ids.prev('academicDegree')}">博士卒</label>
-            <p th:if="${#fields.hasErrors('academicDegree')}">必須項目です</p>
+            <p th:if="${#fields.hasErrors('academicDegree')}"  class="hazard">必須項目です</p>
           </div>
         </div>
         <div>
@@ -261,7 +261,7 @@
             <input type="checkbox" th:field="*{position}" th:value="${pos}">
             <label th:for="${#ids.prev('position')}" th:text="${pos}"></label>
           </th:block>
-          <p th:if="${#fields.hasErrors('position')}">１つ以上選択してください</p>
+          <p th:if="${#fields.hasErrors('position')}"  class="hazard">１つ以上選択してください</p>
         </div>
       </div>
       <div>

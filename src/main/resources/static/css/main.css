@@ -47,6 +47,10 @@ input::placeholder {
   color: #606468;
 }
 
+p{
+  margin-bottom: 3px;
+}
+
 /* ----- Header ----- */
 .inner {
   margin: 0 auto;
