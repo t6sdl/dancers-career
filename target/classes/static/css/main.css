@@ -1,5 +1,4 @@
 /* ----- common ----- */
-
 body{
   margin: 0px;
   padding: 0px;
@@ -12,14 +11,18 @@ body{
 }
 
 a {
-	color: #333;	/*リンクテキストの色*/
-	transition: 0.5s;	/*マウスオン時の移り変わるまでの時間設定。0.5秒。*/
+    color: #333;
+  transition: 0.5s;
 }
 a:hover {
-	color: #426579;			/*マウスオン時の文字色*/
-	text-decoration: none;	/*マウスオン時に下線を消す設定。残したいならこの１行削除。*/
+  color: #426579;
+  text-decoration: none;
 }
 
+h1{
+  text-align: center;
+  color: #426579;
+}
 
 .form:focus{
   box-shadow: 0 0 7px #3498db;
@@ -33,6 +36,7 @@ li{
 
 ul{
   margin: 0px;
+  padding: 0px;
 }
 
 .hazard{
@@ -46,34 +50,40 @@ input::placeholder {
 
 /* ----- Header ----- */
 .inner {
-	margin: 0 auto;
+  margin: 0 auto;
 }
 
 header {
-	border-top: 3px solid #426579;
+  border-top: 3px solid #426579;
   background-color: #fff;
 }
 
 header .inner {
-	position: relative;
-	height: 100px;
+  position: relative;
+  height: 100px;
 }
 
 header #logo img {
-	width: 180px;
-	position: absolute;
-	left: 3%;
-	top: 20px;
+  width: 180px;
+  position: absolute;
+  left: 3%;
+  top: 20px;
+  transition: .2s;
 }
 
-
+header #logo img:hover {
+  width: 200px;
+  position: absolute;
+  left: 2%;
+  top: 20px;
+}
 /* ----- logout button ----- */
 
 #logout {
-	position: absolute;
-	right: 3%;		/*header のinnerに対して右から3%の場所に配置*/
-	top: 15px;	/*header のinnerに対して下から15pxの場所に配置*/
-  float: left;	/*左に回り込み*/
+  position: absolute;
+  right: 3%;
+  top: 15px;
+  float: left;
   margin-top: 5px;
   font-size: 12px;
   text-decoration: none;
@@ -108,10 +118,11 @@ header #logo img {
 /* ----- menu ----- */
 
 #menubar {
-	clear: both;overflow: hidden;
+  clear: both;overflow: hidden;
   font-size: 12px;
   padding: 20px 20px;
   padding-left: 20%;
+  margin: 0 25px;
 }
 
 #menubar li{
@@ -134,7 +145,6 @@ header #logo img {
   transition: .4s;
   text-decoration: none;
   color: #000;
-  padding: 15px 0;
 }
 
 #menubar li a:hover {
@@ -148,105 +158,6 @@ header #logo img {
 #menubar-s {display: none;}
 
 #menubar_hdr {display: none;}
-
-
-/* ----- 800px - 480px ----- */
-@media screen and (max-width:800px){
-
-.inner {
-	width: auto;
-}
-
-@keyframes menu1 {
-0% {opacity: 0;}
-100% {opacity: 1;}
-}
-
-#menubar-s {
-	display: block;overflow: hidden;
-	position: absolute;
-	width: 50%;
-	z-index: 10;
-	animation-name: menu1;		/*上のkeyframesの名前*/
-	animation-duration: 0.7S;	/*アニメーションの実行時間。0.5秒。*/
-	animation-fill-mode: both;	/*アニメーションの完了後、最後のキーフレームを維持する*/
-}
-/*メニュー１個あたりの設定*/
-#menubar-s li a {
-	display: block;text-decoration: none;
-	padding: 15px 5%;
-	border: 1px solid #426579;
-	background: #fff;
-	color: #333;
-	font-size: 12px;
-  text-align: center;
-}
-/*PC用メニューを非表示にする*/
-#menubar {
-	display: none;
-}
-
-#logout {
-	display: none;
-}
-
-/*３本バーアイコン設定
----------------------------------------------------------------------------*/
-/*３本バーブロック*/
-#menubar_hdr {
-	display: block;
-	position: absolute;
-	top: 3%;	/*上から3%の場所に配置*/
-	right: 3%;	/*右から3%の場所に配置*/
-}
-/*アイコン共通設定*/
-#menubar_hdr.close,
-#menubar_hdr.open {
-	width: 50px;	/*幅*/
-	height: 50px;	/*高さ*/
-	border: 1px solid #333;	/*枠線の幅、線種、色*/
-  border-radius: 3px;
-}
-/*三本バーアイコン*/
-#menubar_hdr.close {
-	background: #fff url(../img/icon_menu.png) no-repeat center top/50px;
-}
-/*閉じるアイコン*/
-#menubar_hdr.open {
-	background: #fff url(../img/icon_menu.png) no-repeat center bottom/50px;
-}
-
-}
-
-@media screen and (max-width:480px){
-
-/*全体の設定
----------------------------------------------------------------------------*/
-body {
-	font-size: 12px;	/*文字サイズ*/
-}
-
-/*ヘッダー（ロゴが入った最上段のブロック）
----------------------------------------------------------------------------*/
-/*ロゴ画像*/
-header #logo img {
-	width: 40%;	/*画像幅*/
-	min-width: 20px;
-	top: 30%;	/*ヘッダーに対して上から20%の場所に配置*/
-}
-
-#menubar-s {
-	display: block;overflow: hidden;
-	position: absolute;
-	width: 100%;
-	z-index: 10;
-	animation-name: menu1;		/*上のkeyframesの名前*/
-	animation-duration: 0.7S;	/*アニメーションの実行時間。0.5秒。*/
-	animation-fill-mode: both;	/*アニメーションの完了後、最後のキーフレームを維持する*/
-}
-
-}
-
 
 /* ----- Footer ----- */
 .footer {
@@ -285,11 +196,277 @@ header #logo img {
   text-decoration: none;
 }
 
-/* ----- other ----- */
+/* ----- Other ----- */
 .topwords{
   color: #426579;
 }
 
 #terms{
   margin: 50px;
+}
+
+/* ----- Form ----- */
+
+
+.linkblue{
+  color:#4169e1;
+}
+
+input{
+  border: none;
+  font-size: 12px;
+  line-height: 1.5em;
+  padding: 0;
+  -webkit-appearance: none;
+}
+
+after { clear: both; }
+
+#formdef {
+  margin: 50px auto;
+  text-align: center;
+}
+
+#formdef form {
+  margin: auto;
+  width: 100%;
+}
+
+#formdef form input[type="email"] {
+  border-radius: 3px 3px 3px 3px;
+  margin-bottom: 1em;
+  padding: 0 16px;
+  width: 385px;
+  height: 50px;
+}
+
+#formdef form input[type="password"] {
+  border-radius: 3px 3px 3px 3px;
+  margin-bottom: 1em;
+  padding: 0 15px;
+  width: 385px;
+  height: 50px;
+}
+
+#formdef form input[type="submit"] {
+  background: #89c3eb;
+  border: 0;
+  width: 385px;
+  height: 40px;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+#formdef form input[type="submit"]:hover {
+  background: #426579;
+}
+
+#formdef form input[type="text"]{
+  border-radius: 3px 3px 3px 3px;
+  margin-bottom: 1em;
+  padding: 0 16px;
+  width: 250px;
+  height: 50px;
+}
+
+#formdef form input[type="tel"]{
+  border-radius: 3px 3px 3px 3px;
+  margin-bottom: 1em;
+  padding: 0 16px;
+  width: 250px;
+  height: 50px;
+}
+
+
+
+#button{
+  background: #89c3eb;
+  border: 0;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  width: 385px;
+  height: 40px;
+}
+
+#button:hover {
+  background: #426579;
+  color: white;
+}
+
+
+/* ----- Contact  Form ----- */
+#contactForm{
+  margin: 50px;
+}
+
+#contact{
+  text-align: left;
+  color: #426579;
+}
+
+#contactForm form input[type="email"]{
+  border-radius: 3px 3px 3px 3px;
+  margin-bottom: 1em;
+  padding: 0 16px;
+  width: 250px;
+  height: 50px;
+}
+
+#contactForm form textarea{
+  border-radius: 3px 3px 3px 3px;
+  margin-bottom: 1em;
+  padding: 0 16px;
+  width: 350px;
+  height: 150px;
+}
+
+#contactForm form input[type="submit"] {
+  background: #89c3eb;
+  border: 0;
+  width: 385px;
+  height: 40px;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+#contactForm form input[type="submit"]:hover {
+  background: #426579;
+}
+
+
+/* ----- 800px - 480px ----- */
+@media screen and (max-width:800px){
+
+  body{
+    font-size: 16px;
+  }
+
+  .inner {
+    width: auto;
+  }
+
+/* ----- Header ----- */
+  @keyframes menu1 {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+  }
+
+  #menubar-s {
+    display: block;overflow: hidden;
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+    animation-name: menu1;
+    animation-duration: 0.75S;
+    animation-fill-mode: both;
+  }
+
+  #menubar-s li a {
+    display: block;text-decoration: none;
+    font-weight: bold;
+    padding: 15px 5%;
+    border: 1px solid #426579;
+    border-bottom: none;
+    background: #fff;
+    color: #333;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  #menubar-s #lastli {
+    border-bottom: 1px solid #426579;
+  }
+
+  #menubar-s span{
+    font-size: 10px;
+  }
+
+  #menubar {
+    display: none;
+  }
+
+  #logout {
+    display: none;
+  }
+
+  #menubar_hdr {
+    display: block;
+    position: absolute;
+    top: 30px;
+    right: 3%;
+  }
+
+  #menubar_hdr.close,
+  #menubar_hdr.open {
+    width: 50px;
+    height: 50px;
+
+  }
+
+  #menubar_hdr.close {
+    background: #fff url(../img/icon_menu.png) no-repeat center top/50px;
+  }
+
+  #menubar_hdr.open {
+    background: #fff url(../img/icon_menu.png) no-repeat center bottom/50px;
+  }
+/* ----- Footer ----- */
+.copy{
+  float: right;
+  font-size: 12px;
+}
+
+.footer-logo{
+  float: left;
+  font-size: 25px;
+  color:#426579;
+}
+
+.footer-list{
+  position:relative;
+  margin: 10px;
+  float: left;
+}
+
+.footer-list li {
+  padding-bottom: 20px;
+}
+
+.footer-list a{
+  font-size: 12px;
+  text-decoration: none;
+  color: #000;
+}
+
+.footer-logo{
+  text-decoration: none;
+}
+
+
+}
+
+/* ----- 480px ----- */
+@media screen and (max-width:480px){
+
+  body {
+    font-size: 12px;
+  }
+
+/* ----- Header ----- */
+  #menubar-s {
+    display: block;overflow: hidden;
+    font-weight: bold;
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+    animation-name: menu1;
+    animation-duration: 0.7S;
+    animation-fill-mode: both;
+  }
 }
