@@ -11,14 +11,18 @@ body{
 }
 
 a {
-  color: #333;	/*リンクテキストの色*/
-  transition: 0.5s;	/*マウスオン時の移り変わるまでの時間設定。0.5秒。*/
+    color: #333;
+  transition: 0.5s;
 }
 a:hover {
-  color: #426579;			/*マウスオン時の文字色*/
-  text-decoration: none;	/*マウスオン時に下線を消す設定。残したいならこの１行削除。*/
+  color: #426579;
+  text-decoration: none;
 }
 
+h1{
+  text-align: center;
+  color: #426579;
+}
 
 .form:focus{
   box-shadow: 0 0 7px #3498db;
@@ -77,9 +81,9 @@ header #logo img:hover {
 
 #logout {
   position: absolute;
-  right: 3%;		/*header のinnerに対して右から3%の場所に配置*/
-  top: 15px;	/*header のinnerに対して下から15pxの場所に配置*/
-  float: left;	/*左に回り込み*/
+  right: 3%;
+  top: 15px;
+  float: left;
   margin-top: 5px;
   font-size: 12px;
   text-decoration: none;
@@ -192,7 +196,7 @@ header #logo img:hover {
   text-decoration: none;
 }
 
-/* ----- other ----- */
+/* ----- Other ----- */
 .topwords{
   color: #426579;
 }
@@ -201,6 +205,139 @@ header #logo img:hover {
   margin: 50px;
 }
 
+/* ----- Form ----- */
+
+
+.linkblue{
+  color:#4169e1;
+}
+
+input{
+  border: none;
+  font-size: 12px;
+  line-height: 1.5em;
+  padding: 0;
+  -webkit-appearance: none;
+}
+
+after { clear: both; }
+
+#formdef {
+  margin: 50px auto;
+  text-align: center;
+}
+
+#formdef form {
+  margin: auto;
+  width: 100%;
+}
+
+#formdef form input[type="email"] {
+  border-radius: 3px 3px 3px 3px;
+  margin-bottom: 1em;
+  padding: 0 16px;
+  width: 385px;
+  height: 50px;
+}
+
+#formdef form input[type="password"] {
+  border-radius: 3px 3px 3px 3px;
+  margin-bottom: 1em;
+  padding: 0 15px;
+  width: 385px;
+  height: 50px;
+}
+
+#formdef form input[type="submit"] {
+  background: #89c3eb;
+  border: 0;
+  width: 385px;
+  height: 40px;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+#formdef form input[type="submit"]:hover {
+  background: #426579;
+}
+
+#formdef form input[type="text"]{
+  border-radius: 3px 3px 3px 3px;
+  margin-bottom: 1em;
+  padding: 0 16px;
+  width: 250px;
+  height: 50px;
+}
+
+#formdef form input[type="tel"]{
+  border-radius: 3px 3px 3px 3px;
+  margin-bottom: 1em;
+  padding: 0 16px;
+  width: 250px;
+  height: 50px;
+}
+
+
+
+#button{
+  background: #89c3eb;
+  border: 0;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  width: 385px;
+  height: 40px;
+}
+
+#button:hover {
+  background: #426579;
+  color: white;
+}
+
+
+/* ----- Contact  Form ----- */
+#contactForm{
+  margin: 50px;
+}
+
+#contact{
+  text-align: left;
+  color: #426579;
+}
+
+#contactForm form input[type="email"]{
+  border-radius: 3px 3px 3px 3px;
+  margin-bottom: 1em;
+  padding: 0 16px;
+  width: 250px;
+  height: 50px;
+}
+
+#contactForm form textarea{
+  border-radius: 3px 3px 3px 3px;
+  margin-bottom: 1em;
+  padding: 0 16px;
+  width: 350px;
+  height: 150px;
+}
+
+#contactForm form input[type="submit"] {
+  background: #89c3eb;
+  border: 0;
+  width: 385px;
+  height: 40px;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+#contactForm form input[type="submit"]:hover {
+  background: #426579;
+}
 
 
 /* ----- 800px - 480px ----- */
