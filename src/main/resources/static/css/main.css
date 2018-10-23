@@ -204,6 +204,10 @@ header #logo img:hover {
 
 /* ----- Form ----- */
 
+form{
+  margin-top: 50px;
+  padding-top: 20px;
+}
 
 .linkblue{
   color:#4169e1;
