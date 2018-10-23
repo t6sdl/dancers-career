@@ -12,10 +12,11 @@
   <header th:replace="common/header :: for-stranger"></header>
   <main>
     <div id="formdef">
+      <h1>パスワードの再設定</h1>
       <form th:action="@{/signin/forget-pwd}" method="post" th:object="${emailForm}">
-        <h1>パスワードの再設定</h1>
-        <p th:if="${error}">メールの送信に失敗しました<br>下のボタンより再度お試しください<br>解決しない場合はお問い合わせください</p>
-        <p th:unless="${error}">メールを送信しました<br>再設定用のURLの有効期限は30分です<br>10分以上経ってもメールが届かない場合は再度送信ボタンを押してください<br>解決しない場合はお問い合わせください</p>
+
+        <p th:if="${error}"><span class="hazard">メールの送信に失敗しました</span><br>下のボタンより再度お試しください<br>解決しない場合はお問い合わせください</p>
+        <p th:unless="${error}">メールを送信しました<br>再設定用のURLの有効期限は30分です<br><span class="caption">10分以上経ってもメールが届かない場合は再度送信ボタンを押してください<br>解決しない場合はお問い合わせください</span></p>
         <input type="hidden" th:field="*{email}">
         <input type="submit" value="再度送信する" class="button">
       </form>
