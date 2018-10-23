@@ -4,14 +4,14 @@ body{
   padding: 0px;
   font-family: "Avenir Next";
   background-color: #f5f5f5;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 2;
   color: #333;
   -webkit-text-size-adjust: none;
 }
 
 a {
-    color: #333;
+  color: #333;
   transition: 0.5s;
 }
 a:hover {
@@ -225,23 +225,22 @@ after { clear: both; }
 
 .formbg{
   z-index:0;
-overflow: hidden;
-background-color: rgb(255,255,255);
+  overflow: hidden;
+  background-color: rgb(255,255,255);
 }
 
 .formbg::before{
-
   content: '';
-background-image: url(@{/img/bg.jpg});
-opacity: 0.9;
-filter: blur(7px);
-position: absolute;
-top: -8px;
-left: -8px;
-right: -8px;
-bottom: -8px;
-background-size: cover;
-z-index: -1;
+  background-image: url(https://dancers-career-2019-stg.herokuapp.com/img/bg.jpg);
+  opacity: 0.9;
+  filter: blur(7px);
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  background-size: cover;
+  z-index: -1;
 }
 
 
@@ -378,14 +377,14 @@ z-index: -1;
 @media screen and (max-width:800px){
 
   body{
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .inner {
     width: auto;
   }
 
-/* ----- Header ----- */
+  /* ----- Header ----- */
   @keyframes menu1 {
     0% {opacity: 0;}
     100% {opacity: 1;}
@@ -450,37 +449,37 @@ z-index: -1;
   #menubar_hdr.open {
     background: #fff url(../img/icon_menu.png) no-repeat center bottom/50px;
   }
-/* ----- Footer ----- */
-.copy{
-  float: right;
-  font-size: 12px;
-}
+  /* ----- Footer ----- */
+  .copy{
+    float: right;
+    font-size: 12px;
+  }
 
-.footer-logo{
-  float: left;
-  font-size: 25px;
-  color:#426579;
-}
+  .footer-logo{
+    float: left;
+    font-size: 25px;
+    color:#426579;
+  }
 
-.footer-list{
-  position:relative;
-  margin: 10px;
-  float: left;
-}
+  .footer-list{
+    position:relative;
+    margin: 10px;
+    float: left;
+  }
 
-.footer-list li {
-  padding-bottom: 20px;
-}
+  .footer-list li {
+    padding-bottom: 20px;
+  }
 
-.footer-list a{
-  font-size: 12px;
-  text-decoration: none;
-  color: #000;
-}
+  .footer-list a{
+    font-size: 12px;
+    text-decoration: none;
+    color: #000;
+  }
 
-.footer-logo{
-  text-decoration: none;
-}
+  .footer-logo{
+    text-decoration: none;
+  }
 
 
 }
@@ -492,7 +491,7 @@ z-index: -1;
     font-size: 12px;
   }
 
-/* ----- Header ----- */
+  /* ----- Header ----- */
   #menubar-s {
     display: block;overflow: hidden;
     font-weight: bold;
