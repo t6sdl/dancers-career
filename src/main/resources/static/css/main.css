@@ -204,6 +204,10 @@ header #logo img:hover {
 
 /* ----- Form ----- */
 
+form{
+  margin-top: 50px;
+  padding-top: 20px;
+}
 
 .linkblue{
   color:#4169e1;
@@ -222,21 +226,21 @@ after { clear: both; }
 .formbg{
   z-index:0;
 overflow: hidden;
-background-color: rgb(0,0,0);/*半透明カラーの色*/
+background-color: rgb(255,255,255);
 }
 
 .formbg::before{
 
   content: '';
-background-image: url(../../static/img/bg.jpg);*背景画像のURL*/
-opacity: 0.5;/*半透明カラーの透明度*/
-filter: blur(7px);/*ぼかし度*/
+background-image: url(../../static/img/bg.jpg);
+opacity: 0.9;
+filter: blur(7px);
 position: absolute;
-/* 参考: http://designcolor-web.com/2016/09/14/css-blur-effects-background/*/
 top: -8px;
 left: -8px;
 right: -8px;
 bottom: -8px;
+background-size: cover;
 z-index: -1;
 }
 
