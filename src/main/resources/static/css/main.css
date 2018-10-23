@@ -222,40 +222,15 @@ input{
 after { clear: both; }
 
 .formbg{
-
-  z-index:0;
-
-  background-repeat: no-repeat;
-  background-color: rgb(255,255,255);
-}
-
-.formbg::before{
-
-  content: '';
-  background-image: url(https://dancers-career-2019-stg.herokuapp.com/img/bg.jpg);
-  opacity: 0.9;
-    background-attachment: fixed;
-  filter: blur(7px);
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
-  background-size: cover;
-  z-index: -1;
-}
-
-.bgImage{
   background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg.jpg) no-repeat center;
   background-size: cover;
   position: relative;
   z-index: 0;
   overflow: auto;
-    background-attachment: fixed;
+  background-attachment: fixed;
 }
 
-/*:beforeにぼかし効果を設定する*/
-.bgImage:before{
+.formbg::before{
   content: '';
   background: inherit;/*.bgImageで設定した背景画像を継承する*/
 
@@ -272,7 +247,6 @@ after { clear: both; }
   bottom: -10px;
   z-index: -1;/*重なり順序を一番下にしておく*/
 }
-
 
 #formdef {
   margin: 100px auto;
