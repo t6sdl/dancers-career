@@ -24,10 +24,7 @@ h1{
   color: #426579;
 }
 
-.form:focus{
-  box-shadow: 0 0 7px #3498db;
-  border: 1px solid #3498db;
-}
+
 
 li{
   list-style: none;
@@ -222,14 +219,41 @@ input{
 
 after { clear: both; }
 
+.formbg{
+  z-index:0;
+overflow: hidden;
+background-color: rgb(0,0,0);/*半透明カラーの色*/
+}
+
+.formbg::before{
+
+  content: '';
+background-image: url(../../static/img/bg.jpg);*背景画像のURL*/
+opacity: 0.5;/*半透明カラーの透明度*/
+filter: blur(7px);/*ぼかし度*/
+position: absolute;
+/* 参考: http://designcolor-web.com/2016/09/14/css-blur-effects-background/*/
+top: -8px;
+left: -8px;
+right: -8px;
+bottom: -8px;
+z-index: -1;
+}
+
+
 #formdef {
-  margin: 50px auto;
+  margin: 100px auto;
   text-align: center;
+  background-color:  #f5f5f5;
+  width: 40%;
+  height: auto;
+  border-radius: 10px;
+
 }
 
 #formdef form {
   margin: auto;
-  width: 100%;
+  width: 80%;
 }
 
 #formdef form input[type="email"] {
@@ -238,6 +262,12 @@ after { clear: both; }
   padding: 0 16px;
   width: 385px;
   height: 50px;
+}
+
+
+.form:focus{
+  box-shadow: 0 0 7px #3498db;
+  border: 1px solid #3498db;
 }
 
 #formdef form input[type="password"] {
