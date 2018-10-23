@@ -114,8 +114,8 @@
           </div>
         </div>
         <div>
-          <label for="phoneNumber">電話番号</label>
-          <input type="tel" th:field="*{phoneNumber}" th:errorclass="error" required>
+          <label for="phoneNumber"></label>
+          <input type="tel" th:field="*{phoneNumber}" th:errorclass="error" required placeholder="電話番号">
           <p th:if="${#fields.hasErrors('phoneNumber')}"  class="hazard">ハイフンなしの電話番号を入力してください</p>
         </div>
         <div>
