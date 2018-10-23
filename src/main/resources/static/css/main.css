@@ -232,7 +232,7 @@ background-color: rgb(255,255,255);
 .formbg::before{
 
   content: '';
-background-image: url(../../static/img/bg.jpg);
+background-image: url(@{/img/bg.jpg});
 opacity: 0.9;
 filter: blur(7px);
 position: absolute;
