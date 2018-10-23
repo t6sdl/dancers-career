@@ -75,6 +75,11 @@ header #logo img:hover {
   left: 2%;
   top: 20px;
 }
+
+.caption{
+  font-size: 12px;
+
+}
 /* ----- logout button ----- */
 
 #logout {
