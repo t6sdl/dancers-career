@@ -40,7 +40,7 @@
         <hr id="cutl">
         <p>赤入れ：<br><span th:each="str, stat : *{es[__${loop.index}__].advice.split('\n', -1)}"><th:block th:text="${str == '' ? 'なし' : str}"></th:block><br th:if="${!stat.last}"></span></p>
       </div>
-
+<br>
 
 
 
