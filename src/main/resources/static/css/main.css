@@ -525,6 +525,38 @@ after { clear: both; }
 
 /* ----- experience ----- */
 
+
+hr{
+border-top: 1px solid #426579;
+}
+
+.expbox{
+  border: 3px solid #426579;
+  padding: 10px;
+  background-color: white;
+  font-weight: bold;
+}
+
+.hrnone{
+  border: none;
+}
+
+#cutl{
+  border-style: dashed;
+
+
+}
+
+#ques{
+  color: #4682b4;
+  font-weight: bold;
+}
+
+#ans{
+  color:#dc143c;
+  font-weight: bold;
+}
+
 h1{
   text-align: left;
   color: #426579;
@@ -563,7 +595,3 @@ button:hover {
 .button:hover {
       background: #426579;
     }
-
-hr{
-border-top: 1px solid #426579;
-}
