@@ -45,7 +45,7 @@
 
 
       <div th:each="interviewItem, loop : *{interview}">
-        <hr>
+        <hr class="hrnone">
         <p id="ques">質問：<span th:text="*{interview[__${loop.index}__].question} == '' ? '非公開' : *{interview[__${loop.index}__].question}"></span></p>
         <p id="ans">回答：<br><span th:each="str, stat : *{interview[__${loop.index}__].answer.split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
       </div>

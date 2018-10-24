@@ -531,7 +531,8 @@ border-top: 1px solid #426579;
 }
 
 .expbox{
-  border: 3px solid #426579;
+  border: 5px solid #426579;
+  border-radius: 10px;
   padding: 10px;
   background-color: white;
   font-weight: bold;
