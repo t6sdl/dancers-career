@@ -560,7 +560,15 @@ border-top: 1px solid #426579;
 
 #job{
   color: #606468;
-  font-style: 14px;
+  font-style: 12px;
+}
+#fac{
+  color: #606468;
+  font-style: 12px;
+}
+#dep{
+  color: #606468;
+  font-style: 12px;
 }
 
 .qanda{

@@ -21,8 +21,8 @@
         <p id="job"><span th:each="pos : *{position}" th:text="${pos}"></span></p><!-- 役職タグ -->
         <h2>
           <span th:text="*{university} == '' ? '非公開' : *{university}"></span>
-          <span th:text="*{faculty}"></span>
-          <span th:text="*{department}"></span>
+          <span th:text="*{faculty}" id="fac"></span>
+          <span th:text="*{department}" id="dep"></span>
         </h2>
         <p th:if="*{last_name != '' && first_name != ''}" th:text="|*{last_name} *{first_name} さん|"></p>
         <p>所属サークル：<span th:each="cl : *{club}" th:text="|${cl == '' ? '非公開' : cl} |"></span></p>
