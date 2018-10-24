@@ -33,8 +33,8 @@
       <div th:each="esItem, loop : *{es}" class="expbox">
         <hr th:unless="*{es[__${loop.index}__].isRepeated()}" class="hrnone"><!-- このth:unlessたちは、提出先企業が直前のものと同じ場合に表示しないための属性です -->
         <p th:unless="*{es[__${loop.index}__].isRepeated()}">提出先企業：<span th:text="*{es[__${loop.index}__].corp} == '' ? '非公開' : *{es[__${loop.index}__].corp}"></span></p>
-        <p th:unless="*{es[__${loop.index}__].isRepeated()}">選考結果：<span th:text="*{es[__${loop.index}__].result} == '' ? '非公開' : *{es[__${loop.index}__].result}"></span></p>
-        <hr id="cutl">
+        <p th:unless="*{es[__${loop.index}__].isRepeated()}">選考結果：<span th:text="*{es[__${loop.index}__].result} == '' ? '非公開' : *{es[__${loop.index}__].result}"></span><hr id="cutl"></p>
+
         <p id="ques">設問：<span th:text="*{es[__${loop.index}__].question} == '' ? '非公開' : *{es[__${loop.index}__].question}"></span></p>
         <p id="ans">回答：<br><span th:each="str, stat : *{es[__${loop.index}__].answer.split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
         <hr id="cutl">
