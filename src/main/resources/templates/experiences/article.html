@@ -11,7 +11,7 @@
 <body>
   <header th:replace="common/header :: ${header}"></header>
   <main>
-    <h1>ES/体験記</h1>
+  <!--  <h1>ES/体験記</h1> -->
     <article th:object="${experience}">
       <div>
         <p th:unless="${isLiked}">お気に入りに登録されていません <a th:href="@{/experiences/{experienceId}?like(experienceId=*{experience_id})}"><button class="button">登録</button></a></p>
