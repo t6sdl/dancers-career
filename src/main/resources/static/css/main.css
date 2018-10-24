@@ -521,3 +521,49 @@ after { clear: both; }
     animation-fill-mode: both;
   }
 }
+
+
+/* ----- experience ----- */
+
+h1{
+  text-align: left;
+  color: #426579;
+}
+
+main{
+  margin: 50px;
+}
+
+button{
+    background: #89c3eb;
+    border: 0;
+    width: 100px;
+    height: 30px;
+    border-radius: 3px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+  }
+
+button:hover {
+    background: #426579;
+  }
+
+.button{
+      background: #89c3eb;
+      border: 0;
+      width: 100px;
+      height: 30px;
+      border-radius: 3px;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease-in-out;
+    }
+
+.button:hover {
+      background: #426579;
+    }
+
+hr{
+border-top: 1px solid #426579;
+}
