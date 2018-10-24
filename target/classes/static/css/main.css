@@ -4,27 +4,28 @@ body{
   padding: 0px;
   font-family: "Avenir Next";
   background-color: #f5f5f5;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 2;
   color: #333;
   -webkit-text-size-adjust: none;
 }
 
 a {
-    color: #333;
+  color: #6495ed;
   transition: 0.5s;
+  text-decoration: none;
 }
+
 a:hover {
-  color: #426579;
+  color: #0000cd;
   text-decoration: none;
 }
 
 h1{
   text-align: center;
   color: #426579;
+  margin:auto;
 }
-
-
 
 li{
   list-style: none;
@@ -39,15 +40,20 @@ ul{
 .hazard{
   text-align: center;
   color: #ff0000;
+  margin-top: 0px;
 }
 
 input::placeholder {
   color: #606468;
 }
 
+p{
+  margin-bottom: 3px;
+}
+
 /* ----- Header ----- */
 .inner {
-  margin: 0 auto;
+  margin: 0 0;
 }
 
 header {
@@ -64,7 +70,7 @@ header #logo img {
   width: 180px;
   position: absolute;
   left: 3%;
-  top: 20px;
+  top: 25px;
   transition: .2s;
 }
 
@@ -73,6 +79,11 @@ header #logo img:hover {
   position: absolute;
   left: 2%;
   top: 20px;
+}
+
+.caption{
+  font-size: 12px;
+
 }
 /* ----- logout button ----- */
 
@@ -91,7 +102,11 @@ header #logo img:hover {
   display: inline-block;
   font-weight: bold;
   padding: 1px;
-  text-decoration: none;
+  color: #333;
+}
+
+.square_btn:hover{
+  color: #426579;
 }
 
 .square_btn:before{
@@ -204,11 +219,6 @@ header #logo img:hover {
 
 /* ----- Form ----- */
 
-
-.linkblue{
-  color:#4169e1;
-}
-
 input{
   border: none;
   font-size: 12px;
@@ -220,29 +230,38 @@ input{
 after { clear: both; }
 
 .formbg{
-  z-index:0;
-overflow: hidden;
-background-color: rgb(0,0,0);/*半透明カラーの色*/
+  background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg.jpg)
+  no-repeat center;
+  background-size: cover;
+  position: relative;
+  z-index: 0;
+  overflow: auto;
+  background-attachment: scroll;
+
 }
 
 .formbg::before{
-
   content: '';
-background-image: url(../../static/img/bg.jpg);*背景画像のURL*/
-opacity: 0.5;/*半透明カラーの透明度*/
-filter: blur(7px);/*ぼかし度*/
-position: absolute;
-/* 参考: http://designcolor-web.com/2016/09/14/css-blur-effects-background/*/
-top: -8px;
-left: -8px;
-right: -8px;
-bottom: -8px;
-z-index: -1;
+  background: inherit;
+
+  -webkit-filter: blur(10px);
+  -moz-filter: blur(10px);
+  -o-filter: blur(10px);
+  -ms-filter: blur(10px);
+  filter: blur(10px);
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  z-index: -1;
 }
 
 
 #formdef {
   margin: 100px auto;
+  padding:10px;
+  padding-top: 10px;
   text-align: center;
   background-color:  #f5f5f5;
   width: 40%;
@@ -253,14 +272,17 @@ z-index: -1;
 
 #formdef form {
   margin: auto;
+  padding: 20px 0;
   width: 80%;
+  height: auto;
 }
 
 #formdef form input[type="email"] {
   border-radius: 3px 3px 3px 3px;
+  margin-top: 20px;
   margin-bottom: 1em;
   padding: 0 16px;
-  width: 385px;
+  width: 90%;
   height: 50px;
 }
 
@@ -274,14 +296,14 @@ z-index: -1;
   border-radius: 3px 3px 3px 3px;
   margin-bottom: 1em;
   padding: 0 15px;
-  width: 385px;
+  width: 90%;
   height: 50px;
 }
 
 #formdef form input[type="submit"] {
   background: #89c3eb;
   border: 0;
-  width: 385px;
+  width: 100%;
   height: 40px;
   border-radius: 3px;
   color: white;
@@ -310,7 +332,6 @@ z-index: -1;
 }
 
 
-
 #button{
   background: #89c3eb;
   border: 0;
@@ -318,7 +339,7 @@ z-index: -1;
   color: white;
   cursor: pointer;
   transition: background 0.3s ease-in-out;
-  width: 385px;
+  width: 100%;
   height: 40px;
 }
 
@@ -374,14 +395,14 @@ z-index: -1;
 @media screen and (max-width:800px){
 
   body{
-    font-size: 16px;
+    font-size: 14px;
   }
 
   .inner {
     width: auto;
   }
 
-/* ----- Header ----- */
+  /* ----- Header ----- */
   @keyframes menu1 {
     0% {opacity: 0;}
     100% {opacity: 1;}
@@ -446,37 +467,37 @@ z-index: -1;
   #menubar_hdr.open {
     background: #fff url(../img/icon_menu.png) no-repeat center bottom/50px;
   }
-/* ----- Footer ----- */
-.copy{
-  float: right;
-  font-size: 12px;
-}
+  /* ----- Footer ----- */
+  .copy{
+    float: right;
+    font-size: 12px;
+  }
 
-.footer-logo{
-  float: left;
-  font-size: 25px;
-  color:#426579;
-}
+  .footer-logo{
+    float: left;
+    font-size: 25px;
+    color:#426579;
+  }
 
-.footer-list{
-  position:relative;
-  margin: 10px;
-  float: left;
-}
+  .footer-list{
+    position:relative;
+    margin: 10px;
+    float: left;
+  }
 
-.footer-list li {
-  padding-bottom: 20px;
-}
+  .footer-list li {
+    padding-bottom: 20px;
+  }
 
-.footer-list a{
-  font-size: 12px;
-  text-decoration: none;
-  color: #000;
-}
+  .footer-list a{
+    font-size: 12px;
+    text-decoration: none;
+    color: #000;
+  }
 
-.footer-logo{
-  text-decoration: none;
-}
+  .footer-logo{
+    text-decoration: none;
+  }
 
 
 }
@@ -488,7 +509,7 @@ z-index: -1;
     font-size: 12px;
   }
 
-/* ----- Header ----- */
+  /* ----- Header ----- */
   #menubar-s {
     display: block;overflow: hidden;
     font-weight: bold;
@@ -500,3 +521,97 @@ z-index: -1;
     animation-fill-mode: both;
   }
 }
+
+
+/* ----- experience ----- */
+
+
+hr{
+border-top: 1px solid #426579;
+}
+
+.expbox{
+  border: 5px solid #426579;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: white;
+  font-weight: bold;
+}
+
+.hrnone{
+  border: none;
+}
+
+#cutl{
+  border-style: dashed;
+  border-color: #426579;
+
+}
+
+#ques{
+  color: #4682b4;
+  font-weight: bold;
+}
+
+#ans{
+  color:#dc143c;
+  font-weight: bold;
+}
+
+#job{
+  color: #606468;
+  font-style: 12px;
+}
+#fac{
+  color: #606468;
+  font-style: 12px;
+}
+#dep{
+  color: #606468;
+  font-style: 12px;
+}
+
+.qanda{
+  background-color: #f5f5f5;
+  padding:5px 10px;
+}
+
+.qanda2{
+  background-color: white;
+  margin:10px;
+  padding:5px 10px;
+}
+
+main{
+  margin: 50px;
+}
+
+button{
+    background: #89c3eb;
+    border: 0;
+    width: 100px;
+    height: 30px;
+    border-radius: 3px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+  }
+
+button:hover {
+    background: #426579;
+  }
+
+.button{
+      background: #89c3eb;
+      border: 0;
+      width: 100px;
+      height: 30px;
+      border-radius: 3px;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s ease-in-out;
+    }
+
+.button:hover {
+      background: #426579;
+    }
