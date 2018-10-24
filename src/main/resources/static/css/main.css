@@ -350,13 +350,8 @@ after { clear: both; }
 
 
 /* ----- Contact  Form ----- */
-#contactForm{
-  margin: 50px;
-}
-
-#contact{
-  text-align: left;
-  color: #426579;
+#context{
+  width: 100%;
 }
 
 #contactForm form input[type="email"]{

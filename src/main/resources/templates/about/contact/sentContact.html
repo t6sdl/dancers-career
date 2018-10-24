@@ -8,10 +8,10 @@
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../../static/js/openclose.js"></script>
 </head>
-<body>
+<body class="formbg">
   <header th:replace="common/header :: ${header}"></header>
-  <main id="contactForm">
-    <h1 id="contact">お問い合わせ</h1>
+  <main id="formdef">
+    <h1>お問い合わせ</h1>
     <form th:action="@{/about/contact}" method="post" th:object="${contactForm}">
       <div>
         <label for="from">ご自身のメールアドレス</label>
@@ -19,7 +19,7 @@
       </div>
       <div>
         <label for="content">お問い合わせ内容</label><br>
-        <textarea th:field="*{content}" cols="100" rows="10" disabled></textarea>
+        <textarea th:field="*{content}" cols="100" rows="10" disabled id="context"></textarea>
       </div>
       <div>
         <p>お問い合わせいただきありがとうございます。
