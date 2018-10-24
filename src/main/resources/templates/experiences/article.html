@@ -11,14 +11,14 @@
 <body>
   <header th:replace="common/header :: ${header}"></header>
   <main>
-  <!--  <h1>ES/体験記</h1> -->
+    <!--  <h1>ES/体験記</h1> -->
     <article th:object="${experience}">
       <div>
         <p th:unless="${isLiked}">お気に入りに登録されていません <a th:href="@{/experiences/{experienceId}?like(experienceId=*{experience_id})}"><button class="button">登録</button></a></p>
         <p th:if="${isLiked}">お気に入りに登録されています <a th:href="@{/experiences/{experienceId}?dislike(experienceId=*{experience_id})}"><button class="button">削除</button></a></p>
       </div>
       <div>
-        <p><span th:each="pos : *{position}" th:text="${pos}"></span></p><!-- 役職タグ -->
+        <p id="job"><span th:each="pos : *{position}" th:text="${pos}"></span></p><!-- 役職タグ -->
         <h2>
           <span th:text="*{university} == '' ? '非公開' : *{university}"></span>
           <span th:text="*{faculty}"></span>
@@ -29,22 +29,24 @@
         <p>内定先：<span th:each="off : *{offer}" th:text="|${off == '' ? '非公開' : off} |"></span></p>
         <p><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'"></span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></p>
       </div>
-
-      <div th:each="esItem, loop : *{es}" class="expbox">
-        <hr th:unless="*{es[__${loop.index}__].isRepeated()}" class="hrnone"><!-- このth:unlessたちは、提出先企業が直前のものと同じ場合に表示しないための属性です -->
-        <p th:unless="*{es[__${loop.index}__].isRepeated()}">提出先企業：<span th:text="*{es[__${loop.index}__].corp} == '' ? '非公開' : *{es[__${loop.index}__].corp}"></span></p>
-        <p th:unless="*{es[__${loop.index}__].isRepeated()}">選考結果：<span th:text="*{es[__${loop.index}__].result} == '' ? '非公開' : *{es[__${loop.index}__].result}"></span><hr id="cutl"></p>
-
-        <p><span id="ques">設問</span>：<span th:text="*{es[__${loop.index}__].question} == '' ? '非公開' : *{es[__${loop.index}__].question}"></span></p>
-        <p><span id="ans">回答</span>：<br><span th:each="str, stat : *{es[__${loop.index}__].answer.split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
-        <hr id="cutl">
-        <p>赤入れ：<br><span th:each="str, stat : *{es[__${loop.index}__].advice.split('\n', -1)}"><th:block th:text="${str == '' ? 'なし' : str}"></th:block><br th:if="${!stat.last}"></span></p>
+      <div class="expbox">
+        <div th:each="esItem, loop : *{es}">
+          <hr th:unless="*{es[__${loop.index}__].isRepeated()}" class="hrnone"><!-- このth:unlessたちは、提出先企業が直前のものと同じ場合に表示しないための属性です -->
+          <p th:unless="*{es[__${loop.index}__].isRepeated()}">提出先企業：<span th:text="*{es[__${loop.index}__].corp} == '' ? '非公開' : *{es[__${loop.index}__].corp}"></span></p>
+          <p th:unless="*{es[__${loop.index}__].isRepeated()}">選考結果：<span th:text="*{es[__${loop.index}__].result} == '' ? '非公開' : *{es[__${loop.index}__].result}"></span><hr id="cutl"></p>
+          <div class="qanda">
+            <p><span id="ques">設問</span>：<span th:text="*{es[__${loop.index}__].question} == '' ? '非公開' : *{es[__${loop.index}__].question}"></span></p>
+            <p><span id="ans">回答</span>：<br><span th:each="str, stat : *{es[__${loop.index}__].answer.split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
+            <hr id="cutl">
+            <p>赤入れ：<br><span th:each="str, stat : *{es[__${loop.index}__].advice.split('\n', -1)}"><th:block th:text="${str == '' ? 'なし' : str}"></th:block><br th:if="${!stat.last}"></span></p>
+          </div>
+        </div>
       </div>
-<br>
+      <br>
 
 
 
-      <div th:each="interviewItem, loop : *{interview}">
+      <div th:each="interviewItem, loop : *{interview}" class="qanda2">
         <hr class="hrnone">
         <p><span id="ques">質問</span>：<span th:text="*{interview[__${loop.index}__].question} == '' ? '非公開' : *{interview[__${loop.index}__].question}"></span></p>
         <p><span id="ans">回答</span>：<br><span th:each="str, stat : *{interview[__${loop.index}__].answer.split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
