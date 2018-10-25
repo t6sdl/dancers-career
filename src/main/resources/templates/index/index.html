@@ -18,7 +18,7 @@
 	      <h1 id="summary">ダンサーのための就活サイト</h1>
 	      <h2 id="catchphrase">人事がナットクする<br class="hide-m">ダンスの伝え方。</h2>
 	      <p id="sub-catchphrase">ダンサーの就活を変えること、それが私たちの使命です。</p>
-	      <a class="link-button"><button>ES/体験記を探す</button></a>
+	      <a th:href="@{/experiences?all&sort=0}" class="link-button"><button>ES/体験記を探す</button></a>
 	      <div id="scroll"><span class="scroll-arrow"></span><span class="scroll-arrow"></span><span class="scroll-arrow"></span><span>SCROLL</span></div>
 	    </div>
 	  </section>
@@ -41,7 +41,7 @@
 	        <div class="step">
 	          <p>ダンサーズキャリアで自分の興味のあるES/体験記を探す</p>
 	        </div>
-	        <div><a class="link-button"><button>ES/体験記を探す</button></a></div>
+	        <div><a th:href="@{/experiences?all&sort=0}" class="link-button"><button>ES/体験記を探す</button></a></div>
 	        <div class="down-arrow"><i class="fas fa-angle-down"></i></div>
 	        <div class="step">
 	          <p>見つけたESを参考にして自分の経験をしっかり言語化する
