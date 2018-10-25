@@ -41,7 +41,7 @@
   /* ----- sections ----- */
   #top {
     position: relative;
-    height: calc(72vh - 103px);
+    padding: 0;
     background-image: url('https://dancers-career-2019-stg.herokuapp.com/img/top.jpg');
     background-position: center;
     background-repeat: no-repeat;
@@ -109,7 +109,7 @@
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 1vh;
+    bottom: 1%;
     font-size: .6em;
   }
   #scroll span.scroll-arrow {
@@ -118,8 +118,8 @@
     left: 0;
     right: 0;
     margin: auto;
-    width: 3vh;
-    height: 3vh;
+    width: 2em;
+    height: 2em;
     opacity: 0;
     border-bottom: 1px solid #ffffff;
     border-right: 1px solid #ffffff;
