@@ -565,6 +565,11 @@ button:hover {
     font-size: 12px;
   }
 
+  .footer{
+    padding: 0px;
+    margin: 0px;
+  }
+
   .footer-logo{
     float: left;
     font-size: 25px;
