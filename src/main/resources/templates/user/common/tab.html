@@ -8,13 +8,14 @@
   <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../../static/js/openclose.js"></script>
 </head>
 <body>
-<!-- 自由にいじっちゃってください -->
-<aside th:fragment="tab">
-<ul>
-<li><a th:href="@{/user}">マイページトップ</a></li>
-<li><a th:href="@{/user/account}">アカウント</a></li>
-<li><a th:href="@{/user/profile}">プロフィール</a></li>
-</ul>
-</aside>
+
+  <aside th:fragment="tab">
+    <ul>
+      <li class="sidebutton"><a th:href="@{/user}"><span>マイページトップ</span></a></li><br>
+      <li class="sidebutton"><a th:href="@{/user/account}"><span>アカウント</span></a></li><br>
+      <li class="sidebutton"><a th:href="@{/user/profile}"><span>プロフィール</span></a></li><br>
+    </ul>
+  </aside>
+
 </body>
 </html>

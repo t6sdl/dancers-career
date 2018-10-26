@@ -399,7 +399,7 @@ input[type="tel"]{
 
 
 hr{
-border-top: 1px solid #426579;
+  border-top: 1px solid #426579;
 }
 
 .expbox{
@@ -459,34 +459,95 @@ main{
 }
 
 button{
-    background: #89c3eb;
-    border: 0;
-    width: 100px;
-    height: 30px;
-    border-radius: 3px;
-    color: white;
-    cursor: pointer;
-    transition: background 0.3s ease-in-out;
-  }
+  background: #89c3eb;
+  border: 0;
+  width: 100px;
+  height: 30px;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
 
 button:hover {
-    background: #426579;
-  }
+  background: #426579;
+}
 
 .button{
-      background: #89c3eb;
-      border: 0;
-      width: 100px;
-      height: 30px;
-      border-radius: 3px;
-      color: white;
-      cursor: pointer;
-      transition: background 0.3s ease-in-out;
-    }
+  background: #89c3eb;
+  border: 0;
+  width: 100px;
+  height: 30px;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
 
 .button:hover {
-      background: #426579;
-    }
+  background: #426579;
+}
+
+
+.sidebutton a{
+  color: #426579;
+}
+
+.sidebutton a:hover{
+  color: #fff;
+
+}
+
+.sidebutton{
+  display: inline-block;
+  width: 10%;
+  text-align: center;
+  background-color: #426579;
+  border-bottom: 2px solid #426579;
+  font-size: 14px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0px 20px;
+  position: relative;
+}
+
+.sidebutton span {
+  position: relative;
+  z-index: 1;
+}
+
+.sidebutton:before,
+.sidebutton::after {
+  content: "";
+  display: block;
+  background-color: #FFF;
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  transition: .3s;
+
+}
+.sidebutton::before {
+  left: 0;
+}
+.sidebutton::after {
+  right: 0;
+}
+
+.sidebutton:hover:before,
+.sidebutton:hover:after {
+  width: 0;
+
+}
+
+.sidebutton:hover {
+  color: #FFF;
+}
+
+
+
 
 
 /* ----- 800px - 480px ----- */
