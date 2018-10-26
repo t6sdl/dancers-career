@@ -87,6 +87,13 @@
 			<artifactId>jasypt-spring-boot-starter</artifactId>
 			<version>2.1.0</version>
 		</dependency>
+		<dependency>
+			<groupId>com.newrelic.agent.java</groupId>
+			<artifactId>newrelic-java</artifactId>
+			<version>4.6.0</version>
+			<scope>provided</scope>
+			<type>zip</type>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -95,8 +102,29 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+	          <groupId>org.apache.maven.plugins</groupId>
+	          <artifactId>maven-dependency-plugin</artifactId>
+	          <executions>
+	            <execution>
+	              <id>unpack-newrelic</id>
+	              <phase>package</phase>
+	              <goals>
+	                <goal>unpack-dependencies</goal>
+	              </goals>
+	              <configuration>
+	                <includeGroupIds>com.newrelic.agent.java</includeGroupIds>
+	                <includeArtifactIds>newrelic-java</includeArtifactIds>
+	                <overWriteReleases>false</overWriteReleases>
+	                <overWriteSnapshots>false</overWriteSnapshots>
+	                <overWriteIfNewer>true</overWriteIfNewer>
+	                <outputDirectory>tokyo.t6sdl.dancerscareer2019</outputDirectory>
+	                <destFileName>newrelic</destFileName>
+	              </configuration>
+	            </execution>
+	          </executions>
+	        </plugin>
 		</plugins>
 	</build>
-
-
+	
 </project>
