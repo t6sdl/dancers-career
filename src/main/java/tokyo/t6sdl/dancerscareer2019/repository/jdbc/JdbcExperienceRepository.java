@@ -15,7 +15,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import lombok.RequiredArgsConstructor;
-import tokyo.t6sdl.dancerscareer2019.model.BoundEs;
 import tokyo.t6sdl.dancerscareer2019.model.Es;
 import tokyo.t6sdl.dancerscareer2019.model.Experience;
 import tokyo.t6sdl.dancerscareer2019.model.Interview;
@@ -214,7 +213,9 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 						es.setEs_id(resultSet.getInt("es_id"));
 						es.setCorp(resultSet.getString("corp"));
 						es.setResult(resultSet.getString("result"));
-						es.setContent(Arrays.asList(new BoundEs(resultSet.getString("question"), resultSet.getString("answer"), resultSet.getString("advice"))));
+						es.getQuestion().add(resultSet.getString("question"));
+						es.getAnswer().add(resultSet.getString("answer"));
+						es.getAdvice().add(resultSet.getString("advice"));
 						return es;
 					}, experience_id, es_id);
 		} catch (EmptyResultDataAccessException e) {
@@ -257,10 +258,9 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		if (!(newExperience.getEs().get(0).toString().isEmpty())) {
 			List<Es> es = newExperience.getEs();
 			for (int i = 0; i < es.size(); i++) {
-				BoundEs content = es.get(i).getContent().get(0);
 				jdbcTemplate.update(
 						"INSERT INTO es VALUES (?, ?, ?, ?, ?, ?, ?)",
-						id, i + 1, es.get(i).getCorp(), es.get(i).getResult(), content.getQuestion(), content.getAnswer(), content.getAdvice());
+						id, i + 1, es.get(i).getCorp(), es.get(i).getResult(), es.get(i).getQuestion().get(0), es.get(i).getAnswer().get(0), es.get(i).getAdvice().get(0));
 			}
 		}
 		if (!(newExperience.getInterview().get(0).toString().isEmpty())) {
@@ -332,7 +332,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		}
 		jdbcTemplate.update(
 				"INSERT INTO es VALUES (?, ?, ?, ?, ?, ?, ?)",
-				newEs.getExperience_id(), es_id + 1, newEs.getCorp(), newEs.getResult(), newEs.getContent().get(0).getQuestion(), newEs.getContent().get(0).getAnswer(), newEs.getContent().get(0).getAdvice());
+				newEs.getExperience_id(), es_id + 1, newEs.getCorp(), newEs.getResult(), newEs.getQuestion().get(0), newEs.getAnswer().get(0), newEs.getAdvice().get(0));
 	}
 
 	@Override
@@ -344,7 +344,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	public void updateEs(Es es) {
 		jdbcTemplate.update(
 				"UPDATE es SET corp = ?, result = ?, question = ?, answer = ?, advice = ? WHERE id = ? AND es_id = ?",
-				es.getCorp(), es.getResult(), es.getContent().get(0).getQuestion(), es.getContent().get(0).getAnswer(), es.getContent().get(0).getAdvice(), es.getExperience_id(), es.getEs_id());
+				es.getCorp(), es.getResult(), es.getQuestion().get(0), es.getAnswer().get(0), es.getAdvice().get(0), es.getExperience_id(), es.getEs_id());
 	}
 
 	@Override
@@ -409,7 +409,9 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 						es.setEs_id(esSet.getInt("es_id"));
 						es.setCorp(esSet.getString("corp"));
 						es.setResult(esSet.getString("result"));
-						es.setContent(Arrays.asList(new BoundEs(esSet.getString("question"), esSet.getString("answer"), esSet.getString("advice"))));
+						es.getQuestion().add(esSet.getString("question"));
+						es.getAnswer().add(esSet.getString("answer"));
+						es.getAdvice().add(esSet.getString("advice"));
 						return es;
 					}, experience.getExperience_id()));
 			experience.setInterview(jdbcTemplate.query(
