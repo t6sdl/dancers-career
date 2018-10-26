@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT -Djava.security.egd=file:/dev/urandom -jar target/dancers-career-2019-1.0.1.jar --spring.datasource.url=${JDBC_DATABASE_URL} -XX:+UseContainerSupport
+web: java -javaagent:/app/newrelic/newrelic.jar -Dserver.port=$PORT -Djava.security.egd=file:/dev/urandom -jar target/dancers-career-2019-1.0.1.jar --spring.datasource.url=${JDBC_DATABASE_URL} -XX:+UseContainerSupport
