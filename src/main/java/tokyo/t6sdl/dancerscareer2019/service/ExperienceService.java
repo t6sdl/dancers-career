@@ -1,6 +1,7 @@
 package tokyo.t6sdl.dancerscareer2019.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -8,6 +9,7 @@ import java.util.Objects;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import tokyo.t6sdl.dancerscareer2019.model.BoundEs;
 import tokyo.t6sdl.dancerscareer2019.model.Es;
 import tokyo.t6sdl.dancerscareer2019.model.Experience;
 import tokyo.t6sdl.dancerscareer2019.model.Interview;
@@ -132,14 +134,7 @@ public class ExperienceService {
 	public List<Es> convertEsFormIntoEs(List<EsForm> form) {
 		List<Es> es = new ArrayList<Es>();
 		form.forEach(formItem -> {;
-			Es esItem = new Es();
-			esItem.setEs_id(formItem.getEsId());
-			esItem.setCorp(formItem.getCorp());
-			esItem.setResult(formItem.getResult());
-			esItem.setQuestion(formItem.getQuestion());
-			esItem.setAnswer(formItem.getAnswer());
-			esItem.setAdvice(formItem.getAdvice());
-			es.add(esItem);
+			es.add(this.convertEsFormIntoEs(formItem));
 		});
 		return es;
 	}
@@ -147,11 +142,7 @@ public class ExperienceService {
 	public List<Interview> convertInterviewFormIntoInterview(List<InterviewForm> form) {
 		List<Interview> interview = new ArrayList<Interview>();
 		form.forEach(formItem -> {;
-			Interview interviewItem = new Interview();
-			interviewItem.setInterview_id(formItem.getInterviewId());
-			interviewItem.setQuestion(formItem.getQuestion());
-			interviewItem.setAnswer(formItem.getAnswer());
-			interview.add(interviewItem);
+			interview.add(this.convertInterviewFormIntoInterview(formItem));
 		});
 		return interview;
 	}
@@ -161,9 +152,7 @@ public class ExperienceService {
 		es.setEs_id(form.getEsId());
 		es.setCorp(form.getCorp());
 		es.setResult(form.getResult());
-		es.setQuestion(form.getQuestion());
-		es.setAnswer(form.getAnswer());
-		es.setAdvice(form.getAdvice());
+		es.setContent(Arrays.asList(new BoundEs(form.getQuestion(), form.getAnswer(), form.getAdvice())));
 		return es;
 	}
 	
@@ -212,9 +201,9 @@ public class ExperienceService {
 			formItem.setEsId(esItem.getEs_id());
 			formItem.setCorp(esItem.getCorp());
 			formItem.setResult(esItem.getResult());
-			formItem.setQuestion(esItem.getQuestion());
-			formItem.setAnswer(esItem.getAnswer());
-			formItem.setAdvice(esItem.getAdvice());
+			formItem.setQuestion(esItem.getContent().get(0).getQuestion());
+			formItem.setAnswer(esItem.getContent().get(0).getAnswer());
+			formItem.setAdvice(esItem.getContent().get(0).getAdvice());
 			form.add(formItem);
 		});
 		return form;
@@ -243,9 +232,9 @@ public class ExperienceService {
 		form.setEsId(es.getEs_id());
 		form.setCorp(es.getCorp());
 		form.setResult(es.getResult());
-		form.setQuestion(es.getQuestion());
-		form.setAnswer(es.getAnswer());
-		form.setAdvice(es.getAdvice());
+		form.setQuestion(es.getContent().get(0).getQuestion());
+		form.setAnswer(es.getContent().get(0).getAnswer());
+		form.setAdvice(es.getContent().get(0).getAdvice());
 		return form;
 	}
 	
