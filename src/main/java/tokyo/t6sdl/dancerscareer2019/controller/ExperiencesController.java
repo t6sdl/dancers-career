@@ -1,10 +1,13 @@
 package tokyo.t6sdl.dancerscareer2019.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.httpresponse.NotFound404;
 import tokyo.t6sdl.dancerscareer2019.model.Account;
+import tokyo.t6sdl.dancerscareer2019.model.BoundEs;
 import tokyo.t6sdl.dancerscareer2019.model.Es;
 import tokyo.t6sdl.dancerscareer2019.model.Experience;
 import tokyo.t6sdl.dancerscareer2019.model.Profile;
@@ -146,14 +150,24 @@ public class ExperiencesController {
 		}
 		Experience experience = experienceService.getExperienceById(id, true, pvCount);
 		List<Es> es = new ArrayList<Es>();
-		experience.getEs().forEach(e -> {
-			if (!(es.isEmpty()) && !(e.getCorp().isEmpty()) && es.stream().filter(s -> s.getCorp().equals(e.getCorp())).count() > 0) {
-				e.setRepeated(true);
+		Iterator<Es> iterator = experience.getEs().iterator();
+		String corp = null;
+		while (iterator.hasNext()) {
+			Es each = iterator.next();
+			BoundEs content = each.getContent().get(0);
+			if (Objects.equals(corp, each.getCorp())) {
+				es.get(es.size() - 1).getContent().add(content);
 			} else {
-				e.setRepeated(false);
+				Es e = new Es();
+				e.setExperience_id(each.getExperience_id());
+				e.setEs_id(each.getEs_id());
+				e.setCorp(each.getCorp());
+				e.setResult(each.getResult());
+				e.setContent(new ArrayList<BoundEs>(Arrays.asList(content)));
+				es.add(e);
 			}
-			es.add(e);
-		});
+			corp = each.getCorp();
+		}
 		experience.setEs(es);
 		model.addAttribute("experience", experience);
 		return "experiences/article";
