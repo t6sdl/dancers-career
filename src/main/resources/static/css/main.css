@@ -63,7 +63,7 @@ header {
 
 header .inner {
   position: relative;
-  height: 100px;
+  height: 80px;
 }
 
 header #logo img {
@@ -488,6 +488,10 @@ button:hover {
   background: #426579;
 }
 
+#tab{
+  text-align: right;
+  margin-right: 10px;
+}
 
 .sidebutton a{
   color: #426579;
@@ -503,12 +507,13 @@ button:hover {
   width: 10%;
   text-align: center;
   background-color: #426579;
-  border-bottom: 2px solid #426579;
+  border: 2px solid #426579;
   font-size: 14px;
   color: #fff;
   text-decoration: none;
   font-weight: bold;
   padding: 0px 20px;
+  border-radius: 4px;
   position: relative;
 }
 
