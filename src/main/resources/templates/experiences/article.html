@@ -35,13 +35,15 @@
           <p>提出先企業：<span th:text="*{es[__${loop.index}__].corp} == '' ? '非公開' : *{es[__${loop.index}__].corp}"></span></p>
           <p>選考結果：<span th:text="*{es[__${loop.index}__].result} == '' ? '非公開' : *{es[__${loop.index}__].result}"></span>
             <hr class="hrnone"></p>
-  
-          <div th:each="contentItem, subloop : *{es[__${loop.index}__].question}" class="qanda">
-            <p><span id="ques">設問</span>：<span th:text="*{es[__${loop.index}__].question[__${subloop.index}__]} == '' ? '非公開' : *{es[__${loop.index}__].question[__${subloop.index}__]}"></span></p>
-            <p><span id="ans">回答</span>：<br><span th:each="str, stat : *{es[__${loop.index}__].answer[__${subloop.index}__].split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
+
+
+          <div class="qanda">
+            <p><span id="ques">設問</span>：<span th:text="*{es[__${loop.index}__].question} == '' ? '非公開' : *{es[__${loop.index}__].question}"></span></p>
+            <p><span id="ans">回答</span>：<br><span th:each="str, stat : *{es[__${loop.index}__].answer.split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
             <hr id="cutl">
-            <p>赤入れ：<br><span th:each="str, stat : *{es[__${loop.index}__].advice[__${subloop.index}__].split('\n', -1)}"><th:block th:text="${str == '' ? 'なし' : str}"></th:block><br th:if="${!stat.last}"></span></p>
-          </div>
+            <p>赤入れ：<br><span th:each="str, stat : *{es[__${loop.index}__].advice.split('\n', -1)}"><th:block th:text="${str == '' ? 'なし' : str}"></th:block><br th:if="${!stat.last}"></div></span></p>
+
+
         </div>
 
       <br>
