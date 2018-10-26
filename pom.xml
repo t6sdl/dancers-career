@@ -118,7 +118,7 @@
 	                <overWriteReleases>false</overWriteReleases>
 	                <overWriteSnapshots>false</overWriteSnapshots>
 	                <overWriteIfNewer>true</overWriteIfNewer>
-	                <outputDirectory>tokyo.t6sdl.dancerscareer2019</outputDirectory>
+	                <outputDirectory>tokyo/t6sdl/dancerscareer2019</outputDirectory>
 	                <destFileName>newrelic</destFileName>
 	              </configuration>
 	            </execution>
