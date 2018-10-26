@@ -1,7 +1,6 @@
 package tokyo.t6sdl.dancerscareer2019.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -9,7 +8,6 @@ import java.util.Objects;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import tokyo.t6sdl.dancerscareer2019.model.BoundEs;
 import tokyo.t6sdl.dancerscareer2019.model.Es;
 import tokyo.t6sdl.dancerscareer2019.model.Experience;
 import tokyo.t6sdl.dancerscareer2019.model.Interview;
@@ -152,7 +150,9 @@ public class ExperienceService {
 		es.setEs_id(form.getEsId());
 		es.setCorp(form.getCorp());
 		es.setResult(form.getResult());
-		es.setContent(Arrays.asList(new BoundEs(form.getQuestion(), form.getAnswer(), form.getAdvice())));
+		es.getQuestion().add(form.getQuestion());
+		es.getAnswer().add(form.getAnswer());
+		es.getAdvice().add(form.getAdvice());
 		return es;
 	}
 	
@@ -201,9 +201,9 @@ public class ExperienceService {
 			formItem.setEsId(esItem.getEs_id());
 			formItem.setCorp(esItem.getCorp());
 			formItem.setResult(esItem.getResult());
-			formItem.setQuestion(esItem.getContent().get(0).getQuestion());
-			formItem.setAnswer(esItem.getContent().get(0).getAnswer());
-			formItem.setAdvice(esItem.getContent().get(0).getAdvice());
+			formItem.setQuestion(esItem.getQuestion().get(0));
+			formItem.setAnswer(esItem.getAnswer().get(0));
+			formItem.setAdvice(esItem.getAdvice().get(0));
 			form.add(formItem);
 		});
 		return form;
@@ -232,9 +232,9 @@ public class ExperienceService {
 		form.setEsId(es.getEs_id());
 		form.setCorp(es.getCorp());
 		form.setResult(es.getResult());
-		form.setQuestion(es.getContent().get(0).getQuestion());
-		form.setAnswer(es.getContent().get(0).getAnswer());
-		form.setAdvice(es.getContent().get(0).getAdvice());
+		form.setQuestion(es.getQuestion().get(0));
+		form.setAnswer(es.getAnswer().get(0));
+		form.setAdvice(es.getAdvice().get(0));
 		return form;
 	}
 	
