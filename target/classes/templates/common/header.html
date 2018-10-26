@@ -15,7 +15,8 @@
   <!-- 普通のユーザー用のヘッダー -->
   <header th:fragment="for-user">
     <div class="inner">
-      <h1 id="logo"><a th:href="@{/}"><img alt="t6sdldc" th:src="@{/img/logo1.png}" src="../../static/img/logo1.png"></a></h1>
+      <h1 id="logo"><a th:href="@{/}"><img alt="ダンサーのための就活サイト" th:src="@{/img/logo1.png}" src="../../static/img/logo1.png"></a></h1>
+
       <nav id="menubar">
         <ul class="inner">
           <li><a th:href="@{/}">ダンサーズキャリアとは<br><span>About Dancers Career</span></a></li>
@@ -36,77 +37,80 @@
         <li><a th:href="@{/user}">マイページ<br><span>My Page</span></a></li>
 
         <li id="lastli"><a th:href="@{/logout}">ログアウト<br><span>Logout</span></a></li>
+      </ul>
+    </nav>
+
+    <script type="text/javascript">
+    if (OCwindowWidth() <= 800) {
+      open_close("menubar_hdr", "menubar-s");
+    };
+    $(function(){
+
+      $(window).resize(function(){
+        if (OCwindowWidth() <= 800) {
+          open_close("menubar_hdr", "menubar-s");
+        }
+      });
+    });
+
+
+    </script>
+  </header>
+
+  <!-- 管理者アカウント用のヘッダー -->
+  <header th:fragment="for-admin">
+    <div class="inner">
+      <h1 id="logo"><a th:href="@{/}"><img alt="ダンサーのための就活サイト" th:src="@{/img/logo1.png}" src="../../static/img/logo1.png"></a></h1>
+      <nav id="menubar">
+        <ul class="inner">
+          <li><a th:href="@{/admin/search/students?all&sort=0}">登録学生検索<br><span>Search Students</span></a></li>
+          <li><a th:href="@{/admin/experiences/new}">ES/体験記【登録】<br><span>Register ES/Experiences</span></a></li>
+          <li><a th:href="@{/admin/search/experiences?all&sort=0}">ES/体験記【検索】<br><span>Search ES/Experiences</span></a></li>
+          <li id="lastli"><a th:href="@{/admin/mail?develop}">メール作成<br><span>Write Emails</span></a></li>
         </ul>
       </nav>
+      <div id="logout">
+        <a th:href="@{/logout}" class="square_btn">ログアウト</a>
+      </div>
+    </div>
+    <div id="menubar_hdr" class="close"></div>
+    <nav id="menubar-s">
+      <ul>
+        <li><a th:href="@{/admin/search/students?all&sort=0}">登録学生検索<br><span>Search Students</span></a></li>
+        <li><a th:href="@{/admin/experiences/new}">ES/体験記【登録】<br><span>Register ES/Experiences</span></a></li>
+        <li><a th:href="@{/admin/search/experiences?all&sort=0}">ES/体験記【検索】<br><span>Search ES/Experiences</span></a></li>
+        <li><a th:href="@{/admin/mail?develop}">メール作成<br><span>Write Emails</span></a></li>
+        <li id="lastli"><a th:href="@{/logout}">ログアウト<br><span>Logout</span></a></li>
+      </ul>
+    </nav>
+    <script type="text/javascript">
+    if (OCwindowWidth() <= 800) {
+      open_close("menubar_hdr", "menubar-s");
+    };
+    $(function(){
 
-      <script type="text/javascript">
-      if (OCwindowWidth() <= 800) {
-        open_close("menubar_hdr", "menubar-s");
-          };
-        $(function(){
-
-          $(window).resize(function(){
-            if (OCwindowWidth() <= 800) {
-            open_close("menubar_hdr", "menubar-s");
-          }
-        });
+      $(window).resize(function(){
+        if (OCwindowWidth() <= 800) {
+          open_close("menubar_hdr", "menubar-s");
+        }
       });
+    });
 
 
-      </script>
-    </header>
-
-    <!-- 管理者アカウント用のヘッダー -->
-    <header th:fragment="for-admin">
-      <div class="inner">
-        <h1 id="logo"><a th:href="@{/}"><img alt="t6sdldc" th:src="@{/img/logo1.png}" src="../../static/img/logo1.png"></a></h1>
-          <nav id="menubar">
-            <ul class="inner">
-              <li><a th:href="@{/admin/search/students?all&sort=0}">登録学生検索<br><span>Search Students</span></a></li>
-              <li><a th:href="@{/admin/experiences/new}">ES/体験記【登録】<br><span>Register ES/Experiences</span></a></li>
-              <li><a th:href="@{/admin/search/experiences?all&sort=0}">ES/体験記【検索】<br><span>Search ES/Experiences</span></a></li>
-              <li id="lastli"><a th:href="@{/admin/mail?develop}">メール作成<br><span>Write Emails</span></a></li>
-            </ul>
-          </nav>
-          <div id="logout">
-            <a th:href="@{/logout}" class="square_btn">ログアウト</a>
-          </div>
-        </div>
-        <div id="menubar_hdr" class="close"></div>
-        <nav id="menubar-s">
-          <ul>
-            <li><a th:href="@{/admin/search/students?all&sort=0}">登録学生検索<br><span>Search Students</span></a></li>
-            <li><a th:href="@{/admin/experiences/new}">ES/体験記【登録】<br><span>Register ES/Experiences</span></a></li>
-            <li><a th:href="@{/admin/search/experiences?all&sort=0}">ES/体験記【検索】<br><span>Search ES/Experiences</span></a></li>
-            <li><a th:href="@{/admin/mail?develop}">メール作成<br><span>Write Emails</span></a></li>
-            <li id="lastli"><a th:href="@{/logout}">ログアウト<br><span>Logout</span></a></li>
-            </ul>
-          </nav>
-          <script type="text/javascript">
-          if (OCwindowWidth() <= 800) {
-            open_close("menubar_hdr", "menubar-s");
-          }
-          $(function(){
-
-            $(window).resize(function(){if (OCwindowWidth() <= 800) {
-              open_close("menubar_hdr", "menubar-s");
-            };
-          });
-        });
-        </script>
-      </header>
-
-      <!-- ログインしていない人用のヘッダー -->
-      <header th:fragment="for-stranger">
-        <div class="inner">
-          <h1 id="logo"><a th:href="@{/}"><img alt="t6sdldc" th:src="@{/img/logo1.png}" src="../../static/img/logo1.png" class="header-logo"></a></h1>
-            <nav id="menubar">
-              <ul class="inner">
-              </ul>
-            </nav>
-          </div>
-        </header>
+    </script>
+  </header>
 
 
-      </body>
-      </html>
+
+  <!-- ログインしていない人用のヘッダー -->
+  <header th:fragment="for-stranger">
+    <div class="inner">
+      <h1 id="logo"><a th:href="@{/}"><img alt="ダンサーのための就活サイト" th:src="@{/img/logo1.png}" src="../../static/img/logo1.png" class="header-logo"></a></h1>
+      <nav id="menubar">
+        <ul class="inner">
+        </ul>
+      </nav>
+    </div>
+  </header>
+</body>
+</html>

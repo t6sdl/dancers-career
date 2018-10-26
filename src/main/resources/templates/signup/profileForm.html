@@ -100,7 +100,7 @@
               <option value="31">31</option>
             </select>
             <label for="birthDay">日</label>
-            <p th:if="${#fields.hasErrors('birthYear') ||#fields.hasErrors('birthMonth') || #fields.hasErrors('birthDay')}" class="hazard">必須項目です</p>
+            <p th:if="${#fields.hasErrors('birthYear') || #fields.hasErrors('birthMonth') || #fields.hasErrors('birthDay')}" class="hazard">必須項目です</p>
           </div>
         </div>
         <div>

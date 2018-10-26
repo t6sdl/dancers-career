@@ -213,9 +213,9 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 						es.setEs_id(resultSet.getInt("es_id"));
 						es.setCorp(resultSet.getString("corp"));
 						es.setResult(resultSet.getString("result"));
-						es.setQuestion(resultSet.getString("question"));
-						es.setAnswer(resultSet.getString("answer"));
-						es.setAdvice(resultSet.getString("advice"));
+						es.getQuestion().add(resultSet.getString("question"));
+						es.getAnswer().add(resultSet.getString("answer"));
+						es.getAdvice().add(resultSet.getString("advice"));
 						return es;
 					}, experience_id, es_id);
 		} catch (EmptyResultDataAccessException e) {
@@ -260,7 +260,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 			for (int i = 0; i < es.size(); i++) {
 				jdbcTemplate.update(
 						"INSERT INTO es VALUES (?, ?, ?, ?, ?, ?, ?)",
-						id, i + 1, es.get(i).getCorp(), es.get(i).getResult(), es.get(i).getQuestion(), es.get(i).getAnswer(), es.get(i).getAdvice());
+						id, i + 1, es.get(i).getCorp(), es.get(i).getResult(), es.get(i).getQuestion().get(0), es.get(i).getAnswer().get(0), es.get(i).getAdvice().get(0));
 			}
 		}
 		if (!(newExperience.getInterview().get(0).toString().isEmpty())) {
@@ -332,7 +332,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		}
 		jdbcTemplate.update(
 				"INSERT INTO es VALUES (?, ?, ?, ?, ?, ?, ?)",
-				newEs.getExperience_id(), es_id + 1, newEs.getCorp(), newEs.getResult(), newEs.getQuestion(), newEs.getAnswer(), newEs.getAdvice());
+				newEs.getExperience_id(), es_id + 1, newEs.getCorp(), newEs.getResult(), newEs.getQuestion().get(0), newEs.getAnswer().get(0), newEs.getAdvice().get(0));
 	}
 
 	@Override
@@ -344,7 +344,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	public void updateEs(Es es) {
 		jdbcTemplate.update(
 				"UPDATE es SET corp = ?, result = ?, question = ?, answer = ?, advice = ? WHERE id = ? AND es_id = ?",
-				es.getCorp(), es.getResult(), es.getQuestion(), es.getAnswer(), es.getAdvice(), es.getExperience_id(), es.getEs_id());
+				es.getCorp(), es.getResult(), es.getQuestion().get(0), es.getAnswer().get(0), es.getAdvice().get(0), es.getExperience_id(), es.getEs_id());
 	}
 
 	@Override
@@ -409,9 +409,9 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 						es.setEs_id(esSet.getInt("es_id"));
 						es.setCorp(esSet.getString("corp"));
 						es.setResult(esSet.getString("result"));
-						es.setQuestion(esSet.getString("question"));
-						es.setAnswer(esSet.getString("answer"));
-						es.setAdvice(esSet.getString("advice"));
+						es.getQuestion().add(esSet.getString("question"));
+						es.getAnswer().add(esSet.getString("answer"));
+						es.getAdvice().add(esSet.getString("advice"));
 						return es;
 					}, experience.getExperience_id()));
 			experience.setInterview(jdbcTemplate.query(

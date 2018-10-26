@@ -3,8 +3,10 @@ package tokyo.t6sdl.dancerscareer2019.controller;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -146,14 +148,28 @@ public class ExperiencesController {
 		}
 		Experience experience = experienceService.getExperienceById(id, true, pvCount);
 		List<Es> es = new ArrayList<Es>();
-		experience.getEs().forEach(e -> {
-			if (!(es.isEmpty()) && !(e.getCorp().isEmpty()) && es.stream().filter(s -> s.getCorp().equals(e.getCorp())).count() > 0) {
-				e.setRepeated(true);
+		Iterator<Es> iterator = experience.getEs().iterator();
+		String corp = null;
+		while (iterator.hasNext()) {
+			Es each = iterator.next();
+			if (Objects.equals(corp, each.getCorp())) {
+				es.get(es.size() - 1).getQuestion().add(each.getQuestion().get(0));
+				es.get(es.size() - 1).getAnswer().add(each.getAnswer().get(0));
+				es.get(es.size() - 1).getAdvice().add(each.getAdvice().get(0));
 			} else {
-				e.setRepeated(false);
+				Es e = new Es();
+				e.setExperience_id(each.getExperience_id());
+				e.setEs_id(each.getEs_id());
+				e.setCorp(each.getCorp());
+				e.setResult(each.getResult());
+				e.getQuestion().add(each.getQuestion().get(0));
+				e.getAnswer().add(each.getAnswer().get(0));
+				e.getAdvice().add(each.getAdvice().get(0));
+				es.add(e);
 			}
-			es.add(e);
-		});
+			corp = each.getCorp();
+			iterator.remove();
+		}
 		experience.setEs(es);
 		model.addAttribute("experience", experience);
 		return "experiences/article";

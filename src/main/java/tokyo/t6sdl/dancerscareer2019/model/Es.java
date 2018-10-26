@@ -1,20 +1,22 @@
 package tokyo.t6sdl.dancerscareer2019.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.Data;
 
 @Data
 public class Es {
 	private int experience_id;
 	private int es_id;
-	private boolean isRepeated;
 	private String corp;
 	private String result;
-	private String question;
-	private String answer;
-	private String advice;
+	private List<String> question = new ArrayList<String>();
+	private List<String> answer = new ArrayList<String>();
+	private List<String> advice = new ArrayList<String>();
 	
 	@Override
 	public String toString() {
-		return this.getCorp() + this.getResult() + this.getQuestion() + this.getAnswer() + this.getAdvice();
+		return this.getCorp() + this.getResult() + this.getQuestion().get(0) + this.getAnswer().get(0) + this.getAdvice().get(0);
 	}
 }
