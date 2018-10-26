@@ -292,7 +292,7 @@ after { clear: both; }
   border: 1px solid #3498db;
 }
 
-#formdef form input[type="password"] {
+input[type="password"] {
   border-radius: 3px 3px 3px 3px;
   margin-bottom: 1em;
   padding: 0 15px;
@@ -300,7 +300,15 @@ after { clear: both; }
   height: 50px;
 }
 
-#formdef form input[type="submit"] {
+input[type="email"] {
+  border-radius: 3px 3px 3px 3px;
+  margin-bottom: 1em;
+  padding: 0 15px;
+  width: 90%;
+  height: 50px;
+}
+
+input[type="submit"] {
   background: #89c3eb;
   border: 0;
   width: 100%;
@@ -311,11 +319,11 @@ after { clear: both; }
   transition: background 0.3s ease-in-out;
 }
 
-#formdef form input[type="submit"]:hover {
+input[type="submit"]:hover {
   background: #426579;
 }
 
-#formdef form input[type="text"]{
+input[type="text"]{
   border-radius: 3px 3px 3px 3px;
   margin-bottom: 1em;
   padding: 0 16px;
@@ -323,7 +331,7 @@ after { clear: both; }
   height: 50px;
 }
 
-#formdef form input[type="tel"]{
+input[type="tel"]{
   border-radius: 3px 3px 3px 3px;
   margin-bottom: 1em;
   padding: 0 16px;
@@ -563,6 +571,11 @@ button:hover {
   .copy{
     float: right;
     font-size: 12px;
+  }
+
+  .footer{
+    padding: 0px;
+    margin: 0px;
   }
 
   .footer-logo{
