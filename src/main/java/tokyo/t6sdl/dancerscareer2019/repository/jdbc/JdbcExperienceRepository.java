@@ -409,7 +409,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 						es.setEs_id(esSet.getInt("es_id"));
 						es.setCorp(esSet.getString("corp"));
 						es.setResult(esSet.getString("result"));
-						es.setContent(Arrays.asList(new BoundEs(resultSet.getString("question"), resultSet.getString("answer"), resultSet.getString("advice"))));
+						es.setContent(Arrays.asList(new BoundEs(esSet.getString("question"), esSet.getString("answer"), esSet.getString("advice"))));
 						return es;
 					}, experience.getExperience_id()));
 			experience.setInterview(jdbcTemplate.query(
