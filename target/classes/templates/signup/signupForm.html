@@ -5,16 +5,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../static/js/openclose.js"></script>
 </head>
-<body class="formbg">
+<body class="formbg5">
   <header th:replace="common/header :: for-stranger"></header>
   <div id="formdef">
     <h1>アカウント作成</h1>
     <form th:action="@{/signup}" method="post" th:object="${signupForm}" class="form">
 
-      <p th:if="${param.error}" class="hazard">アカウントの作成に失敗しました<br>もう一度お試しください</p>
+      <p th:if="${param.error}" class="hazard"><i class="fas fa-exclamation-circle"></i>アカウントの作成に失敗しました<br>もう一度お試しください</p>
       <div>
         <label for="newEmail"></label>
         <!-- th:errorclassの値は入力値が不正の場合に付与するクラスなので、この場合エラー時にinputタグにerrorクラスが付きます -->

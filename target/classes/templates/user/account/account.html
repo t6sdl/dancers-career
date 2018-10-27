@@ -4,18 +4,20 @@
   <title>アカウント｜ダンサーズキャリア</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../../static/css/main.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../../static/js/openclose.js"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 </head>
-<body>
+<body class="formbg7">
   <header th:replace="common/header :: for-user"></header>
   <main>
     <article>
+      <div id="formdef">
       <h1>アカウント</h1>
-      <p th:if="${param.changedemail}">メールアドレスが変更されました</p>
-      <p th:if="${param.changedpassword}">パスワードが変更されました</p>
+      <p th:if="${param.changedemail}"><i class="fas fa-check-circle"></i>メールアドレスが変更されました</p>
+      <p th:if="${param.changedpassword}"><i class="fas fa-check-circle"></i>パスワードが変更されました</p>
       <table>
         <tbody>
           <tr>
@@ -28,7 +30,7 @@
             <td th:text="${email}"></td>
           </tr>
           <tr>
-            <td><span th:unless="${validEmail}">メールアドレス未確認 <a th:href="@{/user/account/help}"><i class="far fa-question-circle"></i>メールが届かない</a></span><span th:if="${validEmail}">メールアドレス確認済</span></td>
+            <td><span th:unless="${validEmail}"><i class="fas fa-exclamation-circle"></i>メールアドレス未確認 <a th:href="@{/user/account/help}"><i class="far fa-question-circle"></i>メールが届かない</a></span><span th:if="${validEmail}">メールアドレス確認済</span></td>
           </tr>
         </tbody>
         <tbody>
@@ -53,6 +55,7 @@
         </tbody>
       </table>
       <div><a th:href="@{/user/account/delete}"><button>退会する</button></a></div>
+    </div>
     </article>
     <aside th:replace="user/common/tab :: tab"></aside>
   </main>
