@@ -4,11 +4,12 @@
   <title>メールアドレスの変更｜ダンサーズキャリア</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../../static/css/main.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../../static/js/openclose.js"></script>
 </head>
-<body class="formbg">
+<body class="formbg8">
   <header th:replace="common/header :: for-user"></header>
   <main>
     <article>
@@ -16,7 +17,7 @@
         <h1>メールアドレスの変更</h1>
         <form th:action="@{/user/account/change/email}" method="post" th:object="${newEmailForm}">
           <div>
-            <p th:if="${param.error}" class="hazard">パスワードが異なります</p>
+            <p th:if="${param.error}" class="hazard"><i class="fas fa-exclamation-circle"></i>パスワードが異なります</p>
             <div>
               <label></label>
               <input type="password" th:field="*{currentPassword}" placeholder="現在のパスワード" class="form">

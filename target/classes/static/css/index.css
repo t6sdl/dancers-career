@@ -34,7 +34,7 @@
   br.show-l {
     display: none;
   }
-  
+
   /* ----- sections ----- */
   #top {
     position: relative;
@@ -57,7 +57,7 @@
     color: #ffffff;
     text-align: justify;
   }
-  
+
   /* ----- top ----- */
   #summary {
     position: absolute;
@@ -77,7 +77,7 @@
     margin: 0;
     line-height: 1.5;
     font-size: 2.6em;
-    font-family: Georgia, "Ÿà–¾’©‘Ì", "YuMincho", "Ÿà–¾’©", "Yu Mincho", "ƒqƒ‰ƒMƒm–¾’© ProN W3", "Hiragino Mincho ProN W3", HiraMinProN-W3, "ƒqƒ‰ƒMƒm–¾’© ProN", "Hiragino Mincho ProN", "ƒqƒ‰ƒMƒm–¾’© Pro", "Hiragino Mincho Pro", "HGS–¾’©E", "‚l‚r ‚o–¾’©", "MS PMincho", serif;
+    font-family: Georgia, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "YuMincho", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "Yu Mincho", "ï¿½qï¿½ï¿½ï¿½Mï¿½mï¿½ï¿½ï¿½ï¿½ ProN W3", "Hiragino Mincho ProN W3", HiraMinProN-W3, "ï¿½qï¿½ï¿½ï¿½Mï¿½mï¿½ï¿½ï¿½ï¿½ ProN", "Hiragino Mincho ProN", "ï¿½qï¿½ï¿½ï¿½Mï¿½mï¿½ï¿½ï¿½ï¿½ Pro", "Hiragino Mincho Pro", "HGSï¿½ï¿½ï¿½ï¿½E", "ï¿½lï¿½r ï¿½oï¿½ï¿½ï¿½ï¿½", "MS PMincho", serif;
   }
   #sub-catchphrase {
     position: absolute;
@@ -94,13 +94,14 @@
     bottom: 20%;
   }
   #top a.link-button button {
-    background: #ffffff;
-    color: #000000;
+    background: #426579;
+    color: #ffffff;
     font-weight: bold;
   }
   #top a.link-button button:hover {
-    background: #426579;
-    color: #ffffff;
+
+    background: #ffffff;
+    color: #000000;
   }
   #scroll {
     position: absolute;
@@ -183,7 +184,7 @@
       transform: translateY(5px) rotateZ(45deg);
     }
   }
-  
+
   /* ----- description ----- */
   .theme p, .theme h2 {
     margin: 0;
@@ -269,12 +270,12 @@
     font-size: 2.6em;
     line-height: 1;
   }
-  
+
   /* ----- motive ----- */
   #motive h2 {
     margin-top: 0;
   }
-  
+
   /* ----- in case that width > 480px ----- */
   @media (min-width: 480px) {
     br.hide-m {
@@ -284,7 +285,7 @@
       font-size: 2em;
     }
   }
-  
+
   /* ----- in case that width > 800px ----- */
   @media (min-width: 800px) {
     br.show-l {
