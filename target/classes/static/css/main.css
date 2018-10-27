@@ -180,6 +180,7 @@ header #logo img:hover {
 
 /* ----- Footer ----- */
 .footer {
+  position: relative;
   background-color: #fff;
   height: 80px;
   padding: 40px;
