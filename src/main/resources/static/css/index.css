@@ -86,12 +86,13 @@
     bottom: 20%;
   }
   #top a.link-button button {
+    border: 2px solid #dddddd;
     background: #426579;
     color: #ffffff;
     font-weight: bold;
   }
   #top a.link-button button:hover {
-
+    border: 2px solid #ffffff;
     background: #ffffff;
     color: #000000;
   }
