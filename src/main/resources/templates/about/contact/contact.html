@@ -5,17 +5,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../../static/css/main.css">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../../static/js/openclose.js"></script>
 </head>
-<body class="formbg">
+<body class="formbg2">
   <header th:replace="common/header :: ${header}"></header>
-  <main id="formdef">
+  <main id="formdefw">
     <h1>お問い合わせ</h1>
     <form th:action="@{/about/contact}" method="post" th:object="${contactForm}">
       <div>
-        <label for="from">ご自身のメールアドレス</label><br>
-        <input type="email" th:field="*{from}" required th:readonly="${isLoggedIn}" class="form">
+        <label for="from"></label><br>
+        <input type="email" th:field="*{from}" required th:readonly="${isLoggedIn}" class="form" placeholder="ご自身のメールアドレス">
       </div>
       <div>
         <label for="content">お問い合わせ内容</label><br>
