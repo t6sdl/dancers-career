@@ -8,13 +8,13 @@
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../../static/js/openclose.js"></script>
 </head>
-<body class="formbg">
+<body class="formbg2">
   <header th:replace="common/header :: ${header}"></header>
-  <main id="formdef">
+  <main id="formdefw">
     <h1>お問い合わせ</h1>
     <form th:action="@{/about/contact}" method="post" th:object="${contactForm}">
       <div>
-        <label for="from">ご自身のメールアドレス</label>
+        <label for="from">ご自身のメールアドレス</label><br>
         <input type="text" th:field="*{from}" disabled id="contactForm">
       </div>
       <div>
