@@ -71,8 +71,9 @@
     <footer th:replace="common/footer :: footer"></footer>
     <script>
     $(function() {
+      const headerHeight = $('header').height();
       $('#top').css({
-        height: window.innerHeight - 103,
+        height: window.innerHeight - headerHeight,
       });
     });
     </script>
