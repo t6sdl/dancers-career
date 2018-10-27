@@ -10,6 +10,8 @@ body{
   -webkit-text-size-adjust: none;
 }
 
+
+
 a {
   color: #6495ed;
   transition: 0.5s;
@@ -84,6 +86,11 @@ header #logo img:hover {
 .caption{
   font-size: 12px;
 
+}
+
+#smltxt{
+  font-size: 12px;
+  color: #606468;
 }
 /* ----- logout button ----- */
 
@@ -370,7 +377,7 @@ after { clear: both; }
   z-index: -1;
 }
 
-#formdef {
+#formdef{
   margin: 100px auto;
   padding:10px;
   padding-top: 10px;
@@ -450,6 +457,8 @@ input[type="submit"] {
   color: white;
   cursor: pointer;
   transition: background 0.3s ease-in-out;
+  margin-bottom: 10px;
+
 }
 
 input[type="submit"]:hover {
@@ -536,8 +545,7 @@ hr{
 }
 
 .expbox{
-  border: 5px solid #426579;
-  border-radius: 10px;
+  border: 1px solid #426579;
   padding: 10px;
   background-color: white;
   font-weight: bold;
@@ -700,6 +708,20 @@ button:hover {
 
   }
 
+  #formdef{
+    margin: 80px auto;
+
+    width: 60%;
+
+
+  }
+
+  #formdef form {
+
+    width: 85%;
+
+  }
+
 
 
 }
@@ -738,8 +760,8 @@ button:hover {
     padding: 15px 5%;
     border: 1px solid #426579;
     border-bottom: none;
-    background: #fff;
-    color: #333;
+    background: #333333;
+    color: #fff;
     font-size: 12px;
     text-align: center;
   }
@@ -765,6 +787,7 @@ button:hover {
     position: absolute;
     top: 30px;
     right: 3%;
+    transition: 0.2s;
   }
 
   #menubar_hdr.close,
@@ -790,6 +813,20 @@ button:hover {
     top:70px;
   }
 
+  #formdef{
+    margin: 60px auto;
+    width: 90%;
+
+
+  }
+
+  #formdef form {
+
+    width: 90%;
+
+  }
+
+
 }
 
 /* ----- 480px ----- */
@@ -799,7 +836,11 @@ button:hover {
     margin: 0px;
     padding: 0px;
     font-size: 12px;
-    background-color: red;
+
+  }
+
+  main{
+    margin: 10px;
   }
 
   /* ----- Header ----- */
@@ -829,6 +870,10 @@ button:hover {
   }
 
 
+
+
+
+
   /* ----- Footer ----- */
 
 
@@ -842,10 +887,10 @@ button:hover {
   .copy{
 
     position: relative;
-text-align: center;
+    text-align: center;
 
-top:0px;
-right:0px;
+    top:0px;
+    right:0px;
   }
 
   .footer-logo{
@@ -873,7 +918,5 @@ right:0px;
     text-decoration: none;
     color: #000;
   }
-
-
 
 }
