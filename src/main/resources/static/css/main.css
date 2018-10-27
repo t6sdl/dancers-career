@@ -179,14 +179,18 @@ header #logo img:hover {
 }
 
 .copy{
-  float: right;
   font-size: 12px;
+
+  position: absolute;
+  top:130px;
+  right:10px;
 }
 
 .footer-logo{
   float: left;
   font-size: 25px;
   color:#426579;
+  text-decoration: none;
 }
 
 .footer-list{
@@ -196,6 +200,7 @@ header #logo img:hover {
 
 .footer-list li {
   padding-bottom: 20px;
+  padding-left: 20px
 }
 
 .footer-list a{
@@ -204,9 +209,6 @@ header #logo img:hover {
   color: #000;
 }
 
-.footer-logo{
-  text-decoration: none;
-}
 
 /* ----- Other ----- */
 .topwords{
@@ -698,6 +700,8 @@ button:hover {
 
   }
 
+
+
 }
 /* ----- 800px - 480px ----- */
 @media screen and (max-width:800px){
@@ -778,42 +782,13 @@ button:hover {
     background: #fff url(../img/icon_menu.png) no-repeat center bottom/50px;
   }
   /* ----- Footer ----- */
-  .copy{
-    float: right;
-    font-size: 12px;
-  }
-
-  .footer{
-    padding: 0px;
-    margin: 0px;
-  }
-
-  .footer-logo{
-    float: left;
-    font-size: 25px;
-    color:#426579;
-  }
 
   .footer-list{
-    position:relative;
-    margin: 10px;
-    float: left;
-  }
 
-  .footer-list li {
-    padding-bottom: 20px;
+    position: absolute;
+    left: 30px;
+    top:70px;
   }
-
-  .footer-list a{
-    font-size: 12px;
-    text-decoration: none;
-    color: #000;
-  }
-
-  .footer-logo{
-    text-decoration: none;
-  }
-
 
 }
 
@@ -852,5 +827,53 @@ button:hover {
     width: 90%;
 
   }
+
+
+  /* ----- Footer ----- */
+
+
+
+  .footer {
+    background-color: #fff;
+    height: auto;
+    padding: 10px;
+  }
+
+  .copy{
+
+    position: relative;
+text-align: center;
+
+top:0px;
+right:0px;
+  }
+
+  .footer-logo{
+    float:none;
+    text-align: center;
+
+  }
+
+  .footer-list{
+    margin: 10px;
+    float:none;
+    position: relative;
+    top: 0px;
+
+  }
+
+  .footer-list li {
+    padding-bottom: 10px;
+    padding-left: 0px;
+    text-align: center;
+  }
+
+  .footer-list a{
+    font-size: 12px;
+    text-decoration: none;
+    color: #000;
+  }
+
+
 
 }
