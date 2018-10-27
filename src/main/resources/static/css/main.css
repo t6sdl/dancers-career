@@ -806,12 +806,7 @@ button:hover {
   }
   /* ----- Footer ----- */
 
-  .footer-list{
 
-    position: absolute;
-    left: 30px;
-    top:70px;
-  }
 
   #formdef{
     margin: 60px auto;
@@ -917,6 +912,7 @@ button:hover {
     font-size: 12px;
     text-decoration: none;
     color: #000;
+    text-align: center;
   }
 
 }
