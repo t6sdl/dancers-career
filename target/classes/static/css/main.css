@@ -222,7 +222,13 @@ input {
   font-size: 12px;
   line-height: 1.5em;
   padding: 0;
-  -webkit-appearance: none;
+  outline: none;
+}
+
+select {
+  height: 50px;
+  border: none;
+  outline: none;
 }
 
 after { clear: both; }
@@ -482,13 +488,11 @@ after { clear: both; }
 #formdef{
   margin: 100px auto;
   padding:10px;
-  padding-top: 10px;
   text-align: center;
   background-color: rgb(245, 245, 245,0.8);
   width: 40%;
   height: auto;
   border-radius: 10px;
-
 }
 
 #formdef form {
@@ -504,8 +508,8 @@ after { clear: both; }
   padding-top: 10px;
   text-align: center;
   background-color: rgb(245, 245, 245,0.8);
-  width:50%;
-  height:auto;
+  width: 60%;
+  height: auto;
   border-radius: 10px;
 }
 
@@ -518,12 +522,19 @@ after { clear: both; }
 
 #formdef form input[type="email"] {
   border-radius: 3px 3px 3px 3px;
-  margin-bottom: 1em;
+  margin: .5em 0;
   padding: 0 16px;
   width: 90%;
   height: 50px;
 }
 
+.form-item {
+  padding: .5em 0;
+}
+
+.form-item > p {
+  font-weight: bold;
+}
 
 .form:focus {
   box-shadow: 0 0 7px #3498db;
@@ -532,7 +543,7 @@ after { clear: both; }
 
 input[type="password"] {
   border-radius: 3px 3px 3px 3px;
-  margin-bottom: 1em;
+  margin: .5em 0;
   padding: 0 16px;
   width: 90%;
   height: 50px;
@@ -540,7 +551,7 @@ input[type="password"] {
 
 input[type="email"] {
   border-radius: 3px 3px 3px 3px;
-  margin-bottom: 1em;
+  margin: .5em 0;
   padding: 0 16px;
   width: 90%;
   height: 50px;
@@ -564,7 +575,7 @@ input[type="submit"]:hover {
 
 input[type="text"] {
   border-radius: 3px 3px 3px 3px;
-  margin-bottom: 1em;
+  margin: .5em 0;
   padding: 0 16px;
   width: 90%;
   height: 50px;
@@ -572,12 +583,11 @@ input[type="text"] {
 
 input[type="tel"] {
   border-radius: 3px 3px 3px 3px;
-  margin-bottom: 1em;
+  margin: .5em 0;
   padding: 0 16px;
   width: 250px;
   height: 50px;
 }
-
 
 #button {
   background: #89c3eb;
@@ -899,7 +909,7 @@ button:hover {
     width: 90%;
   }
   
-  .footer > a {
+  .footer > a, .footer > small {
     width: 100%;
   }
 
