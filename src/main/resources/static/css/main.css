@@ -575,14 +575,14 @@ input[type="email"] {
 }
 
 input[type="submit"] {
-  background: #89c3eb;
+  background: #89c3eb !important;
   border: 0;
   width: 100%;
   height: 40px;
-  border-radius: 3px;
+  border-radius: 3px !important;
   color: white;
   cursor: pointer;
-  transition: background 0.3s ease-in-out;
+  transition: background .3s ease-in-out;
   margin: 1em 0;
 }
 
@@ -612,7 +612,7 @@ input[type="tel"] {
   border-radius: 3px;
   color: white;
   cursor: pointer;
-  transition: background 0.3s ease-in-out;
+  transition: background .3s ease-in-out;
   width: 100%;
   height: 40px;
 }
@@ -769,44 +769,41 @@ button:hover {
 }
 
 #tab {
-  text-align: right;
-  margin-right: 10px;
-  top: 0px;
+  width: 100%;
+}
+
+#tab ul {
+  display: flex;
+  justify-content: space-arround;
 }
 
 .sidebutton a {
+  display: block;
   color: #426579;
-}
-
-.sidebutton a:hover {
-  color: #fff;
-}
-
-.sidebutton {
-  display: inline-block;
-  width: 15%;
-  text-align: center;
-  background-color: #426579;
+  width: 20%;
+  background: #426579;
   border: 2px solid #426579;
   font-size: 14px;
-  color: #fff;
-  text-decoration: none;
   font-weight: bold;
-  padding: 0px 20px;
+  padding: 0px 2em;
   border-radius: 4px;
   position: relative;
 }
 
-.sidebutton span {
-  position: relative;
-  z-index: 1;
+.sidebutton a:hover {
+  color: #ffffff;
 }
 
-.sidebutton:before,
+.sidebutton {
+  display: inline-block;
+  text-align: center;
+}
+
+.sidebutton::before,
 .sidebutton::after {
   content: "";
   display: block;
-  background-color: #FFF;
+  background-color: #ffffff;
   width: 50%;
   height: 100%;
   position: absolute;
@@ -821,14 +818,11 @@ button:hover {
   right: 0;
 }
 
-.sidebutton:hover:before,
-.sidebutton:hover:after {
+.sidebutton a:hover:before,
+.sidebutton a:hover:after {
   width: 0;
 }
 
-.sidebutton:hover {
-  color: #FFF;
-}
 
 /* ------ 1000px - 800px ----- */
 @media screen and (max-width:1000px){
@@ -988,15 +982,14 @@ button:hover {
   #formdefw form {
     width: 90%;
   }
-
-
-  .sidebutton {
-    display: inline-block;
-    width: 50%;
+  
+  #tab ul {
+    flex-direction: column;
+    justify-content: center;
   }
 
-  #tab {
-    text-align: center;
+  .sidebutton {
+    width: 50%;
   }
   
 }
