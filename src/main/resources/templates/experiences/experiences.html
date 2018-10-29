@@ -12,7 +12,6 @@
 <body>
   <header th:replace="common/header :: ${header}"></header>
   <main>
-<!--    <h1>ES/体験記</h1> -->
     <form th:action="@{/experiences}" method="get" th:object="${searchForm}">
       <div>
         <span th:each="pos : ${positionList}" class="position-tag">
@@ -33,20 +32,19 @@
       <p id="smltxt"><i class="fas fa-search fa-fw"></i>検索結果： <span th:text="${count}"></span> 件</p>
     </div>
     <section th:if="${count == 0 ? false : true}">
-      <article th:each="experience : ${experiences}" th:object="${experience}">
+      <article th:each="experience : ${experiences}" th:object="${experience}" class="exp-container">
         <div>
           <p><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></p>
-          <h1 th:text="*{university}"></h1>
-          <p>内定先：<span th:each="off : *{offer}" th:text="${off} == '' ? '非公開' : ${off} + ' '"></span></p>
+          <h1 th:text="*{university}" style="font-size:1.5em;"></h1>
         </div>
-        <div>
+        <div style="display:flex; justify-content:space-between">
+          <p>内定先：<span th:each="off : *{offer}" th:text="${off} == '' ? '非公開' : ${off} + ' '"></span></p>
           <p><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'"></span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></p>
         </div>
-
-        <div>
+        <hr>
+        <div style="text-align:right;">
           <a th:href="@{/experiences/{experienceId}(experienceId=*{experience_id})}"><button class="button">詳細を見る</button></a>
         </div>
-        <hr>
       </article>
     </section>
     <section  th:unless="${count == 0 ? false : true}">
