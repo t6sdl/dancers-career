@@ -16,12 +16,11 @@
   <header th:fragment="for-user">
     <div class="inner">
       <h1 id="logo"><a th:href="@{/}"><img alt="ダンサーのための就活サイト" th:src="@{/img/logo1.png}" src="../../static/img/logo1.png"></a></h1>
-
       <nav id="menubar">
-        <ul class="inner">
-          <li><a th:href="@{/}">ダンサーズキャリアとは<br><span>About Dancers Career</span></a></li>
-          <li><a th:href="@{/experiences?all&sort=0}">ES/体験記を探す<br><span>Find ES/Experiences</span></a></li>
-          <li id="lastli"><a th:href="@{/user}">マイページ<br><span>My Page</span></a></li>
+        <ul>
+          <li><a th:href="@{/}"><span>ダンサーズキャリアとは</span><br>About Dancers Career</a></li>
+          <li><a th:href="@{/experiences?all&sort=0}"><span>ES/体験記を探す</span><br>Find ES/Experiences</a></li>
+          <li id="lastli"><a th:href="@{/user}"><span>マイページ</span><br>My Page</a></li>
         </ul>
       </nav>
       <div id="logout">
@@ -62,11 +61,11 @@
     <div class="inner">
       <h1 id="logo"><a th:href="@{/}"><img alt="ダンサーのための就活サイト" th:src="@{/img/logo1.png}" src="../../static/img/logo1.png"></a></h1>
       <nav id="menubar">
-        <ul class="inner">
-          <li><a th:href="@{/admin/search/students?all&sort=0}">登録学生検索<br><span>Search Students</span></a></li>
-          <li><a th:href="@{/admin/experiences/new}">ES/体験記【登録】<br><span>Register ES/Experiences</span></a></li>
-          <li><a th:href="@{/admin/search/experiences?all&sort=0}">ES/体験記【検索】<br><span>Search ES/Experiences</span></a></li>
-          <li id="lastli"><a th:href="@{/admin/mail?develop}">メール作成<br><span>Write Emails</span></a></li>
+        <ul>
+          <li><a th:href="@{/admin/search/students?all&sort=0}"><span>登録学生検索</span><br>Search Students</a></li>
+          <li><a th:href="@{/admin/experiences/new}"><span>ES/体験記【登録】</span><br>Register ES/Experiences</a></li>
+          <li><a th:href="@{/admin/search/experiences?all&sort=0}"><span>ES/体験記【検索】</span><br>Search ES/Experiences</a></li>
+          <li id="lastli"><a th:href="@{/admin/mail?develop}"><span>メール作成</span><br>Write Emails</a></li>
         </ul>
       </nav>
       <div id="logout">
@@ -107,8 +106,6 @@
     <div class="inner">
       <h1 id="logo"><a th:href="@{/}"><img alt="ダンサーのための就活サイト" th:src="@{/img/logo1.png}" src="../../static/img/logo1.png" class="header-logo"></a></h1>
       <nav id="menubar">
-        <ul class="inner">
-        </ul>
       </nav>
     </div>
   </header>
