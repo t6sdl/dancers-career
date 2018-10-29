@@ -18,9 +18,7 @@
         <div class="form-item">
           <p>氏名</p>
           <div>
-            <label for="lastName"></label>
             <input type="text" th:field="*{lastName}" th:errorclass="error" required placeholder="姓">
-            <label for="firstName"></label>
             <input type="text" th:field="*{firstName}" th:errorclass="error" required placeholder="名">
             <p th:if="${#fields.hasErrors('lastName') || #fields.hasErrors('firstName')}" class="hazard"><i class="fas fa-exclamation-circle"></i>入力してください</p>
           </div>
@@ -28,9 +26,7 @@
         <div class="form-item">
           <p>氏名（カナ）</p>
           <div>
-            <label for="kanaLastName"></label>
             <input type="text" th:field="*{kanaLastName}" th:errorclass="error" required placeholder="セイ">
-            <label for="kanaFirstName"></label>
             <input type="text" th:field="*{kanaFirstName}" th:errorclass="error" required placeholder="メイ">
             <p th:if="${#fields.hasErrors('kanaLastName') || #fields.hasErrors('kanaFirstName')}" class="hazard"><i class="fas fa-exclamation-circle"></i>カタカナで入力してください</p>
           </div>
@@ -38,6 +34,7 @@
         <div class="form-item">
           <p>生年月日</p>
           <div>
+            <div style="display:inline-block;">
             <select th:field="*{birthYear}" required>
               <option value="default">選択してください</option>
               <option value="1990">1990</option>
@@ -52,6 +49,8 @@
               <option value="1999">1999</option>
             </select>
             <label for="birthYear">年</label>
+            </div>
+            <div style="display:inline-block;">
             <select th:field="*{birthMonth}" required>
               <option value="default">選択してください</option>
               <option value="1">1</option>
@@ -68,6 +67,8 @@
               <option value="12">12</option>
             </select>
             <label for="birthMonth">月</label>
+            </div>
+            <div style="display:inline-block;">
             <select th:field="*{birthDay}" required>
               <option value="default">選択してください</option>
               <option value="1">1</option>
@@ -103,6 +104,7 @@
               <option value="31">31</option>
             </select>
             <label for="birthDay">日</label>
+            </div>
             <p th:if="${#fields.hasErrors('birthYear') || #fields.hasErrors('birthMonth') || #fields.hasErrors('birthDay')}" class="hazard"><i class="fas fa-exclamation-circle"></i>必須項目です</p>
           </div>
         </div>
@@ -136,7 +138,7 @@
         <div class="form-item">
           <p>学部・学科</p>
           <div>
-            <div>
+            <div style="display:inline-block;">
               <label for="prefecture">大学所在地</label>
               <select th:field="*{prefecture}" required>
                 <option value="default">選択してください</option>
@@ -190,7 +192,7 @@
               </select>
               <p th:if="${#fields.hasErrors('prefecture')}"  class="hazard"><i class="fas fa-exclamation-circle"></i>必須項目です</p>
             </div>
-            <div>
+            <div style="display:inline-block;">
               <label for="university">大学</label>
               <select th:field="*{university}" required>
                 <option value="default">選択してください</option>
@@ -198,7 +200,7 @@
               <input type="hidden" id="hiddenUniv" th:value="${hiddenUniv == null ? 'default' : hiddenUniv}">
               <p th:if="${#fields.hasErrors('university')}"  class="hazard"><i class="fas fa-exclamation-circle"></i>必須項目です</p>
             </div>
-            <div>
+            <div style="display:inline-block;">
               <label for="faculty">学部</label>
               <select th:field="*{faculty}" required>
                 <option value="default">選択してください</option>
@@ -206,7 +208,7 @@
               <input type="hidden" id="hiddenFac" th:value="${hiddenFac == null ? 'default' : hiddenFac}">
               <p th:if="${#fields.hasErrors('faculty')}"  class="hazard"><i class="fas fa-exclamation-circle"></i>必須項目です</p>
             </div>
-            <div>
+            <div style="display:inline-block;">
               <label for="department">学科</label>
               <select th:field="*{department}" required>
                 <option value="default">選択してください</option>
@@ -219,6 +221,7 @@
         <div class="form-item">
           <p>卒業年度</p>
           <div>
+            <div style="display:inline-block;">
             <select th:field="*{graduationYear}" required>
               <option value="default">選択してください</option>
               <option value="2019">2019</option>
@@ -227,6 +230,8 @@
               <option value="2022">2022</option>
             </select>
             <label for="graduationYear">年</label>
+            </div>
+            <div style="display:inline-block;">
             <select th:field="*{graduationMonth}" required>
               <option value="default">選択してください</option>
               <option value="1">1</option>
@@ -243,7 +248,8 @@
               <option value="12">12</option>
             </select>
             <label for="graduationMonth">月</label>
-            <span>卒業予定</span>
+            </div>
+            <div style="display:inline-block;">卒業予定</div>
             <p th:if="${#fields.hasErrors('graduationYear') || #fields.hasErrors('graduationMonth')}"  class="hazard"><i class="fas fa-exclamation-circle"></i>必須項目です</p>
           </div>
         </div>
