@@ -17,7 +17,7 @@
       <form th:action="@{/signin/forget-pwd}" method="post" th:object="${emailForm}">
 
         <p th:if="${error}"><span class="hazard"><i class="fas fa-exclamation-circle"></i>メールの送信に失敗しました</span><br>下のボタンより再度お試しください<br>解決しない場合はお問い合わせください</p>
-        <p th:unless="${error}"><i class="fas fa-check-circle"></i>メールを送信しました<br>再設定用のURLの有効期限は30分です<br><span class="caption">10分以上経ってもメールが届かない場合は再度送信ボタンを押してください<br>解決しない場合はお問い合わせください</span></p>
+        <p th:unless="${error}"><span class="fins"><i class="fas fa-check-circle"></i>メールを送信しました</span><br>再設定用のURLの有効期限は30分です<br><span class="caption">10分以上経ってもメールが届かない場合は再度送信ボタンを押してください<br>解決しない場合はお問い合わせください</span></p>
         <input type="hidden" th:field="*{email}">
         <input type="submit" value="再度送信する" class="button">
       </form>

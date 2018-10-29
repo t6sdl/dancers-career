@@ -10,8 +10,6 @@ body{
   -webkit-text-size-adjust: none;
 }
 
-
-
 a {
   color: #6495ed;
   transition: 0.5s;
@@ -43,6 +41,10 @@ ul{
   text-align: center;
   color: #ff0000;
   margin-top: 0px;
+}
+
+.fins{
+  color: #6495ed;
 }
 
 input::placeholder {
