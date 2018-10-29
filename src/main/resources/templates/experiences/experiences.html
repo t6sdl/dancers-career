@@ -34,7 +34,7 @@
     <section th:if="${count == 0 ? false : true}">
       <article th:each="experience : ${experiences}" th:object="${experience}" class="exp-container">
         <div>
-          <p><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></p>
+          <p style="margin: 0;"><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></p>
           <h1 th:text="*{university}" style="font-size:1.5em;"></h1>
         </div>
         <div style="display:flex; justify-content:space-between">
