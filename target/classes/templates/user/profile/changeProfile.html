@@ -256,7 +256,7 @@
         </div>
         <div class="form-item">
           <p>サークルなどでの役職・役割（複数選択可）</p>
-          <div>
+          <div style="text-align:center;">
             <span th:each="pos : ${positionList}" class="position-tag">
               <input type="checkbox" th:field="*{position}" th:value="${pos}">
               <label th:for="${#ids.prev('position')}" th:text="${pos}"></label>
