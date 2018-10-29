@@ -102,13 +102,8 @@ header #logo img:hover {
 
 /* ----- logout button ----- */
 #logout {
-  position: absolute;
-  right: 3%;
-  top: 15px;
-  float: left;
-  margin-top: 5px;
+  margin-bottom: 5px;
   font-size: 12px;
-  text-decoration: none;
 }
 
 .square_btn {
@@ -149,9 +144,7 @@ header #logo img:hover {
 
 #menubar li {
   display: inline-block;
-  width: 165px;
-  height:55px;
-  top: 30px;
+  width: 155px;
   border-right: solid 1px;
   border-color: #426579;
   text-align: center;
@@ -165,17 +158,18 @@ header #logo img:hover {
   display: block;
   font-weight: bold;
   font-size: 10px;
-  transition: .4s;
   text-decoration: none;
   color: #000;
 }
 
 #menubar li a:hover span {
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
 #menubar span {
+  display: inline-block;
   font-size: 12px;
+  transition: .4s;
 }
 
 #menubar-s {display: none;}
@@ -845,7 +839,8 @@ button:hover {
   }
 
   #menubar-s {
-    display: block;overflow: hidden;
+    display: block;
+    overflow: hidden;
     position: absolute;
     width: 100%;
     z-index: 10;
@@ -855,7 +850,8 @@ button:hover {
   }
 
   #menubar-s li a {
-    display: block;text-decoration: none;
+    display: block;
+    text-decoration: none;
     font-weight: bold;
     padding: 15px 5%;
     border: 1px solid #426579;
@@ -885,9 +881,9 @@ button:hover {
   #menubar_hdr {
     display: block;
     position: absolute;
-    top: 30px;
-    right: 3%;
-    transition: 0.2s;
+    top: 23px;
+    right: 5%;
+    transition: .2s;
   }
 
   #menubar_hdr.close,
