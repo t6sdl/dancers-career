@@ -1,5 +1,5 @@
 /* ----- common ----- */
-body{
+body {
   margin: 0px;
   padding: 0px;
   font-family: "Avenir Next";
@@ -9,8 +9,6 @@ body{
   color: #333;
   -webkit-text-size-adjust: none;
 }
-
-
 
 a {
   color: #6495ed;
@@ -23,23 +21,23 @@ a:hover {
   text-decoration: none;
 }
 
-h1{
+h1 {
   text-align: center;
   color: #426579;
   margin:auto;
 }
 
-li{
+li {
   list-style: none;
 }
 
 
-ul{
+ul {
   margin: 0px;
   padding: 0px;
 }
 
-.hazard{
+.hazard {
   text-align: center;
   color: #ff0000;
   margin-top: 0px;
@@ -83,12 +81,12 @@ header #logo img:hover {
   top: 20px;
 }
 
-.caption{
+.caption {
   font-size: 12px;
 
 }
 
-#smltxt{
+#smltxt {
   font-size: 12px;
   color: #606468;
 }
@@ -104,7 +102,7 @@ header #logo img:hover {
   text-decoration: none;
 }
 
-.square_btn{
+.square_btn {
   position: relative;
   display: inline-block;
   font-weight: bold;
@@ -112,11 +110,11 @@ header #logo img:hover {
   color: #333;
 }
 
-.square_btn:hover{
+.square_btn:hover {
   color: #426579;
 }
 
-.square_btn:before{
+.square_btn:before {
   position: absolute;
   content: '';
   width: 100%;
@@ -144,7 +142,7 @@ header #logo img:hover {
   margin: 0 25px;
 }
 
-#menubar li{
+#menubar li {
   float: left;
   width: 180px;
   height:55px;
@@ -154,11 +152,11 @@ header #logo img:hover {
   text-align: center;
 }
 
-#menubar #lastli{
+#menubar #lastli {
   border-right:none;
 }
 
-#menubar li a{
+#menubar li a {
   font-weight: bold;
   font-size: 12px;
   transition: .4s;
@@ -170,7 +168,7 @@ header #logo img:hover {
   font-size: 1.2em;
 }
 
-#menubar span{
+#menubar span {
   font-size: 10px;
 }
 
@@ -180,38 +178,29 @@ header #logo img:hover {
 
 /* ----- Footer ----- */
 .footer {
-  position: relative;
-  background-color: #fff;
-  height: 80px;
-  padding: 40px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #ffffff;
+  padding: 1rem 10%;
 }
 
-.copy{
+.copy {
   font-size: 12px;
-
-  position: absolute;
-  top:130px;
-  right:10px;
 }
 
-.footer-logo{
-  float: left;
+.footer-logo {
   font-size: 25px;
   color:#426579;
   text-decoration: none;
 }
 
-.footer-list{
-  margin: 10px;
-  float: left;
+.footer-list {
 }
 
 .footer-list li {
-  padding-bottom: 20px;
-  padding-left: 20px
 }
 
-.footer-list a{
+.footer-list a {
   font-size: 12px;
   text-decoration: none;
   color: #000;
@@ -219,17 +208,17 @@ header #logo img:hover {
 
 
 /* ----- Other ----- */
-.topwords{
+.topwords {
   color: #426579;
 }
 
-#terms{
+#terms {
   margin: 50px;
 }
 
-/* ----- Form ----- */
 
-input{
+/* ----- Form ----- */
+input {
   border: none;
   font-size: 12px;
   line-height: 1.5em;
@@ -239,7 +228,7 @@ input{
 
 after { clear: both; }
 
-.formbg1{
+.formbg1 {
   background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg1.jpg)
   no-repeat center;
   background-size: cover;
@@ -250,24 +239,24 @@ after { clear: both; }
   text-align: center;
 }
 
-.formbg1::before{
+.formbg1::before {
   content: '';
   background: inherit;
-
+  
   -webkit-filter: blur(10px);
   -moz-filter: blur(10px);
   -o-filter: blur(10px);
   -ms-filter: blur(10px);
   filter: blur(10px);
   position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: -1;
 }
 
-.formbg2{
+.formbg2 {
   background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg2.jpg)
   no-repeat center;
   background-size: cover;
@@ -276,27 +265,26 @@ after { clear: both; }
   overflow: auto;
   background-attachment: scroll;
   text-align: center;
-
 }
 
-.formbg2::before{
+.formbg2::before {
   content: '';
   background: inherit;
-
+  
   -webkit-filter: blur(10px);
   -moz-filter: blur(10px);
   -o-filter: blur(10px);
   -ms-filter: blur(10px);
   filter: blur(10px);
   position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: -1;
 }
 
-.formbg3{
+.formbg3 {
   background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg3.jpg)
   no-repeat center;
   background-size: cover;
@@ -307,7 +295,7 @@ after { clear: both; }
   text-align: center;
 }
 
-.formbg3::before{
+.formbg3::before {
   content: '';
   background: inherit;
 
@@ -317,13 +305,14 @@ after { clear: both; }
   -ms-filter: blur(10px);
   filter: blur(10px);
   position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: -1;
 }
-.formbg4{
+
+.formbg4 {
   background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg4.jpg)
   no-repeat center;
   background-size: cover;
@@ -334,7 +323,7 @@ after { clear: both; }
   text-align: center;
 }
 
-.formbg4::before{
+.formbg4::before {
   content: '';
   background: inherit;
 
@@ -344,13 +333,14 @@ after { clear: both; }
   -ms-filter: blur(10px);
   filter: blur(10px);
   position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: -1;
 }
-.formbg5{
+
+.formbg5 {
   background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg5.jpg)
   no-repeat center;
   background-size: cover;
@@ -361,7 +351,7 @@ after { clear: both; }
   text-align: center;
 }
 
-.formbg5::before{
+.formbg5::before {
   content: '';
   background: inherit;
 
@@ -371,14 +361,14 @@ after { clear: both; }
   -ms-filter: blur(10px);
   filter: blur(10px);
   position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: -1;
 }
 
-.formbg6{
+.formbg6 {
   background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg6.jpg)
   no-repeat center;
   background-size: cover;
@@ -389,7 +379,7 @@ after { clear: both; }
   text-align: center;
 }
 
-.formbg6::before{
+.formbg6::before {
   content: '';
   background: inherit;
 
@@ -399,14 +389,14 @@ after { clear: both; }
   -ms-filter: blur(10px);
   filter: blur(10px);
   position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: -1;
 }
 
-.formbg7{
+.formbg7 {
   background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg6.jpg)
   no-repeat center;
   background-size: cover;
@@ -417,7 +407,7 @@ after { clear: both; }
   text-align: center;
 }
 
-.formbg7::before{
+.formbg7::before {
   content: '';
   background: inherit;
 
@@ -427,14 +417,14 @@ after { clear: both; }
   -ms-filter: blur(10px);
   filter: blur(10px);
   position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: -1;
 }
 
-.formbg8{
+.formbg8 {
   background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg6.jpg)
   no-repeat center;
   background-size: cover;
@@ -445,7 +435,7 @@ after { clear: both; }
   text-align: center;
 }
 
-.formbg8::before{
+.formbg8::before {
   content: '';
   background: inherit;
 
@@ -455,10 +445,10 @@ after { clear: both; }
   -ms-filter: blur(10px);
   filter: blur(10px);
   position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: -1;
 }
 
@@ -483,10 +473,10 @@ after { clear: both; }
   -ms-filter: blur(10px);
   filter: blur(10px);
   position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: -1;
 }
 
@@ -518,7 +508,6 @@ after { clear: both; }
   width:50%;
   height:auto;
   border-radius: 10px;
-
 }
 
 #formdefw form {
@@ -527,8 +516,6 @@ after { clear: both; }
   width: 80%;
   height: auto;
 }
-
-
 
 #formdef form input[type="email"] {
   border-radius: 3px 3px 3px 3px;
@@ -540,7 +527,7 @@ after { clear: both; }
 }
 
 
-.form:focus{
+.form:focus {
   box-shadow: 0 0 7px #3498db;
   border: 1px solid #3498db;
 }
@@ -578,7 +565,7 @@ input[type="submit"]:hover {
   background: #426579;
 }
 
-input[type="text"]{
+input[type="text"] {
   border-radius: 3px 3px 3px 3px;
   margin-bottom: 1em;
   padding: 0 16px;
@@ -586,7 +573,7 @@ input[type="text"]{
   height: 50px;
 }
 
-input[type="tel"]{
+input[type="tel"] {
   border-radius: 3px 3px 3px 3px;
   margin-bottom: 1em;
   padding: 0 16px;
@@ -595,7 +582,7 @@ input[type="tel"]{
 }
 
 
-#button{
+#button {
   background: #89c3eb;
   border: 0;
   border-radius: 3px;
@@ -613,11 +600,11 @@ input[type="tel"]{
 
 
 /* ----- Contact  Form ----- */
-#context{
+#context {
   width: 100%;
 }
 
-#contactForm form input[type="email"]{
+#contactForm form input[type="email"] {
   border-radius: 3px 3px 3px 3px;
   margin-bottom: 1em;
   padding: 0 16px;
@@ -625,7 +612,7 @@ input[type="tel"]{
   height: 50px;
 }
 
-#contactForm form textarea{
+#contactForm form textarea {
   border-radius: 3px 3px 3px 3px;
   margin-bottom: 1em;
   padding: 0 16px;
@@ -649,70 +636,68 @@ input[type="tel"]{
 }
 
 
-
 /* ----- experience ----- */
-
-
-hr{
+hr {
   border-top: 1px solid #426579;
 }
 
-.expbox{
+.expbox {
   border: 1px solid #426579;
   padding: 10px;
   background-color: white;
   font-weight: bold;
 }
 
-.hrnone{
+.hrnone {
   border: none;
 }
 
-#cutl{
+#cutl {
   border-style: dashed;
   border-color: #426579;
-
 }
 
-#ques{
+#ques {
   color: #4682b4;
   font-weight: bold;
 }
 
-#ans{
+#ans {
   color:#dc143c;
   font-weight: bold;
 }
 
-#job{
-  color: #606468;
-  font-style: 12px;
-}
-#fac{
-  color: #606468;
-  font-style: 12px;
-}
-#dep{
+#job {
   color: #606468;
   font-style: 12px;
 }
 
-.qanda{
+#fac {
+  color: #606468;
+  font-style: 12px;
+}
+
+#dep {
+  color: #606468;
+  font-style: 12px;
+}
+
+.qanda {
   background-color: #f5f5f5;
   padding:5px 10px;
 }
 
-.qanda2{
+.qanda2 {
   background-color: white;
   margin:10px;
   padding:5px 10px;
 }
 
-main{
+main {
   margin: 50px;
 }
 
-button{
+button {
   background: #89c3eb;
   border: 0;
   width: 100px;
@@ -727,7 +712,7 @@ button:hover {
   background: #426579;
 }
 
-.button{
+.button {
   background: #89c3eb;
   border: 0;
   width: 100px;
@@ -742,22 +727,21 @@ button:hover {
   background: #426579;
 }
 
-#tab{
+#tab {
   text-align: right;
   margin-right: 10px;
   top: 0px;
 }
 
-.sidebutton a{
+.sidebutton a {
   color: #426579;
 }
 
-.sidebutton a:hover{
+.sidebutton a:hover {
   color: #fff;
-
 }
 
-.sidebutton{
+.sidebutton {
   display: inline-block;
   width: 15%;
   text-align: center;
@@ -799,7 +783,6 @@ button:hover {
 .sidebutton:hover:before,
 .sidebutton:hover:after {
   width: 0;
-
 }
 
 .sidebutton:hover {
@@ -811,33 +794,24 @@ button:hover {
   #formdefw {
     margin: 80px auto;
     width:70%;
-
-
   }
 
   #formdefw form {
-
     width: 85%;
-
   }
 
   #formdef{
     margin: 80px auto;
-
     width: 60%;
-
-
   }
 
   #formdef form {
-
     width: 85%;
-
   }
 
-
-
 }
+
+
 /* ----- 800px - 480px ----- */
 @media screen and (max-width:800px){
 
@@ -907,7 +881,6 @@ button:hover {
   #menubar_hdr.open {
     width: 50px;
     height: 50px;
-
   }
 
   #menubar_hdr.close {
@@ -917,23 +890,17 @@ button:hover {
   #menubar_hdr.open {
     background: #fff url(../img/icon_menu.png) no-repeat center bottom/50px;
   }
+  
+  
   /* ----- Footer ----- */
-
-
-
   #formdef{
     margin: 60px auto;
     width: 90%;
-
-
   }
 
   #formdef form {
-
     width: 90%;
-
   }
-
 
 }
 
@@ -944,22 +911,23 @@ button:hover {
     margin: 0px;
     padding: 0px;
     font-size: 12px;
-
   }
 
-  main{
+  main {
     margin: 10px;
   }
 
+
   /* ----- Header ----- */
   #menubar-s {
-    display: block;overflow: hidden;
+    display: block;
+    overflow: hidden;
     font-weight: bold;
     position: absolute;
     width: 100%;
     z-index: 10;
     animation-name: menu1;
-    animation-duration: 0.7S;
+    animation-duration: 0.7s;
     animation-fill-mode: both;
   }
 
@@ -967,47 +935,34 @@ button:hover {
   #formdefw {
     margin: 60px auto;
     width:90%;
-
-
   }
 
   #formdefw form {
-
     width: 90%;
-
   }
-
-
-
-
 
 
   /* ----- Footer ----- */
-
-
-
   .footer {
-    background-color: #fff;
+    display: flex;
+    background-color: #ffffff;
     height: auto;
-    padding: 10px;
+    padding: 10%;
   }
 
-  .copy{
-
+  .copy {
     position: relative;
     text-align: center;
-
     top:0px;
     right:0px;
   }
 
-  .footer-logo{
+  .footer-logo {
     float:none;
     text-align: center;
-
   }
 
-  .footer-list{
+  .footer-list {
     margin: 10px;
     float:none;
     position: relative;
@@ -1021,20 +976,20 @@ button:hover {
     text-align: center;
   }
 
-  .footer-list a{
+  .footer-list a {
     font-size: 12px;
     text-decoration: none;
     color: #000;
     text-align: center;
   }
 
-
-  .sidebutton{
+  .sidebutton {
     display: inline-block;
     width: 50%;
-
   }
 
-  #tab{
+  #tab {
     text-align: center;
+  }
+  
 }
