@@ -179,16 +179,18 @@ header #logo img:hover {
 /* ----- Footer ----- */
 .footer {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   background-color: #ffffff;
   padding: 1rem 5%;
-  color: #333333;
 }
 
 .copy {
   display: block;
-  align-self: end;
+  align-self: flex-end;
+  font-size: 10px;
+  color: #333333;
 }
 
 .footer-logo {
@@ -200,6 +202,7 @@ header #logo img:hover {
 .footer-link {
   display: block;
   font-size: 12px;
+  color: #333333;
 }
 
 
@@ -895,6 +898,10 @@ button:hover {
   #formdef form {
     width: 90%;
   }
+  
+  .footer > a {
+    width: 100%;
+  }
 
 }
 
@@ -935,47 +942,6 @@ button:hover {
     width: 90%;
   }
 
-
-  /* ----- Footer ----- */
-  .footer {
-    display: flex;
-    background-color: #ffffff;
-    height: auto;
-    padding: 10%;
-  }
-
-  .copy {
-    position: relative;
-    text-align: center;
-    top:0px;
-    right:0px;
-  }
-
-  .footer-logo {
-    float:none;
-    text-align: center;
-  }
-
-  .footer-list {
-    margin: 10px;
-    float:none;
-    position: relative;
-    top: 0px;
-
-  }
-
-  .footer-list li {
-    padding-bottom: 10px;
-    padding-left: 0px;
-    text-align: center;
-  }
-
-  .footer-list a {
-    font-size: 12px;
-    text-decoration: none;
-    color: #000;
-    text-align: center;
-  }
 
   .sidebutton {
     display: inline-block;
