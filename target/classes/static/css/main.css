@@ -666,19 +666,11 @@ hr {
   border-radius: .5em;
 }
 
-.exp-container p {
-  margin: 0;
-}
-
 .expbox {
   border: 1px solid #426579;
   padding: 10px;
   background-color: white;
   font-weight: bold;
-}
-
-.hrnone {
-  border: none;
 }
 
 #cutl {
