@@ -257,23 +257,23 @@
         <div class="form-item">
           <p>サークルなどでの役職・役割（複数選択可）</p>
           <div>
-            <th:block th:each="pos : ${positionList}">
-            <input type="checkbox" th:field="*{position}" th:value="${pos}">
-            <label th:for="${#ids.prev('position')}" th:text="${pos}"></label>
-          </th:block>
-          <p th:if="${#fields.hasErrors('position')}" class="hazard"><i class="fas fa-exclamation-circle"></i>１つ以上選択してください</p>
+            <span th:each="pos : ${positionList}" class="position-tag">
+              <input type="checkbox" th:field="*{position}" th:value="${pos}">
+              <label th:for="${#ids.prev('position')}" th:text="${pos}"></label>
+            </span>
+            <p th:if="${#fields.hasErrors('position')}" class="hazard"><i class="fas fa-exclamation-circle"></i>１つ以上選択してください</p>
+          </div>
         </div>
-      </div>
-      <div>
-        <input type="submit" value="修正する">
-        <input type="hidden" id="contextPath" th:value="@{/}">
-      </div>
-    </form>
-  </div>
-  </article>
-  <aside th:replace="user/common/tab :: tab"></aside>
-</main>
-<footer th:replace="common/footer :: footer"></footer>
+        <div>
+          <input type="submit" value="修正する">
+          <input type="hidden" id="contextPath" th:value="@{/}">
+        </div>
+      </form>
+    </div>
+    </article>
+    <aside th:replace="user/common/tab :: tab"></aside>
+  </main>
+  <footer th:replace="common/footer :: footer"></footer>
 <script th:src="@{/js/setUniversityAndBirth.js}"></script>
 <script th:src="@{/js/submit.js}"></script>
 </body>

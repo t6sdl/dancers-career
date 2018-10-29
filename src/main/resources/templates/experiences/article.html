@@ -19,7 +19,7 @@
         <p th:if="${isLiked}"><i class="fas fa-check-circle fa-fw"></i>お気に入りに登録されています <a th:href="@{/experiences/{experienceId}?dislike(experienceId=*{experience_id})}"><button class="button">削除</button></a></p>
       </div>
       <div>
-        <p id="job"><span th:each="pos : *{position}" th:text="${pos}"></span></p><!-- 役職タグ -->
+        <p><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></p>
         <h2>
           <span th:text="*{university} == '' ? '非公開' : *{university}"></span>
           <span th:text="*{faculty}" id="fac"></span>
