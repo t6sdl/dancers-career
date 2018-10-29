@@ -663,6 +663,7 @@ input[type="tel"] {
 #exp-form {
   background: #ffffff;
   padding 2em;
+  border-radius: .5em;
 }
 
 hr {
