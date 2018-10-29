@@ -242,6 +242,7 @@ input {
 }
 
 select {
+  margin: .5em;
   height: 50px;
   border: none;
   outline: none;
@@ -505,7 +506,7 @@ after { clear: both; }
   margin: 100px auto;
   padding:10px;
   text-align: center;
-  background-color: rgb(245, 245, 245, .8);
+  background: #ffffffaa;
   width: 40%;
   height: auto;
   border-radius: 10px;
@@ -523,8 +524,8 @@ after { clear: both; }
   padding:10px;
   padding-top: 10px;
   text-align: center;
-  background-color: rgb(245, 245, 245, .8);
-  width: 60%;
+  background: #ffffffaa;
+  width: 70%;
   height: auto;
   border-radius: 10px;
 }
@@ -662,7 +663,7 @@ input[type="tel"] {
 /* ----- experience ----- */
 #exp-form {
   background: #ffffff;
-  padding 2em;
+  padding: 1em 2em;
   border-radius: .5em;
 }
 
