@@ -12,7 +12,7 @@
 <body>
   <header th:replace="common/header :: ${header}"></header>
   <main>
-    <form th:action="@{/experiences}" method="get" th:object="${searchForm}">
+    <form th:action="@{/experiences}" method="get" th:object="${searchForm}" id="exp-form">
       <div style="text-align:center;">
         <span th:each="pos : ${positionList}" class="position-tag">
           <input type="checkbox" th:field="*{position}" th:value="${pos}">
