@@ -666,26 +666,29 @@ hr {
   border-radius: .5em;
 }
 
-.expbox {
-  border: 1px solid #426579;
-  padding: 10px;
-  background-color: white;
-  font-weight: bold;
+.exp-container p {
+  margin: 0;
 }
 
-#cutl {
+
+.cutl {
   border-style: dashed;
   border-color: #426579;
 }
 
-#ques {
-  color: #4682b4;
+.ques {
   font-weight: bold;
 }
 
-#ans {
-  color:#dc143c;
+.ans {
   font-weight: bold;
+  font-size: .9em;
+}
+
+.adv {
+  color: #dc143c;
+  font-weight: bold;
+  font-size: .9em;
 }
 
 #fac {
