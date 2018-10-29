@@ -10,6 +10,8 @@ body{
   -webkit-text-size-adjust: none;
 }
 
+
+
 a {
   color: #6495ed;
   transition: 0.5s;
@@ -63,7 +65,7 @@ header {
 
 header .inner {
   position: relative;
-  height: 100px;
+  height: 90px;
 }
 
 header #logo img {
@@ -84,6 +86,11 @@ header #logo img:hover {
 .caption{
   font-size: 12px;
 
+}
+
+#smltxt{
+  font-size: 12px;
+  color: #606468;
 }
 /* ----- logout button ----- */
 
@@ -173,20 +180,25 @@ header #logo img:hover {
 
 /* ----- Footer ----- */
 .footer {
+  position: relative;
   background-color: #fff;
   height: 80px;
   padding: 40px;
 }
 
 .copy{
-  float: right;
   font-size: 12px;
+
+  position: absolute;
+  top:130px;
+  right:10px;
 }
 
 .footer-logo{
   float: left;
   font-size: 25px;
   color:#426579;
+  text-decoration: none;
 }
 
 .footer-list{
@@ -196,6 +208,7 @@ header #logo img:hover {
 
 .footer-list li {
   padding-bottom: 20px;
+  padding-left: 20px
 }
 
 .footer-list a{
@@ -204,9 +217,6 @@ header #logo img:hover {
   color: #000;
 }
 
-.footer-logo{
-  text-decoration: none;
-}
 
 /* ----- Other ----- */
 .topwords{
@@ -229,18 +239,213 @@ input{
 
 after { clear: both; }
 
-.formbg{
-  background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg.jpg)
+.formbg1{
+  background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg1.jpg)
   no-repeat center;
   background-size: cover;
   position: relative;
   z-index: 0;
   overflow: auto;
   background-attachment: scroll;
+  text-align: center;
+}
+
+.formbg1::before{
+  content: '';
+  background: inherit;
+
+  -webkit-filter: blur(10px);
+  -moz-filter: blur(10px);
+  -o-filter: blur(10px);
+  -ms-filter: blur(10px);
+  filter: blur(10px);
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  z-index: -1;
+}
+
+.formbg2{
+  background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg2.jpg)
+  no-repeat center;
+  background-size: cover;
+  position: relative;
+  z-index: 0;
+  overflow: auto;
+  background-attachment: scroll;
+  text-align: center;
 
 }
 
-.formbg::before{
+.formbg2::before{
+  content: '';
+  background: inherit;
+
+  -webkit-filter: blur(10px);
+  -moz-filter: blur(10px);
+  -o-filter: blur(10px);
+  -ms-filter: blur(10px);
+  filter: blur(10px);
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  z-index: -1;
+}
+
+.formbg3{
+  background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg3.jpg)
+  no-repeat center;
+  background-size: cover;
+  position: relative;
+  z-index: 0;
+  overflow: auto;
+  background-attachment: scroll;
+  text-align: center;
+}
+
+.formbg3::before{
+  content: '';
+  background: inherit;
+
+  -webkit-filter: blur(10px);
+  -moz-filter: blur(10px);
+  -o-filter: blur(10px);
+  -ms-filter: blur(10px);
+  filter: blur(10px);
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  z-index: -1;
+}
+.formbg4{
+  background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg4.jpg)
+  no-repeat center;
+  background-size: cover;
+  position: relative;
+  z-index: 0;
+  overflow: auto;
+  background-attachment: scroll;
+  text-align: center;
+}
+
+.formbg4::before{
+  content: '';
+  background: inherit;
+
+  -webkit-filter: blur(10px);
+  -moz-filter: blur(10px);
+  -o-filter: blur(10px);
+  -ms-filter: blur(10px);
+  filter: blur(10px);
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  z-index: -1;
+}
+.formbg5{
+  background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg5.jpg)
+  no-repeat center;
+  background-size: cover;
+  position: relative;
+  z-index: 0;
+  overflow: auto;
+  background-attachment: scroll;
+  text-align: center;
+}
+
+.formbg5::before{
+  content: '';
+  background: inherit;
+
+  -webkit-filter: blur(10px);
+  -moz-filter: blur(10px);
+  -o-filter: blur(10px);
+  -ms-filter: blur(10px);
+  filter: blur(10px);
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  z-index: -1;
+}
+
+.formbg6{
+  background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg6.jpg)
+  no-repeat center;
+  background-size: cover;
+  position: relative;
+  z-index: 0;
+  overflow: auto;
+  background-attachment: scroll;
+  text-align: center;
+}
+
+.formbg6::before{
+  content: '';
+  background: inherit;
+
+  -webkit-filter: blur(10px);
+  -moz-filter: blur(10px);
+  -o-filter: blur(10px);
+  -ms-filter: blur(10px);
+  filter: blur(10px);
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  z-index: -1;
+}
+
+.formbg7{
+  background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg6.jpg)
+  no-repeat center;
+  background-size: cover;
+  position: relative;
+  z-index: 0;
+  overflow: auto;
+  background-attachment: scroll;
+  text-align: center;
+}
+
+.formbg7::before{
+  content: '';
+  background: inherit;
+
+  -webkit-filter: blur(10px);
+  -moz-filter: blur(10px);
+  -o-filter: blur(10px);
+  -ms-filter: blur(10px);
+  filter: blur(10px);
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  z-index: -1;
+}
+
+.formbg8{
+  background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg6.jpg)
+  no-repeat center;
+  background-size: cover;
+  position: relative;
+  z-index: 0;
+  overflow: auto;
+  background-attachment: scroll;
+  text-align: center;
+}
+
+.formbg8::before{
   content: '';
   background: inherit;
 
@@ -258,7 +463,7 @@ after { clear: both; }
 }
 
 
-#formdef {
+#formdef{
   margin: 100px auto;
   padding:10px;
   padding-top: 10px;
@@ -276,6 +481,27 @@ after { clear: both; }
   width: 80%;
   height: auto;
 }
+
+#formdefw {
+  margin: 100px auto;
+  padding:10px;
+  padding-top: 10px;
+  text-align: center;
+  background-color: rgb(245, 245, 245,0.8);
+  width:50%;
+  height:auto;
+  border-radius: 10px;
+
+}
+
+#formdefw form {
+  margin: auto;
+  padding: 20px 0;
+  width: 80%;
+  height: auto;
+}
+
+
 
 #formdef form input[type="email"] {
   border-radius: 3px 3px 3px 3px;
@@ -295,7 +521,7 @@ after { clear: both; }
 input[type="password"] {
   border-radius: 3px 3px 3px 3px;
   margin-bottom: 1em;
-  padding: 0 15px;
+  padding: 0 16px;
   width: 90%;
   height: 50px;
 }
@@ -303,7 +529,7 @@ input[type="password"] {
 input[type="email"] {
   border-radius: 3px 3px 3px 3px;
   margin-bottom: 1em;
-  padding: 0 15px;
+  padding: 0 16px;
   width: 90%;
   height: 50px;
 }
@@ -317,6 +543,8 @@ input[type="submit"] {
   color: white;
   cursor: pointer;
   transition: background 0.3s ease-in-out;
+  margin-bottom: 10px;
+
 }
 
 input[type="submit"]:hover {
@@ -327,7 +555,7 @@ input[type="text"]{
   border-radius: 3px 3px 3px 3px;
   margin-bottom: 1em;
   padding: 0 16px;
-  width: 250px;
+  width: 90%;
   height: 50px;
 }
 
@@ -399,12 +627,11 @@ input[type="tel"]{
 
 
 hr{
-border-top: 1px solid #426579;
+  border-top: 1px solid #426579;
 }
 
 .expbox{
-  border: 5px solid #426579;
-  border-radius: 10px;
+  border: 1px solid #426579;
   padding: 10px;
   background-color: white;
   font-weight: bold;
@@ -459,36 +686,131 @@ main{
 }
 
 button{
-    background: #89c3eb;
-    border: 0;
-    width: 100px;
-    height: 30px;
-    border-radius: 3px;
-    color: white;
-    cursor: pointer;
-    transition: background 0.3s ease-in-out;
-  }
+  background: #89c3eb;
+  border: 0;
+  width: 100px;
+  height: 30px;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
 
 button:hover {
-    background: #426579;
-  }
+  background: #426579;
+}
 
 .button{
-      background: #89c3eb;
-      border: 0;
-      width: 100px;
-      height: 30px;
-      border-radius: 3px;
-      color: white;
-      cursor: pointer;
-      transition: background 0.3s ease-in-out;
-    }
+  background: #89c3eb;
+  border: 0;
+  width: 100px;
+  height: 30px;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
 
 .button:hover {
-      background: #426579;
-    }
+  background: #426579;
+}
+
+#tab{
+  text-align: right;
+  margin-right: 10px;
+  top: 0px;
+}
+
+.sidebutton a{
+  color: #426579;
+}
+
+.sidebutton a:hover{
+  color: #fff;
+
+}
+
+.sidebutton{
+  display: inline-block;
+  width: 15%;
+  text-align: center;
+  background-color: #426579;
+  border: 2px solid #426579;
+  font-size: 14px;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 0px 20px;
+  border-radius: 4px;
+  position: relative;
+}
+
+.sidebutton span {
+  position: relative;
+  z-index: 1;
+}
+
+.sidebutton:before,
+.sidebutton::after {
+  content: "";
+  display: block;
+  background-color: #FFF;
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  transition: .3s;
+
+}
+.sidebutton::before {
+  left: 0;
+}
+.sidebutton::after {
+  right: 0;
+}
+
+.sidebutton:hover:before,
+.sidebutton:hover:after {
+  width: 0;
+
+}
+
+.sidebutton:hover {
+  color: #FFF;
+}
+
+/* ------ 1000px - 800px ----- */
+@media screen and (max-width:1000px){
+  #formdefw {
+    margin: 80px auto;
+    width:70%;
 
 
+  }
+
+  #formdefw form {
+
+    width: 85%;
+
+  }
+
+  #formdef{
+    margin: 80px auto;
+
+    width: 60%;
+
+
+  }
+
+  #formdef form {
+
+    width: 85%;
+
+  }
+
+
+
+}
 /* ----- 800px - 480px ----- */
 @media screen and (max-width:800px){
 
@@ -524,8 +846,8 @@ button:hover {
     padding: 15px 5%;
     border: 1px solid #426579;
     border-bottom: none;
-    background: #fff;
-    color: #333;
+    background: #333333;
+    color: #fff;
     font-size: 12px;
     text-align: center;
   }
@@ -551,6 +873,7 @@ button:hover {
     position: absolute;
     top: 30px;
     right: 3%;
+    transition: 0.2s;
   }
 
   #menubar_hdr.close,
@@ -568,40 +891,20 @@ button:hover {
     background: #fff url(../img/icon_menu.png) no-repeat center bottom/50px;
   }
   /* ----- Footer ----- */
-  .copy{
-    float: right;
-    font-size: 12px;
+
+
+
+  #formdef{
+    margin: 60px auto;
+    width: 90%;
+
+
   }
 
-  .footer{
-    padding: 0px;
-    margin: 0px;
-  }
+  #formdef form {
 
-  .footer-logo{
-    float: left;
-    font-size: 25px;
-    color:#426579;
-  }
+    width: 90%;
 
-  .footer-list{
-    position:relative;
-    margin: 10px;
-    float: left;
-  }
-
-  .footer-list li {
-    padding-bottom: 20px;
-  }
-
-  .footer-list a{
-    font-size: 12px;
-    text-decoration: none;
-    color: #000;
-  }
-
-  .footer-logo{
-    text-decoration: none;
   }
 
 
@@ -614,6 +917,11 @@ button:hover {
     margin: 0px;
     padding: 0px;
     font-size: 12px;
+
+  }
+
+  main{
+    margin: 10px;
   }
 
   /* ----- Header ----- */
@@ -627,4 +935,79 @@ button:hover {
     animation-duration: 0.7S;
     animation-fill-mode: both;
   }
+
+
+  #formdefw {
+    margin: 60px auto;
+    width:90%;
+
+
+  }
+
+  #formdefw form {
+
+    width: 90%;
+
+  }
+
+
+
+
+
+
+  /* ----- Footer ----- */
+
+
+
+  .footer {
+    background-color: #fff;
+    height: auto;
+    padding: 10px;
+  }
+
+  .copy{
+
+    position: relative;
+    text-align: center;
+
+    top:0px;
+    right:0px;
+  }
+
+  .footer-logo{
+    float:none;
+    text-align: center;
+
+  }
+
+  .footer-list{
+    margin: 10px;
+    float:none;
+    position: relative;
+    top: 0px;
+
+  }
+
+  .footer-list li {
+    padding-bottom: 10px;
+    padding-left: 0px;
+    text-align: center;
+  }
+
+  .footer-list a{
+    font-size: 12px;
+    text-decoration: none;
+    color: #000;
+    text-align: center;
+  }
+
+
+  .sidebutton{
+    display: inline-block;
+    width: 50%;
+
+  }
+
+  #tab{
+    text-align: center;
 }

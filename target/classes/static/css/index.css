@@ -1,3 +1,5 @@
+  @font-face('utf-8');
+  
   /* ----- common ----- */
   body {
     margin: 0;
@@ -34,7 +36,7 @@
   br.show-l {
     display: none;
   }
-  
+
   /* ----- sections ----- */
   #top {
     position: relative;
@@ -57,18 +59,8 @@
     color: #ffffff;
     text-align: justify;
   }
-  
+
   /* ----- top ----- */
-  #summary {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 8%;
-    margin: 0;
-    color: #ffffff;
-    font-weight: normal;
-    font-size: 1.2em;
-  }
   #catchphrase {
     position: absolute;
     left: 0;
@@ -94,20 +86,35 @@
     bottom: 20%;
   }
   #top a.link-button button {
-    background: #ffffff;
-    color: #000000;
+    border: 2px solid #dddddd;
+    background: #426579;
+    color: #ffffff;
     font-weight: bold;
   }
   #top a.link-button button:hover {
-    background: #426579;
-    color: #ffffff;
+    border: 2px solid #ffffff;
+    background: #ffffff;
+    color: #000000;
   }
   #scroll {
+    display: block;
     position: absolute;
     left: 0;
     right: 0;
     bottom: 1%;
+    margin: 0 auto;
+    width: 3rem;
+    height: 5rem;
     font-size: .6em;
+    color: #ffffff;
+  }
+  #scroll span.scroll-text {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
   }
   #scroll span.scroll-arrow {
     display: block;
@@ -125,17 +132,17 @@
     animation: scroll 2s infinite linear;
   }
   #scroll span.scroll-arrow:nth-of-type(1) {
-    bottom: 10vh;
+    top: 0;
     -webkit-animation-delay: 0s;
     animation-delay: 0s;
   }
   #scroll span.scroll-arrow:nth-of-type(2) {
-    bottom: 8vh;
+    top: .8rem;
     -webkit-animation-delay: 0.15s;
     animation-delay: 0.2s;
   }
   #scroll span.scroll-arrow:nth-of-type(3) {
-    bottom: 6vh;
+    top: 1.6rem;
     -webkit-animation-delay: 0.3s;
     animation-delay: 0.4s;
   }
@@ -183,7 +190,7 @@
       transform: translateY(5px) rotateZ(45deg);
     }
   }
-  
+
   /* ----- description ----- */
   .theme p, .theme h2 {
     margin: 0;
@@ -244,7 +251,7 @@
     position: absolute;
     right: 0;
     bottom: 0;
-    color: #cccccc;
+    color: #4ac8d3a4;
     line-height: 1;
     font-size: 2.6em;
     font-weight: bold;
@@ -269,12 +276,12 @@
     font-size: 2.6em;
     line-height: 1;
   }
-  
+
   /* ----- motive ----- */
   #motive h2 {
     margin-top: 0;
   }
-  
+
   /* ----- in case that width > 480px ----- */
   @media (min-width: 480px) {
     br.hide-m {
@@ -284,7 +291,7 @@
       font-size: 2em;
     }
   }
-  
+
   /* ----- in case that width > 800px ----- */
   @media (min-width: 800px) {
     br.show-l {

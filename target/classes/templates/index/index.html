@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
   <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}" href="../../static/css/index.css">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../static/js/openclose.js"></script>
 </head>
@@ -18,7 +19,7 @@
 	      <h2 id="catchphrase">人事がナットクする<br class="hide-m">ダンスの伝え方。</h2>
 	      <p id="sub-catchphrase">ダンサーの就活を変えること、それが私たちの使命です。</p>
 	      <a th:href="@{/experiences?all&sort=0}" class="link-button"><button>ES/体験記を探す</button></a>
-	      <div id="scroll"><span class="scroll-arrow"></span><span class="scroll-arrow"></span><span class="scroll-arrow"></span><span>SCROLL</span></div>
+          <a href="#description" id="scroll"><span class="scroll-arrow"></span><span class="scroll-arrow"></span><span class="scroll-arrow"></span><span class="scroll-text">SCROLL</span></a>
 	    </div>
 	  </section>
 	  <section id="description">
@@ -69,8 +70,14 @@
     <footer th:replace="common/footer :: footer"></footer>
     <script>
     $(function() {
+      const headerHeight = $('header').outerHeight();
+      let topHeight = window.innerHeight - headerHeight;
       $('#top').css({
-        height: window.innerHeight - 103,
+        height: topHeight,
+      });
+      $('#scroll').on('click', (event) => {
+        event.preventDefault();
+        $('html,body').animate({scrollTop: headerHeight + topHeight}, 500, 'swing');
       });
     });
     </script>
