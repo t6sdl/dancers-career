@@ -57,11 +57,11 @@
           </tr>
           <tr>
             <th align="right">サークルなどでの役職・役割：</th>
-            <td><span th:each="pos : *{position == null ? '' : position}" th:text="|${pos} |"></span></td>
+            <td><span th:each="pos : *{position == null ? '' : position}" th:text="${pos}" class="position-tag"></span></td>
           </tr>
         </table>
         <div><a th:href="@{/user/profile/change}"><button>修正する</button></a></div>
-      </dv>
+      </div>
       </article>
       <aside th:replace="user/common/tab :: tab"></aside>
     </main>

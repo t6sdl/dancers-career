@@ -12,7 +12,7 @@ body {
 
 a {
   color: #6495ed;
-  transition: 0.5s;
+  transition: .5s;
   text-decoration: none;
 }
 
@@ -144,7 +144,8 @@ header #logo img:hover {
 
 #menubar li {
   display: inline-block;
-  width: 155px;
+  min-width: 155px;
+  width: 18vw;
   border-right: solid 1px;
   border-color: #426579;
   text-align: center;
@@ -215,6 +216,15 @@ header #logo img:hover {
   margin: 50px;
 }
 
+.position-tag {
+  display: inline-block;
+  padding: 0 .5em;
+  margin: 0 .5em;
+  background: #426579;
+  color: #ffffff;
+  border-radius: 3px;
+}
+
 
 /* ----- Form ----- */
 input {
@@ -223,6 +233,7 @@ input {
   line-height: 1.5em;
   padding: 0;
   outline: none;
+  box-sizing: border-box;
 }
 
 select {
