@@ -781,11 +781,10 @@ button:hover {
   display: block;
   color: #426579;
   width: 20%;
-  background: #426579;
+  background: #ffffff;
   border: 2px solid #426579;
   font-size: 14px;
   font-weight: bold;
-  padding: 0px 2em;
   border-radius: 4px;
   position: relative;
 }
@@ -799,28 +798,22 @@ button:hover {
   text-align: center;
 }
 
-.sidebutton::before,
-.sidebutton::after {
+.sidebutton a::before {
   content: "";
   display: block;
-  background-color: #ffffff;
-  width: 50%;
+  background: #426579;
+  width: 0;
   height: 100%;
+  margin: auto;
   position: absolute;
   top: 0;
-  transition: .3s;
-
-}
-.sidebutton::before {
   left: 0;
-}
-.sidebutton::after {
   right: 0;
+  transition: .3s;
 }
 
-.sidebutton a:hover:before,
-.sidebutton a:hover:after {
-  width: 0;
+.sidebutton a:hover::before {
+  width: 100%;
 }
 
 
