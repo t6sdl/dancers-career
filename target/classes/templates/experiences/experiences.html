@@ -29,7 +29,7 @@
     </form>
     <hr>
     <div>
-      <p id="smltxt"><i class="fas fa-search fa-fw"></i>検索結果： <span th:text="${count}"></span> 件</p>
+      <p id="smltxt"><i class="fas fa-search fa-fw"></i> 検索結果： <span th:text="${count}"></span> 件</p>
     </div>
     <section th:if="${count == 0 ? false : true}">
       <article th:each="experience : ${experiences}" th:object="${experience}" class="exp-container">
