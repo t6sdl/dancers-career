@@ -51,9 +51,13 @@ p{
   margin-bottom: 3px;
 }
 
+
 /* ----- Header ----- */
 .inner {
-  margin: 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
 }
 
 header {
@@ -62,36 +66,41 @@ header {
 }
 
 header .inner {
-  position: relative;
   height: 90px;
+  padding: 0 5%;
+}
+
+header #logo {
+  margin: 0;
+  line-height: 0;
+}
+
+header #logo a {
+  display: block;
 }
 
 header #logo img {
-  width: 180px;
-  position: absolute;
-  left: 3%;
-  top: 25px;
+  max-width: 180px;
+  min-width: 160px;
+  width: 20%;
   transition: .2s;
 }
 
 header #logo img:hover {
-  width: 200px;
-  position: absolute;
-  left: 2%;
-  top: 20px;
+  transform: scale(1.2);
 }
 
 .caption {
   font-size: 12px;
-
 }
 
 #smltxt {
   font-size: 12px;
   color: #606468;
 }
-/* ----- logout button ----- */
 
+
+/* ----- logout button ----- */
 #logout {
   position: absolute;
   right: 3%;
@@ -132,19 +141,15 @@ header #logo img:hover {
   background: #426579;
 }
 
-/* ----- menu ----- */
 
+/* ----- menu ----- */
 #menubar {
-  clear: both;overflow: hidden;
   font-size: 12px;
-  padding: 20px 20px;
-  padding-left: 20%;
-  margin: 0 25px;
 }
 
 #menubar li {
-  float: left;
-  width: 180px;
+  display: inline-block;
+  width: 165px;
   height:55px;
   top: 30px;
   border-right: solid 1px;
@@ -153,23 +158,24 @@ header #logo img:hover {
 }
 
 #menubar #lastli {
-  border-right:none;
+  border-right: none;
 }
 
 #menubar li a {
+  display: block;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 10px;
   transition: .4s;
   text-decoration: none;
   color: #000;
 }
 
-#menubar li a:hover {
-  font-size: 1.2em;
+#menubar li a:hover span {
+  transform: scale(1.2);
 }
 
 #menubar span {
-  font-size: 10px;
+  font-size: 12px;
 }
 
 #menubar-s {display: none;}
@@ -489,7 +495,7 @@ after { clear: both; }
   margin: 100px auto;
   padding:10px;
   text-align: center;
-  background-color: rgb(245, 245, 245,0.8);
+  background-color: rgb(245, 245, 245, .8);
   width: 40%;
   height: auto;
   border-radius: 10px;
@@ -507,7 +513,7 @@ after { clear: both; }
   padding:10px;
   padding-top: 10px;
   text-align: center;
-  background-color: rgb(245, 245, 245,0.8);
+  background-color: rgb(245, 245, 245, .8);
   width: 60%;
   height: auto;
   border-radius: 10px;
@@ -911,6 +917,7 @@ button:hover {
   
   .footer > a, .footer > small {
     width: 100%;
+    text-align: center;
   }
 
 }
