@@ -17,8 +17,7 @@
   <div id="formdef">
     <form name='form-login' th:action="@{/login}" method="post">
       <p class="hazard" th:if="${param.error}"><i class="fas fa-exclamation-circle"></i>メールアドレスまたはパスワードに誤りがあります</p>
-      <input type="email" placeholder="Email" name="email" class="form">
-      <br><input type="password" placeholder="Password" name="password" class="form">
+      <input type="email" placeholder="Email" name="email" class="form"><br><input type="password" placeholder="Password" name="password" class="form">
 
       <div>
         <input type="checkbox" id="remember-me" name="remember-me">
