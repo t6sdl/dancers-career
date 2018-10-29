@@ -17,7 +17,7 @@
       <article>
         <div id="formdefw">
         <h1>プロフィール</h1>
-        <p th:if="${param.modified}"><i class="fas fa-check-circle"></i>修正が保存されました</p>
+        <p th:if="${param.modified}" class="fins"><i class="fas fa-check-circle"></i>修正が保存されました</p>
         <table th:object="${profile}">
           <tr>
             <th align="right">氏名：</th>

@@ -43,6 +43,10 @@ ul {
   margin-top: 0px;
 }
 
+.fins{
+  color: #6495ed;
+}
+
 input::placeholder {
   color: #606468;
 }
