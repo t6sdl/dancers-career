@@ -660,6 +660,11 @@ input[type="tel"] {
 
 
 /* ----- experience ----- */
+#exp-form {
+  background: #ffffff;
+  padding 2em;
+}
+
 hr {
   border-top: 1px solid #426579;
 }
