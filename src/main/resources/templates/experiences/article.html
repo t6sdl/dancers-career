@@ -32,24 +32,28 @@
         </div>
         <hr class="cutl">
         <h2>ES</h2>
-        <div style="margin-bottom:2em;" th:each="esItem, loop : *{es}"><!-- 設問と回答のセット数に関係なく、提出企業ごとにこのタグで挟まれるように変更しました -->
+        <div style="margin-bottom:3.5em;" th:each="esItem, loop : *{es}"><!-- 設問と回答のセット数に関係なく、提出企業ごとにこのタグで挟まれるように変更しました -->
           <div class="es-info">
             <p>提出先企業：<span th:text="*{es[__${loop.index}__].corp} == '' ? '非公開' : *{es[__${loop.index}__].corp}"></span></p>
             <p>選考結果：<span th:text="*{es[__${loop.index}__].result} == '' ? '非公開' : *{es[__${loop.index}__].result}"></span></p>        
           </div>
-          <div th:each="content, subloop : *{es[__${loop.index}__].question}" class="qanda">
-            <p class="ques"><span th:text="*{es[__${loop.index}__].question[__${subloop.index}__]} == '' ? '非公開' : *{es[__${loop.index}__].question[__${subloop.index}__]}"></span></p>
-            <hr class="cutl">
-            <p class="ans"><span th:each="str, stat : *{es[__${loop.index}__].answer[__${subloop.index}__].split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
-            <p class="adv">現役人事からのコメント！<br><span th:each="str, stat : *{es[__${loop.index}__].advice[__${subloop.index}__].split('\n', -1)}"><th:block th:text="${str == '' ? 'なし' : str}"></th:block><br th:if="${!stat.last}"></span></p>
+          <div class="qanda-container">
+            <div th:each="content, subloop : *{es[__${loop.index}__].question}" class="qanda">
+              <p class="ques"><span th:text="*{es[__${loop.index}__].question[__${subloop.index}__]} == '' ? '非公開' : *{es[__${loop.index}__].question[__${subloop.index}__]}"></span></p>
+              <hr class="cutl">
+              <p class="ans"><span th:each="str, stat : *{es[__${loop.index}__].answer[__${subloop.index}__].split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
+              <p class="adv">現役人事からのコメント！<br><span th:each="str, stat : *{es[__${loop.index}__].advice[__${subloop.index}__].split('\n', -1)}"><th:block th:text="${str == '' ? 'なし' : str}"></th:block><br th:if="${!stat.last}"></span></p>
+            </div>
           </div>
         </div>
         <hr class="cutl">
         <h2>Interview</h2>
-        <div th:each="interviewItem, loop : *{interview}" class="qanda">
-          <p class="ques"><span th:text="*{interview[__${loop.index}__].question} == '' ? '非公開' : *{interview[__${loop.index}__].question}"></span></p>
-          <hr class="cutl">
-          <p class="ans"><br><span th:each="str, stat : *{interview[__${loop.index}__].answer.split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
+        <div class="qanda-container">
+          <div th:each="interviewItem, loop : *{interview}" class="qanda">
+            <p class="ques"><span th:text="*{interview[__${loop.index}__].question} == '' ? '非公開' : *{interview[__${loop.index}__].question}"></span></p>
+            <hr class="cutl">
+            <p class="ans"><span th:each="str, stat : *{interview[__${loop.index}__].answer.split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
+          </div>
         </div>
       </div>
       <div>
