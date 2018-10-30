@@ -13,8 +13,8 @@
 <body class="formbg2">
 
   <header th:replace="common/header :: for-stranger"></header>
-
-  <div id="formdef">
+  <main id="formdef">
+  <div>
     <h1>ログイン</h1>
     <form name='form-login' th:action="@{/login}" method="post">
       <p class="hazard" th:if="${param.error}"><i class="fas fa-exclamation-circle"></i>メールアドレスまたはパスワードに誤りがあります</p>
@@ -38,7 +38,7 @@
       </div>
     </form>
   </div>
-
+  </main>
   <footer th:replace="common/footer :: footer"></footer>
   <script th:src="@{/js/submit.js}"></script>
 </body>

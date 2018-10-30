@@ -257,7 +257,7 @@ select {
 
 after { clear: both; }
 
-.formbg1 {
+.formbg1 main {
   background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg1.jpg)
   no-repeat center;
   background-size: cover;
@@ -268,7 +268,7 @@ after { clear: both; }
   text-align: center;
 }
 
-.formbg1::before {
+.formbg1 main::before {
   content: '';
   background: inherit;
   
@@ -285,7 +285,7 @@ after { clear: both; }
   z-index: -1;
 }
 
-.formbg2 {
+.formbg2 main {
   background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg2.jpg)
   no-repeat center;
   background-size: cover;
@@ -296,7 +296,7 @@ after { clear: both; }
   text-align: center;
 }
 
-.formbg2::before {
+.formbg2 main::before {
   content: '';
   background: inherit;
   
@@ -313,7 +313,7 @@ after { clear: both; }
   z-index: -1;
 }
 
-.formbg3 {
+.formbg3 main {
   background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg3.jpg)
   no-repeat center;
   background-size: cover;
@@ -324,7 +324,7 @@ after { clear: both; }
   text-align: center;
 }
 
-.formbg3::before {
+.formbg3 main::before {
   content: '';
   background: inherit;
 
@@ -341,7 +341,7 @@ after { clear: both; }
   z-index: -1;
 }
 
-.formbg4 {
+.formbg4 main {
   background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg4.jpg)
   no-repeat center;
   background-size: cover;
@@ -352,7 +352,7 @@ after { clear: both; }
   text-align: center;
 }
 
-.formbg4::before {
+.formbg4 main::before {
   content: '';
   background: inherit;
 
@@ -369,7 +369,7 @@ after { clear: both; }
   z-index: -1;
 }
 
-.formbg5 {
+.formbg5 main {
   background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg5.jpg)
   no-repeat center;
   background-size: cover;
@@ -380,7 +380,7 @@ after { clear: both; }
   text-align: center;
 }
 
-.formbg5::before {
+.formbg5 main::before {
   content: '';
   background: inherit;
 
@@ -397,7 +397,7 @@ after { clear: both; }
   z-index: -1;
 }
 
-.formbg6 {
+.formbg6 main {
   background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg6.jpg)
   no-repeat center;
   background-size: cover;
@@ -408,7 +408,7 @@ after { clear: both; }
   text-align: center;
 }
 
-.formbg6::before {
+.formbg6 main::before {
   content: '';
   background: inherit;
 
@@ -425,7 +425,7 @@ after { clear: both; }
   z-index: -1;
 }
 
-.formbg7 {
+.formbg7 main {
   background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg6.jpg)
   no-repeat center;
   background-size: cover;
@@ -436,7 +436,7 @@ after { clear: both; }
   text-align: center;
 }
 
-.formbg7::before {
+.formbg7 main::before {
   content: '';
   background: inherit;
 
@@ -453,7 +453,7 @@ after { clear: both; }
   z-index: -1;
 }
 
-.formbg8 {
+.formbg8 main {
   background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg6.jpg)
   no-repeat center;
   background-size: cover;
@@ -464,7 +464,7 @@ after { clear: both; }
   text-align: center;
 }
 
-.formbg8::before {
+.formbg8 main::before {
   content: '';
   background: inherit;
 
@@ -481,7 +481,7 @@ after { clear: both; }
   z-index: -1;
 }
 
-.formbg9{
+.formbg9 main {
   background: url(https://dancers-career-2019-stg.herokuapp.com/img/bg6.jpg)
   no-repeat center;
   background-size: cover;
@@ -492,7 +492,7 @@ after { clear: both; }
   text-align: center;
 }
 
-.formbg9::before{
+.formbg9 main::before{
   content: '';
   background: inherit;
 
@@ -781,7 +781,7 @@ button:hover {
 .sidebutton {
   display: inline-block;
   text-align: center;
-  width: 25%;
+  width: 28%;
 }
 
 .sidebutton a {
