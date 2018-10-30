@@ -5,9 +5,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../../static/css/main.css">
-      <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../../static/js/openclose.js"></script>
+  <style>
+  section {
+    margin: .5em 0;
+    padding: 1em 2em;
+    background: #ffffff;
+    border-radius: .5em;
+  }
+  section h2 {
+    border-bottom: 1px dashed #333333;
+  }
+  </style>
 </head>
 <body>
   <header th:replace="common/header :: for-user"></header>
@@ -26,26 +37,26 @@
       </section>
       <section>
         <h2>ご自身のメールフィルタリング設定によりブロックされている</h2>
-        <ul><li>携帯電話キャリアのメールアドレスをご登録されている方</li></ul>
+        <ul><li><i class="fas fa-circle fa-fw"></i>携帯電話キャリアのメールアドレスをご登録されている方</li></ul>
         <p>ドメイン指定受信などの設定をされている方は、「t6sdl.tokyo」ドメインからの受信が許可されているか、もしくは拒否されていないかご確認ください。
           <br>設定方法につきましては、お手数ですが各携帯会社にお問い合わせください。</p>
-          <ul><li>携帯電話キャリア以外のメールアドレスをご登録されている方</li></ul>
-          <p>メールソフト、フリーメールサービス、インターネットプロバイダのフィルタリング設定を確認してください。
-            <br>設定方法につきましては、お手数ですが各サービス提供会社にお問い合わせください。</p>
-          </section>
-          <section>
-            <h2>ご登録されたメールアドレスに誤りがある</h2>
-            <p><a th:href="@{/user/account}">こちら</a>からご確認ください</p>
-          </section>
-          <section>
-            <h2>上記全てご確認いただいた方</h2>
-            <p>下ボタンからアドレス確認メールを再送信できます。</p>
-            <a th:href="@{/signup/reverify-email}"><button>再送信</button></a>
-            <p>10分以上経ってもメールが届かない場合は、<a th:href="@{/about/contact}">こちら</a>からお問い合わせください。</p>
-          </section>
-        </article>
-        <aside th:replace="user/common/tab :: tab"></aside>
-      </main>
-      <footer th:replace="common/footer :: footer"></footer>
-    </body>
-    </html>
+        <ul><li><i class="fas fa-circle fa-fw"></i>携帯電話キャリア以外のメールアドレスをご登録されている方</li></ul>
+        <p>メールソフト、フリーメールサービス、インターネットプロバイダのフィルタリング設定を確認してください。
+          <br>設定方法につきましては、お手数ですが各サービス提供会社にお問い合わせください。</p>
+      </section>
+      <section>
+        <h2>ご登録されたメールアドレスに誤りがある</h2>
+        <p><a th:href="@{/user/account}">こちら</a>からご確認ください</p>
+      </section>
+      <section>
+        <h2>上記全てご確認いただいた方</h2>
+        <p>下ボタンからアドレス確認メールを再送信できます。</p>
+        <a th:href="@{/signup/reverify-email}"><button>再送信</button></a>
+        <p>10分以上経ってもメールが届かない場合は、<a th:href="@{/about/contact}">こちら</a>からお問い合わせください。</p>
+      </section>
+    </article>
+    <aside th:replace="user/common/tab :: tab"></aside>
+  </main>
+  <footer th:replace="common/footer :: footer"></footer>
+</body>
+</html>
