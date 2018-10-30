@@ -13,7 +13,12 @@ body {
 }
 
 main {
-  margin: 2em 5%;
+  padding: 2em 5%;
+}
+
+table {
+  margin: 1em 0;
+  width: 100%;
 }
 
 a {
@@ -55,10 +60,6 @@ ul {
 
 input::placeholder {
   color: #606468;
-}
-
-p{
-  margin-bottom: 3px;
 }
 
 
@@ -509,11 +510,11 @@ after { clear: both; }
 }
 
 #formdef{
-  margin: 100px auto;
-  padding:10px;
+  margin: 5em auto;
+  padding: 1em;
   text-align: center;
   background: #ffffffaa;
-  width: 40%;
+  width: 50%;
   height: auto;
   border-radius: 10px;
 }
@@ -526,9 +527,8 @@ after { clear: both; }
 }
 
 #formdefw {
-  margin: 100px auto;
-  padding:10px;
-  padding-top: 10px;
+  margin: 5em auto;
+  padding: 1em;
   text-align: center;
   background: #ffffffaa;
   width: 70%;
@@ -832,15 +832,15 @@ button:hover {
 }
 
 .sidebutton:nth-of-type(1) a::after {
-  content: 'マイページ';
+  content: '\30DE\30A4\30DA\30FC\30B8';
 }
 
 .sidebutton:nth-of-type(2) a::after {
-  content: 'アカウント';
+  content: '\30A2\30AB\30A6\30F3\30C8';
 }
 
 .sidebutton:nth-of-type(3) a::after {
-  content: 'プロフィール';
+  content: '\30D7\30ED\30D5\30A3\30FC\30EB';
 }
 
 .sidebutton a:hover::after {
