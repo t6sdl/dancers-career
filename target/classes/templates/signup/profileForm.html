@@ -11,8 +11,8 @@
 </head>
 <body class="formbg5">
   <header th:replace="common/header :: for-stranger"></header>
-  <main id="formdefw">
-    <div>
+  <main>
+    <div id="formdefw">
       <form th:action="@{/signup/profile}" method="post" th:object="${profileForm}">
         <h1>プロフィール登録</h1>
         <div class="form-item">

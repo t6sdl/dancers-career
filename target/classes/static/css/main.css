@@ -266,6 +266,7 @@ after { clear: both; }
   overflow: auto;
   background-attachment: scroll;
   text-align: center;
+  padding: 0;
 }
 
 .formbg1 main::before {
@@ -294,6 +295,7 @@ after { clear: both; }
   overflow: auto;
   background-attachment: scroll;
   text-align: center;
+  padding: 0;
 }
 
 .formbg2 main::before {
@@ -322,6 +324,7 @@ after { clear: both; }
   overflow: auto;
   background-attachment: scroll;
   text-align: center;
+  padding: 0;
 }
 
 .formbg3 main::before {
@@ -350,6 +353,7 @@ after { clear: both; }
   overflow: auto;
   background-attachment: scroll;
   text-align: center;
+  padding: 0;
 }
 
 .formbg4 main::before {
@@ -378,6 +382,7 @@ after { clear: both; }
   overflow: auto;
   background-attachment: scroll;
   text-align: center;
+  padding: 0;
 }
 
 .formbg5 main::before {
@@ -406,6 +411,7 @@ after { clear: both; }
   overflow: auto;
   background-attachment: scroll;
   text-align: center;
+  padding: 0;
 }
 
 .formbg6 main::before {
@@ -434,6 +440,7 @@ after { clear: both; }
   overflow: auto;
   background-attachment: scroll;
   text-align: center;
+  padding: 0;
 }
 
 .formbg7 main::before {
@@ -462,6 +469,7 @@ after { clear: both; }
   overflow: auto;
   background-attachment: scroll;
   text-align: center;
+  padding: 0;
 }
 
 .formbg8 main::before {
@@ -490,6 +498,7 @@ after { clear: both; }
   overflow: auto;
   background-attachment: scroll;
   text-align: center;
+  padding: 0;
 }
 
 .formbg9 main::before{
