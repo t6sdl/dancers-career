@@ -774,22 +774,7 @@ button:hover {
 
 #tab ul {
   display: flex;
-  justify-content: space-arround;
-}
-
-.sidebutton a {
-  display: block;
-  color: #426579;
-  background: #ffffff;
-  border: 2px solid #426579;
-  font-size: 14px;
-  font-weight: bold;
-  border-radius: 4px;
-  position: relative;
-}
-
-.sidebutton a:hover {
-  color: #ffffff;
+  justify-content: space-around;
 }
 
 .sidebutton {
@@ -798,22 +783,54 @@ button:hover {
   width: 20%;
 }
 
-.sidebutton a::before {
-  content: "";
+.sidebutton a {
+  position: relative;
   display: block;
-  background: #426579;
-  width: 0;
-  height: 100%;
-  margin: auto;
+  color: #426579;
+  background: #ffffff;
+  border: 2px solid #426579;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 3;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.sidebutton a::before {
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  transition: .3s;
+  display: block;
+  margin: auto;
+  width: 0;
+  height: 100%;
+  background: #426579;
+  transition: width .3s;
 }
 
 .sidebutton a:hover::before {
   width: 100%;
+}
+
+.sidebutton a::after {
+  content: 'アカウント';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: block;
+  margin: auto;
+  width: 100%;
+  line-height: 3;
+  color: #ffffff;
+  opacity: 0;
+  transition: opacity .3s;
+}
+
+.sidebutton a:hover::after {
+  opacity: 0;
 }
 
 
