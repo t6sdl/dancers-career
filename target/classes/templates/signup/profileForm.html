@@ -119,7 +119,7 @@
           </div>
         </div>
         <div class="form-item">
-          <p>電話番号</p>
+          <p>電話番号（ハイフン不要）</p>
           <div>
             <input type="tel" th:field="*{phoneNumber}" th:errorclass="error" required placeholder="電話番号">
             <p th:if="${#fields.hasErrors('phoneNumber')}"  class="hazard"><i class="fas fa-exclamation-circle"></i>ハイフンなしの電話番号を入力してください</p>
@@ -224,10 +224,15 @@
             <div style="display:inline-block;">
             <select th:field="*{graduationYear}" required>
               <option value="default">選択してください</option>
+              <option value="2016">2016</option>
+              <option value="2017">2017</option>
+              <option value="2018">2018</option>
               <option value="2019">2019</option>
               <option value="2020">2020</option>
               <option value="2021">2021</option>
               <option value="2022">2022</option>
+              <option value="2023">2023</option>
+              <option value="2024">2024</option>
             </select>
             <label for="graduationYear">年</label>
             </div>

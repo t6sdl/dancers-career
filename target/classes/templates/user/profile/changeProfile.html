@@ -120,7 +120,7 @@
           </div>
         </div>
         <div class="form-item">
-          <p>電話番号</p>
+          <p>電話番号（ハイフン不要）</p>
           <input type="tel" th:field="*{phoneNumber}" th:errorclass="error" required>
           <p th:if="${#fields.hasErrors('phoneNumber')}" class="hazard"><i class="fas fa-exclamation-circle"></i>ハイフンなしの電話番号を入力してください</p>
         </div>

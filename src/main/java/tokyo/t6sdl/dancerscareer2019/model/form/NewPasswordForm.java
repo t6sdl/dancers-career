@@ -11,7 +11,7 @@ import tokyo.t6sdl.dancerscareer2019.validation.SamePassword;
 public class NewPasswordForm {
 	private String currentPassword;
 	@Size(min=8)
-	@Pattern(message="半角英数字と記号（.-+_のうち少なくとも１つ）を必ず含めてください", regexp="^(?=[a-zA-Z0-9]*(\\.|\\-|\\+|_))(?=([a-zA-Z]|\\.|\\-|\\+|_)*[0-9])(?=([0-9]|\\.|\\-|\\+|_)*[a-zA-Z])(\\w|\\.|\\-|\\+|_)*$")
+	@Pattern(message="半角英数字、記号（!.?+$%#&*=@）をそれぞれ最低1文字ずつ含む必要があります", regexp="^(?=[a-zA-Z0-9]*(\\.|!|\\?|\\+|\\$|%|#|&|\\*|=|@))(?=([a-zA-Z]|\\.|!|\\?|\\+|\\$|%|#|&|\\*|=|@)*[0-9])(?=([0-9]|\\.|!|\\?|\\+|\\$|%|#|&|\\*|=|@)*[a-zA-Z])(\\w|\\.|!|\\?|\\+|\\$|%|#|&|\\*|=|@)*$")
 	private String newPassword;
 	private String confirm;
 }
