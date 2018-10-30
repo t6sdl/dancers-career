@@ -126,6 +126,58 @@
           </div>
         </div>
         <div class="form-item">
+          <p>卒業年度</p>
+          <div>
+            <div style="display:inline-block;">
+            <select th:field="*{graduationYear}" required>
+              <option value="default">選択してください</option>
+              <option value="2016">2016</option>
+              <option value="2017">2017</option>
+              <option value="2018">2018</option>
+              <option value="2019">2019</option>
+              <option value="2020">2020</option>
+              <option value="2021">2021</option>
+              <option value="2022">2022</option>
+              <option value="2023">2023</option>
+              <option value="2024">2024</option>
+            </select>
+            <label for="graduationYear">年</label>
+            </div>
+            <div style="display:inline-block;">
+            <select th:field="*{graduationMonth}" required>
+              <option value="default">選択してください</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+            </select>
+            <label for="graduationMonth">月</label>
+            </div>
+            <div style="display:inline-block;">卒業予定</div>
+            <p th:if="${#fields.hasErrors('graduationYear') || #fields.hasErrors('graduationMonth')}"  class="hazard"><i class="fas fa-exclamation-circle"></i>必須項目です</p>
+          </div>
+        </div>
+        <div class="form-item">
+          <p>最終学歴</p>
+          <div>
+            <input type="radio" th:field="*{academicDegree}" value="学部卒" required>
+            <label th:for="${#ids.prev('academicDegree')}">学部卒</label>
+            <input type="radio" th:field="*{academicDegree}" value="修士卒">
+            <label th:for="${#ids.prev('academicDegree')}">修士卒</label>
+            <input type="radio" th:field="*{academicDegree}" value="博士卒">
+            <label th:for="${#ids.prev('academicDegree')}">博士卒</label>
+            <p th:if="${#fields.hasErrors('academicDegree')}"  class="hazard"><i class="fas fa-exclamation-circle"></i>必須項目です</p>
+          </div>
+        </div>
+        <div class="form-item">
           <p>文理</p>
           <div>
             <input type="radio" th:field="*{major}" value="文系" required>
@@ -219,58 +271,6 @@
           </div>
         </div>
         <div class="form-item">
-          <p>卒業年度</p>
-          <div>
-            <div style="display:inline-block;">
-            <select th:field="*{graduationYear}" required>
-              <option value="default">選択してください</option>
-              <option value="2016">2016</option>
-              <option value="2017">2017</option>
-              <option value="2018">2018</option>
-              <option value="2019">2019</option>
-              <option value="2020">2020</option>
-              <option value="2021">2021</option>
-              <option value="2022">2022</option>
-              <option value="2023">2023</option>
-              <option value="2024">2024</option>
-            </select>
-            <label for="graduationYear">年</label>
-            </div>
-            <div style="display:inline-block;">
-            <select th:field="*{graduationMonth}" required>
-              <option value="default">選択してください</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-              <option value="11">11</option>
-              <option value="12">12</option>
-            </select>
-            <label for="graduationMonth">月</label>
-            </div>
-            <div style="display:inline-block;">卒業予定</div>
-            <p th:if="${#fields.hasErrors('graduationYear') || #fields.hasErrors('graduationMonth')}"  class="hazard"><i class="fas fa-exclamation-circle"></i>必須項目です</p>
-          </div>
-        </div>
-        <div class="form-item">
-          <p>最終学歴</p>
-          <div>
-            <input type="radio" th:field="*{academicDegree}" value="学部卒" required>
-            <label th:for="${#ids.prev('academicDegree')}">学部卒</label>
-            <input type="radio" th:field="*{academicDegree}" value="修士卒">
-            <label th:for="${#ids.prev('academicDegree')}">修士卒</label>
-            <input type="radio" th:field="*{academicDegree}" value="博士卒">
-            <label th:for="${#ids.prev('academicDegree')}">博士卒</label>
-            <p th:if="${#fields.hasErrors('academicDegree')}"  class="hazard"><i class="fas fa-exclamation-circle"></i>必須項目です</p>
-          </div>
-        </div>
-        <div class="form-item">
           <p>サークル等での役職（複数選択可）</p>
           <div style="text-align:center;">
             <span th:each="pos : ${positionList}" class="position-tag">
@@ -281,8 +281,10 @@
           </div>
         </div>
         <div>
-          <input type="checkbox" th:field="*{applyLineNotify}" checked>
-          <label th:for="${#ids.prev('applyLineNotify')}"><strong>LINE通知を受け取る</strong></label>
+          <p>
+            <input type="checkbox" th:field="*{applyLineNotify}">
+            <label th:for="${#ids.prev('applyLineNotify')}"><strong>LINE通知を受け取る</strong></label>
+          </p>
           <p>LINE通知を受け取ると、ダンサーズキャリアからのメールを受信した際にLINEにも同じ内容の文章が届きます。</p>
         </div>
         <div>

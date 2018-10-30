@@ -62,7 +62,9 @@ public class SignupController {
 	@GetMapping("/profile")
 	public String getSignupProfile(Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute(new ProfileForm());
+		ProfileForm form = new ProfileForm();
+		form.setApplyLineNotify(true);
+		model.addAttribute(form);
 		return "signup/profileForm";
 	}
 	
