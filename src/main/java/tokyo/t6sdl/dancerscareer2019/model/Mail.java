@@ -7,7 +7,7 @@ public class Mail {
 	public static final String CONTEXT_PATH = "https://dancers-career-2019-stg.herokuapp.com";
 	public static final String URI_VERIFY_EMAIL = Mail.CONTEXT_PATH + "/signup/verify-email?token=";
 	public static final String URI_RESET_PWD = Mail.CONTEXT_PATH + "/signin/forget-pwd?token=";
-	public static final String NAME_OF_SUPPORT = "（仮）ダンサーズキャリア事務局";
+	public static final String NAME_OF_SUPPORT = "ダンサーズキャリア";
 	public static final String TO_SUPPORT = "dancerscareer_support@t6sdl.tokyo";
 	public static final String TO_ERROR = "dancerscareer_error@t6sdl.tokyo";
 	public static final String SUB_WELCOME_TO_US = "ダンサーズキャリアへようこそ！";
