@@ -246,6 +246,7 @@
     box-sizing: border-box;
     border-bottom: 2px solid #aaaaaa;
     counter-increment: step;
+    z-index: 999;
   }
   #how .step::after {
     content: 'step' counter(step);
@@ -260,7 +261,7 @@
     overflow: hidden;
   }
   #how .step p {
-    margin-top: 0;
+    margin: 0;
   }
   #how a.link-button {
     margin: .5em auto;
