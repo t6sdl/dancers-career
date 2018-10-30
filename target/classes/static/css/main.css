@@ -617,7 +617,7 @@ input[type="tel"] {
   color: white;
   cursor: pointer;
   transition: background .3s ease-in-out;
-  width: 100%;
+  min-width: 100%;
   height: 40px;
 }
 
@@ -741,7 +741,7 @@ hr {
 button {
   background: #89c3eb;
   border: 0;
-  width: 100px;
+  min-width: 100px;
   height: 30px;
   border-radius: 3px;
   color: white;
@@ -756,7 +756,7 @@ button:hover {
 .button {
   background: #89c3eb;
   border: 0;
-  width: 100px;
+  min-width: 100px;
   height: 30px;
   border-radius: 3px;
   color: white;
