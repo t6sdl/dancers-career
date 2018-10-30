@@ -1,3 +1,5 @@
+@font-face('utf-8');
+
 /* ----- common ----- */
 body {
   margin: 0px;
@@ -8,6 +10,10 @@ body {
   line-height: 2;
   color: #333;
   -webkit-text-size-adjust: none;
+}
+
+main {
+  margin: 2em 5%;
 }
 
 a {
@@ -734,10 +740,6 @@ hr {
   padding: 1em;
 }
 
-main {
-  margin: 50px;
-}
-
 button {
   background: #89c3eb;
   border: 0;
@@ -769,6 +771,7 @@ button:hover {
 }
 
 #tab {
+  margin 2em 0;
   width: 100%;
 }
 
@@ -815,7 +818,6 @@ button:hover {
 }
 
 .sidebutton a::after {
-  content: 'アカウント';
   position: absolute;
   top: 0;
   left: 0;
@@ -829,8 +831,20 @@ button:hover {
   transition: opacity .3s;
 }
 
+.sidebutton:nth-of-type(1) a::after {
+  content: 'マイページ';
+}
+
+.sidebutton:nth-of-type(2) a::after {
+  content: 'アカウント';
+}
+
+.sidebutton:nth-of-type(3) a::after {
+  content: 'プロフィール';
+}
+
 .sidebutton a:hover::after {
-  opacity: 0;
+  opacity: 1;
 }
 
 
@@ -853,13 +867,11 @@ button:hover {
   #formdef form {
     width: 85%;
   }
-
 }
 
 
 /* ----- 800px - 480px ----- */
 @media screen and (max-width:800px){
-
   body{
     margin: 0px;
     padding: 0px;
@@ -953,20 +965,14 @@ button:hover {
     width: 100%;
     text-align: center;
   }
-
 }
 
 /* ----- 480px ----- */
 @media screen and (max-width:480px){
-
   body {
     margin: 0px;
     padding: 0px;
     font-size: 12px;
-  }
-
-  main {
-    margin: 10px;
   }
 
 
@@ -995,11 +1001,11 @@ button:hover {
   
   #tab ul {
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
   }
 
   .sidebutton {
     width: 50%;
+    margin: .3em 0;
   }
-  
 }
