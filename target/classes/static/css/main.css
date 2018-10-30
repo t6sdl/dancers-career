@@ -518,7 +518,7 @@ after { clear: both; }
   z-index: -1;
 }
 
-#formdef{
+#formdef {
   margin: 5em auto;
   padding: 2em 1em;
   text-align: center;
@@ -590,7 +590,7 @@ input[type="email"] {
 input[type="submit"] {
   background: #89c3eb !important;
   border: 0;
-  width: 100%;
+  width: 90%;
   height: 40px;
   border-radius: 3px !important;
   color: white;
@@ -607,7 +607,8 @@ input[type="text"] {
   border-radius: 3px 3px 3px 3px;
   margin: .5em 0;
   padding: 0 16px;
-  width: 90%;
+  width: 45%;
+  min-width: 200px;
   height: 50px;
 }
 
@@ -615,7 +616,8 @@ input[type="tel"] {
   border-radius: 3px 3px 3px 3px;
   margin: .5em 0;
   padding: 0 16px;
-  width: 250px;
+  min-width: 200px;
+  width: 45%;
   height: 50px;
 }
 
