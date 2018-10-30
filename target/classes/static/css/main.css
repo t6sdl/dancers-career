@@ -35,7 +35,7 @@ a:hover {
 h1 {
   text-align: center;
   color: #426579;
-  margin:auto;
+  margin: auto;
 }
 
 li {
@@ -511,7 +511,7 @@ after { clear: both; }
 
 #formdef{
   margin: 5em auto;
-  padding: 1em;
+  padding: 2em 1em;
   text-align: center;
   background: #ffffffaa;
   width: 50%;
@@ -521,14 +521,13 @@ after { clear: both; }
 
 #formdef form {
   margin: auto;
-  padding: 20px 0;
   width: 80%;
   height: auto;
 }
 
 #formdefw {
   margin: 5em auto;
-  padding: 1em;
+  padding: 2em 1em;
   text-align: center;
   background: #ffffffaa;
   width: 70%;
@@ -538,7 +537,6 @@ after { clear: both; }
 
 #formdefw form {
   margin: auto;
-  padding: 20px 0;
   width: 80%;
   height: auto;
 }
