@@ -11,7 +11,8 @@
 </head>
 <body class="formbg2">
   <header th:replace="common/header :: ${header}"></header>
-  <main id="formdefw">
+  <main>
+    <div id="formdefw">
     <h1>お問い合わせ</h1>
     <form th:action="@{/about/contact}" method="post" th:object="${contactForm}">
       <div>
@@ -26,6 +27,7 @@
         <input type="submit" value="送信する">
       </div>
     </form>
+    </div>
   </main>
   <footer th:replace="common/footer :: footer"></footer>
   <script th:src="@{/js/submit.js}"></script>

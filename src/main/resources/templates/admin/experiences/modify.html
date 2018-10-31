@@ -155,6 +155,13 @@
 <input type="hidden" id="hiddenDep" th:value="${hiddenDep == null ? '' : hiddenDep}">
 </div>
 </div>
+<div style="display:none;">
+<p>大学院・研究科・専攻</p>
+<input type="text" th:field="*{gradSchoolPref}">
+<input type="text" th:field="*{gradSchoolName}">
+<input type="text" th:field="*{gradSchoolOf}">
+<input type="text" th:field="*{programIn}">
+</div>
 <div>
 <p>サークルなどでの役職・役割（複数選択可・必須）</p>
 <th:block th:each="pos : ${positionList}">
