@@ -147,8 +147,8 @@
 <div style="display:flex;justify-content:space-between">
 <span th:text="|PV数 *{page_view} ｜ お気に入り登録者数 *{likes}|"></span>
 <span>
-<a th:href="@{/admin/experiences/{experienceId}(experienceId=*{experience_id})}"><button>詳細を見る</button></a>
-<a th:href="@{/admin/experiences/{experienceId}?delete(experienceId=*{experience_id})}"><button>消去する</button></a>
+<a class="button" th:href="@{/admin/experiences/{experienceId}(experienceId=*{experience_id})}">詳細を見る</a>
+<a class="button" th:href="@{/admin/experiences/{experienceId}?delete(experienceId=*{experience_id})}">消去する</a>
 </span>
 </div>
 </article>

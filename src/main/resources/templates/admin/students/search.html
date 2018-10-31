@@ -139,7 +139,7 @@ td, th {
 <p style="text-align:center;">検索結果： <span th:text="${count}"></span> 件</p>
 </div>
 <section th:if="${count == 0 ? false : true}">
-<div th:with="downloadURL=(${#request.requestURI + '/download?' + #strings.defaultString(#request.queryString, '')})"><a th:href="@{__${downloadURL}__}"><button>Excel形式で出力</button></a></div>
+<div th:with="downloadURL=(${#request.requestURI + '/download?' + #strings.defaultString(#request.queryString, '')})"><a class="button" th:href="@{__${downloadURL}__}">Excel形式で出力</a></div>
 <article><p>メールアドレス一覧</p><p th:text="${emails}"></p></article>
 <article th:each="student : ${students}">
 <div>

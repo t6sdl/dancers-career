@@ -29,7 +29,6 @@ a {
 
 a:hover {
   color: #0000cd;
-  text-decoration: none;
 }
 
 h1 {
@@ -735,18 +734,20 @@ hr {
 }
 
 .button {
-  background: #89c3eb;
-  border: 0;
+  display: inline-block;
   min-width: 100px;
-  height: 30px;
+  line-height: 2.6;
+  background: #89c3eb;
   border-radius: 3px;
-  color: white;
+  color: #ffffff;
+  font-size: .9em;
   cursor: pointer;
-  transition: background 0.3s ease-in-out;
+  transition: background .3s ease-in-out;
 }
 
 .button:hover {
   background: #426579;
+  color: #ffffff;
 }
 
 
