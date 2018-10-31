@@ -60,6 +60,13 @@
 <input type="hidden" th:field="*{faculty}">
 <input type="hidden" th:field="*{department}">
 </div>
+<div style="display:none;">
+<p>大学院・研究科・専攻</p>
+<input type="hidden" th:field="*{gradSchoolPref}">
+<input type="hidden" th:field="*{gradSchoolName}">
+<input type="hidden" th:field="*{gradSchoolOf}">
+<input type="hidden" th:field="*{programIn}">
+</div>
 <div>
 <p>サークルなどでの役職・役割</p>
 <p><span th:each="pos : *{position}" th:text="|【${pos}】 |"></span></p>
