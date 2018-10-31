@@ -63,7 +63,7 @@
 </div>
 <hr>
 <div style="text-align:right;">
-<a th:href="@{/admin/experiences/{experienceId}?modify(experienceId=*{experience_id})}"><button>提供者情報を修正する</button></a>
+<a class="button" th:href="@{/admin/experiences/{experienceId}?modify(experienceId=*{experience_id})}">提供者情報を修正する</a>
 </div>
 </fieldset>
 <fieldset>
@@ -75,13 +75,13 @@
 <p>回答：<br><span th:text="*{es[__${loop.index}__].answer.get(0)} == '' ? '【非公開】' : *{es[__${loop.index}__].answer.get(0)}"></span></p>
 <p>赤入れ：<br><span th:text="*{es[__${loop.index}__].advice.get(0)} == '' ? '【非公開】' : *{es[__${loop.index}__].advice.get(0)}"></span></p>
 <div style="text-align:right;">
-<a th:href="@{/admin/experiences/{experienceId}/es/{esId}?modify(experienceId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}"><button>このESを修正する</button></a>
-<a th:href="@{/admin/experiences/{experienceId}/es/{esId}?delete(experienceId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}"><button>このESを消去する</button></a>
+<a class="button" th:href="@{/admin/experiences/{experienceId}/es/{esId}?modify(experienceId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}">このESを修正する</a>
+<a class="button" th:href="@{/admin/experiences/{experienceId}/es/{esId}?delete(experienceId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}">このESを消去する</a>
 </div>
 <hr>
 </div>
 <div>
-<a th:href="@{/admin/experiences/{experienceId}/es/new(experienceId=*{experience_id})}"><button>ESを追加する</button></a>
+<a class="button" th:href="@{/admin/experiences/{experienceId}/es/new(experienceId=*{experience_id})}">ESを追加する</a>
 </div>
 </fieldset>
 <fieldset>
@@ -90,17 +90,17 @@
 <p>設問：<span th:text="*{interview[__${loop.index}__].question} == '' ? '【非公開】' : *{interview[__${loop.index}__].question}"></span></p>
 <p>回答：<br><span th:text="*{interview[__${loop.index}__].answer} == '' ? '【非公開】' : *{interview[__${loop.index}__].answer}"></span></p>
 <div style="text-align:right;">
-<a th:href="@{/admin/experiences/{experienceId}/interview/{interviewId}?modify(experienceId=*{experience_id},interviewId=*{interview[__${loop.index}__].interview_id})}"><button>このInterviewを修正する</button></a>
-<a th:href="@{/admin/experiences/{experienceId}/interview/{interviewId}?delete(experienceId=*{experience_id},interviewId=*{interview[__${loop.index}__].interview_id})}"><button>このInterviewを消去する</button></a>
+<a class="button" th:href="@{/admin/experiences/{experienceId}/interview/{interviewId}?modify(experienceId=*{experience_id},interviewId=*{interview[__${loop.index}__].interview_id})}">このInterviewを修正する</a>
+<a class="button" th:href="@{/admin/experiences/{experienceId}/interview/{interviewId}?delete(experienceId=*{experience_id},interviewId=*{interview[__${loop.index}__].interview_id})}">このInterviewを消去する</a>
 </div>
 <hr>
 </div>
 <div>
-<a th:href="@{/admin/experiences/{experienceId}/interview/new(experienceId=*{experience_id})}"><button>Interviewを追加する</button></a>
+<a class="button" th:href="@{/admin/experiences/{experienceId}/interview/new(experienceId=*{experience_id})}">Interviewを追加する</a>
 </div>
 </fieldset>
 <div style="text-align:right;">
-<a th:href="@{/admin/experiences/{experienceId}?delete(experienceId=*{experience_id})}"><button>このES/体験記を消去する</button></a>
+<a class="button" th:href="@{/admin/experiences/{experienceId}?delete(experienceId=*{experience_id})}">このES/体験記を消去する</a>
 </div>
 </article>
 </main>
