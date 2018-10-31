@@ -4,8 +4,10 @@
   <title>ES/体験記｜ダンサーズキャリア</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}" href="../../static/css/form.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/experience.css}" href="../../static/css/experience.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../static/js/openclose.js"></script>
 </head>
@@ -29,7 +31,7 @@
     </form>
     <hr>
     <div>
-      <p id="smltxt"><i class="fas fa-search fa-fw"></i> 検索結果： <span th:text="${count}"></span> 件</p>
+      <p style="font-size:12px; color:#606468;"><i class="fas fa-search fa-fw"></i> 検索結果： <span th:text="${count}"></span> 件</p>
     </div>
     <section th:if="${count == 0 ? false : true}">
       <article th:each="experience : ${experiences}" th:object="${experience}" class="exp-container">

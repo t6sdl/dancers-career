@@ -14,7 +14,7 @@
   <!-- 普通のユーザー用のヘッダー -->
   <header id="for-user" th:fragment="for-user">
     <div class="inner">
-      <h1 id="logo"><a th:href="@{/}"><img alt="ダンサーのための就活サイト" th:src="@{/img/logo1.png}" src="../../static/img/logo1.png"></a></h1>
+      <h1 id="logo"><a th:href="@{/}"><img alt="ダンサーのための就活サイト" th:src="@{/img/logo.png}" src="../../static/img/logo.png"></a></h1>
       <nav id="menubar">
         <ul>
           <li><a th:href="@{/}"><span>ダンサーズキャリアとは</span><br>About Dancers Career</a></li>
@@ -23,7 +23,7 @@
         </ul>
       </nav>
       <div id="logout">
-        <a th:href="@{/logout}" class="square_btn">ログアウト</a>
+        <a th:href="@{/logout}">ログアウト</a>
       </div>
     </div>
     <div id="menubar_hdr" class="close"></div>
@@ -54,7 +54,7 @@
   <!-- 管理者アカウント用のヘッダー -->
   <header id="for-admin" th:fragment="for-admin">
     <div class="inner">
-      <h1 id="logo"><a th:href="@{/}"><img alt="ダンサーのための就活サイト" th:src="@{/img/logo1.png}" src="../../static/img/logo1.png"></a></h1>
+      <h1 id="logo"><a th:href="@{/}"><img alt="ダンサーのための就活サイト" th:src="@{/img/logo.png}" src="../../static/img/logo.png"></a></h1>
       <nav id="menubar">
         <ul>
           <li><a th:href="@{/admin/search/students?all&sort=0}"><span>登録学生検索</span><br>Search Students</a></li>
@@ -64,7 +64,7 @@
         </ul>
       </nav>
       <div id="logout">
-        <a th:href="@{/logout}" class="square_btn">ログアウト</a>
+        <a th:href="@{/logout}">ログアウト</a>
       </div>
     </div>
     <div id="menubar_hdr" class="close"></div>
@@ -99,7 +99,7 @@
   <!-- ログインしていない人用のヘッダー -->
   <header id="for-stranger" th:fragment="for-stranger">
     <div class="inner">
-      <h1 id="logo"><a th:href="@{/}"><img alt="ダンサーのための就活サイト" th:src="@{/img/logo1.png}" src="../../static/img/logo1.png" class="header-logo"></a></h1>
+      <h1 id="logo"><a th:href="@{/}"><img alt="ダンサーのための就活サイト" th:src="@{/img/logo.png}" src="../../static/img/logo.png" class="header-logo"></a></h1>
       <nav id="menubar">
       </nav>
     </div>

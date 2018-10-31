@@ -4,8 +4,9 @@
   <title>ES/体験記｜ダンサーズキャリア</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/experience.css}" href="../../static/css/experience.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../static/js/openclose.js"></script>
 </head>
@@ -22,8 +23,8 @@
           <p><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></p>
           <h1>
             <span th:text="*{univ_name} == '' ? '非公開' : *{univ_name}"></span>
-            <span th:text="*{faculty}" id="fac"></span>
-            <span th:text="*{department}" id="dep"></span>
+            <span th:text="*{faculty}"></span>
+            <span th:text="*{department}"></span>
           </h1>
           <p th:if="*{last_name != '' && first_name != ''}" th:text="|*{last_name} *{first_name} さん|"></p>
           <p>所属サークル：<span th:each="cl : *{club}" th:text="|${cl == '' ? '非公開' : cl} |"></span></p>

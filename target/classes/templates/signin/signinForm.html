@@ -5,8 +5,10 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
-  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/window.css}" href="../../static/css/window.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}" href="../../static/css/form.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../static/js/openclose.js"></script>
 </head>
@@ -18,7 +20,7 @@
     <h1>ログイン</h1>
     <form name='form-login' th:action="@{/login}" method="post">
       <p class="hazard" th:if="${param.error}"><i class="fas fa-exclamation-circle"></i>メールアドレスまたはパスワードに誤りがあります</p>
-      <input type="email" placeholder="Email" name="email" class="form"><br><input type="password" placeholder="Password" name="password" class="form">
+      <input type="email" placeholder="Email" name="email"><br><input type="password" placeholder="Password" name="password">
 
       <div>
         <input type="checkbox" id="remember-me" name="remember-me">

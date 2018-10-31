@@ -4,8 +4,10 @@
   <title>アカウント作成｜ダンサーズキャリア</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
-    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/window.css}" href="../../static/css/window.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}" href="../../static/css/form.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../static/js/openclose.js"></script>
 </head>
@@ -14,24 +16,24 @@
   <main>
   <div id="formdef">
     <h1>アカウント作成</h1>
-    <form th:action="@{/signup}" method="post" th:object="${signupForm}" class="form">
+    <form th:action="@{/signup}" method="post" th:object="${signupForm}">
 
       <p th:if="${param.error}" class="hazard"><i class="fas fa-exclamation-circle"></i>アカウントの作成に失敗しました<br>もう一度お試しください</p>
       <div>
         <label for="newEmail"></label>
         <!-- th:errorclassの値は入力値が不正の場合に付与するクラスなので、この場合エラー時にinputタグにerrorクラスが付きます -->
-        <input type="email" th:field="*{newEmail}" th:errorclass="error" required class="form" placeholder="メールアドレス">
+        <input type="email" th:field="*{newEmail}" th:errorclass="error" required placeholder="メールアドレス">
         <!-- エラーの内容を表示する部分で、エラーの数だけpタグが生成されます、ので、pタグじゃない方が良ければ変更します -->
         <p th:if="${#fields.hasErrors('newEmail')}" th:errors="*{newEmail}"></p>
       </div>
       <div>
         <label for="newPassword"></label>
-        <input type="password" th:field="*{newPassword}" th:errorclass="error" required class="form" placeholder="パスワード">
+        <input type="password" th:field="*{newPassword}" th:errorclass="error" required placeholder="パスワード">
         <p th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}"></p>
       </div>
       <div>
         <label for="confirm"></label>
-        <input type="password" th:field="*{confirm}" th:errorclass="error" required class="form" placeholder="パスワード(確認)">
+        <input type="password" th:field="*{confirm}" th:errorclass="error" required placeholder="パスワード(確認)">
         <p th:if="${#fields.hasGlobalErrors()}" th:errors="*{global}"></p>
       </div>
       <div class="caption">
