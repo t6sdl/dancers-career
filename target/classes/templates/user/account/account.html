@@ -29,7 +29,7 @@
             <td th:text="${email}"></td>
           </tr>
           <tr>
-            <td><span th:unless="${validEmail}"><i class="fas fa-exclamation-circle"></i>メールアドレス未確認 <a th:href="@{/user/account/help}"><i class="far fa-question-circle"></i>メールが届かない</a></span><span th:if="${validEmail}">メールアドレス確認済</span></td>
+            <td style="font-size:.8em;"><span th:unless="${validEmail}"><i class="fas fa-exclamation-circle"></i>メールアドレス未確認 <a th:href="@{/user/account/help}"><i class="far fa-question-circle"></i>メールが届かない</a></span><span th:if="${validEmail}">メールアドレス確認済</span></td>
           </tr>
         </tbody>
         <tbody>
