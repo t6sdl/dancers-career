@@ -22,7 +22,7 @@ CREATE TABLE profiles (
   likes VARCHAR(255) NOT NULL DEFAULT '',
   PRIMARY KEY (email),
   KEY ix_name (kana_last_name, kana_first_name),
-  KEY ix_univ (prefecture, university, faculty, department),
+  KEY ix_univ (univ_pref, univ_name, faculty, department),
   FOREIGN KEY (email) REFERENCES accounts (email) ON DELETE CASCADE ON UPDATE CASCADE
 ) CHARACTER SET utf8;
 
