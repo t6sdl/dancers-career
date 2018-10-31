@@ -90,10 +90,14 @@ header #logo a {
 }
 
 header #logo img {
-  max-width: 180px;
-  min-width: 160px;
-  width: 20%;
+  max-width: 160px;
+  min-width: 100px;
+  width: 20vw;
   transition: .2s;
+}
+
+header#for-admin #logo img {
+  max-width: 120px;
 }
 
 header #logo img:hover {
@@ -159,6 +163,11 @@ header #logo img:hover {
   border-right: solid 1px;
   border-color: #426579;
   text-align: center;
+}
+
+#for-admin #menubar li {
+  min-width: 130px;
+  width: 13vw;
 }
 
 #menubar #lastli {
