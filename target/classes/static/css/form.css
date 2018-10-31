@@ -17,7 +17,7 @@ select {
 }
 
 textarea {
-  width: 100%;
+  width: 90%;
   border-radius: 3px 3px 3px 3px;
   margin-bottom: 1em;
   padding: 0 16px;
@@ -63,10 +63,23 @@ input[type="submit"] {
 }
 
 input[type="button"] {
+  background: #89c3eb;
+  border: 0;
+  min-width: 100px;
+  height: 40px;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  transition: background .3s ease-in-out;
+  margin: .5em 0;
   -webkit-appearance: none;
 }
 
 input[type="submit"]:hover {
+  background: #426579;
+}
+
+input[type="button"]:hover {
   background: #426579;
 }
 
@@ -86,6 +99,10 @@ input[type="tel"] {
   min-width: 200px;
   width: 45%;
   height: 50px;
+}
+
+form {
+  text-align: center;
 }
 
 .form-item {
