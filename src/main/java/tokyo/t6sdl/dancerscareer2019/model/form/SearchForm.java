@@ -8,8 +8,8 @@ import lombok.Data;
 public class SearchForm {
 	private String kanaLastName;
 	private String kanaFirstName;
-	private String prefecture;
-	private String university;
+	private String univPref;
+	private String univName;
 	private String faculty;
 	private String department;
 	private List<String> position;
@@ -22,8 +22,8 @@ public class SearchForm {
 	public void clean() {
 		this.setKanaLastName(null);
 		this.setKanaFirstName(null);
-		this.setPrefecture(null);
-		this.setUniversity(null);
+		this.setUnivPref(null);
+		this.setUnivName(null);
 		this.setFaculty(null);
 		this.setDepartment(null);
 		this.setPosition(null);

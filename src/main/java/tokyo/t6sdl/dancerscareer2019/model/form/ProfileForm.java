@@ -39,16 +39,24 @@ public class ProfileForm {
 	private String major;
 	@NotEmpty
 	@Pattern(regexp="^(?!default).*$")
-	private String prefecture;
+	private String univPref;
 	@NotEmpty
 	@Pattern(regexp="^(?!default).*$")
-	private String university;
+	private String univName;
 	@NotEmpty
 	@Pattern(regexp="^(?!default).*$")
 	private String faculty;
 	@NotEmpty
 	@Pattern(regexp="^(?!default).*$")
 	private String department;
+	@NotEmpty
+	private String gradSchoolPref;
+	@NotEmpty
+	private String gradSchoolName;
+	@NotEmpty
+	private String gradSchoolOf;
+	@NotEmpty
+	private String programIn;
 	@NotEmpty
 	@Pattern(regexp="^[0-9]+$")
 	private String graduationYear;

@@ -96,10 +96,14 @@ public class ProfileService {
 		profile.setSex(form.getSex());
 		profile.setPhone_number(form.getPhoneNumber());
 		profile.setMajor(form.getMajor());
-		profile.setPrefecture(form.getPrefecture());
-		profile.setUniversity(form.getUniversity());
+		profile.setUniv_pref(form.getUnivPref());
+		profile.setUniv_name(form.getUnivName());
 		profile.setFaculty(form.getFaculty());
 		profile.setDepartment(form.getDepartment());
+		profile.setGrad_school_pref(form.getGradSchoolPref());
+		profile.setGrad_school_name(form.getGradSchoolName());
+		profile.setGrad_school_of(form.getGradSchoolOf());
+		profile.setProgram_in(form.getProgramIn());
 		profile.setGraduation(graduation);
 		profile.setAcademic_degree(form.getAcademicDegree());
 		profile.setPosition(form.getPosition());
@@ -109,7 +113,7 @@ public class ProfileService {
 	public ProfileForm convertProfileIntoProfileForm(Profile profile) {
 		if (Objects.equals(profile, null)) {
 			ProfileForm form = new ProfileForm();
-			form.setUniversity("");
+			form.setUnivName("");
 			form.setFaculty("");
 			form.setDepartment("");
 			return form;
@@ -129,10 +133,14 @@ public class ProfileService {
 		form.setSex(profile.getSex());
 		form.setPhoneNumber(profile.getPhone_number());
 		form.setMajor(profile.getMajor());
-		form.setPrefecture(profile.getPrefecture());
-		form.setUniversity(profile.getUniversity());
+		form.setUnivPref(profile.getUniv_pref());
+		form.setUnivName(profile.getUniv_name());
 		form.setFaculty(profile.getFaculty());
 		form.setDepartment(profile.getDepartment());
+		form.setGradSchoolPref(profile.getGrad_school_pref());
+		form.setGradSchoolName(profile.getGrad_school_name());
+		form.setGradSchoolOf(profile.getGrad_school_of());
+		form.setProgramIn(profile.getProgram_in());
 		form.setGraduationYear(split[0]);
 		form.setGraduationMonth(split[1]);
 		form.setAcademicDegree(profile.getAcademic_degree());
@@ -154,10 +162,14 @@ public class ProfileService {
 		student.setSex(profile.getSex());
 		student.setPhone_number(profile.getPhone_number());
 		student.setMajor(profile.getMajor());
-		student.setPrefecture(profile.getPrefecture());
-		student.setUniversity(profile.getUniversity());
+		student.setUniv_pref(profile.getUniv_pref());
+		student.setUniv_name(profile.getUniv_name());
 		student.setFaculty(profile.getFaculty());
 		student.setDepartment(profile.getDepartment());
+		student.setGrad_school_pref(profile.getGrad_school_pref());
+		student.setGrad_school_name(profile.getGrad_school_name());
+		student.setGrad_school_of(profile.getGrad_school_of());
+		student.setProgram_in(profile.getProgram_in());
 		student.setGraduation(profile.getGraduation());
 		student.setAcademic_degree(profile.getAcademic_degree());
 		student.setPosition(profile.getPosition());

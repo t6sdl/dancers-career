@@ -71,7 +71,7 @@ public class SignupController {
 	@PostMapping("/profile")
 	public String postSignupProfile(@Validated ProfileForm form, BindingResult result, Model model) {
 		if (result.hasErrors()) {
-			model.addAttribute("hiddenUniv", form.getUniversity());
+			model.addAttribute("hiddenUnivName", form.getUnivName());
 			model.addAttribute("hiddenFac", form.getFaculty());
 			model.addAttribute("hiddenDep", form.getDepartment());
 			model.addAttribute("positionList", Profile.POSITION_LIST);

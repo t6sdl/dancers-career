@@ -1,11 +1,11 @@
 $(function () {
 	const contextPath = $('#contextPath').val();
-	const $prefecture = $('#prefecture'),
-	$university = $('#university'),
+	const $univPref = $('#univPref'),
+	$univName = $('#univName'),
 	$faculty = $('#faculty'),
 	$department = $('#department'),
-	$hiddenPref = $('#hiddenPref'),
-	$hiddenUniv = $('#hiddenUniv'),
+	$hiddenUnivPref = $('#hiddenUnivPref'),
+	$hiddenUnivName = $('#hiddenUnivName'),
 	$hiddenFac = $('#hiddenFac'),
 	$hiddenDep = $('#hiddenDep');
 	let json;
@@ -17,24 +17,24 @@ $(function () {
 		$.ajaxSetup({async: true});
 	}
 	const setUniversity = function () {
-		$university.children('[value!=""]').remove();
+		$univName.children('[value!=""]').remove();
 		$faculty.children('[value!=""]').remove();
 		$department.children('[value!=""]').remove();
-		if ($prefecture.val() === '') {
+		if ($univPref.val() === '') {
 			return;
 		}
-		for (let univ in json[$prefecture.val()]) {
+		for (let univ in json[$univPref.val()]) {
 			let options = '<option value="' + univ + '">' + univ + '</option>';
-			$university.append(options);
+			$univName.append(options);
 		}
 	}
 	const setFaculty = function () {
 		$faculty.children('[value!=""]').remove();
 		$department.children('[value!=""]').remove();
-		if ($university.val() === '') {
+		if ($univName.val() === '') {
 			return;
 		}
-		for (let fac in json[$prefecture.val()][$university.val()]) {
+		for (let fac in json[$univPref.val()][$univName.val()]) {
 			let options = '<option value="' + fac + '">' + fac + '</option>';
 			$faculty.append(options);
 		}
@@ -44,18 +44,18 @@ $(function () {
 		if ($faculty.val() === '') {
 			return;
 		}
-		for (let i = 0; i < json[$prefecture.val()][$university.val()][$faculty.val()].length; i++) {
-			let dep = json[$prefecture.val()][$university.val()][$faculty.val()][i];
+		for (let i = 0; i < json[$univPref.val()][$univName.val()][$faculty.val()].length; i++) {
+			let dep = json[$univPref.val()][$univName.val()][$faculty.val()][i];
 			let options = '<option value="' + dep + '">' + dep + '</option>';
 			$department.append(options);
 		}
 	}
-	const initPrefecture = function () {
-		$prefecture.children('[value="' + $hiddenPref.val() + '"]').prop('selected', true);
+	const initUnivPref = function () {
+		$univPref.children('[value="' + $hiddenUnivPref.val() + '"]').prop('selected', true);
 	}
-	const initUniversity = function () {
+	const initUnivName = function () {
 		setUniversity();
-		$university.children('[value="' + $hiddenUniv.val() + '"]').prop('selected', true);
+		$univName.children('[value="' + $hiddenUnivName.val() + '"]').prop('selected', true);
 	}
 	const initFaculty = function () {
 		setFaculty();
@@ -66,15 +66,15 @@ $(function () {
 		$department.children('[value="' + $hiddenDep.val() + '"]').prop('selected', true);
 	}
 	prepJSON();
-	initPrefecture();
-	initUniversity();
+	initUnivPref();
+	initUnivName();
 	initFaculty();
 	initDepartment();
-	$prefecture.on('input', function (event) {
+	$univPref.on('input', function (event) {
 		event.preventDefault();
-		setUniversity();
+		setUnivName();
 	});
-	$university.on('input', function (event) {
+	$univName.on('input', function (event) {
 		event.preventDefault();
 		setFaculty();
 	});

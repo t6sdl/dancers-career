@@ -140,8 +140,8 @@ public class AdminController {
 	@RequestMapping(value="/search/students", params="by-university")
 	public String getSearchStudentsByUniveristy(SearchForm form, Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute("hiddenPref", form.getPrefecture());
-		model.addAttribute("hiddenUniv", form.getUniversity());
+		model.addAttribute("hiddenUnivPref", form.getUnivPref());
+		model.addAttribute("hiddenUnivName", form.getUnivName());
 		model.addAttribute("hiddenFac", form.getFaculty());
 		model.addAttribute("hiddenDep", form.getDepartment());
 		model.addAttribute(form);
@@ -153,13 +153,13 @@ public class AdminController {
 		}
 		Map<String, Object> result = new HashMap<String, Object>();
 		if (!(form.getDepartment().isEmpty())) {
-			result = profileService.getProfilesByDepartment(sortId, form.getPrefecture(), form.getUniversity(), form.getFaculty(), form.getDepartment());
+			result = profileService.getProfilesByDepartment(sortId, form.getUnivPref(), form.getUnivName(), form.getFaculty(), form.getDepartment());
 		} else if (!(form.getFaculty().isEmpty())) {
-			result = profileService.getProfilesByFaculty(sortId, form.getPrefecture(), form.getUniversity(), form.getFaculty());
-		} else if (!(form.getUniversity().isEmpty())) {
-			result = profileService.getProfilesByUniversity(sortId, form.getPrefecture(), form.getUniversity());
-		} else if (!(form.getPrefecture().isEmpty())) {
-			result = profileService.getProfilesByPrefecture(sortId, form.getPrefecture());
+			result = profileService.getProfilesByFaculty(sortId, form.getUnivPref(), form.getUnivName(), form.getFaculty());
+		} else if (!(form.getUnivName().isEmpty())) {
+			result = profileService.getProfilesByUniversity(sortId, form.getUnivPref(), form.getUnivName());
+		} else if (!(form.getUnivPref().isEmpty())) {
+			result = profileService.getProfilesByPrefecture(sortId, form.getUnivPref());
 		} else {
 			result = profileService.getProfiles(sortId);
 		}
@@ -340,8 +340,8 @@ public class AdminController {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		int id = Integer.parseInt(experienceId);
 		ExperienceForm form = experienceService.convertExperienceIntoExperienceForm(experienceService.getExperienceById(id, false, false));
-		model.addAttribute("hiddenPref", form.getPrefecture());
-		model.addAttribute("hiddenUniv", form.getUniversity());
+		model.addAttribute("hiddenUnivPref", form.getUnivPref());
+		model.addAttribute("hiddenUnivName", form.getUnivName());
 		model.addAttribute("hiddenFac", form.getFaculty());
 		model.addAttribute("hiddenDep", form.getDepartment());
 		model.addAttribute(form);
@@ -359,8 +359,8 @@ public class AdminController {
 				form.setInterview(this.cleanUp(form.getInterview(), new InterviewForm()));
 				if (result.hasErrors()) {
 					model.addAttribute("positionList", Profile.POSITION_LIST);
-					model.addAttribute("hiddenPref", form.getPrefecture());
-					model.addAttribute("hiddenUniv", form.getUniversity());
+					model.addAttribute("hiddenUnivPref", form.getUnivPref());
+					model.addAttribute("hiddenUnivName", form.getUnivName());
 					model.addAttribute("hiddenFac", form.getFaculty());
 					model.addAttribute("hiddenDep", form.getDepartment());
 					return "admin/experiences/submit";
@@ -371,8 +371,8 @@ public class AdminController {
 			default:
 				if (result.hasErrors()) {
 					model.addAttribute("positionList", Profile.POSITION_LIST);
-					model.addAttribute("hiddenPref", form.getPrefecture());
-					model.addAttribute("hiddenUniv", form.getUniversity());
+					model.addAttribute("hiddenUnivPref", form.getUnivPref());
+					model.addAttribute("hiddenUnivName", form.getUnivName());
 					model.addAttribute("hiddenFac", form.getFaculty());
 					model.addAttribute("hiddenDep", form.getDepartment());
 					return "admin/experiences/modify";
@@ -390,8 +390,8 @@ public class AdminController {
 	public String postNotCompleteExperiences(@Validated ExperienceForm form, BindingResult result, Model model) {
 		model.addAttribute("experienceId", "new");
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute("hiddenPref", form.getPrefecture());
-		model.addAttribute("hiddenUniv", form.getUniversity());
+		model.addAttribute("hiddenUnivPref", form.getUnivPref());
+		model.addAttribute("hiddenUnivName", form.getUnivName());
 		model.addAttribute("hiddenFac", form.getFaculty());
 		model.addAttribute("hiddenDep", form.getDepartment());
 		model.addAttribute(form);
@@ -545,8 +545,8 @@ public class AdminController {
 	@RequestMapping(value="/search/experiences", params="by-university")
 	public String getSearchExperiencesByUniveristy(SearchForm form, Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute("hiddenPref", form.getPrefecture());
-		model.addAttribute("hiddenUniv", form.getUniversity());
+		model.addAttribute("hiddenUnivPref", form.getUnivPref());
+		model.addAttribute("hiddenUnivName", form.getUnivName());
 		model.addAttribute("hiddenFac", form.getFaculty());
 		model.addAttribute("hiddenDep", form.getDepartment());
 		model.addAttribute(form);
@@ -558,13 +558,13 @@ public class AdminController {
 		}
 		Map<String, Object> result = new HashMap<String, Object>();
 		if (!(form.getDepartment().isEmpty())) {
-			result = experienceService.getExperiencesByDepartment(sortId, form.getPrefecture(), form.getUniversity(), form.getFaculty(), form.getDepartment());
+			result = experienceService.getExperiencesByDepartment(sortId, form.getUnivPref(), form.getUnivName(), form.getFaculty(), form.getDepartment());
 		} else if (!(form.getFaculty().isEmpty())) {
-			result = experienceService.getExperiencesByFaculty(sortId, form.getPrefecture(), form.getUniversity(), form.getFaculty());
-		} else if (!(form.getUniversity().isEmpty())) {
-			result = experienceService.getExperiencesByUniversity(sortId, form.getPrefecture(), form.getUniversity());
-		} else if (!(form.getPrefecture().isEmpty())) {
-			result = experienceService.getExperiencesByPrefecture(sortId, form.getPrefecture());
+			result = experienceService.getExperiencesByFaculty(sortId, form.getUnivPref(), form.getUnivName(), form.getFaculty());
+		} else if (!(form.getUnivName().isEmpty())) {
+			result = experienceService.getExperiencesByUniversity(sortId, form.getUnivPref(), form.getUnivName());
+		} else if (!(form.getUnivPref().isEmpty())) {
+			result = experienceService.getExperiencesByPrefecture(sortId, form.getUnivPref());
 		} else {
 			result = experienceService.getExperiences(sortId);
 		}

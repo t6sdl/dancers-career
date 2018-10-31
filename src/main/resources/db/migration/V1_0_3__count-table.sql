@@ -4,4 +4,4 @@ CREATE TABLE counts (
   PRIMARY KEY (name)
 ) CHARACTER SET utf8;
 
-INSERT INTO counts VALUES ('accounts', 3), ('profiles', 3), ('experiences', 3);
+INSERT INTO counts VALUES ('accounts', 0), ('profiles', 0), ('experiences', 0);

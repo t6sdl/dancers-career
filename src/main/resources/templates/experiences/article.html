@@ -21,7 +21,7 @@
         <div>
           <p><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></p>
           <h1>
-            <span th:text="*{university} == '' ? '非公開' : *{university}"></span>
+            <span th:text="*{univ_name} == '' ? '非公開' : *{univ_name}"></span>
             <span th:text="*{faculty}" id="fac"></span>
             <span th:text="*{department}" id="dep"></span>
           </h1>

@@ -12,10 +12,10 @@ public interface ExperienceRepository {
 	Map<String, Object> find(int sort);
 	Map<String, Object> findByName(int sort, String kanaLastName, String kanaFirstName);
 	Map<String, Object> findByLastName(int sort, String kanaLastName);
-	Map<String, Object> findByPrefecture(int sort, String prefecture);
-	Map<String, Object> findByUniversity(int sort, String prefecture, String university);
-	Map<String, Object> findByFaculty(int sort, String prefecture, String university, String faculty);
-	Map<String, Object> findByDepartment(int sort, String prefecture, String university, String faculty, String department);
+	Map<String, Object> findByPrefecture(int sort, String univPref);
+	Map<String, Object> findByUniversity(int sort, String univPref, String univName);
+	Map<String, Object> findByFaculty(int sort, String univPref, String univName, String faculty);
+	Map<String, Object> findByDepartment(int sort, String univPref, String univName, String faculty, String department);
 	Map<String, Object> findByPosition(int sort, List<String> position, boolean andSearch);
 	Es findEsById(int experience_id, int es_id);
 	Interview findInterviewById(int experience_id, int interview_id);

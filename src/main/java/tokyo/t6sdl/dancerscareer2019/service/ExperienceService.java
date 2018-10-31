@@ -113,10 +113,14 @@ public class ExperienceService {
 		experience.setKana_first_name(form.getKanaFirstName());
 		experience.setSex(form.getSex());
 		experience.setMajor(form.getMajor());
-		experience.setPrefecture(form.getPrefecture());
-		experience.setUniversity(form.getUniversity());
+		experience.setUniv_pref(form.getUnivPref());
+		experience.setUniv_name(form.getUnivName());
 		experience.setFaculty(form.getFaculty());
 		experience.setDepartment(form.getDepartment());
+		experience.setGrad_school_pref(form.getGradSchoolPref());
+		experience.setGrad_school_name(form.getGradSchoolName());
+		experience.setGrad_school_of(form.getGradSchoolOf());
+		experience.setProgram_in(form.getProgramIn());
 		experience.setGraduation(form.getGraduation());
 		experience.setAcademic_degree(form.getAcademicDegree());
 		experience.setPosition(form.getPosition());
@@ -175,10 +179,14 @@ public class ExperienceService {
 		form.setKanaFirstName(experience.getKana_first_name());
 		form.setSex(experience.getSex());
 		form.setMajor(experience.getMajor());
-		form.setPrefecture(experience.getPrefecture());
-		form.setUniversity(experience.getUniversity());
+		form.setUnivPref(experience.getUniv_pref());
+		form.setUnivName(experience.getUniv_name());
 		form.setFaculty(experience.getFaculty());
 		form.setDepartment(experience.getDepartment());
+		form.setGradSchoolPref(experience.getGrad_school_pref());
+		form.setGradSchoolName(experience.getGrad_school_name());
+		form.setGradSchoolOf(experience.getGrad_school_of());
+		form.setProgramIn(experience.getProgram_in());
 		form.setGraduation(experience.getGraduation());
 		form.setAcademicDegree(experience.getAcademic_degree());
 		form.setPosition(experience.getPosition());
@@ -197,14 +205,7 @@ public class ExperienceService {
 		}
 		List<EsForm> form = new ArrayList<EsForm>();
 		es.forEach(esItem -> {;
-			EsForm formItem = new EsForm();
-			formItem.setEsId(esItem.getEs_id());
-			formItem.setCorp(esItem.getCorp());
-			formItem.setResult(esItem.getResult());
-			formItem.setQuestion(esItem.getQuestion().get(0));
-			formItem.setAnswer(esItem.getAnswer().get(0));
-			formItem.setAdvice(esItem.getAdvice().get(0));
-			form.add(formItem);
+			form.add(this.convertEsIntoEsForm(esItem));
 		});
 		return form;
 	}
@@ -215,11 +216,7 @@ public class ExperienceService {
 		}
 		List<InterviewForm> form = new ArrayList<InterviewForm>();
 		interview.forEach(interviewItem -> {;
-			InterviewForm formItem = new InterviewForm();
-			formItem.setInterviewId(interviewItem.getInterview_id());
-			formItem.setQuestion(interviewItem.getQuestion());
-			formItem.setAnswer(interviewItem.getAnswer());
-			form.add(formItem);
+			form.add(this.convertInterviewIntoInterviewForm(interviewItem));
 		});
 		return form;
 	}

@@ -3,11 +3,11 @@ $(function () {
 	const $birthYear = $('#birthYear'),
 	$birthMonth = $('#birthMonth'),
 	$birthDay = $('#birthDay'),
-	$prefecture = $('#prefecture'),
-	$university = $('#university'),
+	$univPref = $('#univPref'),
+	$univName = $('#univName'),
 	$faculty = $('#faculty'),
 	$department = $('#department'),
-	$hiddenUniv = $('#hiddenUniv'),
+	$hiddenUnivName = $('#hiddenUnivName'),
 	$hiddenFac = $('#hiddenFac'),
 	$hiddenDep = $('#hiddenDep');
 	let json;
@@ -18,35 +18,35 @@ $(function () {
 		});
 		$.ajaxSetup({async: true});
 	}
-	const setUniversity = function () {
-		$university.children('[value!="default"]').remove();
+	const setUnivName = function () {
+		$univName.children('[value!="default"]').remove();
 		$faculty.children('[value!="default"]').remove();
 		$department.children('[value!="default"]').remove();
-		if ($prefecture.val() === 'default') {
-			$university.prop('disabled', true);
+		if ($univPref.val() === 'default') {
+			$univName.prop('disabled', true);
 			$faculty.prop('disabled', true);
 			$department.prop('disabled', true);
 			return;
 		}
-		$university.prop('disabled', false);
+		$univName.prop('disabled', false);
 		$faculty.prop('disabled', true);
 		$department.prop('disabled', true);
-		for (let univ in json[$prefecture.val()]) {
+		for (let univ in json[$univPref.val()]) {
 			let options = '<option value="' + univ + '">' + univ + '</option>';
-			$university.append(options);
+			$univName.append(options);
 		}
 	}
 	const setFaculty = function () {
 		$faculty.children('[value!="default"]').remove();
 		$department.children('[value!="default"]').remove();
-		if ($university.val() === 'default') {
+		if ($univName.val() === 'default') {
 			$faculty.prop('disabled', true);
 			$department.prop('disabled', true);
 			return;
 		}
 		$faculty.prop('disabled', false);
 		$department.prop('disabled', true);
-		for (let fac in json[$prefecture.val()][$university.val()]) {
+		for (let fac in json[$univPref.val()][$univName.val()]) {
 			let options = '<option value="' + fac + '">' + fac + '</option>';
 			$faculty.append(options);
 		}
@@ -58,15 +58,15 @@ $(function () {
 			return;
 		}
 		$department.prop('disabled', false);
-		for (let i = 0; i < json[$prefecture.val()][$university.val()][$faculty.val()].length; i++) {
-			let dep = json[$prefecture.val()][$university.val()][$faculty.val()][i];
+		for (let i = 0; i < json[$univPref.val()][$univName.val()][$faculty.val()].length; i++) {
+			let dep = json[$univPref.val()][$univName.val()][$faculty.val()][i];
 			let options = '<option value="' + dep + '">' + dep + '</option>';
 			$department.append(options);
 		}
 	}
-	const initUniversity = function () {
-		setUniversity();
-		$university.children('[value="' + $hiddenUniv.val() + '"]').prop('selected', true);
+	const initUnivName = function () {
+		setUnivName();
+		$univName.children('[value="' + $hiddenUnivName.val() + '"]').prop('selected', true);
 	}
 	const initFaculty = function () {
 		setFaculty();
@@ -117,7 +117,7 @@ $(function () {
 	setBirthMonth();
 	setBirthDay();
 	prepJSON();
-	initUniversity();
+	initUnivName();
 	initFaculty();
 	initDepartment();
 	$birthYear.on('input', function (event) {
@@ -128,11 +128,11 @@ $(function () {
 		event.preventDefault();
 		setBirthDay();
 	});
-	$prefecture.on('input', function (event) {
+	$univPref.on('input', function (event) {
 		event.preventDefault();
-		setUniversity();
+		setUnivName();
 	});
-	$university.on('input', function (event) {
+	$univName.on('input', function (event) {
 		event.preventDefault();
 		setFaculty();
 	});

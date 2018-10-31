@@ -188,7 +188,7 @@ public class UserPageController {
 			form = profileService.convertProfileIntoProfileForm(profile);
 		}
 		model.addAttribute(form);
-		model.addAttribute("hiddenUniv", form.getUniversity());
+		model.addAttribute("hiddenUnivName", form.getUnivName());
 		model.addAttribute("hiddenFac", form.getFaculty());
 		model.addAttribute("hiddenDep", form.getDepartment());
 		return "user/profile/changeProfile";
@@ -197,7 +197,7 @@ public class UserPageController {
 	@PostMapping("/profile/change")
 	public String postChangeProfile(@Validated ProfileForm form, BindingResult result, Model model) {
 		if (result.hasErrors()) {
-			model.addAttribute("hiddenUniv", form.getUniversity());
+			model.addAttribute("hiddenUnivName", form.getUnivName());
 			model.addAttribute("hiddenFac", form.getFaculty());
 			model.addAttribute("hiddenDep", form.getDepartment());
 			model.addAttribute("positionList", Profile.POSITION_LIST);

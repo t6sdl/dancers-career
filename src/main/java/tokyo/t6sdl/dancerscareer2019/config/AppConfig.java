@@ -41,9 +41,13 @@ public class AppConfig implements WebMvcConfigurer {
 	public DataSource dataSource() {
 		HikariConfig config = new HikariConfig();
 		config.setDriverClassName("com.mysql.jdbc.Driver");
-		config.setJdbcUrl("jdbc:mysql://us-cdbr-iron-east-01.cleardb.net/heroku_6ed62eaddfd562d");
-		config.setUsername("b23da6ad7dabc5");
-		config.setPassword("f5f14f28");
+//		--staging--
+//		config.setJdbcUrl("jdbc:mysql://us-cdbr-iron-east-01.cleardb.net/heroku_6ed62eaddfd562d");
+//		config.setUsername("b23da6ad7dabc5");
+//		config.setPassword("f5f14f28");
+		config.setJdbcUrl("jdbc:mysql://us-cdbr-iron-east-01.cleardb.net/heroku_355da0dbefbdd1d");
+		config.setUsername("ba75598b86a005");
+		config.setPassword("30b5c174");
 		config.setMaximumPoolSize(8);
 		config.setLeakDetectionThreshold(5000);
 		config.setConnectionInitSql("SET SESSION sql_mode='TRADITIONAL,NO_AUTO_VALUE_ON_ZERO,ONLY_FULL_GROUP_BY'");

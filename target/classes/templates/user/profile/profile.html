@@ -39,14 +39,6 @@
             <td th:text="*{phone_number == null ? '' : phone_number}"></td>
           </tr>
           <tr>
-            <th>文理</th>
-            <td th:text="*{major == null ? '' : major}"></td>
-          </tr>
-          <tr>
-            <th>大学・学部・学科</th>
-            <td th:text="|*{university == null ? '' : university} *{faculty == null ? '' : faculty} *{department == null ? '' : department}|"></td>
-          </tr>
-          <tr>
             <th>卒業年度</th>
             <td th:text="*{graduation == null ? '' : graduation + ' 卒業'}"></td>
           </tr>
@@ -55,11 +47,19 @@
             <td th:text="*{academic_degree == null ? '' : academic_degree}"></td>
           </tr>
           <tr>
+            <th>文理</th>
+            <td th:text="*{major == null ? '' : major}"></td>
+          </tr>
+          <tr>
+            <th>大学・学部・学科</th>
+            <td th:text="|*{univ_name == null ? '' : univ_name} *{faculty == null ? '' : faculty} *{department == null ? '' : department}|"></td>
+          </tr>
+          <tr>
             <th>サークル等での役職</th>
             <td><span th:each="pos : *{position == null ? '' : position}" th:text="${pos}" class="position-tag"></span></td>
           </tr>
         </table>
-        <div><a th:href="@{/user/profile/change}"><button>修正する</button></a></div>
+        <div><a th:href="@{/user/profile/change}"><button class="button">修正する</button></a></div>
       </div>
       </article>
       <aside th:replace="user/common/tab :: tab"></aside>

@@ -39,6 +39,34 @@
 <label th:for="${#ids.prev('sex')}">非公開</label>
 </div>
 <div>
+<p>卒業年度</p>
+<select th:field="*{graduation}">
+<option value="">非公開</option>
+<option value="2011">2011</option>
+<option value="2012">2012</option>
+<option value="2013">2013</option>
+<option value="2014">2014</option>
+<option value="2015">2015</option>
+<option value="2016">2016</option>
+<option value="2017">2017</option>
+<option value="2018">2018</option>
+<option value="2019">2019</option>
+<option value="2020">2020</option>
+</select>
+<label for="graduation">年度</label>
+</div>
+<div>
+<p>最終学歴</p>
+<input type="radio" th:field="*{academicDegree}" value="学部卒" required>
+<label th:for="${#ids.prev('academicDegree')}">学部卒</label>
+<input type="radio" th:field="*{academicDegree}" value="修士卒">
+<label th:for="${#ids.prev('academicDegree')}">修士卒</label>
+<input type="radio" th:field="*{academicDegree}" value="博士卒">
+<label th:for="${#ids.prev('academicDegree')}">博士卒</label>
+<input type="radio" th:field="*{academicDegree}" value="">
+<label th:for="${#ids.prev('academicDegree')}">非公開</label>
+</div>
+<div>
 <p>文理</p>
 <input type="radio" th:field="*{major}" value="文系" required>
 <label th:for="${#ids.prev('major')}">文系</label>
@@ -50,8 +78,8 @@
 <div>
 <p>大学・学部・学科</p>
 <div>
-<label for="prefecture">大学所在地</label>
-<select th:field="*{prefecture}">
+<label for="univPref">大学所在地</label>
+<select th:field="*{univPref}">
 <option value="">非公開</option>
 <option value="北海道">北海道</option>
 <option value="青森県">青森県</option>
@@ -101,16 +129,16 @@
 <option value="鹿児島県">鹿児島県</option>
 <option value="沖縄県">沖縄県</option>
 </select>
-<p th:if="${#fields.hasErrors('prefecture')}">必須項目です</p>
-<input type="hidden" id="hiddenPref" th:value="${hiddenPref == null ? '' : hiddenPref}">
+<p th:if="${#fields.hasErrors('univPref')}">必須項目です</p>
+<input type="hidden" id="hiddenUnivPref" th:value="${hiddenUnivPref == null ? '' : hiddenUnivPref}">
 </div>
 <div>
-<label for="university">大学</label>
-<select th:field="*{university}">
+<label for="univName">大学</label>
+<select th:field="*{univName}">
 <option value="">非公開</option>
 </select>
-<p th:if="${#fields.hasErrors('university')}">必須項目です</p>
-<input type="hidden" id="hiddenUniv" th:value="${hiddenUniv == null ? '' : hiddenUniv}">
+<p th:if="${#fields.hasErrors('univName')}">必須項目です</p>
+<input type="hidden" id="hiddenUnivName" th:value="${hiddenUnivName == null ? '' : hiddenUnivName}">
 </div>
 <div>
 <label for="faculty">学部</label>
@@ -126,34 +154,6 @@
 </select>
 <input type="hidden" id="hiddenDep" th:value="${hiddenDep == null ? '' : hiddenDep}">
 </div>
-</div>
-<div>
-<p>卒業年度</p>
-<select th:field="*{graduation}">
-<option value="">非公開</option>
-<option value="2011">2011</option>
-<option value="2012">2012</option>
-<option value="2013">2013</option>
-<option value="2014">2014</option>
-<option value="2015">2015</option>
-<option value="2016">2016</option>
-<option value="2017">2017</option>
-<option value="2018">2018</option>
-<option value="2019">2019</option>
-<option value="2020">2020</option>
-</select>
-<label for="graduation">年度</label>
-</div>
-<div>
-<p>最終学歴</p>
-<input type="radio" th:field="*{academicDegree}" value="学部卒" required>
-<label th:for="${#ids.prev('academicDegree')}">学部卒</label>
-<input type="radio" th:field="*{academicDegree}" value="修士卒">
-<label th:for="${#ids.prev('academicDegree')}">修士卒</label>
-<input type="radio" th:field="*{academicDegree}" value="博士卒">
-<label th:for="${#ids.prev('academicDegree')}">博士卒</label>
-<input type="radio" th:field="*{academicDegree}" value="">
-<label th:for="${#ids.prev('academicDegree')}">非公開</label>
 </div>
 <div>
 <p>サークルなどでの役職・役割（複数選択可・必須）</p>
