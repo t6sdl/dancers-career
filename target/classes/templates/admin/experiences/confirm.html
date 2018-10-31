@@ -35,22 +35,6 @@
 <input type="hidden" th:field="*{sex}">
 </div>
 <div>
-<p>文理</p>
-<p>【<span th:text="*{major} == '' ? '非公開' : *{major}"></span>】</p>
-<input type="hidden" th:field="*{major}">
-</div>
-<div>
-<p>大学・学部・学科</p>
-<p>大学所在地：【<span th:text="*{prefecture} == '' ? '非公開' : *{prefecture}"></span>】
-大学：【<span th:text="*{university} == '' ? '非公開' : *{university}"></span>】
-学部：【<span th:text="*{faculty} == '' ? '非公開' : *{faculty}"></span>】
-学科：【<span th:text="*{department} == '' ? '非公開' : *{department}"></span>】</p>
-<input type="hidden" th:field="*{prefecture}">
-<input type="hidden" th:field="*{university}">
-<input type="hidden" th:field="*{faculty}">
-<input type="hidden" th:field="*{department}">
-</div>
-<div>
 <p>卒業年度</p>
 <p>【<span th:text="*{graduation} == '' ? '非公開' : *{graduation}"></span>】 年度</p>
 <input type="hidden" th:field="*{graduation}">
@@ -59,6 +43,22 @@
 <p>最終学歴</p>
 <p>【<span th:text="*{academicDegree} == '' ? '非公開' : *{academicDegree}"></span>】</p>
 <input type="hidden" th:field="*{academicDegree}">
+</div>
+<div>
+<p>文理</p>
+<p>【<span th:text="*{major} == '' ? '非公開' : *{major}"></span>】</p>
+<input type="hidden" th:field="*{major}">
+</div>
+<div>
+<p>大学・学部・学科</p>
+<p>大学所在地：【<span th:text="*{univPref} == '' ? '非公開' : *{univPref}"></span>】
+大学：【<span th:text="*{univName} == '' ? '非公開' : *{univName}"></span>】
+学部：【<span th:text="*{faculty} == '' ? '非公開' : *{faculty}"></span>】
+学科：【<span th:text="*{department} == '' ? '非公開' : *{department}"></span>】</p>
+<input type="hidden" th:field="*{univPref}">
+<input type="hidden" th:field="*{univName}">
+<input type="hidden" th:field="*{faculty}">
+<input type="hidden" th:field="*{department}">
 </div>
 <div>
 <p>サークルなどでの役職・役割</p>

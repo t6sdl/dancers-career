@@ -17,11 +17,15 @@ public class ExperienceForm {
 	private String sex;
 	private String major;
 	@NotEmpty
-	private String prefecture;
+	private String univPref;
 	@NotEmpty
-	private String university;
+	private String univName;
 	private String faculty;
 	private String department;
+	private String gradSchoolPref;
+	private String gradSchoolName;
+	private String gradSchoolOf;
+	private String programIn;
 	private String graduation;
 	private String academicDegree;
 	@NotEmpty

@@ -26,8 +26,8 @@ import tokyo.t6sdl.dancerscareer2019.repository.ProfileRepository;
 @Repository
 public class JdbcProfileRepository implements ProfileRepository {
 	private final JdbcTemplate jdbcTemplate;
-	private final String QUERIED_VALUE = "accounts.email, valid_email, last_login, last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, prefecture, university, faculty, department, graduation, academic_degree, position, likes";
-	private final List<String> SORT_LIST = Arrays.asList("last_login DESC", "kana_last_name ASC, kana_first_name ASC", "prefecture ASC, university ASC, faculty ASC, department ASC");
+	private final String QUERIED_VALUE = "accounts.email, valid_email, last_login, last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, univ_pref, univ_name, faculty, department, grad_school_pref, grad_school_name, grad_school_of, program_in, graduation, academic_degree, position, likes";
+	private final List<String> SORT_LIST = Arrays.asList("last_login DESC", "kana_last_name ASC, kana_first_name ASC", "univ_pref ASC, univ_name ASC, faculty ASC, department ASC");
 	
 	private List<String> stringToList(String str) {
 		List<String> list = new ArrayList<String>();
@@ -57,7 +57,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 	public Profile findOneByEmail(String email) {
 		 try {
 				return jdbcTemplate.queryForObject(
-						"SELECT email, last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, prefecture, university, faculty, department, graduation, academic_degree, position, likes FROM profiles WHERE email = ?", (resultSet, i) -> {
+						"SELECT email, last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, univ_pref, univ_name, faculty, department, grad_school_pref, grad_school_name, grad_school_of, program_in, graduation, academic_degree, position, likes FROM profiles WHERE email = ?", (resultSet, i) -> {
 							Profile profile = new Profile();
 							this.adjustDataToProfile(profile, resultSet);
 							return profile;
@@ -90,7 +90,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM profiles WHERE kana_last_name = ? AND kana_first_name = ?", Integer.class, kanaLastName, kanaFirstName);
 		List<String> emails = new ArrayList<String>();
 		List<Student> students = jdbcTemplate.query(
-				this.selectStudentIn("WHERE authority = 'ROLE_USER' AND kana_last_name = ? AND kana_first_name = ?", sort), (resultSet, i) -> {
+				this.selectStudentIn("WHERE kana_last_name = ? AND kana_first_name = ?", sort), (resultSet, i) -> {
 					Student student = new Student();
 					this.adjustDataToStudent(student, resultSet);
 					emails.add(student.getEmail());
@@ -108,7 +108,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM profiles WHERE kana_last_name = ?", Integer.class, kanaLastName);
 		List<String> emails = new ArrayList<String>();
 		List<Student> students = jdbcTemplate.query(
-				this.selectStudentIn("WHERE authority = 'ROLE_USER' AND kana_last_name = ?", sort), (resultSet, i) -> {
+				this.selectStudentIn("WHERE kana_last_name = ?", sort), (resultSet, i) -> {
 					Student student = new Student();
 					this.adjustDataToStudent(student, resultSet);
 					emails.add(student.getEmail());
@@ -122,16 +122,16 @@ public class JdbcProfileRepository implements ProfileRepository {
 	}
 
 	@Override
-	public Map<String, Object> findByPrefecture(int sort, String prefecture) {
-		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM profiles WHERE prefecture = ?", Integer.class, prefecture);
+	public Map<String, Object> findByPrefecture(int sort, String univPref) {
+		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM profiles WHERE univ_pref = ?", Integer.class, univPref);
 		List<String> emails = new ArrayList<String>();
 		List<Student> students = jdbcTemplate.query(
-				this.selectStudentIn("WHERE authority = 'ROLE_USER' AND prefecture = ?", sort), (resultSet, i) -> {
+				this.selectStudentIn("WHERE univ_pref = ?", sort), (resultSet, i) -> {
 					Student student = new Student();
 					this.adjustDataToStudent(student, resultSet);
 					emails.add(student.getEmail());
 					return student;
-				}, prefecture);
+				}, univPref);
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("count", count);
 		result.put("emails", emails);
@@ -140,16 +140,16 @@ public class JdbcProfileRepository implements ProfileRepository {
 	}
 
 	@Override
-	public Map<String, Object> findByUniversity(int sort, String prefecture, String university) {
-		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM profiles WHERE prefecture = ? AND university = ?", Integer.class, prefecture, university);
+	public Map<String, Object> findByUniversity(int sort, String univPref, String univName) {
+		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM profiles WHERE univ_pref = ? AND univ_name = ?", Integer.class, univPref, univName);
 		List<String> emails = new ArrayList<String>();
 		List<Student> students = jdbcTemplate.query(
-				this.selectStudentIn("WHERE authority = 'ROLE_USER' AND prefecture = ? AND university = ?", sort), (resultSet, i) -> {
+				this.selectStudentIn("WHERE univ_pref = ? AND univ_name = ?", sort), (resultSet, i) -> {
 					Student student = new Student();
 					this.adjustDataToStudent(student, resultSet);
 					emails.add(student.getEmail());
 					return student;
-				}, prefecture, university);
+				}, univPref, univName);
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("count", count);
 		result.put("emails", emails);
@@ -158,16 +158,16 @@ public class JdbcProfileRepository implements ProfileRepository {
 	}
 
 	@Override
-	public Map<String, Object> findByFaculty(int sort, String prefecture, String university, String faculty) {
-		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM profiles WHERE prefecture = ? AND university = ? AND faculty = ?", Integer.class, prefecture, university, faculty);
+	public Map<String, Object> findByFaculty(int sort, String univPref, String univName, String faculty) {
+		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM profiles WHERE univ_pref = ? AND univ_name = ? AND faculty = ?", Integer.class, univPref, univName, faculty);
 		List<String> emails = new ArrayList<String>();
 		List<Student> students = jdbcTemplate.query(
-				this.selectStudentIn("WHERE authority = 'ROLE_USER' AND prefecture = ? AND university = ? AND faculty = ?", sort), (resultSet, i) -> {
+				this.selectStudentIn("WHERE univ_pref = ? AND univ_name = ? AND faculty = ?", sort), (resultSet, i) -> {
 					Student student = new Student();
 					this.adjustDataToStudent(student, resultSet);
 					emails.add(student.getEmail());
 					return student;
-				}, prefecture, university, faculty);
+				}, univPref, univName, faculty);
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("count", count);
 		result.put("emails", emails);
@@ -176,16 +176,16 @@ public class JdbcProfileRepository implements ProfileRepository {
 	}
 
 	@Override
-	public Map<String, Object> findByDepartment(int sort, String prefecture, String university, String faculty, String department) {
-		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM profiles WHERE prefecture = ? AND university = ? AND faculty = ? AND department = ?", Integer.class, prefecture, university, faculty, department);
+	public Map<String, Object> findByDepartment(int sort, String univPref, String univName, String faculty, String department) {
+		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM profiles WHERE univ_pref = ? AND univ_name = ? AND faculty = ? AND department = ?", Integer.class, univPref, univName, faculty, department);
 		List<String> emails = new ArrayList<String>();
 		List<Student> students = jdbcTemplate.query(
-				this.selectStudentIn("WHERE authority = 'ROLE_USER' AND prefecture = ? AND university = ? AND faculty = ? AND department = ?", sort), (resultSet, i) -> {
+				this.selectStudentIn("WHERE univ_pref = ? AND univ_name = ? AND faculty = ? AND department = ?", sort), (resultSet, i) -> {
 					Student student = new Student();
 					this.adjustDataToStudent(student, resultSet);
 					emails.add(student.getEmail());
 					return student;
-				}, prefecture, university, faculty, department);
+				}, univPref, univName, faculty, department);
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("count", count);
 		result.put("emails", emails);
@@ -244,10 +244,11 @@ public class JdbcProfileRepository implements ProfileRepository {
 	public void insert(Profile newProfile) {
 		Date date_of_birth = Date.from(newProfile.getDate_of_birth().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		jdbcTemplate.update(
-				"INSERT INTO profiles VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				"INSERT INTO profiles VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				newProfile.getEmail(), newProfile.getLast_name(), newProfile.getFirst_name(), newProfile.getKana_last_name(), newProfile.getKana_first_name(),
-				date_of_birth, newProfile.getSex(), newProfile.getPhone_number(), newProfile.getMajor(), newProfile.getPrefecture(), newProfile.getUniversity(),
-				newProfile.getFaculty(), newProfile.getDepartment(), newProfile.getGraduation(), newProfile.getAcademic_degree(), this.listToString(newProfile.getPosition()), "");
+				date_of_birth, newProfile.getSex(), newProfile.getPhone_number(), newProfile.getMajor(), newProfile.getUniv_pref(), newProfile.getUniv_name(),
+				newProfile.getFaculty(), newProfile.getDepartment(), newProfile.getGrad_school_pref(), newProfile.getGrad_school_name(), newProfile.getGrad_school_of(),
+				newProfile.getProgram_in(), newProfile.getGraduation(), newProfile.getAcademic_degree(), this.listToString(newProfile.getPosition()), "");
 		if (!(newProfile.getPosition().contains(""))) {
 			String insertPos = this.listToString(newProfile.getPosition(), "('", "', '" + newProfile.getEmail() + "')", ", ");
 			jdbcTemplate.update("INSERT INTO positions VALUES " + insertPos);
@@ -268,11 +269,11 @@ public class JdbcProfileRepository implements ProfileRepository {
 		List<String> newPos = profile.getPosition();
 		Date date_of_birth = Date.from(profile.getDate_of_birth().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		jdbcTemplate.update(
-				"UPDATE profiles SET last_name = ?, first_name = ?, kana_last_name = ?, kana_first_name = ?, date_of_birth = ?, sex = ?, phone_number = ?, "
-				+ "major = ?, prefecture = ?, university = ?, faculty = ?, department = ?, graduation = ?, academic_degree = ?, position = ? WHERE email = ?",
-				profile.getLast_name(), profile.getFirst_name(), profile.getKana_last_name(), profile.getKana_first_name(),
-				date_of_birth, profile.getSex(), profile.getPhone_number(), profile.getMajor(), profile.getPrefecture(), profile.getUniversity(),
-				profile.getFaculty(), profile.getDepartment(), profile.getGraduation(), profile.getAcademic_degree(), this.listToString(newPos), profile.getEmail());
+				"UPDATE profiles SET last_name = ?, first_name = ?, kana_last_name = ?, kana_first_name = ?, date_of_birth = ?, sex = ?, phone_number = ?, major = ?, univ_pref = ?, univ_name = ?, "
+				+ "faculty = ?, department = ?, grad_school_pref = ?, grad_school_name = ?, grad_school_of = ?, program_in = ?, graduation = ?, academic_degree = ?, position = ? WHERE email = ?",
+				profile.getLast_name(), profile.getFirst_name(), profile.getKana_last_name(), profile.getKana_first_name(), date_of_birth, profile.getSex(), profile.getPhone_number(),
+				profile.getMajor(), profile.getUniv_pref(), profile.getUniv_name(), profile.getFaculty(), profile.getDepartment(), profile.getGrad_school_pref(), profile.getGrad_school_name(),
+				profile.getGrad_school_of(), profile.getProgram_in(), profile.getGraduation(), profile.getAcademic_degree(), this.listToString(newPos), profile.getEmail());
 		List<String> duplication = new ArrayList<String>();
 		oldPos.forEach(pos -> {
 			if (newPos.contains(pos)) duplication.add(pos);
@@ -306,7 +307,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 		}
 		 String emailsStr = this.listToString(emails, "'", "'", ", ");
 		return jdbcTemplate.query(
-				this.selectStudentIn("WHERE authority = 'ROLE_USER' AND accounts.email IN (" + emailsStr + ")", sort), (resultSet, i) -> {
+				this.selectStudentIn("WHERE accounts.email IN (" + emailsStr + ")", sort), (resultSet, i) -> {
 					Student student = new Student();
 					this.adjustDataToStudent(student, resultSet);
 					return student;
@@ -324,10 +325,14 @@ public class JdbcProfileRepository implements ProfileRepository {
 		profile.setSex(resultSet.getString("sex"));
 		profile.setPhone_number(resultSet.getString("phone_number"));
 		profile.setMajor(resultSet.getString("major"));
-		profile.setPrefecture(resultSet.getString("prefecture"));
-		profile.setUniversity(resultSet.getString("university"));
+		profile.setUniv_pref(resultSet.getString("univ_pref"));
+		profile.setUniv_name(resultSet.getString("univ_name"));
 		profile.setFaculty(resultSet.getString("faculty"));
 		profile.setDepartment(resultSet.getString("department"));
+		profile.setGrad_school_pref(resultSet.getString("grad_school_pref"));
+		profile.setGrad_school_name(resultSet.getString("grad_school_name"));
+		profile.setGrad_school_of(resultSet.getString("grad_school_of"));
+		profile.setProgram_in(resultSet.getString("program_in"));
 		profile.setGraduation(resultSet.getString("graduation"));
 		profile.setAcademic_degree(resultSet.getString("academic_degree"));
 		profile.setLikes(this.stringToList(resultSet.getString("likes")));
@@ -348,10 +353,14 @@ public class JdbcProfileRepository implements ProfileRepository {
 		student.setSex(resultSet.getString("sex"));
 		student.setPhone_number(resultSet.getString("phone_number"));
 		student.setMajor(resultSet.getString("major"));
-		student.setPrefecture(resultSet.getString("prefecture"));
-		student.setUniversity(resultSet.getString("university"));
+		student.setUniv_pref(resultSet.getString("univ_pref"));
+		student.setUniv_name(resultSet.getString("univ_name"));
 		student.setFaculty(resultSet.getString("faculty"));
 		student.setDepartment(resultSet.getString("department"));
+		student.setGrad_school_pref(resultSet.getString("grad_school_pref"));
+		student.setGrad_school_name(resultSet.getString("grad_school_name"));
+		student.setGrad_school_of(resultSet.getString("grad_school_of"));
+		student.setProgram_in(resultSet.getString("program_in"));
 		student.setGraduation(resultSet.getString("graduation"));
 		student.setAcademic_degree(resultSet.getString("academic_degree"));
 		student.setLikes(this.stringToList(resultSet.getString("likes")));

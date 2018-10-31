@@ -24,6 +24,3 @@ CREATE TABLE persistent_logins (
 );
 
 INSERT INTO accounts (email, password, authority, valid_email, updated_at, created_at, last_login) VALUES ('admin@t6sdl.tokyo', '$2a$10$wKXDlrqlwfxJqwud6iT2RORZkxiK2bSq.PXRWEx21Dfaf.F5SwOn6', 'ROLE_ADMIN', true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO accounts (email, password, valid_email, updated_at, created_at, last_login) VALUES ('user1@t6sdl.tokyo', '$2a$10$yXtGsfu.8xbJJl/aSC.36eLqq4DXnFkx6UgeWf4thrKEwGMyApe/y', true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO accounts (email, password, valid_email, updated_at, created_at, last_login) VALUES ('user2@t6sdl.tokyo', '$2a$10$HrsvTe6OTy2qm7H8zeK0A.CR9KCqSZsT70nAMxED2g6ttTVBYjoRi', true, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
-INSERT INTO accounts (email, password, valid_email, updated_at, created_at, last_login) VALUES ('user3@t6sdl.tokyo', '$2a$10$f0ZkKhEkhTl8hTAfxcwyou9wM9OuaQTpKJSa//QEikdfItZqBOFwC', false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);

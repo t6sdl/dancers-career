@@ -22,7 +22,7 @@
           <tr>
             <th>メールアドレス</th>
             <td rowspan="3">
-              <a th:href="@{/user/account/change/email}"><button>変更</button></a>
+              <a th:href="@{/user/account/change/email}"><button class="button">変更</button></a>
             </td>
           </tr>
           <tr>
@@ -36,7 +36,7 @@
           <tr>
             <th>パスワード</th>
             <td rowspan="2">
-              <a th:href="@{/user/account/change/password}"><button>変更</button></a>
+              <a th:href="@{/user/account/change/password}"><button class="button">変更</button></a>
             </td>
           </tr>
           <tr>
@@ -46,14 +46,14 @@
         <tbody>
           <tr>
             <th>LINE連携</th>
-            <td rowspan="2"><a th:href="${isConnected} ? @{/line-notify/revoke} : @{/line-notify/apply?from=mypage}"><button th:text="${isConnected ? '解除する' : '連携する'}"></button></a></td>
+            <td rowspan="2"><a th:href="${isConnected} ? @{/line-notify/revoke} : @{/line-notify/apply?from=mypage}"><button th:text="${isConnected ? '解除する' : '連携する'}" class="button"></button></a></td>
           </tr>
           <tr>
             <td th:text="${isConnected ? '連携済' : '未連携'}"></td>
           </tr>
         </tbody>
       </table>
-      <div><a th:href="@{/user/account/delete}"><button>退会する</button></a></div>
+      <div><a th:href="@{/user/account/delete}"><button class="button">退会する</button></a></div>
     </div>
     </article>
     <aside th:replace="user/common/tab :: tab"></aside>

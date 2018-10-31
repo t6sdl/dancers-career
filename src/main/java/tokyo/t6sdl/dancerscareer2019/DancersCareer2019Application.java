@@ -11,8 +11,13 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 public class DancersCareer2019Application {
 
 	public static void main(String[] args) {
+//		--staging--
+//		Flyway flyway = new Flyway();
+//		flyway.setDataSource("jdbc:mysql://us-cdbr-iron-east-01.cleardb.net/heroku_6ed62eaddfd562d", "b23da6ad7dabc5", "f5f14f28");
+//		flyway.repair();
+//		flyway.clean();
 		Flyway flyway = new Flyway();
-		flyway.setDataSource("jdbc:mysql://us-cdbr-iron-east-01.cleardb.net/heroku_6ed62eaddfd562d", "b23da6ad7dabc5", "f5f14f28");
+		flyway.setDataSource("jdbc:mysql://us-cdbr-iron-east-01.cleardb.net/heroku_355da0dbefbdd1d", "ba75598b86a005", "30b5c174");
 		flyway.repair();
 		flyway.clean();
 		SpringApplication.run(DancersCareer2019Application.class, args);

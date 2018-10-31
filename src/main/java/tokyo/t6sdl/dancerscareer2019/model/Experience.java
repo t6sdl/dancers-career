@@ -15,10 +15,14 @@ public class Experience {
 	private String kana_first_name;
 	private String sex;
 	private String major;
-	private String prefecture;
-	private String university;
+	private String univ_pref;
+	private String univ_name;
 	private String faculty;
 	private String department;
+	private String grad_school_pref;
+	private String grad_school_name;
+	private String grad_school_of;
+	private String program_in;
 	private String graduation;
 	private String academic_degree;
 	private List<String> position;
