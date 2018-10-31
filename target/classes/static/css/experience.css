@@ -1,0 +1,61 @@
+@font-face('utf-8'){}
+
+#exp-form {
+  background: #ffffff;
+  padding: 1em 2em;
+  border-radius: .5em;
+  text-align: center;
+}
+
+.exp-container {
+  margin: 1em 0;
+  padding: 1em 2em 1.5em;
+  background: #ffffff;
+  border-radius: .5em;
+}
+
+.exp-container h2 {
+  margin-top: 2em;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.exp-container p {
+  margin: 0;
+}
+
+.es-info {
+  padding: 0 2em;
+}
+
+.cutl {
+  border-style: dashed;
+  border-color: #426579;
+}
+
+.ques {
+  font-weight: bold;
+}
+
+.ans {
+  font-weight: bold;
+  font-size: .9em;
+  color: #555555;
+}
+
+.adv {
+  margin-top: 1em !important;
+  color: #dc143c;
+  font-weight: bold;
+  font-size: .9em;
+}
+
+.qanda-container {
+  background-color: #f5f5f5;
+  padding: 1em 2em;
+  border-radius: .5em;
+}
+
+.qanda {
+  padding: 1em;
+}
