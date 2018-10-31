@@ -11,7 +11,6 @@
 </head>
 
 <body>
-
   <!-- 普通のユーザー用のヘッダー -->
   <header th:fragment="for-user">
     <div class="inner">
@@ -27,7 +26,6 @@
       <div id="logout">
         <a th:href="@{/logout}" class="square_btn">ログアウト</a>
       </div>
-
     </div>
     <div id="menubar_hdr" class="close"></div>
     <nav id="menubar-s">
@@ -35,7 +33,6 @@
         <li><a th:href="@{/}">ダンサーズキャリアとは<br><span>About Dancers Career</span></a></li>
         <li><a th:href="@{/experiences?all&sort=0}">ES/体験記を探す<br><span>Find ES/Experiences</span></a></li>
         <li><a th:href="@{/user}">マイページ<br><span>My Page</span></a></li>
-
         <li id="lastli"><a th:href="@{/logout}">ログアウト<br><span>Logout</span></a></li>
       </ul>
     </nav>
@@ -52,8 +49,6 @@
         }
       });
     });
-
-
     </script>
   </header>
 
