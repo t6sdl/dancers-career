@@ -33,8 +33,12 @@ public class GeneralController {
 	@RequestMapping("")
 	public String index(Model model) {
 		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
-		if (account.isAdmin()) {
+		if (Objects.equals(account, null)) {
+			model.addAttribute("header", "for-stranger");
+		} else if (account.isAdmin()) {
 			return "redirect:/admin";
+		} else {
+			model.addAttribute("header", "for-user");
 		}
 		return "index/index";
 	}

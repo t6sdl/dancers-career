@@ -133,6 +133,33 @@ header #logo img:hover {
   display: none;
 }
 
+#login {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 12px;
+}
+
+#login a {
+  position: relative;
+  display: inline-block;
+  font-weight: bold;
+  padding: 1px;
+  color: #333;
+}
+
+#login a::before {
+  position: absolute;
+  content: '';
+  width: 100%;
+  height: 2px;
+  top: -webkit-calc(100% - 3px);
+  top: calc(100% - 3px);
+  left: 0;
+  border-radius: 3px;
+  background: #426579;
+  transition: .2s;
+}
+
 #menubar-s {
   display: block;
   overflow: hidden;
@@ -260,23 +287,29 @@ header #logo img:hover {
     color: #333;
   }
 
-  #logout a:hover {
+  #logout a:hover, #login a:hover {
     color: #426579;
   }
 
-  #logout a:before {
+  #logout a::before {
     position: absolute;
     content: '';
     width: 100%;
     height: 2px;
-    top:100%;
+    top: 100%;
     left: 0;
     border-radius: 3px;
-    background:#dcdcdc;
+    background: #dcdcdc;
     transition: .2s;
   }
+  
+  #login a::before {
+    width: 100%;
+    top: 100%;
+    background: #dcdcdc;
+  }
 
-  #logout a:hover:before {
+  #logout a:hover::before, #login a:hover::before {
     top: -webkit-calc(100% - 3px);
     top: calc(100% - 3px);
     background: #426579;
@@ -295,7 +328,6 @@ header #logo img:hover {
 
 .copy {
   display: inline-block;
-  align-self: flex-end;
   font-size: 10px;
   color: #333333;
 }
@@ -316,5 +348,9 @@ header #logo img:hover {
   .footer {
     flex-direction: row;
     justify-content: space-between;
+  }
+  
+  .copy {
+    align-self: flex-end;
   }
 }
