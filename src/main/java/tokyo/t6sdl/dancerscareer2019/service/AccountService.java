@@ -2,6 +2,7 @@ package tokyo.t6sdl.dancerscareer2019.service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +22,9 @@ public class AccountService implements UserDetailsService {
 	private PasswordEncoder passwordEncoder;
 		
 	public Account getAccountByEmail(String email) {
+		if (Objects.equals(email, null)) {
+			return null;
+		}
 		return accountRepository.findOneByEmail(email);
 	}
 	

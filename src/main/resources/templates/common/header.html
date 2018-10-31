@@ -100,8 +100,9 @@
   <header id="for-stranger" th:fragment="for-stranger">
     <div class="inner">
       <h1 id="logo"><a th:href="@{/}"><img alt="ダンサーのための就活サイト" th:src="@{/img/logo.png}" src="../../static/img/logo.png" class="header-logo"></a></h1>
-      <nav id="menubar">
-      </nav>
+      <div id="login">
+        <a th:href="@{/signin}">ログイン</a>
+      </div>
     </div>
   </header>
 </body>
