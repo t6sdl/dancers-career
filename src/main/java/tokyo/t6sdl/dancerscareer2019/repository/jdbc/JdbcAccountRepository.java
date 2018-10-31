@@ -153,14 +153,14 @@ public class JdbcAccountRepository implements AccountRepository {
 	@Override
 	public void updateLineAccessToken(String loggedInEmail, String lineAccessToken) {
 		jdbcTemplate.update(
-				"UPDATE accounts SET line_access_token = ? WHERE email = ?",
+				"UPDATE accounts SET line_access_token = ?, updated_at = CURRENT_TIMESTAMP WHERE email = ?",
 				lineAccessToken, loggedInEmail);
 	}
 
 	@Override
 	public void recordEmailToken(String loggedInEmail, String emailToken) {
 		jdbcTemplate.update(
-				"UPDATE accounts SET email_token = ? WHERE email = ?",
+				"UPDATE accounts SET email_token = ?, updated_at = CURRENT_TIMESTAMP WHERE email = ?",
 				emailToken, loggedInEmail);
 	}
 
@@ -174,7 +174,7 @@ public class JdbcAccountRepository implements AccountRepository {
 	@Override
 	public void recordPasswordToken(String loggedInEmail, String passwordToken) {
 		jdbcTemplate.update(
-				"UPDATE accounts SET password_token = ? WHERE email = ?",
+				"UPDATE accounts SET password_token = ?, updated_at = CURRENT_TIMESTAMP WHERE email = ?",
 				passwordToken, loggedInEmail);
 	}
 

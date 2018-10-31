@@ -13,9 +13,6 @@
     padding: 14vh 0;
     width: 100%;
   }
-  button {
-    padding: 0;
-  }
   .container {
     width: 80%;
     margin: 0 auto;
@@ -23,8 +20,6 @@
   a.link-button {
     display: block;
     margin: 0 auto;
-  }
-  a.link-button button {
     width: 80%;
     max-width: 280px;
     height: auto;
@@ -86,14 +81,12 @@
     left: 0;
     right: 0;
     bottom: 20%;
-  }
-  #top a.link-button button {
     border: 2px solid #dddddd;
     background: #426579;
     color: #ffffff;
     font-weight: bold;
   }
-  #top a.link-button button:hover {
+  #top a.link-button:hover {
     border: 2px solid #ffffff;
     background: #ffffff;
     color: #000000;
@@ -266,12 +259,10 @@
   }
   #how a.link-button {
     margin: .5em auto;
-  }
-  #how a.link-button button {
     background: #426579;
     color: #ffffff;
   }
-  #how a.link-button button:hover {
+  #how a.link-button:hover {
     box-shadow: 0 2px 4px #666666;
   }
   #how .down-arrow {
