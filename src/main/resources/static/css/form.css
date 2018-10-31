@@ -59,11 +59,11 @@ input[type="submit"] {
   cursor: pointer;
   transition: background .3s ease-in-out;
   margin: .5em 0;
-  -webkit-appearence: none;
+  -webkit-appearance: none;
 }
 
 input[type="button"] {
-  -webkit-appearence: none;
+  -webkit-appearance: none;
 }
 
 input[type="submit"]:hover {
