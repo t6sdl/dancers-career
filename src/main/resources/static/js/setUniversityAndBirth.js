@@ -349,11 +349,11 @@ $(function () {
 			setGradSchoolCategory();
 		}
 	});
-	$gradSchoolCategory.on('input', function (event)) {
+	$gradSchoolCategory.on('input', function (event) {
 		event.preventDefault();
 		$hiddenGradSchoolCategory.val() = $gradSchoolCategory.val();
 		setGradSchoolName();
-	}
+	});
 	$gradSchoolName.on('input', function (event) {
 		event.preventDefault();
 		let found = false;
