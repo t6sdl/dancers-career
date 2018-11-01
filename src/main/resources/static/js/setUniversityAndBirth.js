@@ -315,7 +315,7 @@ $(function () {
 	});
 	$univCategory.on('input', function (event) {
 		event.preventDefault();
-		$hiddenUnivCategory.val() = $univCategory.val();
+		$hiddenUnivCategory.val($univCategory.val());
 		setUnivName();
 	})
 	$univName.on('input', function (event) {
@@ -351,7 +351,7 @@ $(function () {
 	});
 	$gradSchoolCategory.on('input', function (event) {
 		event.preventDefault();
-		$hiddenGradSchoolCategory.val() = $gradSchoolCategory.val();
+		$hiddenGradSchoolCategory.val($gradSchoolCategory.val());
 		setGradSchoolName();
 	});
 	$gradSchoolName.on('input', function (event) {
