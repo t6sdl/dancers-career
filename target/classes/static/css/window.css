@@ -56,14 +56,14 @@
   padding: 0;
 }
 
-.formbr1 main::before,
-.formbr2 main::before,
-.formbr3 main::before,
-.formbr4 main::before,
-.formbr5 main::before,
-.formbr6 main::before,
-.formbr7 main::before,
-.formbr8 main::before,
+.formbg1 main::before,
+.formbg2 main::before,
+.formbg3 main::before,
+.formbg4 main::before,
+.formbg5 main::before,
+.formbg6 main::before,
+.formbg7 main::before,
+.formbg8 main::before,
 .formbg9 main::before {
   content: '';
   background: inherit;
