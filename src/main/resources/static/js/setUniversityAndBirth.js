@@ -89,14 +89,14 @@ $(function () {
 		if ($('input[name="academicDegree"]:checked').val() === '修士卒' || $('input[name="academicDegree"]:checked').val() === '博士卒') {
 			prepJSON('js/grad_school.json');
 			$gradSchool.css({
-				display: block,
+				display: "block",
 			});
 			initGradSchoolName();
 			initGradSchoolOf();
 			initProgramIn();
 		} else {
 			$gradSchool.css({
-				display: none,
+				display: "none",
 			});
 		}
 	}
