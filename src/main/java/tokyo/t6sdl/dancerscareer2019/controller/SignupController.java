@@ -65,6 +65,7 @@ public class SignupController {
 		ProfileForm form = new ProfileForm();
 		form.setApplyLineNotify(true);
 		model.addAttribute(form);
+		model.addAttribute("domain", System.getenv("DOMAIN"));
 		return "signup/profileForm";
 	}
 	
@@ -78,6 +79,7 @@ public class SignupController {
 			model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
 			model.addAttribute("hiddenProgramIn", form.getProgramIn());
 			model.addAttribute("positionList", Profile.POSITION_LIST);
+			model.addAttribute("domain", System.getenv("DOMAIN"));
 			return "signup/profileForm";
 		}
 		Profile newProfile = profileService.convertProfileFormIntoProfile(form);

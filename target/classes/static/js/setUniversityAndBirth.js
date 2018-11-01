@@ -89,7 +89,7 @@ $(function () {
 	const initGradSchool = function () {
 		if ($('input[name="academicDegree"]:checked').val() === '修士卒' || $('input[name="academicDegree"]:checked').val() === '博士卒') {
 			if (gradJson == null) {
-				prepJSON('js/grad_school.json', gradJson);
+				prepJSON('/js/grad_school.json', gradJson);
 			}
 			$gradSchool.css({
 				display: "block",
@@ -203,7 +203,7 @@ $(function () {
 	
 	setBirthMonth();
 	setBirthDay();
-	prepJSON('js/university.json');
+	prepJSON('/js/university.json');
 	initUnivName();
 	initFaculty();
 	initDepartment();

@@ -12,7 +12,7 @@ input {
 select {
   margin: .5em;
   height: 50px;
-  border: none;
+  border: 1px solid #555555;
   outline: none;
 }
 
@@ -28,7 +28,7 @@ input::placeholder {
   color: #606468;
 }
 
-input:focus, textarea:focus {
+input:not([type="radio"]):focus, textarea:focus {
   box-shadow: 0 0 7px #3498db;
   border: 1px solid #3498db;
 }
