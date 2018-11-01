@@ -154,10 +154,10 @@ $(function () {
 		}
 	}
 	const setGradSchoolCategory = function () {
-		$gradSchoolName.children('[value!="default"]').remove();
-		$gradSchoolOf.children('[value!="default"]').remove();
-		$programIn.children('[value!="default"]').remove();
-		if ($gradSchoolPref.val() === 'default') {
+		$gradSchoolName.children('[value!=""]').remove();
+		$gradSchoolOf.children('[value!=""]').remove();
+		$programIn.children('[value!=""]').remove();
+		if ($gradSchoolPref.val() === '') {
 			$gradSchoolCategory.prop('disabled', true);
 			$gradSchoolName.prop('disabled', true);
 			$gradSchoolOf.prop('disabled', true);
