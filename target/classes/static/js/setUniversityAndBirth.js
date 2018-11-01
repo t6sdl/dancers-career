@@ -20,10 +20,14 @@ $(function () {
 	$hiddenProgramIn = $('#hiddenProgramIn');
 	let univJson;
 	let gradJson;
-	const prepJSON = function (fileName, json) {
+	const prepJSON = function (fileName) {
 		$.ajaxSetup({async: false});
 		$.getJSON(contextPath + fileName, function (data) {
-			json = data;
+			if (fileName === 'js/university.json') {
+				univJson = data;
+			} else if (fileName === 'js/grad_school.json') {
+				gradJson = data;
+			}
 		});
 		$.ajaxSetup({async: true});
 	}
@@ -89,7 +93,7 @@ $(function () {
 	const initGradSchool = function () {
 		if ($('input[name="academicDegree"]:checked').val() === '修士卒' || $('input[name="academicDegree"]:checked').val() === '博士卒') {
 			if (gradJson == null) {
-				prepJSON('/js/grad_school.json', gradJson);
+				prepJSON('js/grad_school.json');
 			}
 			$gradSchool.css({
 				display: "block",
@@ -203,7 +207,7 @@ $(function () {
 	
 	setBirthMonth();
 	setBirthDay();
-	prepJSON('/js/university.json');
+	prepJSON('js/university.json');
 	initUnivName();
 	initFaculty();
 	initDepartment();
