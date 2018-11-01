@@ -74,6 +74,9 @@ public class SignupController {
 			model.addAttribute("hiddenUnivName", form.getUnivName());
 			model.addAttribute("hiddenFac", form.getFaculty());
 			model.addAttribute("hiddenDep", form.getDepartment());
+			model.addAttribute("hiddenGradSchoolName", form.getGradSchoolName());
+			model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
+			model.addAttribute("hiddenProgramIn", form.getProgramIn());
 			model.addAttribute("positionList", Profile.POSITION_LIST);
 			return "signup/profileForm";
 		}

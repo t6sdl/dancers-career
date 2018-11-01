@@ -7,13 +7,21 @@ $(function () {
 	$univName = $('#univName'),
 	$faculty = $('#faculty'),
 	$department = $('#department'),
+	$gradSchool = $('#gradSchool'),
+	$gradSchoolPref = $('#gradSchoolPref'),
+	$gradSchoolName = $('#gradSchoolName'),
+	$gradSchoolOf = $('#gradSchoolOf'),
+	$programIn = $('#programIn'),
 	$hiddenUnivName = $('#hiddenUnivName'),
 	$hiddenFac = $('#hiddenFac'),
-	$hiddenDep = $('#hiddenDep');
+	$hiddenDep = $('#hiddenDep'),
+	$hiddenGradSchoolName = $('#hiddenGradSchoolName'),
+	$hiddenGradSchoolOf = $('#hiddenGradSchoolOf'),
+	$hiddenProgramIn = $('#hiddenProgramIn');
 	let json;
-	const prepJSON = function () {
+	const prepJSON = function (file) {
 		$.ajaxSetup({async: false});
-		$.getJSON(contextPath + 'js/university.json', function (data) {
+		$.getJSON(contextPath + file, function (data) {
 			json = data;
 		});
 		$.ajaxSetup({async: true});
@@ -76,6 +84,81 @@ $(function () {
 		setDepartment();
 		$department.children('[value="' + $hiddenDep.val() + '"]').prop('selected', true);
 	}
+	
+	const initGradSchool = function () {
+		if ($('input[name="academicDegree"]:checked').val() === '修士卒' || $('input[name="academicDegree"]:checked').val() === '博士卒') {
+			prepJSON('js/grad_school.json');
+			$gradSchool.css({
+				display: block,
+			});
+			initGradSchoolName();
+			initGradSchoolOf();
+			initProgramIn();
+		} else {
+			$gradSchool.css({
+				display: none,
+			});
+		}
+	}
+	const setGradSchoolName = function () {
+		$gradSchoolName.children('[value!=""]').remove();
+		$gradSchoolOf.children('[value!=""]').remove();
+		$programIn.children('[value!=""]').remove();
+		if ($gradSchoolPref.val() === '') {
+			$gradSchoolName.prop('disabled', true);
+			$gradSchoolOf.prop('disabled', true);
+			$programIn.prop('disabled', true);
+			return;
+		}
+		$gradSchoolName.prop('disabled', false);
+		$gradSchoolOf.prop('disabled', true);
+		$programIn.prop('disabled', true);
+		for (let grad in json[$gradSchoolPref.val()]) {
+			let options = '<option value="' + grad + '">' + grad + '</option>';
+			$gradSchoolName.append(options);
+		}
+	}
+	const setGradSchoolOf = function () {
+		$gradSchoolOf.children('[value!=""]').remove();
+		$programIn.children('[value!=""]').remove();
+		if ($gradSchoolName.val() === '') {
+			$gradSchoolOf.prop('disabled', true);
+			$programIn.prop('disabled', true);
+			return;
+		}
+		$gradSchoolOf.prop('disabled', false);
+		$programIn.prop('disabled', true);
+		for (let grad in json[$gradSchoolPref.val()][$gradSchoolName.val()]) {
+			let options = '<option value="' + grad + '">' + grad + '</option>';
+			$gradSchoolOf.append(options);
+		}
+	}
+	const setProgramIn = function () {
+		$programIn.children('[value!=""]').remove();
+		if ($gradSchoolOf.val() === '') {
+			$programIn.prop('disabled', true);
+			return;
+		}
+		$programIn.prop('disabled', false);
+		for (let i = 0; i < json[$gradSchoolPref.val()][$gradSchoolName.val()][$gradSchoolOf.val()].length; i++) {
+			let grad = json[$gradSchoolPref.val()][$gradSchoolName.val()][$gradSchoolOf.val()][i];
+			let options = '<option value="' + grad + '">' + grad + '</option>';
+			$programIn.append(options);
+		}
+	}
+	const initGradSchoolName = function () {
+		setGradSchoolName();
+		$gradSchoolName.children('[value="' + $hiddenGradSchoolName.val() + '"]').prop('selected', true);
+	}
+	const initGradSchoolOf = function () {
+		setGradSchoolOf();
+		$gradSchoolOf.children('[value="' + $hiddenGradSchoolOf.val() + '"]').prop('selected', true);
+	}
+	const initProgramIn = function () {
+		setProgramIn();
+		$programIn.children('[value="' + $hiddenProgramIn.val() + '"]').prop('selected', true);
+	}
+	
 	const autoSetDate = function (max, $object) {
 		for (let i = 1; i <= 31; i++) {
 			if (!($object.children('[value="' + i + '"]').length)) {
@@ -114,12 +197,14 @@ $(function () {
 			autoSetDate(31, $birthDay);
 		}
 	}
+	
 	setBirthMonth();
 	setBirthDay();
-	prepJSON();
+	prepJSON('js/university.json');
 	initUnivName();
 	initFaculty();
 	initDepartment();
+	initGradSchool();
 	$birthYear.on('input', function (event) {
 		event.preventDefault();
 		setBirthMonth();
@@ -139,5 +224,17 @@ $(function () {
 	$faculty.on('input', function (event) {
 		event.preventDefault();
 		setDepartment();
+	});
+	$gradSchoolPref.on('input', function (event) {
+		event.preventDefault();
+		setGradSchoolName();
+	});
+	$gradSchoolName.on('input', function (event) {
+		event.preventDefault();
+		setGradSchoolOf();
+	});
+	$gradSchoolOf.on('input', function (event) {
+		event.preventDefault();
+		setProgramIn();
 	});
 });
