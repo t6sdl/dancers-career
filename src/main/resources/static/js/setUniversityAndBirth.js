@@ -18,10 +18,11 @@ $(function () {
 	$hiddenGradSchoolName = $('#hiddenGradSchoolName'),
 	$hiddenGradSchoolOf = $('#hiddenGradSchoolOf'),
 	$hiddenProgramIn = $('#hiddenProgramIn');
-	let json;
-	const prepJSON = function (file) {
+	let univJson;
+	let gradJson;
+	const prepJSON = function (fileName, json) {
 		$.ajaxSetup({async: false});
-		$.getJSON(contextPath + file, function (data) {
+		$.getJSON(contextPath + fileName, function (data) {
 			json = data;
 		});
 		$.ajaxSetup({async: true});
@@ -39,7 +40,7 @@ $(function () {
 		$univName.prop('disabled', false);
 		$faculty.prop('disabled', true);
 		$department.prop('disabled', true);
-		for (let univ in json[$univPref.val()]) {
+		for (let univ in univJson[$univPref.val()]) {
 			let options = '<option value="' + univ + '">' + univ + '</option>';
 			$univName.append(options);
 		}
@@ -54,7 +55,7 @@ $(function () {
 		}
 		$faculty.prop('disabled', false);
 		$department.prop('disabled', true);
-		for (let fac in json[$univPref.val()][$univName.val()]) {
+		for (let fac in univJson[$univPref.val()][$univName.val()]) {
 			let options = '<option value="' + fac + '">' + fac + '</option>';
 			$faculty.append(options);
 		}
@@ -66,8 +67,8 @@ $(function () {
 			return;
 		}
 		$department.prop('disabled', false);
-		for (let i = 0; i < json[$univPref.val()][$univName.val()][$faculty.val()].length; i++) {
-			let dep = json[$univPref.val()][$univName.val()][$faculty.val()][i];
+		for (let i = 0; i < univJson[$univPref.val()][$univName.val()][$faculty.val()].length; i++) {
+			let dep = univJson[$univPref.val()][$univName.val()][$faculty.val()][i];
 			let options = '<option value="' + dep + '">' + dep + '</option>';
 			$department.append(options);
 		}
@@ -87,7 +88,9 @@ $(function () {
 	
 	const initGradSchool = function () {
 		if ($('input[name="academicDegree"]:checked').val() === '修士卒' || $('input[name="academicDegree"]:checked').val() === '博士卒') {
-			prepJSON('js/grad_school.json');
+			if (gradJson == null) {
+				prepJSON('js/grad_school.json', gradJson);
+			}
 			$gradSchool.css({
 				display: "block",
 			});
@@ -113,7 +116,7 @@ $(function () {
 		$gradSchoolName.prop('disabled', false);
 		$gradSchoolOf.prop('disabled', true);
 		$programIn.prop('disabled', true);
-		for (let grad in json[$gradSchoolPref.val()]) {
+		for (let grad in gradJson[$gradSchoolPref.val()]) {
 			let options = '<option value="' + grad + '">' + grad + '</option>';
 			$gradSchoolName.append(options);
 		}
@@ -128,7 +131,7 @@ $(function () {
 		}
 		$gradSchoolOf.prop('disabled', false);
 		$programIn.prop('disabled', true);
-		for (let grad in json[$gradSchoolPref.val()][$gradSchoolName.val()]) {
+		for (let grad in gradJson[$gradSchoolPref.val()][$gradSchoolName.val()]) {
 			let options = '<option value="' + grad + '">' + grad + '</option>';
 			$gradSchoolOf.append(options);
 		}
@@ -140,8 +143,8 @@ $(function () {
 			return;
 		}
 		$programIn.prop('disabled', false);
-		for (let i = 0; i < json[$gradSchoolPref.val()][$gradSchoolName.val()][$gradSchoolOf.val()].length; i++) {
-			let grad = json[$gradSchoolPref.val()][$gradSchoolName.val()][$gradSchoolOf.val()][i];
+		for (let i = 0; i < gradJson[$gradSchoolPref.val()][$gradSchoolName.val()][$gradSchoolOf.val()].length; i++) {
+			let grad = gradJson[$gradSchoolPref.val()][$gradSchoolName.val()][$gradSchoolOf.val()][i];
 			let options = '<option value="' + grad + '">' + grad + '</option>';
 			$programIn.append(options);
 		}
@@ -237,4 +240,7 @@ $(function () {
 		event.preventDefault();
 		setProgramIn();
 	});
+	$('input[name="academicDegree"]').change(function () {
+		initGradSchool();
+	})
 });
