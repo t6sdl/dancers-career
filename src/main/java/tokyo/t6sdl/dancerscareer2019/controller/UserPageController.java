@@ -194,7 +194,6 @@ public class UserPageController {
 		model.addAttribute("hiddenGradSchoolName", form.getGradSchoolName());
 		model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
 		model.addAttribute("hiddenProgramIn", form.getProgramIn());
-		model.addAttribute("domain", System.getenv("DOMAIN"));
 		return "user/profile/changeProfile";
 	}
 	
@@ -208,7 +207,6 @@ public class UserPageController {
 			model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
 			model.addAttribute("hiddenProgramIn", form.getProgramIn());
 			model.addAttribute("positionList", Profile.POSITION_LIST);
-			model.addAttribute("domain", System.getenv("DOMAIN"));
 			return "user/profile/changeProfile";
 		} else {
 			String loggedInEmail = securityService.findLoggedInEmail();
