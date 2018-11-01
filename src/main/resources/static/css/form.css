@@ -14,6 +14,7 @@ select {
   height: 50px;
   border: 1px solid #555555;
   outline: none;
+  max-width: 30em;
 }
 
 textarea {
@@ -115,4 +116,13 @@ form {
 
 .form-item > p {
   font-weight: bold;
+}
+
+table .label {
+  text-align: right;
+  width: 46%;
+}
+
+table .pulldown {
+  text-align: left;
 }

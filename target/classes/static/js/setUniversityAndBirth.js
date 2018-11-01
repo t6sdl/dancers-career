@@ -4,17 +4,21 @@ $(function () {
 	$birthMonth = $('#birthMonth'),
 	$birthDay = $('#birthDay'),
 	$univPref = $('#univPref'),
+	$univCategory = $('#univCategory'),
 	$univName = $('#univName'),
 	$faculty = $('#faculty'),
 	$department = $('#department'),
 	$gradSchool = $('#gradSchool'),
 	$gradSchoolPref = $('#gradSchoolPref'),
+	$gradSchoolCategory = $('#gradSchoolCategory'),
 	$gradSchoolName = $('#gradSchoolName'),
 	$gradSchoolOf = $('#gradSchoolOf'),
 	$programIn = $('#programIn'),
+	$hiddenUnivCategory = $('#hiddenUnivCategory'),
 	$hiddenUnivName = $('#hiddenUnivName'),
 	$hiddenFac = $('#hiddenFac'),
 	$hiddenDep = $('#hiddenDep'),
+	$hiddenGradSchoolCategory = $('#hiddenGradSchoolCategory'),
 	$hiddenGradSchoolName = $('#hiddenGradSchoolName'),
 	$hiddenGradSchoolOf = $('#hiddenGradSchoolOf'),
 	$hiddenProgramIn = $('#hiddenProgramIn');
@@ -31,22 +35,58 @@ $(function () {
 		});
 		$.ajaxSetup({async: true});
 	}
-	const setUnivName = function () {
+	const setUnivCategory = function () {
 		$univName.children('[value!="default"]').remove();
 		$faculty.children('[value!="default"]').remove();
 		$department.children('[value!="default"]').remove();
 		if ($univPref.val() === 'default') {
+			$univCategory.prop('disabled', true);
 			$univName.prop('disabled', true);
 			$faculty.prop('disabled', true);
 			$department.prop('disabled', true);
 			return;
 		}
-		$univName.prop('disabled', false);
+		$univCategory.prop('disabled', false);
+		$univName.prop('disabled', true);
 		$faculty.prop('disabled', true);
 		$department.prop('disabled', true);
-		for (let univ in univJson[$univPref.val()]) {
-			let options = '<option value="' + univ + '">' + univ + '</option>';
-			$univName.append(options);
+	}
+	const setUnivName = function () {
+		$univName.children('[value!="default"]').remove();
+		$faculty.children('[value!="default"]').remove();
+		$department.children('[value!="default"]').remove();
+		if ($univCategory === null) {
+			if ($univPref.val() === 'default') {
+				$univName.prop('disabled', true);
+				$faculty.prop('disabled', true);
+				$department.prop('disabled', true);
+				return;
+			}
+			$univName.prop('disabled', false);
+			$faculty.prop('disabled', true);
+			$department.prop('disabled', true);
+			for (let cate in univJson[$univPref.val()]) {
+				let caption = '<option value="' + cate + '" disabled>-- ' + cate + ' --</option>';
+				$univName.append(caption);
+				for (let univ in univJson[$univPref.val()][cate]) {
+					let options = '<option value="' + univ + '">' + univ + '</option>';
+					$univName.append(options);
+				}
+			}
+		} else {
+			if ($univCategory.val() === 'default') {
+				$univName.prop('disabled', true);
+				$faculty.prop('disabled', true);
+				$department.prop('disabled', true);
+				return;
+			}
+			$univName.prop('disabled', false);
+			$faculty.prop('disabled', true);
+			$department.prop('disabled', true);
+			for (let univ in univJson[$univPref.val()][$univCategory.val()]) {
+				let options = '<option value="' + univ + '">' + univ + '</option>';
+				$univName.append(options);
+			}
 		}
 	}
 	const setFaculty = function () {
@@ -59,7 +99,10 @@ $(function () {
 		}
 		$faculty.prop('disabled', false);
 		$department.prop('disabled', true);
-		for (let fac in univJson[$univPref.val()][$univName.val()]) {
+		if ($univCategory === null) {
+			
+		}
+		for (let fac in univJson[$univPref.val()][$hiddenUnivCategory.val()][$univName.val()]) {
 			let options = '<option value="' + fac + '">' + fac + '</option>';
 			$faculty.append(options);
 		}
@@ -71,7 +114,7 @@ $(function () {
 			return;
 		}
 		$department.prop('disabled', false);
-		for (let i = 0; i < univJson[$univPref.val()][$univName.val()][$faculty.val()].length; i++) {
+		for (let i = 0; i < univJson[$univPref.val()][$hiddenUnivCategory.val()][$univName.val()][$faculty.val()].length; i++) {
 			let dep = univJson[$univPref.val()][$univName.val()][$faculty.val()][i];
 			let options = '<option value="' + dep + '">' + dep + '</option>';
 			$department.append(options);
@@ -95,6 +138,9 @@ $(function () {
 			if (gradJson == null) {
 				prepJSON('js/grad_school.json');
 			}
+			if ($gradSchoolCategory !== null) {
+				setGradSchoolCategory();
+			}
 			$gradSchool.css({
 				display: "block",
 			});
@@ -107,22 +153,58 @@ $(function () {
 			});
 		}
 	}
-	const setGradSchoolName = function () {
-		$gradSchoolName.children('[value!=""]').remove();
-		$gradSchoolOf.children('[value!=""]').remove();
-		$programIn.children('[value!=""]').remove();
-		if ($gradSchoolPref.val() === '') {
+	const setGradSchoolCategory = function () {
+		$gradSchoolName.children('[value!="default"]').remove();
+		$gradSchoolOf.children('[value!="default"]').remove();
+		$programIn.children('[value!="default"]').remove();
+		if ($gradSchoolPref.val() === 'default') {
+			$gradSchoolCategory.prop('disabled', true);
 			$gradSchoolName.prop('disabled', true);
 			$gradSchoolOf.prop('disabled', true);
 			$programIn.prop('disabled', true);
 			return;
 		}
-		$gradSchoolName.prop('disabled', false);
+		$gradSchoolCategory.prop('disabled', false);
+		$gradSchoolName.prop('disabled', true);
 		$gradSchoolOf.prop('disabled', true);
 		$programIn.prop('disabled', true);
-		for (let grad in gradJson[$gradSchoolPref.val()]) {
-			let options = '<option value="' + grad + '">' + grad + '</option>';
-			$gradSchoolName.append(options);
+	}
+	const setGradSchoolName = function () {
+		$gradSchoolName.children('[value!=""]').remove();
+		$gradSchoolOf.children('[value!=""]').remove();
+		$programIn.children('[value!=""]').remove();
+		if ($gradSchoolCategory === null) {
+			if ($gradSchoolPref.val() === '') {
+				$gradSchoolName.prop('disabled', true);
+				$gradSchoolOf.prop('disabled', true);
+				$programIn.prop('disabled', true);
+				return;
+			}
+			$gradSchoolName.prop('disabled', false);
+			$gradSchoolOf.prop('disabled', true);
+			$programIn.prop('disabled', true);
+			for (let cate in gradJson[$gradSchoolPref.val()]) {
+				let caption = '<option value="' + cate + '" disabled>-- ' + cate + ' --</option>';
+				$gradSchoolName.append(caption);
+				for (let grad in gradJson[$gradSchoolPref.val()][cate]) {
+					let options = '<option value="' + grad + '">' + grad + '</option>';
+					$gradSchoolName.append(options);
+				}
+			}
+		} else {
+			if ($gradSchoolCategory.val() === '') {
+				$gradSchoolName.prop('disabled', true);
+				$gradSchoolOf.prop('disabled', true);
+				$programIn.prop('disabled', true);
+				return;
+			}
+			$gradSchoolName.prop('disabled', false);
+			$gradSchoolOf.prop('disabled', true);
+			$programIn.prop('disabled', true);
+			for (let grad in gradJson[$gradSchoolPref.val()][$gradSchoolCategory.val()]) {
+				let options = '<option value="' + grad + '">' + grad + '</option>';
+				$gradSchoolName.append(options);
+			}
 		}
 	}
 	const setGradSchoolOf = function () {
@@ -135,7 +217,7 @@ $(function () {
 		}
 		$gradSchoolOf.prop('disabled', false);
 		$programIn.prop('disabled', true);
-		for (let grad in gradJson[$gradSchoolPref.val()][$gradSchoolName.val()]) {
+		for (let grad in gradJson[$gradSchoolPref.val()][$hiddenGradSchoolCategory.val()][$gradSchoolName.val()]) {
 			let options = '<option value="' + grad + '">' + grad + '</option>';
 			$gradSchoolOf.append(options);
 		}
@@ -147,8 +229,8 @@ $(function () {
 			return;
 		}
 		$programIn.prop('disabled', false);
-		for (let i = 0; i < gradJson[$gradSchoolPref.val()][$gradSchoolName.val()][$gradSchoolOf.val()].length; i++) {
-			let grad = gradJson[$gradSchoolPref.val()][$gradSchoolName.val()][$gradSchoolOf.val()][i];
+		for (let i = 0; i < gradJson[$gradSchoolPref.val()][$hiddenGradSchoolCategory.val()][$gradSchoolName.val()][$gradSchoolOf.val()].length; i++) {
+			let grad = gradJson[$gradSchoolPref.val()][$hiddenGradSchoolCategory.val()][$gradSchoolName.val()][$gradSchoolOf.val()][i];
 			let options = '<option value="' + grad + '">' + grad + '</option>';
 			$programIn.append(options);
 		}
@@ -208,6 +290,9 @@ $(function () {
 	setBirthMonth();
 	setBirthDay();
 	prepJSON('js/university.json');
+	if ($univCategory !== null) {
+		setUnivCategory();
+	}
 	initUnivName();
 	initFaculty();
 	initDepartment();
@@ -222,10 +307,34 @@ $(function () {
 	});
 	$univPref.on('input', function (event) {
 		event.preventDefault();
-		setUnivName();
+		if ($univCategory === null) {
+			setUnivName();
+		} else {
+			setUnivCategory();
+		}
 	});
+	$univCategory.on('input', function (event) {
+		event.preventDefault();
+		$hiddenUnivCategory.val() = $univCategory.val();
+		setUnivName();
+	})
 	$univName.on('input', function (event) {
 		event.preventDefault();
+		let found = false;
+		if ($univCategory === null) {
+			for (let cate in univJson[$univPref.val()]) {
+				for (let univ in univJson[$univPref.val()][cate]) {
+					if (univ === $univName.val()) {
+						$hiddenUnivCategory.val() = cate;
+						found = true;
+						return;
+					}
+				}
+				if (flag) {
+					return;
+				}
+			}
+		}
 		setFaculty();
 	});
 	$faculty.on('input', function (event) {
@@ -234,10 +343,34 @@ $(function () {
 	});
 	$gradSchoolPref.on('input', function (event) {
 		event.preventDefault();
-		setGradSchoolName();
+		if ($gradSchoolCategory === null) {
+			setGradSchoolName();
+		} else {
+			setGradSchoolCategory();
+		}
 	});
+	$gradSchoolCategory.on('input', function (event)) {
+		event.preventDefault();
+		$hiddenGradSchoolCategory.val() = $gradSchoolCategory.val();
+		setGradSchoolName();
+	}
 	$gradSchoolName.on('input', function (event) {
 		event.preventDefault();
+		let found = false;
+		if ($gradSchoolCategory === null) {
+			for (let cate in gradJson[$gradSchoolPref.val()]) {
+				for (let grad in gradJson[$gradSchoolPref.val()][cate]) {
+					if (grad === $gradSchoolName.val()) {
+						$hiddenGradSchoolCategory.val() = cate;
+						found = true;
+						return;
+					}
+				}
+				if (flag) {
+					return;
+				}
+			}
+		}
 		setGradSchoolOf();
 	});
 	$gradSchoolOf.on('input', function (event) {
