@@ -65,6 +65,7 @@ $(function () {
 		setDepartment();
 		$department.children('[value="' + $hiddenDep.val() + '"]').prop('selected', true);
 	}
+	
 	prepJSON();
 	initUnivPref();
 	initUnivName();
