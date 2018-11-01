@@ -183,7 +183,11 @@ td, th {
 </tr>
 <tr>
 <th align="right">大学・学部・学科</th>
-<td th:text="|${student.univName} ${student.faculty} ${student.department}|"></td>
+<td th:text="|${student.univ_name} ${student.faculty} ${student.department}|"></td>
+</tr>
+<tr>
+<th align="right">大学院・研究科・専攻</th>
+<td th:text="|${student.grad_school_name} ${student.grad_school_of} ${student.program_in}|"></td>
 </tr>
 <tr>
 <th align="right">役職</th>

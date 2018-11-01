@@ -49,5 +49,11 @@ public class Profile {
 		if (this.getDepartment().equals("-")) {
 			this.setDepartment("");
 		}
+		if (this.getGrad_school_of().equals("-")) {
+			this.setGrad_school_of("");
+		}
+		if (this.getProgram_in().equals("-")) {
+			this.setProgram_in("");
+		}
 	}
 }
