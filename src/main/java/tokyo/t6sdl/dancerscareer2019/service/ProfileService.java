@@ -21,6 +21,7 @@ public class ProfileService {
 	
 	public void register(Profile newProfile, String loggedInEmail) {
 		newProfile.setEmail(loggedInEmail);
+		newProfile.convertForData();
 		profileRepository.insert(newProfile);
 	}
 	
@@ -30,6 +31,7 @@ public class ProfileService {
 	
 	public void update(Profile profile, String loggedInEmail) {
 		profile.setEmail(loggedInEmail);
+		profile.convertForData();
 		profileRepository.updateAny(profile);
 	}
 	

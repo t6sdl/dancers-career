@@ -56,4 +56,13 @@ public class Profile {
 			this.setProgram_in("");
 		}
 	}
+	
+	public void convertForData() {
+		if (this.getAcademic_degree().equals("学部卒")) {
+			this.setGrad_school_pref("");
+			this.setGrad_school_name("");
+			this.setGrad_school_of("");
+			this.setProgram_in("");
+		}
+	}
 }
