@@ -115,7 +115,7 @@ $(function () {
 		}
 		$department.prop('disabled', false);
 		for (let i = 0; i < univJson[$univPref.val()][$hiddenUnivCategory.val()][$univName.val()][$faculty.val()].length; i++) {
-			let dep = univJson[$univPref.val()][$univName.val()][$faculty.val()][i];
+			let dep = univJson[$univPref.val()][$hiddenUnivCategory.val()][$univName.val()][$faculty.val()][i];
 			let options = '<option value="' + dep + '">' + dep + '</option>';
 			$department.append(options);
 		}
