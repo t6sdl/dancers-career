@@ -62,6 +62,10 @@
             <th>大学・学部・学科</th>
             <td th:text="|*{univ_name == null ? '' : univ_name} *{faculty == null ? '' : faculty} *{department == null ? '' : department}|"></td>
           </tr>
+          <tr th:unless="*{grad_school_name == ''}">
+            <th>大学院・研究科・専攻</th>
+            <td th:text="|*{grad_school_name == null ? '' : grad_school_name} *{grad_school_of == null ? '' : grad_school_of} *{program_in == null ? '' : program_in}|"></td>
+          </tr>
           <tr>
             <th>サークル等での役職</th>
             <td><span th:each="pos : *{position == null ? '' : position}" th:text="${pos}" class="position-tag"></span></td>
