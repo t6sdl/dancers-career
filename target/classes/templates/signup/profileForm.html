@@ -293,7 +293,7 @@
                 </td>
               </tr>
             </table>
-            <input type="hidden" id="hiddenUnivCategory" value="">
+            <input type="hidden" id="hiddenUnivCategory" th:value="${hiddenUnivCategory == null ? 'default' : hiddenUnivCategory}">
             <input type="hidden" id="hiddenUnivName" th:value="${hiddenUnivName == null ? 'default' : hiddenUnivName}">
             <input type="hidden" id="hiddenFac" th:value="${hiddenFac == null ? 'default' : hiddenFac}">
             <input type="hidden" id="hiddenDep" th:value="${hiddenDep == null ? 'default' : hiddenDep}">
@@ -396,7 +396,7 @@
                 </td>
               </tr>
             </table>
-            <input type="hidden" id="hiddenGradSchoolCategory" value="">
+            <input type="hidden" id="hiddenGradSchoolCategory" th:value="${hiddenGradSchoolCategory == null ? '' : hiddenGradSchoolCategory}">
             <input type="hidden" id="hiddenGradSchoolName" th:value="${hiddenGradSchoolName == null ? '' : hiddenGradSchoolName}">
             <input type="hidden" id="hiddenGradSchoolOf" th:value="${hiddenGradSchoolOf == null ? '' : hiddenGradSchoolOf}">
             <input type="hidden" id="hiddenProgramIn" th:value="${hiddenProgramIn == null ? '' : hiddenProgramIn}">
