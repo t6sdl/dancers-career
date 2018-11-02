@@ -19,10 +19,13 @@ public class ExperienceForm {
 	@NotEmpty
 	private String univPref;
 	@NotEmpty
+	private String univCategory;
+	@NotEmpty
 	private String univName;
 	private String faculty;
 	private String department;
 	private String gradSchoolPref;
+	private String gradSchoolCategory;
 	private String gradSchoolName;
 	private String gradSchoolOf;
 	private String programIn;

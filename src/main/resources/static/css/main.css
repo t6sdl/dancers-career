@@ -67,6 +67,7 @@ hr {
   background: #89c3eb;
   border-radius: 3px;
   color: #ffffff;
+  text-align: center;
   font-size: .9em;
   cursor: pointer;
   transition: background .3s ease-in-out;
