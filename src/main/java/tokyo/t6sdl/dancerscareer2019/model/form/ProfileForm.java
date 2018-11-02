@@ -40,6 +40,8 @@ public class ProfileForm {
 	@NotEmpty
 	@Pattern(regexp="^(?!default).*$")
 	private String univPref;
+	@Pattern(regexp="^(?!default).*$")
+	private String univCategory;
 	@NotEmpty
 	@Pattern(regexp="^(?!default).*$")
 	private String univName;
@@ -50,6 +52,7 @@ public class ProfileForm {
 	@Pattern(regexp="^(?!default).*$")
 	private String department;
 	private String gradSchoolPref;
+	private String gradSchoolCategory;
 	private String gradSchoolName;
 	private String gradSchoolOf;
 	private String programIn;
