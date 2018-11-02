@@ -192,7 +192,7 @@ $(function () {
 		$gradSchoolPref.children('[value="' + $hiddenGradSchoolPref.val() + '"]').prop('selected', true);
 	}
 	const initGradSchoolName = function () {
-		if ($hiddenGradSchoolName !== '') {
+		if ($hiddenGradSchoolName.val() !== '') {
 			for (let cate in gradJson[$gradSchoolPref.val()]) {
 				for (let grad in gradJson[$gradSchoolPref.val()][cate]) {
 					if (grad === $hiddenGradSchoolName.val()) {
