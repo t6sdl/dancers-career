@@ -183,11 +183,11 @@ public class ProfileService {
 		if (Objects.equals(profile, null)) {
 			return false;
 		}
-		ProfileForm form = this.convertProfileIntoProfileForm(profile);
-		for (Field field: form.getClass().getDeclaredFields()) {
+		profile.convertForDisplay();
+		for (Field field: profile.getClass().getDeclaredFields()) {
 			try {
 				field.setAccessible(true);
-				if (field.get(form) == null) {
+				if (field.getType().equals(String.class) && Objects.equals(field.get(profile), null)) {
 					return false;
 				}
 			} catch (IllegalAccessException e) {
