@@ -18,16 +18,15 @@ $(function () {
 	$hiddenGradSchoolName = $('#hiddenGradSchoolName'),
 	$hiddenGradSchoolOf = $('#hiddenGradSchoolOf'),
 	$hiddenProgramIn = $('#hiddenProgramIn');
-	let univJson = null;
-	let gradJson = null;
-	const prepJSON = function (fileName) {
+	let univJson;
+	let gradJson;
+	const prepJSON = function () {
 		$.ajaxSetup({async: false});
-		$.getJSON(contextPath + fileName, function (data) {
-			if (fileName === 'js/university.json') {
-				univJson = data;
-			} else if (fileName === 'js/grad_school.json') {
-				gradJson = data;
-			}
+		$.getJSON(contextPath + 'js/university.json', function (data) {
+			univJson = data;
+		});
+		$.getJSON(contextPath + 'js/grad_school.json', function (data) {
+			gradJson = data;
 		});
 		$.ajaxSetup({async: true});
 	}
@@ -219,7 +218,7 @@ $(function () {
 		$programIn.children('[value="' + $hiddenProgramIn.val() + '"]').prop('selected', true);
 	}
 
-	prepJSON('js/university.json');
+	prepJSON();
 	initUnivPref();
 	initUnivName();
 	initFaculty();
