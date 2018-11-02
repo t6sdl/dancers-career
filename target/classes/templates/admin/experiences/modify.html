@@ -159,7 +159,7 @@
 <tr>
 <td class="label"><label for="faculty">学部</label></td>
 <td class="pulldown">
-<select th:field="*{faculty}" required>
+<select th:field="*{faculty}">
 <option value="">非公開</option>
 </select>
 </td>
@@ -167,12 +167,13 @@
 <tr>
 <td class="label"><label for="department">学科</label></td>
 <td class="pulldown">
-<select th:field="*{department}" required>
+<select th:field="*{department}">
 <option value="">非公開</option>
 </select>
 </td>
 </tr>
 </table>
+<input type="hidden" id="hiddenUnivPref" th:value="${hiddenUnivPref == null ? '' : hiddenUnivPref}">
 <input type="hidden" id="hiddenUnivName" th:value="${hiddenUnivName == null ? '' : hiddenUnivName}">
 <input type="hidden" id="hiddenFac" th:value="${hiddenFac == null ? '' : hiddenFac}">
 <input type="hidden" id="hiddenDep" th:value="${hiddenDep == null ? '' : hiddenDep}">
@@ -275,6 +276,7 @@
 </td>
 </tr>
 </table>
+<input type="hidden" id="hiddenGradSchoolPref" th:value="${hiddenGradSchoolPref == null ? '' : hiddenGradSchoolPref}">
 <input type="hidden" id="hiddenGradSchoolName" th:value="${hiddenGradSchoolName == null ? '' : hiddenGradSchoolName}">
 <input type="hidden" id="hiddenGradSchoolOf" th:value="${hiddenGradSchoolOf == null ? '' : hiddenGradSchoolOf}">
 <input type="hidden" id="hiddenProgramIn" th:value="${hiddenProgramIn == null ? '' : hiddenProgramIn}">
