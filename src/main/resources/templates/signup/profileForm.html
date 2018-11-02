@@ -199,7 +199,6 @@
         </div>
         <div class="form-item">
           <p>大学・学部・学科</p>
-          <input type="hidden" id="hiddenUnivCategory" value="">
           <div>
             <table>
               <tr>
@@ -260,7 +259,7 @@
               <tr>
                 <td class="label"><label for="univCategory">大学種別</label></td>
                 <td class="pulldown">
-                  <select id="univCategory" required>
+                  <select th:field="*{univCategory}" required>
                     <option value="default">選択してください</option>
                     <option value="国立">国立</option>
                     <option value="公立">公立</option>
@@ -294,6 +293,7 @@
                 </td>
               </tr>
             </table>
+            <input type="hidden" id="hiddenUnivCategory" value="">
             <input type="hidden" id="hiddenUnivName" th:value="${hiddenUnivName == null ? 'default' : hiddenUnivName}">
             <input type="hidden" id="hiddenFac" th:value="${hiddenFac == null ? 'default' : hiddenFac}">
             <input type="hidden" id="hiddenDep" th:value="${hiddenDep == null ? 'default' : hiddenDep}">
@@ -303,7 +303,6 @@
         <div class="form-item" id="gradSchool">
           <p>大学院・研究科・専攻</p>
           <span style="font-size: .8em;">現在、全ての大学院に対応できておりません。ご自身の研究科や専攻が見つからない場合は<a th:href="@{/about/contact}">こちら</a>よりお知らせください。</span>
-          <input type="hidden" id="hiddenGradSchoolCategory" value="">
           <div>
             <table>
               <tr>
@@ -364,7 +363,7 @@
               <tr>
                 <td class="label"><label for="gradSchoolCategory">大学院種別</label></td>
                 <td class="pulldown">
-                  <select id="gradSchoolCategory" required>
+                  <select th:field="*{gradSchoolCategory}">
                     <option value="">選択してください</option>
                     <option value="国立">国立</option>
                     <option value="公立">公立</option>
@@ -375,7 +374,7 @@
               <tr>
                 <td class="label"><label for="gradSchoolName">大学院</label></td>
                 <td class="pulldown">
-                  <select th:field="*{gradSchoolName}" required>
+                  <select th:field="*{gradSchoolName}">
                     <option value="">選択してください</option>
                   </select>
                 </td>
@@ -383,7 +382,7 @@
               <tr>
                 <td class="label"><label for="gradSchoolOf">研究科等</label></td>
                 <td class="pulldown">
-                  <select th:field="*{gradSchoolOf}" required>
+                  <select th:field="*{gradSchoolOf}">
                     <option value="">選択してください</option>
                   </select>
                 </td>
@@ -391,12 +390,13 @@
               <tr>
                 <td class="label"><label for="programIn">専攻等</label></td>
                 <td class="pulldown">
-                  <select th:field="*{programIn}" required>
+                  <select th:field="*{programIn}">
                     <option value="">選択してください</option>
                   </select>
                 </td>
               </tr>
             </table>
+            <input type="hidden" id="hiddenGradSchoolCategory" value="">
             <input type="hidden" id="hiddenGradSchoolName" th:value="${hiddenGradSchoolName == null ? '' : hiddenGradSchoolName}">
             <input type="hidden" id="hiddenGradSchoolOf" th:value="${hiddenGradSchoolOf == null ? '' : hiddenGradSchoolOf}">
             <input type="hidden" id="hiddenProgramIn" th:value="${hiddenProgramIn == null ? '' : hiddenProgramIn}">
