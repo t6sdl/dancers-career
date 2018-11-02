@@ -2,14 +2,14 @@
 
 #exp-form {
   background: #ffffff;
-  padding: 1em 2em;
+  padding: 3%;
   border-radius: .5em;
   text-align: center;
 }
 
 .exp-container {
   margin: 1em 0;
-  padding: 1em 2em 1.5em;
+  padding: 3%;
   background: #ffffff;
   border-radius: .5em;
 }
@@ -25,7 +25,7 @@
 }
 
 .es-info {
-  padding: 0 2em;
+  padding: 0 5%;
 }
 
 .cutl {
@@ -38,24 +38,23 @@
 }
 
 .ans {
-  font-weight: bold;
   font-size: .9em;
-  color: #555555;
+  color: #333333;
 }
 
 .adv {
   margin-top: 1em !important;
-  color: #dc143c;
+  color: #e64552;
   font-weight: bold;
   font-size: .9em;
 }
 
 .qanda-container {
   background-color: #f5f5f5;
-  padding: 1em 2em;
+  padding: 3% 5%;
   border-radius: .5em;
 }
 
 .qanda {
-  padding: 1em;
+  padding: 1em 0;
 }

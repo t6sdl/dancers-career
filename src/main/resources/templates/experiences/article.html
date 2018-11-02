@@ -20,7 +20,7 @@
         <p th:if="${isLiked}"><i class="fas fa-check-circle fa-fw"></i>お気に入りに登録されています <a class="button" th:href="@{/experiences/{experienceId}?dislike(experienceId=*{experience_id})}">削除</a></p>
       </div>
       <div class="exp-container">
-        <div>
+        <div style="padding: 0 3%;">
           <p><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></p>
           <h1>
             <span th:text="*{univ_name} == '' ? '非公開' : *{univ_name}"></span>
