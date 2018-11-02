@@ -14,6 +14,7 @@ $(function () {
 	$hiddenUnivName = $('#hiddenUnivName'),
 	$hiddenFac = $('#hiddenFac'),
 	$hiddenDep = $('#hiddenDep')
+	$hiddenGradSchoolPref = $('#hiddenGradSchoolPref'),
 	$hiddenGradSchoolName = $('#hiddenGradSchoolName'),
 	$hiddenGradSchoolOf = $('#hiddenGradSchoolOf'),
 	$hiddenProgramIn = $('#hiddenProgramIn');

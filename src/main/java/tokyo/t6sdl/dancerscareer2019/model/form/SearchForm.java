@@ -12,6 +12,10 @@ public class SearchForm {
 	private String univName;
 	private String faculty;
 	private String department;
+	private String gradSchoolPref;
+	private String gradSchoolName;
+	private String gradSchoolOf;
+	private String programIn;
 	private List<String> position;
 	private String sort;
 	

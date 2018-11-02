@@ -144,6 +144,10 @@ public class AdminController {
 		model.addAttribute("hiddenUnivName", form.getUnivName());
 		model.addAttribute("hiddenFac", form.getFaculty());
 		model.addAttribute("hiddenDep", form.getDepartment());
+		model.addAttribute("hiddenGradSchoolPref", form.getGradSchoolPref());
+		model.addAttribute("hiddenGradSchoolName", form.getGradSchoolName());
+		model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
+		model.addAttribute("hiddenProgramIn", form.getProgramIn());
 		model.addAttribute(form);
 		int sortId;
 		try {
@@ -344,6 +348,10 @@ public class AdminController {
 		model.addAttribute("hiddenUnivName", form.getUnivName());
 		model.addAttribute("hiddenFac", form.getFaculty());
 		model.addAttribute("hiddenDep", form.getDepartment());
+		model.addAttribute("hiddenGradSchoolPref", form.getGradSchoolPref());
+		model.addAttribute("hiddenGradSchoolName", form.getGradSchoolName());
+		model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
+		model.addAttribute("hiddenProgramIn", form.getProgramIn());
 		model.addAttribute(form);
 		return "admin/experiences/modify";
 	}
@@ -363,6 +371,10 @@ public class AdminController {
 					model.addAttribute("hiddenUnivName", form.getUnivName());
 					model.addAttribute("hiddenFac", form.getFaculty());
 					model.addAttribute("hiddenDep", form.getDepartment());
+					model.addAttribute("hiddenGradSchoolPref", form.getGradSchoolPref());
+					model.addAttribute("hiddenGradSchoolName", form.getGradSchoolName());
+					model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
+					model.addAttribute("hiddenProgramIn", form.getProgramIn());
 					return "admin/experiences/submit";
 				} else {
 					model.addAttribute(form);
@@ -375,6 +387,10 @@ public class AdminController {
 					model.addAttribute("hiddenUnivName", form.getUnivName());
 					model.addAttribute("hiddenFac", form.getFaculty());
 					model.addAttribute("hiddenDep", form.getDepartment());
+					model.addAttribute("hiddenGradSchoolPref", form.getGradSchoolPref());
+					model.addAttribute("hiddenGradSchoolName", form.getGradSchoolName());
+					model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
+					model.addAttribute("hiddenProgramIn", form.getProgramIn());
 					return "admin/experiences/modify";
 				} else {
 					int experience_id = Integer.parseInt(experienceId);
@@ -394,6 +410,10 @@ public class AdminController {
 		model.addAttribute("hiddenUnivName", form.getUnivName());
 		model.addAttribute("hiddenFac", form.getFaculty());
 		model.addAttribute("hiddenDep", form.getDepartment());
+		model.addAttribute("hiddenGradSchoolPref", form.getGradSchoolPref());
+		model.addAttribute("hiddenGradSchoolName", form.getGradSchoolName());
+		model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
+		model.addAttribute("hiddenProgramIn", form.getProgramIn());
 		model.addAttribute(form);
 		return "admin/experiences/submit";
 	}
@@ -549,6 +569,10 @@ public class AdminController {
 		model.addAttribute("hiddenUnivName", form.getUnivName());
 		model.addAttribute("hiddenFac", form.getFaculty());
 		model.addAttribute("hiddenDep", form.getDepartment());
+		model.addAttribute("hiddenGradSchoolPref", form.getGradSchoolPref());
+		model.addAttribute("hiddenGradSchoolName", form.getGradSchoolName());
+		model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
+		model.addAttribute("hiddenProgramIn", form.getProgramIn());
 		model.addAttribute(form);
 		int sortId;
 		try {
