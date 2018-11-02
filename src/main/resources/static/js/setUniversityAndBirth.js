@@ -124,11 +124,11 @@ $(function () {
 					if (univ === $hiddenUnivName.val()) {
 						$hiddenUnivCategory.val(cate);
 						found = true;
-						return;
+						break;
 					}
 				}
-				if (flag) {
-					return;
+				if (found) {
+					break;
 				}
 			}
 		}
@@ -157,11 +157,11 @@ $(function () {
 						if (grad === $hiddenGradSchoolName.val()) {
 							$hiddenGradSchoolCategory.val(cate);
 							found = true;
-							return;
+							break;
 						}
 					}
-					if (flag) {
-						return;
+					if (found) {
+						break;
 					}
 				}
 			}
@@ -351,11 +351,11 @@ $(function () {
 					if (univ === $univName.val()) {
 						$hiddenUnivCategory.val(cate);
 						found = true;
-						return;
+						break;
 					}
 				}
-				if (flag) {
-					return;
+				if (found) {
+					break;
 				}
 			}
 		}
@@ -387,11 +387,11 @@ $(function () {
 					if (grad === $gradSchoolName.val()) {
 						$hiddenGradSchoolCategory.val(cate);
 						found = true;
-						return;
+						break;
 					}
 				}
-				if (flag) {
-					return;
+				if (found) {
+					break;
 				}
 			}
 		}
