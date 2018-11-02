@@ -121,6 +121,20 @@ $(function () {
 		}
 	}
 	const initUnivName = function () {
+		if ($univCategory === null) {
+			for (let cate in univJson[$univPref.val()]) {
+				for (let univ in univJson[$univPref.val()][cate]) {
+					if (univ === $hiddenUnivName.val()) {
+						$hiddenUnivCategory.val(cate);
+						found = true;
+						return;
+					}
+				}
+				if (flag) {
+					return;
+				}
+			}
+		}
 		setUnivName();
 		$univName.children('[value="' + $hiddenUnivName.val() + '"]').prop('selected', true);
 	}
@@ -140,6 +154,19 @@ $(function () {
 			}
 			if ($gradSchoolCategory !== null) {
 				setGradSchoolCategory();
+			} else if ($gradSchoolCategory === null) {
+				for (let cate in gradJson[$gradSchoolPref.val()]) {
+					for (let grad in gradJson[$gradSchoolPref.val()][cate]) {
+						if (grad === $hiddenGradSchoolName.val()) {
+							$hiddenGradSchoolCategory.val(cate);
+							found = true;
+							return;
+						}
+					}
+					if (flag) {
+						return;
+					}
+				}
 			}
 			$gradSchool.css({
 				display: "block",
@@ -325,7 +352,7 @@ $(function () {
 			for (let cate in univJson[$univPref.val()]) {
 				for (let univ in univJson[$univPref.val()][cate]) {
 					if (univ === $univName.val()) {
-						$hiddenUnivCategory.val() = cate;
+						$hiddenUnivCategory.val(cate);
 						found = true;
 						return;
 					}
@@ -361,7 +388,7 @@ $(function () {
 			for (let cate in gradJson[$gradSchoolPref.val()]) {
 				for (let grad in gradJson[$gradSchoolPref.val()][cate]) {
 					if (grad === $gradSchoolName.val()) {
-						$hiddenGradSchoolCategory.val() = cate;
+						$hiddenGradSchoolCategory.val(cate);
 						found = true;
 						return;
 					}
