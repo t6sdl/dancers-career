@@ -9,10 +9,12 @@ public class SearchForm {
 	private String kanaLastName;
 	private String kanaFirstName;
 	private String univPref;
+	private String univCategory;
 	private String univName;
 	private String faculty;
 	private String department;
 	private String gradSchoolPref;
+	private String gradSchoolCategory;
 	private String gradSchoolName;
 	private String gradSchoolOf;
 	private String programIn;
