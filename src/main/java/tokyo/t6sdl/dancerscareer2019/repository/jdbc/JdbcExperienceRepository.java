@@ -246,7 +246,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		String club = this.listToString(newExperience.getClub());
 		String offer = this.listToString(newExperience.getOffer());
 		jdbcTemplate.update(
-				"INSERT INTO experiences (last_name, first_name, kana_last_name, kana_first_name, sex, major, prefecture, university, faculty, department, grad_school_pref, grad_school_name, grad_school_of, program_in, graduation, academic_degree, position, club, offer) "
+				"INSERT INTO experiences (last_name, first_name, kana_last_name, kana_first_name, sex, major, univ_pref, univ_name, faculty, department, grad_school_pref, grad_school_name, grad_school_of, program_in, graduation, academic_degree, position, club, offer) "
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				newExperience.getLast_name(), newExperience.getFirst_name(), newExperience.getKana_last_name(), newExperience.getKana_first_name(), newExperience.getSex(), newExperience.getMajor(),
 				newExperience.getUniv_pref(), newExperience.getUniv_name(), newExperience.getFaculty(), newExperience.getDepartment(), newExperience.getGrad_school_pref(), newExperience.getGrad_school_name(),
