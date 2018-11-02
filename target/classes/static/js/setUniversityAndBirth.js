@@ -99,9 +99,6 @@ $(function () {
 		}
 		$faculty.prop('disabled', false);
 		$department.prop('disabled', true);
-		if ($univCategory === null) {
-			
-		}
 		for (let fac in univJson[$univPref.val()][$hiddenUnivCategory.val()][$univName.val()]) {
 			let options = '<option value="' + fac + '">' + fac + '</option>';
 			$faculty.append(options);
