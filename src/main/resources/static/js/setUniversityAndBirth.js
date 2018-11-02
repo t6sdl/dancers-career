@@ -36,6 +36,7 @@ $(function () {
 		$.ajaxSetup({async: true});
 	}
 	const setUnivCategory = function () {
+		$univCategory.children('[value="default"]').prop('selected', true);
 		$univName.children('[value!="default"]').remove();
 		$faculty.children('[value!="default"]').remove();
 		$department.children('[value!="default"]').remove();
@@ -178,6 +179,7 @@ $(function () {
 		}
 	}
 	const setGradSchoolCategory = function () {
+		$gradSchoolCategory.children('[value=""]').prop('selected', true);
 		$gradSchoolName.children('[value!=""]').remove();
 		$gradSchoolOf.children('[value!=""]').remove();
 		$programIn.children('[value!=""]').remove();
