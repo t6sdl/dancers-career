@@ -40,7 +40,7 @@
         </div>
         <hr class="cutl">
         <h2>ES</h2>
-        <div style="margin-bottom:3.5em;" th:each="esItem, loop : *{es}"><!-- 設問と回答のセット数に関係なく、提出企業ごとにこのタグで挟まれるように変更しました -->
+        <div style="margin-bottom:3.5em;" th:each="esItem, loop : *{es}">
           <div class="es-info">
             <p>提出先企業：<span th:text="*{es[__${loop.index}__].corp} == '' ? '非公開' : *{es[__${loop.index}__].corp}"></span></p>
             <p>選考結果：<span th:text="*{es[__${loop.index}__].result} == '' ? '非公開' : *{es[__${loop.index}__].result}"></span></p>        

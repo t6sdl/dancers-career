@@ -22,9 +22,7 @@
       <p th:if="${param.error}" class="hazard"><i class="fas fa-exclamation-circle"></i>アカウントの作成に失敗しました<br>もう一度お試しください</p>
       <div>
         <label for="newEmail"></label>
-        <!-- th:errorclassの値は入力値が不正の場合に付与するクラスなので、この場合エラー時にinputタグにerrorクラスが付きます -->
         <input type="email" th:field="*{newEmail}" th:errorclass="error" required placeholder="メールアドレス">
-        <!-- エラーの内容を表示する部分で、エラーの数だけpタグが生成されます、ので、pタグじゃない方が良ければ変更します -->
         <p th:if="${#fields.hasErrors('newEmail')}" th:errors="*{newEmail}"></p>
       </div>
       <div>
