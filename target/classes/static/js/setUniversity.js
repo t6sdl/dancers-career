@@ -98,6 +98,7 @@ $(function () {
 	}
 	const initUnivName = function () {
 		if ($hiddenUnivName.val() !== '') {
+			let found = false;
 			for (let cate in univJson[$univPref.val()]) {
 				for (let univ in univJson[$univPref.val()][cate]) {
 					if (univ === $hiddenUnivName.val()) {
@@ -192,6 +193,7 @@ $(function () {
 	}
 	const initGradSchoolName = function () {
 		if ($hiddenGradSchoolName.val() !== '') {
+			let found = false;
 			for (let cate in gradJson[$gradSchoolPref.val()]) {
 				for (let grad in gradJson[$gradSchoolPref.val()][cate]) {
 					if (grad === $hiddenGradSchoolName.val()) {
