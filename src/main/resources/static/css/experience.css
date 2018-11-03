@@ -25,6 +25,9 @@
 }
 
 .es-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   padding: 0 5%;
 }
 
@@ -57,4 +60,14 @@
 
 .qanda {
   padding: 1em 0;
+}
+
+@media (min-width: 600px) {
+  .es-info {
+    flex-direction: row;
+  }
+  .es-info > p + p::before {
+    content: '\FF5C';
+    padding: 0 .5em;
+  }
 }

@@ -51,6 +51,13 @@
 学科：【<span th:text="*{department} == '' ? '非公開' : *{department}"></span>】</p>
 </div>
 <div>
+<p>大学院・研究科・専攻</p>
+<p>大学院所在地：【<span th:text="*{grad_school_pref} == '' ? '' : *{grad_school_pref}"></span>】
+大学院：【<span th:text="*{grad_school_name} == '' ? '' : *{grad_school_name}"></span>】
+研究科：【<span th:text="*{grad_school_of} == '' ? '' : *{grad_school_of}"></span>】
+専攻：【<span th:text="*{program_in} == '' ? '' : *{program_in}"></span>】</p>
+</div>
+<div>
 <p>サークルなどでの役職・役割</p>
 <p><span th:each="pos : *{position}" th:text="|【${pos}】 |"></span></p>
 </div>

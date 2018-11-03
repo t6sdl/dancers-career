@@ -64,15 +64,14 @@
     right: 0;
     bottom: 52%;
     margin: 0;
-    line-height: 1.5;
-    font-size: 2.6em;
-    font-family: Georgia, "Ÿà–¾’©‘Ì", "YuMincho", "Ÿà–¾’©", "Yu Mincho", "ƒqƒ‰ƒMƒm–¾’© ProN W3", "Hiragino Mincho ProN W3", HiraMinProN-W3, "ƒqƒ‰ƒMƒm–¾’© ProN", "Hiragino Mincho ProN", "ƒqƒ‰ƒMƒm–¾’© Pro", "Hiragino Mincho Pro", "HGS–¾’©E", "‚l‚r ‚o–¾’©", "MS PMincho", serif;
+    font-size: 2.4em;
+    font-family: Georgia, "\6E38\660E\671D\4F53", "YuMincho", "\6E38\660E\671D", "Yu Mincho", "\30D2\30E9\30AE\30CE\660E\671D  ProN W3", "Hiragino Mincho ProN W3", HiraMinProN-W3, "\30D2\30E9\30AE\30CE\660E\671D  ProN", "Hiragino Mincho ProN", "\30D2\30E9\30AE\30CE\660E\671D  Pro", "Hiragino Mincho Pro", "HGS \660E\671D E", "\FF2D\FF33\a0\FF30\660E\671D", "MS PMincho", serif;
   }
   #sub-catchphrase {
     position: absolute;
     left: 0;
     right: 0;
-    top: 49%;
+    top: 50%;
     margin: 0;
     font-size: .8em;
   }
@@ -235,21 +234,32 @@
   }
   #how .step {
     position: relative;
-    padding: 0 3em;
-    line-height: 1.5;
+    padding: 0 1em;
     box-sizing: border-box;
     border-bottom: 2px solid #aaaaaa;
     counter-increment: step;
     z-index: 999;
   }
-  #how .step::after {
-    content: 'step' counter(step);
+  #how .step::before {
+    content: 'step';
     position: absolute;
-    right: 0;
-    bottom: 0;
+    right: 1.3em;
+    bottom: -1em;
     color: #4ac8d3a4;
     line-height: 1;
-    font-size: 2.6em;
+    font-size: 1.5em;
+    font-weight: bold;
+    z-index: -999;
+    overflow: hidden;    
+  }
+  #how .step::after {
+    content: counter(step);
+    position: absolute;
+    right: 0;
+    bottom: -1em;
+    color: #4ac8d3a4;
+    line-height: 1;
+    font-size: 3em;
     font-weight: bold;
     z-index: -999;
     overflow: hidden;
@@ -258,7 +268,7 @@
     margin: 0;
   }
   #how a.link-button {
-    margin: .5em auto;
+    margin: 1.5em auto .5em;
     background: #426579;
     color: #ffffff;
   }
@@ -290,5 +300,8 @@
   @media (min-width: 800px) {
     br.show-l {
       display: block;
+    }
+    #how a.link-button {
+      margin: .5em auto;
     }
   }

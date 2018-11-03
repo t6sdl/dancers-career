@@ -5,7 +5,7 @@ body {
   margin: 0px;
   padding: 0px;
   font-family: "Avenir Next", san-serif;
-  font-size: 12px;
+  font-size: 14px;
   color: #333;
   -webkit-text-size-adjust: none;
 }
@@ -77,12 +77,6 @@ hr {
   color: #ffffff;
 }
 
-@media (min-width: 480px) {
-  body {
-    font-size: 14px;
-  }
-}
-
 @media (min-width: 800px) {
   body{
     font-size: 16px;
@@ -104,6 +98,7 @@ header .inner {
   margin: 0;
   height: 90px;
   padding: 0 5%;
+  line-height: 2;
 }
 
 header #logo {
@@ -337,7 +332,7 @@ header #logo img:hover {
 .footer-logo {
   display: inline-block;
   padding: .5em;
-  font-size: 2em;
+  font-size: 25px;
   color:#426579;
 }
 
