@@ -5,7 +5,7 @@ body {
   margin: 0px;
   padding: 0px;
   font-family: "Avenir Next", san-serif;
-  font-size: 12px;
+  font-size: 14px;
   color: #333;
   -webkit-text-size-adjust: none;
 }
@@ -75,12 +75,6 @@ hr {
 .button:hover {
   background: #426579;
   color: #ffffff;
-}
-
-@media (min-width: 480px) {
-  body {
-    font-size: 14px;
-  }
 }
 
 @media (min-width: 800px) {
