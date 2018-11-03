@@ -120,6 +120,7 @@ $(function () {
 	}
 	const initUnivName = function () {
 		if (!($univCategory.length)) {
+			let found = false;
 			for (let cate in univJson[$univPref.val()]) {
 				for (let univ in univJson[$univPref.val()][cate]) {
 					if (univ === $hiddenUnivName.val()) {
@@ -153,6 +154,7 @@ $(function () {
 			if ($gradSchoolCategory.length) {
 				setGradSchoolCategory();
 			} else if (!($gradSchoolCategory.length)) {
+				let found = false;
 				for (let cate in gradJson[$gradSchoolPref.val()]) {
 					for (let grad in gradJson[$gradSchoolPref.val()][cate]) {
 						if (grad === $hiddenGradSchoolName.val()) {
