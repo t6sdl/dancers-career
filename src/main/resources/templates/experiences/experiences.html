@@ -41,7 +41,7 @@
           <h1 th:text="*{univ_name}" style="font-size:1.5em; margin-top:0;"></h1>
         </div>
         <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
-          <p>内定先：<span th:each="off : *{offer}" th:text="${off} == '' ? '非公開' : ${off} + ' '"></span></p>
+          <p>内定先：<span class="divide-slash" th:each="off : *{offer}" th:text="${off} == '' ? '非公開' : ${off}"></span></p>
           <p><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'"></span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></p>
         </div>
         <hr>
