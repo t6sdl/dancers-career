@@ -62,6 +62,11 @@
   padding: 1em 0;
 }
 
+.divide-slash + .divide-slash::before {
+  content: '/';
+  padding: 0 .5em;
+}
+
 @media (min-width: 600px) {
   .es-info {
     flex-direction: row;
