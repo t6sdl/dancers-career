@@ -242,7 +242,7 @@ header #logo img:hover {
     text-align: center;
   }
 
-  #for-admin #menubar li {
+  header#for-admin #menubar li {
     min-width: 130px;
     width: 13vw;
   }
