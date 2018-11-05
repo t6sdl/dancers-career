@@ -1,18 +1,3 @@
-/*
- * ブロック開閉処理
- * 2015/12/21 ボタン画像の非表示処理を行わない
- */
-/*
- * Return the classList property of e, if it has one.
- * Otherwise, return an object that simulates the DOMTokenList API for e.
- * The returned object has contains(), add(), remove(), toggle() and toString()
- * methods for testing and altering the set of classes of the element e.
- * If the classList property is natively supported, the returned object is
- * array-like and has length and array index properties. The simulated
- * DOMTokenList is not array-like, but has a toArray() method that returns
- * a true-array snapshot of the element's class names.
- */
-
 function classList(e) {
     if (e.classList) return e.classList;   // Return e.classList if it exists
     else return new CSSClassList(e);       // Otherwise try to fake it
@@ -50,7 +35,7 @@ CSSClassList.prototype.remove = function(c) {
     // Make sure c is a valid class name
     if (c.length === 0 || c.indexOf(" ") != -1) 
         throw new Error("Invalid class name: '" + c + "'");
-    // Remove all occurances of c as a word, plus any trailing space
+    // Remove all occurrences of c as a word, plus any trailing space
     var pattern = new RegExp("\\b" + c + "\\b\\s*", "g");
     this.e.className = this.e.className.replace(pattern, "");
 };
