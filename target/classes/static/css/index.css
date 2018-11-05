@@ -38,7 +38,7 @@
     position: relative;
     padding: 0;
     height: calc(100vh - 93px);
-    background-image: url('https://dancers-career-2019.herokuapp.com/img/top.jpg');
+    background-image: url('https://dancers-career.t6sdl.tokyo/img/top.jpg');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -49,7 +49,7 @@
     text-align: center;
   }
   #motive {
-    background-image: url('https://dancers-career-2019.herokuapp.com/img/motive.jpg');
+    background-image: url('https://dancers-career.t6sdl.tokyo/img/motive.jpg');
     background-position: top;
     background-repeat: no-repeat;
     background-size: cover;
