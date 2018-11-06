@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>お気に入りES一覧｜ダンサーズキャリア</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <th:block th:replace="common/favicons :: favicons"></th:block>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/user.css}" href="../../static/css/user.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../static/js/openclose.js"></script>
+</head>
+<body>
+  <header th:replace="common/header :: for-user"></header>
+  <main>
+    <article>
+      <h1>お気に入りES一覧</h1>
+      <section>
+        <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
+          <p th:text="|こんにちは ${lastName == null ? '名無しさん' : lastName + 'さん'}|"></p>
+          <p>お気に入りに登録されたES/体験記：<span th:text="${likes}"></span>件</p>
+        </div>
+        <article th:each="experience : ${experiences}" th:object="${experience}" class="exp-container">
+          <div>
+            <p style="margin: 0;"><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></p>
+            <h1 th:text="*{univ_name}" style="font-size:1.5em;"></h1>
+          </div>
+          <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
+            <p>内定先：<span th:each="off : *{offer}" th:text="${off} == '' ? '非公開' : ${off} + ' '"></span></p>
+            <p><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'"></span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></p>
+          </div>
+          <hr>
+          <div style="display:flex; flex-wrap:wrap; justify-content:space-between;">
+            <span>お気に入り数：<span th:text="*{likes}"></span></span>
+            <a class="button" th:href="@{/experiences/{experienceId}(experienceId=*{experience_id})}">詳細を見る</a>
+          </div>
+        </article>
+      </section>
+    </article>
+    <aside th:replace="user/common/tab :: tab"></aside>
+  </main>
+  <footer th:replace="common/footer :: footer"></footer>
+</body>
+</html>

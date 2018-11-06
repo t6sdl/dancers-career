@@ -45,7 +45,8 @@
           <p><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'"></span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></p>
         </div>
         <hr>
-        <div style="text-align:right;">
+        <div style="display:flex; flex-wrap:wrap; justify-content:space-between;">
+          <span>お気に入り数：<span th:text="*{likes}"></span></span>
           <a class="button" th:href="@{/experiences/{experienceId}(experienceId=*{experience_id})}">詳細を見る</a>
         </div>
       </article>
