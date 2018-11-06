@@ -9,7 +9,6 @@
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../static/js/openclose.js"></script>
 </head>
-
 <body>
   <!-- 普通のユーザー用のヘッダー -->
   <header id="for-user" th:fragment="for-user">
@@ -17,7 +16,7 @@
       <h1 id="logo"><a th:href="@{/}"><img alt="ダンサーのための就活サイト" th:src="@{/img/logo.png}" src="../../static/img/logo.png"></a></h1>
       <nav id="menubar">
         <ul>
-          <li><a th:href="@{/}"><span>ダンサーズキャリアとは</span><br>About Dancer's Career</a></li>
+          <li><a th:href="@{/}"><span>トップ</span><br>Top</a></li>
           <li><a th:href="@{/experiences?all&sort=0}"><span>ES/体験記を探す</span><br>Find ES/Experiences</a></li>
           <li id="lastli"><a th:href="@{/user}"><span>マイページ</span><br>My Page</a></li>
         </ul>
@@ -29,19 +28,17 @@
     <div id="menubar_hdr" class="close"></div>
     <nav id="menubar-s">
       <ul>
-        <li><a th:href="@{/}">ダンサーズキャリアとは<br><span>About Dancer's Career</span></a></li>
+        <li><a th:href="@{/}">トップ<br><span>Top</span></a></li>
         <li><a th:href="@{/experiences?all&sort=0}">ES/体験記を探す<br><span>Find ES/Experiences</span></a></li>
         <li><a th:href="@{/user}">マイページ<br><span>My Page</span></a></li>
         <li id="lastli"><a th:href="@{/logout}">ログアウト<br><span>Logout</span></a></li>
       </ul>
     </nav>
-
     <script type="text/javascript">
     if (OCwindowWidth() <= 800) {
       open_close("menubar_hdr", "menubar-s");
     };
     $(function(){
-
       $(window).resize(function(){
         if (OCwindowWidth() <= 800) {
           open_close("menubar_hdr", "menubar-s");
@@ -82,19 +79,14 @@
       open_close("menubar_hdr", "menubar-s");
     };
     $(function(){
-
       $(window).resize(function(){
         if (OCwindowWidth() <= 800) {
           open_close("menubar_hdr", "menubar-s");
         }
       });
     });
-
-
     </script>
   </header>
-
-
 
   <!-- ログインしていない人用のヘッダー -->
   <header id="for-stranger" th:fragment="for-stranger">

@@ -29,7 +29,7 @@ public class GeneralController {
 	private final AccountService accountService;
 	private final LineNotifyManager lineNotify;
 	private final String CONTEXT_PATH = Mail.CONTEXT_PATH;
-		
+
 	@RequestMapping("")
 	public String index(Model model) {
 		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());

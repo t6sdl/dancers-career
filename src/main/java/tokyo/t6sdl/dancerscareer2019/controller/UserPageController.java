@@ -43,9 +43,22 @@ public class UserPageController {
 	private final EmailSender emailSender;
 	private final PasswordEncoder passwordEncoder;
 	private final LineNotifyManager lineNotify;
-		
+	
 	@RequestMapping()
 	public String getMypage(Model model) {
+		String lastName = profileService.getLastNameByEmail(securityService.findLoggedInEmail());
+		List<String> likesData = profileService.getLikesByEmail(securityService.findLoggedInEmail());
+		if (likesData.contains("")) {
+			model.addAttribute("likes", 0);
+		} else {
+			model.addAttribute("likes", likesData.size());
+		}
+		model.addAttribute("lastName", lastName);
+		return "user/user";
+	}
+		
+	@RequestMapping("/likes")
+	public String getMyLikes(Model model) {
 		String lastName = profileService.getLastNameByEmail(securityService.findLoggedInEmail());
 		List<String> likesData = profileService.getLikesByEmail(securityService.findLoggedInEmail());
 		List<Experience> experiences = new ArrayList<Experience>();
@@ -61,9 +74,9 @@ public class UserPageController {
 		}
 		Collections.reverse(experiences);
 		model.addAttribute("lastName", lastName);
-		model.addAttribute("likes", likes);
+		model.addAttribute("likes", likes.size());
 		model.addAttribute("experiences", experiences);
-		return "user/user";
+		return "user/myLikes";
 	}
 	
 	@RequestMapping("/error")
