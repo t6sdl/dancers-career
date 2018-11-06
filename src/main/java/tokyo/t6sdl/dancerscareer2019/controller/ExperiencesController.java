@@ -152,7 +152,7 @@ public class ExperiencesController {
 		String corp = null;
 		while (iterator.hasNext()) {
 			Es each = iterator.next();
-			if (Objects.equals(corp, each.getCorp())) {
+			if (!(each.getCorp().isEmpty()) && Objects.equals(corp, each.getCorp())) {
 				es.get(es.size() - 1).getQuestion().add(each.getQuestion().get(0));
 				es.get(es.size() - 1).getAnswer().add(each.getAnswer().get(0));
 				es.get(es.size() - 1).getAdvice().add(each.getAdvice().get(0));
