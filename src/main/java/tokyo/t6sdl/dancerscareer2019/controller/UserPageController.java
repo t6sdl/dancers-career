@@ -47,12 +47,6 @@ public class UserPageController {
 	@RequestMapping()
 	public String getMypage(Model model) {
 		String lastName = profileService.getLastNameByEmail(securityService.findLoggedInEmail());
-		List<String> likesData = profileService.getLikesByEmail(securityService.findLoggedInEmail());
-		if (likesData.contains("")) {
-			model.addAttribute("likes", 0);
-		} else {
-			model.addAttribute("likes", likesData.size());
-		}
 		model.addAttribute("lastName", lastName);
 		return "user/user";
 	}
