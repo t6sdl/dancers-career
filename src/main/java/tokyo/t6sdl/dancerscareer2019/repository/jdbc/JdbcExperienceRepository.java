@@ -293,7 +293,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		String offer = this.listToString(experience.getOffer());
 		jdbcTemplate.update(
 				"UPDATE experiences SET last_name = ?, first_name = ?, kana_last_name = ?, kana_first_name = ?, sex = ?, major = ?, "
-				+ "prefecture = ?, university = ?, faculty = ?, department = ?, grad_school_pref = ?, grad_school_name = ?, grad_school_of = ?, "
+				+ "univ_pref = ?, univ_name = ?, faculty = ?, department = ?, grad_school_pref = ?, grad_school_name = ?, grad_school_of = ?, "
 				+ "program_in = ?, graduation = ?, academic_degree = ?, position = ?, club = ?, offer = ? WHERE experience_id = ?",
 				experience.getLast_name(), experience.getFirst_name(), experience.getKana_last_name(), experience.getKana_first_name(), experience.getSex(), experience.getMajor(), 
 				experience.getUniv_pref(), experience.getUniv_name(), experience.getFaculty(), experience.getDepartment(), experience.getGrad_school_pref(), experience.getGrad_school_name(),

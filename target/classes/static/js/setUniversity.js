@@ -35,31 +35,14 @@ $(function () {
 		$univName.children('[value!=""]').remove();
 		$faculty.children('[value!=""]').remove();
 		$department.children('[value!=""]').remove();
-		if ($univPref.val() === '') {
-			$univCategory.prop('disabled', true);
-			$univName.prop('disabled', true);
-			$faculty.prop('disabled', true);
-			$department.prop('disabled', true);
-			return;
-		}
-		$univCategory.prop('disabled', false);
-		$univName.prop('disabled', true);
-		$faculty.prop('disabled', true);
-		$department.prop('disabled', true);
 	}
 	const setUnivName = function () {
 		$univName.children('[value!=""]').remove();
 		$faculty.children('[value!=""]').remove();
 		$department.children('[value!=""]').remove();
 		if ($univCategory.val() === '') {
-			$univName.prop('disabled', true);
-			$faculty.prop('disabled', true);
-			$department.prop('disabled', true);
 			return;
 		}
-		$univName.prop('disabled', false);
-		$faculty.prop('disabled', true);
-		$department.prop('disabled', true);
 		for (let univ in univJson[$univPref.val()][$univCategory.val()]) {
 			let options = '<option value="' + univ + '">' + univ + '</option>';
 			$univName.append(options);
@@ -69,12 +52,8 @@ $(function () {
 		$faculty.children('[value!=""]').remove();
 		$department.children('[value!=""]').remove();
 		if ($univName.val() === '') {
-			$faculty.prop('disabled', true);
-			$department.prop('disabled', true);
 			return;
 		}
-		$faculty.prop('disabled', false);
-		$department.prop('disabled', true);
 		for (let fac in univJson[$univPref.val()][$univCategory.val()][$univName.val()]) {
 			let options = '<option value="' + fac + '">' + fac + '</option>';
 			$faculty.append(options);
@@ -83,10 +62,8 @@ $(function () {
 	const setDepartment = function () {
 		$department.children('[value!=""]').remove();
 		if ($faculty.val() === '') {
-			$department.prop('disabled', true);
 			return;
 		}
-		$department.prop('disabled', false);
 		for (let i = 0; i < univJson[$univPref.val()][$univCategory.val()][$univName.val()][$faculty.val()].length; i++) {
 			let dep = univJson[$univPref.val()][$univCategory.val()][$univName.val()][$faculty.val()][i];
 			let options = '<option value="' + dep + '">' + dep + '</option>';
@@ -131,30 +108,16 @@ $(function () {
 		$gradSchoolOf.children('[value!=""]').remove();
 		$programIn.children('[value!=""]').remove();
 		if ($gradSchoolPref.val() === '') {
-			$gradSchoolCategory.prop('disabled', true);
-			$gradSchoolName.prop('disabled', true);
-			$gradSchoolOf.prop('disabled', true);
-			$programIn.prop('disabled', true);
 			return;
 		}
-		$gradSchoolCategory.prop('disabled', false);
-		$gradSchoolName.prop('disabled', true);
-		$gradSchoolOf.prop('disabled', true);
-		$programIn.prop('disabled', true);
 	}
 	const setGradSchoolName = function () {
 		$gradSchoolName.children('[value!=""]').remove();
 		$gradSchoolOf.children('[value!=""]').remove();
 		$programIn.children('[value!=""]').remove();
 		if ($gradSchoolCategory.val() === '') {
-			$gradSchoolName.prop('disabled', true);
-			$gradSchoolOf.prop('disabled', true);
-			$programIn.prop('disabled', true);
 			return;
 		}
-		$gradSchoolName.prop('disabled', false);
-		$gradSchoolOf.prop('disabled', true);
-		$programIn.prop('disabled', true);
 		for (let grad in gradJson[$gradSchoolPref.val()][$gradSchoolCategory.val()]) {
 			let options = '<option value="' + grad + '">' + grad + '</option>';
 			$gradSchoolName.append(options);
@@ -164,12 +127,8 @@ $(function () {
 		$gradSchoolOf.children('[value!=""]').remove();
 		$programIn.children('[value!=""]').remove();
 		if ($gradSchoolName.val() === '') {
-			$gradSchoolOf.prop('disabled', true);
-			$programIn.prop('disabled', true);
 			return;
 		}
-		$gradSchoolOf.prop('disabled', false);
-		$programIn.prop('disabled', true);
 		for (let grad in gradJson[$gradSchoolPref.val()][$gradSchoolCategory.val()][$gradSchoolName.val()]) {
 			let options = '<option value="' + grad + '">' + grad + '</option>';
 			$gradSchoolOf.append(options);
@@ -178,10 +137,8 @@ $(function () {
 	const setProgramIn = function () {
 		$programIn.children('[value!=""]').remove();
 		if ($gradSchoolOf.val() === '') {
-			$programIn.prop('disabled', true);
 			return;
 		}
-		$programIn.prop('disabled', false);
 		for (let i = 0; i < gradJson[$gradSchoolPref.val()][$gradSchoolCategory.val()][$gradSchoolName.val()][$gradSchoolOf.val()].length; i++) {
 			let grad = gradJson[$gradSchoolPref.val()][$gradSchoolCategory.val()][$gradSchoolName.val()][$gradSchoolOf.val()][i];
 			let options = '<option value="' + grad + '">' + grad + '</option>';
