@@ -38,10 +38,10 @@ public class ExperiencesController {
 	@RequestMapping(params="all")
 	public String getExperiences(@RequestParam(name="sort") String sort, Model model) {
 		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
-		if (account.isAdmin()) {
+		if (Objects.equals(account, null)) {
+			model.addAttribute("header", "for-stranger");
+		} else if (account.isAdmin()) {
 			model.addAttribute("header", "for-admin");
-		} else if (!(account.isValid_email()) || !(profileService.isCompleteProfile(profileService.getProfileByEmail(account.getEmail())))) {
-			return "experiences/error";
 		} else {
 			model.addAttribute("header", "for-user");
 		}
@@ -62,10 +62,10 @@ public class ExperiencesController {
 	@RequestMapping(params="by-position")
 	public String getExperiencesByPosition(SearchForm form, Model model) {
 		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
-		if (account.isAdmin()) {
+		if (Objects.equals(account, null)) {
+			model.addAttribute("header", "for-stranger");
+		} else if (account.isAdmin()) {
 			model.addAttribute("header", "for-admin");
-		} else if (!(account.isValid_email()) || !(profileService.isCompleteProfile(profileService.getProfileByEmail(securityService.findLoggedInEmail())))) {
-			return "experiences/error";
 		} else {
 			model.addAttribute("header", "for-user");
 		}
@@ -102,6 +102,9 @@ public class ExperiencesController {
 	
 	@RequestMapping(value="/{experienceId}", params="like")
 	public String getLikeExperience(@PathVariable(name="experienceId") String experienceId, Model model) {
+		if (Objects.equals(accountService.getAccountByEmail(securityService.findLoggedInEmail()), null)) {
+			throw new NotFound404();
+		}
 		int id = Integer.parseInt(experienceId);
 		List<String> likesData = profileService.getLikesByEmail(securityService.findLoggedInEmail());
 		List<String> likes = new ArrayList<String>();
@@ -121,6 +124,9 @@ public class ExperiencesController {
 	
 	@RequestMapping(value="/{experienceId}", params="dislike")
 	public String getDislikeExperience(@PathVariable(name="experienceId") String experienceId, Model model) {
+		if (Objects.equals(accountService.getAccountByEmail(securityService.findLoggedInEmail()), null)) {
+			throw new NotFound404();
+		}
 		int id = Integer.parseInt(experienceId);
 		List<String> likesData = profileService.getLikesByEmail(securityService.findLoggedInEmail());
 		List<String> likes = new ArrayList<String>();
@@ -139,14 +145,20 @@ public class ExperiencesController {
 	
 	private String display(int id, boolean pvCount, Model model) {
 		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
-		if (account.isAdmin()) {
+		Experience experience = new Experience();
+		if (Objects.equals(account, null)) {
+			model.addAttribute("header", "for-stranger");
+			experience = experienceService.getExperienceByIdForStranger(id);
+			model.addAttribute("experience", experience);
+			return "experiences/articleForStranger";
+		} else if (account.isAdmin()) {
 			model.addAttribute("header", "for-admin");
-		} else if (!(account.isValid_email()) || !(profileService.isCompleteProfile(profileService.getProfileByEmail(securityService.findLoggedInEmail())))) {
+		} else if (!(account.isValid_email()) || !(profileService.isCompleteProfile(profileService.getProfileByEmail(account.getEmail())))) {
 			return "experiences/error";
 		} else {
 			model.addAttribute("header", "for-user");
 		}
-		Experience experience = experienceService.getExperienceById(id, true, pvCount);
+		experience = experienceService.getExperienceById(id, true, pvCount);
 		List<Es> es = new ArrayList<Es>();
 		Iterator<Es> iterator = experience.getEs().iterator();
 		String corp = null;
