@@ -71,6 +71,20 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	}
 	
 	@Override
+	public Experience findOneByIdForStranger(int experience_id) {
+		try {
+			return jdbcTemplate.queryForObject(
+					this.selectExperienceIn("WHERE experience_id = ?", false, 0), (resultSet, i) -> {
+						Experience experience = new Experience();
+						this.adjustDataToExperienceForStranger(experience, resultSet);
+						return experience;
+					}, experience_id);
+		} catch (EmptyResultDataAccessException e) {
+			return null;
+		}
+	}
+	
+	@Override
 	public Map<String, Object> find(int sort) {
 		Integer count = jdbcTemplate.queryForObject("SELECT count FROM counts WHERE name = 'experiences'", Integer.class);
 		List<Experience> experiences = jdbcTemplate.query(
@@ -430,6 +444,53 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 					}, experience.getExperience_id()));
 		}
 	}
+	
+	private void adjustDataToExperienceForStranger(Experience experience, ResultSet resultSet) throws SQLException {
+		experience.setExperience_id(resultSet.getInt("experience_id"));
+		experience.setPage_view(resultSet.getInt("page_view"));
+		experience.setLikes(resultSet.getInt("likes"));
+		experience.setLast_name(resultSet.getString("last_name"));
+		experience.setFirst_name(resultSet.getString("first_name"));
+		experience.setKana_last_name(resultSet.getString("kana_last_name"));
+		experience.setKana_first_name(resultSet.getString("kana_first_name"));
+		experience.setSex(resultSet.getString("sex"));
+		experience.setMajor(resultSet.getString("major"));
+		experience.setUniv_pref(resultSet.getString("univ_pref"));
+		experience.setUniv_name(resultSet.getString("univ_name"));
+		experience.setFaculty(resultSet.getString("faculty"));
+		experience.setDepartment(resultSet.getString("department"));
+		experience.setGrad_school_pref(resultSet.getString("grad_school_pref"));
+		experience.setGrad_school_name(resultSet.getString("grad_school_name"));
+		experience.setGrad_school_of(resultSet.getString("grad_school_of"));
+		experience.setProgram_in(resultSet.getString("program_in"));
+		experience.setGraduation(resultSet.getString("graduation"));
+		experience.setAcademic_degree(resultSet.getString("academic_degree"));
+		experience.setPosition(this.stringToList(resultSet.getString("position")));
+		experience.setClub(this.stringToList(resultSet.getString("club")));
+		experience.setOffer(this.stringToList(resultSet.getString("offer")));
+		experience.setEs(jdbcTemplate.query(
+				"SELECT es_id, corp, result, question, LEFT(answer, 200) FROM es WHERE id = ? LIMIT 1", (esSet, i) -> {
+					Es es = new Es();
+					es.setExperience_id(experience.getExperience_id());
+					es.setEs_id(esSet.getInt("es_id"));
+					es.setCorp(esSet.getString("corp"));
+					es.setResult(esSet.getString("result"));
+					es.getQuestion().add(esSet.getString("question"));
+					StringBuilder builder = new StringBuilder();
+					builder.append(esSet.getString("LEFT(answer, 200)")).append("...");
+					es.getAnswer().add(builder.toString());
+					return es;
+				}, experience.getExperience_id()));
+		experience.setInterview(jdbcTemplate.query(
+				"SELECT interview_id, question, answer FROM interview WHERE id = ? LIMIT 1", (interviewSet, i) -> {
+					Interview interview = new Interview();
+					interview.setExperience_id(experience.getExperience_id());
+					interview.setInterview_id(interviewSet.getInt("interview_id"));
+					interview.setQuestion(interviewSet.getString("question"));
+					interview.setAnswer(interviewSet.getString("answer"));
+					return interview;
+				}, experience.getExperience_id()));
+	}	
 	
 	private String selectExperienceIn(String condition, boolean multiple, int sort) {
 		if (sort > 2) sort = 0;

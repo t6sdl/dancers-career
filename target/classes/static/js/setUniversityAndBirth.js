@@ -178,6 +178,12 @@ $(function () {
 			$gradSchool.css({
 				display: "none",
 			});
+			if ($gradSchoolCategory.length) {
+				$gradSchoolCategory.prop('disabled', false);
+			}
+			$gradSchoolName.prop('disabled', false);
+			$gradSchoolOf.prop('disabled', false);
+			$programIn.prop('disabled', false);
 		}
 	}
 	const setGradSchoolCategory = function () {
