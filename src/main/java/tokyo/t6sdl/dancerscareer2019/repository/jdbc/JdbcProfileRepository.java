@@ -344,28 +344,30 @@ public class JdbcProfileRepository implements ProfileRepository {
 		student.setValid_email(resultSet.getBoolean("valid_email"));
 		Date lastLogin = resultSet.getTimestamp("last_login");
 		student.setLast_login(LocalDateTime.ofInstant(lastLogin.toInstant(), ZoneId.of("Asia/Tokyo")));
-		student.setLast_name(resultSet.getString("last_name"));
-		student.setFirst_name(resultSet.getString("first_name"));
-		student.setKana_last_name(resultSet.getString("kana_last_name"));
-		student.setKana_first_name(resultSet.getString("kana_first_name"));
-		Date dateOfBirth = resultSet.getTimestamp("date_of_birth");
-		student.setDate_of_birth(LocalDate.ofInstant(dateOfBirth.toInstant(), ZoneId.systemDefault()));
-		student.setSex(resultSet.getString("sex"));
-		student.setPhone_number(resultSet.getString("phone_number"));
-		student.setMajor(resultSet.getString("major"));
-		student.setUniv_pref(resultSet.getString("univ_pref"));
-		student.setUniv_name(resultSet.getString("univ_name"));
-		student.setFaculty(resultSet.getString("faculty"));
-		student.setDepartment(resultSet.getString("department"));
-		student.setGrad_school_pref(resultSet.getString("grad_school_pref"));
-		student.setGrad_school_name(resultSet.getString("grad_school_name"));
-		student.setGrad_school_of(resultSet.getString("grad_school_of"));
-		student.setProgram_in(resultSet.getString("program_in"));
-		student.setGraduation(resultSet.getString("graduation"));
-		student.setAcademic_degree(resultSet.getString("academic_degree"));
-		student.setLikes(this.stringToList(resultSet.getString("likes")));
-		student.setPosition(this.stringToList(resultSet.getString("position")));
-		student.convertForDisplay();
+		if (!(Objects.equals(resultSet.getString("last_name"), null))) {
+			student.setLast_name(resultSet.getString("last_name"));
+			student.setFirst_name(resultSet.getString("first_name"));
+			student.setKana_last_name(resultSet.getString("kana_last_name"));
+			student.setKana_first_name(resultSet.getString("kana_first_name"));
+			Date dateOfBirth = resultSet.getTimestamp("date_of_birth");
+			student.setDate_of_birth(LocalDate.ofInstant(dateOfBirth.toInstant(), ZoneId.systemDefault()));
+			student.setSex(resultSet.getString("sex"));
+			student.setPhone_number(resultSet.getString("phone_number"));
+			student.setMajor(resultSet.getString("major"));
+			student.setUniv_pref(resultSet.getString("univ_pref"));
+			student.setUniv_name(resultSet.getString("univ_name"));
+			student.setFaculty(resultSet.getString("faculty"));
+			student.setDepartment(resultSet.getString("department"));
+			student.setGrad_school_pref(resultSet.getString("grad_school_pref"));
+			student.setGrad_school_name(resultSet.getString("grad_school_name"));
+			student.setGrad_school_of(resultSet.getString("grad_school_of"));
+			student.setProgram_in(resultSet.getString("program_in"));
+			student.setGraduation(resultSet.getString("graduation"));
+			student.setAcademic_degree(resultSet.getString("academic_degree"));
+			student.setLikes(this.stringToList(resultSet.getString("likes")));
+			student.setPosition(this.stringToList(resultSet.getString("position")));
+			student.convertForDisplay();
+		}
 	}
 	
 	private String selectStudentIn(String condition, int sort) {
