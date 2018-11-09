@@ -46,16 +46,16 @@
               <p class="ques"><span th:text="*{es[0].question[0]} == '' ? '非公開' : *{es[0].question[0]}"></span></p>
               <hr class="cutl">
               <p class="ans"><span th:each="str, stat : *{es[0].answer[0].split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
-              <p class="adv"><i class="far fa-comment-dots"></i> 現役人事からのコメント<br><span th:each="str, stat : *{es[0].advice[0].split('\n', -1)}"><th:block th:text="${str == '' ? 'なし' : str}"></th:block><br th:if="${!stat.last}">ペラペラペラペラ</span></p>
+              <p class="adv"><i class="far fa-comment-dots"></i> 現役人事からのコメント<br><span th:each="str, stat : *{es[0].advice[0].split('\n', -1)}"><th:block th:text="${str == '' ? 'なし' : str}"></th:block><br th:if="${!stat.last}"></span></p>
             </div>
             <div th:if="${otherEs > 0}">
-              <div th:if="${validEmail}" class="secret">
-                <p>あと<span th:text="${otherEs}"></span>件のESがあります。全て見るには「メールアドレスの確認」が必要です。</p>
+              <div th:unless="${validEmail}" class="secret">
+                <p><strong>あと<span th:text="${otherEs}"></span>件のESがあります。</strong>全て見るには「メールアドレスの確認」が必要です。</p>
                 <p>メールアドレスの確認は「ダンサーズキャリア（dancerscareer_support@t6sdl.tokyo）」から届くメールの「メールアドレスの確認」ボタンを押すことで完了します。</p>
                 <a th:href="@{/help/get-email}"><i class="far fa-question-circle"></i>メールが届かない</a>
               </div>
-              <div th:unless="${validEmail}" class="secret">
-                <p>あと<span th:text="${otherEs}"></span>件のESがあります。全て見るには「プロフィールの登録」が必要です。</p>
+              <div th:if="${validEmail}" class="secret">
+                <p><strong>あと<span th:text="${otherEs}"></span>件のESがあります。</strong>全て見るには「プロフィールの登録」が必要です。</p>
                 <a class="button" th:href="@{/user/profile/change}">プロフィールを登録する</a>
               </div>
             </div>
