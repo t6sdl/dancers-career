@@ -52,7 +52,7 @@
               <a class="button" th:href="@{/signin}">ログインはこちらから</a>
             </div>
             <div th:unless="${isStranger}" class="secret">
-              <p>全て見るには「メールアドレスの確認」と「プロフィールの登録」が必要です。</p>
+              <p><strong>全て見るには「メールアドレスの確認」と「プロフィールの登録」が必要です。</strong></p>
               <a class="button" th:href="@{/user/profile/change}">プロフィールを登録する</a>
               <p>メールアドレスの確認は「ダンサーズキャリア（dancerscareer_support@t6sdl.tokyo）」から届くメールの「メールアドレスの確認」ボタンを押すことで完了します。</p>
               <a th:href="@{/help/get-email}"><i class="far fa-question-circle"></i>メールが届かない</a>
@@ -72,7 +72,7 @@
             <a class="button" th:href="@{/signin}">ログインはこちらから</a>
           </div>
           <div th:unless="${isStranger}" class="secret">
-            <p>全て見るには「メールアドレスの確認」と「プロフィールの登録」が必要です。</p>
+            <p><strong>全て見るには「メールアドレスの確認」と「プロフィールの登録」が必要です。</strong></p>
             <a class="button" th:href="@{/user/profile/change}">プロフィールを登録する</a>
             <p>メールアドレスの確認は「ダンサーズキャリア（dancerscareer_support@t6sdl.tokyo）」から届くメールの「メールアドレスの確認」ボタンを押すことで完了します。</p>
             <a th:href="@{/help/get-email}"><i class="far fa-question-circle"></i>メールが届かない</a>

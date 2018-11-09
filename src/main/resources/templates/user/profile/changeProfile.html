@@ -23,7 +23,7 @@
         <div class="form-item">
           <p>氏名</p>
           <div>
-            <input type="text" th:field="*{lastName}" th:errorclass="error" required placeholder="性">
+            <input type="text" th:field="*{lastName}" th:errorclass="error" required placeholder="姓">
             <input type="text" th:field="*{firstName}" th:errorclass="error" required placeholder="名">
             <p th:if="${#fields.hasErrors('lastName') || #fields.hasErrors('firstName')}" class="hazard"><i class="fas fa-exclamation-circle"></i>入力してください</p>
           </div>

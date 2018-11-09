@@ -198,6 +198,6 @@ public class ExperiencesController {
 		}
 		experience.setEs(es);
 		model.addAttribute("experience", experience);
-		return "experiences/article";
+		return "experiences/fullArticle";
 	}
 }
