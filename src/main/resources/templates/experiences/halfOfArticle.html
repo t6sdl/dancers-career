@@ -56,7 +56,7 @@
               </div>
               <div th:if="${validEmail}" class="secret">
                 <p><strong>あと<span th:text="${otherEs}"></span>件のESがあります。全て見るには「プロフィールの登録」が必要です。</strong></p>
-                <a class="button" th:href="@{/user/profile/change}">プロフィールを登録する</a>
+                <a class="button" th:href="@{/signup/profile?revisit}">プロフィールを登録する</a>
               </div>
             </div>
           </div>

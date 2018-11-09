@@ -53,21 +53,20 @@ public class UserPageController {
 		
 	@RequestMapping("/likes")
 	public String getMyLikes(Model model) {
-		String lastName = profileService.getLastNameByEmail(securityService.findLoggedInEmail());
-		List<String> likesData = profileService.getLikesByEmail(securityService.findLoggedInEmail());
+		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
+		Profile profile = profileService.getProfileByEmail(account.getEmail());
+		List<String> likes = profile.getLikes();
 		List<Experience> experiences = new ArrayList<Experience>();
-		List<String> likes = new ArrayList<String>();
-		likes.addAll(likesData);
-		if (likes.contains("")) {
-			likes.remove("");
-		} else {
+		if (!(likes.remove(""))) {
 			likes.forEach(like -> {
 				int id = Integer.parseInt(like);
 				experiences.add(experienceService.getExperienceById(id, false, false));
 			});
 		}
 		Collections.reverse(experiences);
-		model.addAttribute("lastName", lastName);
+		model.addAttribute("lastName", profile.getLast_name());
+		model.addAttribute("validEmail", account.isValid_email());
+		model.addAttribute("perfect", profileService.isCompleteProfile(profile));
 		model.addAttribute("likes", likes.size());
 		model.addAttribute("experiences", experiences);
 		return "user/myLikes";

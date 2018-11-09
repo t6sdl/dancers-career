@@ -21,6 +21,21 @@
           <p th:text="|こんにちは ${lastName == null ? '名無しさん' : lastName + 'さん'}|"></p>
           <p>お気に入りに登録されたES/体験記：<span th:text="${likes}"></span>件</p>
         </div>
+        <div th:if="${!(validEmail) && !(perfect)}" style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+          <p><strong>お気に入りは「メールアドレスの確認」と「プロフィールの登録」が完了するとご利用になれます。</strong></p>
+          <a class="button" th:href="@{/signup/profile?revisit}">プロフィールを登録する</a>
+          <p>メールアドレスの確認は「ダンサーズキャリア（dancerscareer_support@t6sdl.tokyo）」から届くメールの「メールアドレスの確認」ボタンを押すことで完了します。</p>
+          <a th:href="@{/help/get-email}"><i class="far fa-question-circle"></i>メールが届かない</a>
+        </div>
+        <div th:if="${validEmail && !(perfect)}" style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+          <p><strong>お気に入りの利用には「プロフィールの登録」が必要です。</strong></p>
+          <a class="button" th:href="@{/signup/profile?revisit}">プロフィールを登録する</a>
+        </div>
+        <div th:if="${!(validEmail) && perfect}" style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+          <p><strong>お気に入りの利用には「メールアドレスの確認」が必要です。</strong></p>
+          <p>メールアドレスの確認は「ダンサーズキャリア（dancerscareer_support@t6sdl.tokyo）」から届くメールの「メールアドレスの確認」ボタンを押すことで完了します。</p>
+          <a th:href="@{/help/get-email}"><i class="far fa-question-circle"></i>メールが届かない</a>
+        </div>
         <article th:each="experience : ${experiences}" th:object="${experience}" class="exp-container">
           <div>
             <p style="margin: 0;"><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></p>

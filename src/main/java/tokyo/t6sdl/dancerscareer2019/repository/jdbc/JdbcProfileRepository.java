@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -30,27 +31,17 @@ public class JdbcProfileRepository implements ProfileRepository {
 	private final List<String> SORT_LIST = Arrays.asList("last_login DESC", "kana_last_name ASC, kana_first_name ASC", "univ_pref ASC, univ_name ASC, faculty ASC, department ASC");
 	
 	private List<String> stringToList(String str) {
-		List<String> list = new ArrayList<String>();
-		list.addAll(Arrays.asList(str.split(",")));
-		return list;
+		return new ArrayList<String>(Arrays.asList(str.split(",")));
 	}
 	
 	private String listToString(List<String> list) {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < list.size(); i++) {
-			sb.append(list.get(i));
-			if (i < list.size() - 1) sb.append(",");
-		}
-		return sb.toString();
+		return list.toString().substring(1, list.toString().length() - 1).replace(" ", "");
 	}
 	
 	private String listToString(List<String> list, String prefix, String suffix, String separator) {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < list.size(); i++) {
-			sb.append(prefix).append(list.get(i)).append(suffix);
-			if (i < list.size() - 1) sb.append(separator);
-		}
-		return sb.toString();
+		StringJoiner joiner = new StringJoiner(separator, prefix, suffix);
+		list.forEach(str -> joiner.add(str));
+		return joiner.toString();
 	}
 	
 	@Override
@@ -233,8 +224,8 @@ public class JdbcProfileRepository implements ProfileRepository {
 	@Override
 	public List<String> findLikesByEmail(String email) {
 		try {
-			String likesData = jdbcTemplate.queryForObject("SELECT likes FROM profiles WHERE email = ?", String.class, email);
-			return this.stringToList(likesData);
+			String likes = jdbcTemplate.queryForObject("SELECT likes FROM profiles WHERE email = ?", String.class, email);
+			return this.stringToList(likes);
 		} catch (EmptyResultDataAccessException e) {
 			return new ArrayList<String>(Arrays.asList(""));
 		}
@@ -292,13 +283,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 	
 	@Override
 	public void updateLikes(String email, List<String> likes) {
-		String likesData;
-		if (likes.isEmpty()) {
-			likesData = "";
-		} else {
-			likesData = this.listToString(likes);
-		}
-		jdbcTemplate.update("UPDATE profiles SET likes = ? WHERE email = ?", likesData, email);
+		jdbcTemplate.update("UPDATE profiles SET likes = ? WHERE email = ?", this.listToString(likes), email);
 	}
 	
 	protected List<Student> findByEmail(int sort, List<String> emails) {
