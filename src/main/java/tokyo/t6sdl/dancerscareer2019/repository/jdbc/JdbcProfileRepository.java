@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.StringJoiner;
+import java.util.stream.Collectors;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -35,13 +35,11 @@ public class JdbcProfileRepository implements ProfileRepository {
 	}
 	
 	private String listToString(List<String> list) {
-		return list.toString().substring(1, list.toString().length() - 1).replace(" ", "");
+		return list.stream().collect(Collectors.joining(","));
 	}
 	
 	private String listToString(List<String> list, String prefix, String suffix, String separator) {
-		StringJoiner joiner = new StringJoiner(separator, prefix, suffix);
-		list.forEach(str -> joiner.add(str));
-		return joiner.toString();
+		return String.join(separator, (String[]) list.stream().map(e -> prefix + e + suffix).toArray());
 	}
 	
 	@Override
