@@ -84,6 +84,10 @@
   margin: .5em 0;
 }
 
+.likes {
+  color: #e64552;
+}
+
 @media (min-width: 600px) {
   .es-info {
     flex-direction: row;
