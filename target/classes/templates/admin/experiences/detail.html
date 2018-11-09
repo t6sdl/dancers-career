@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8">
-<th:block th:replace="common/head :: head"></th:block>
 <title>ES/体験記【詳細】｜ダンサーズキャリア</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../../static/css/main.css">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script type="text/javascript" th:src="@{/js/openclose.js}" src="../../../static/js/openclose.js"></script>
 </head>
 <body>
 <header th:replace="common/header :: for-admin"></header>
@@ -68,9 +71,9 @@
 <div th:each="esItem, loop : *{es}">
 <p>提出先企業：<span th:text="*{es[__${loop.index}__].corp} == '' ? '【非公開】' : *{es[__${loop.index}__].corp}"></span></p>
 <p>選考結果：<span th:text="*{es[__${loop.index}__].result} == '' ? '【非公開】' : *{es[__${loop.index}__].result}"></span></p>
-<p>設問：<span th:text="*{es[__${loop.index}__].question} == '' ? '【非公開】' : *{es[__${loop.index}__].question}"></span></p>
-<p>回答：<br><span th:text="*{es[__${loop.index}__].answer} == '' ? '【非公開】' : *{es[__${loop.index}__].answer}"></span></p>
-<p>赤入れ：<br><span th:text="*{es[__${loop.index}__].advice} == '' ? '【非公開】' : *{es[__${loop.index}__].advice}"></span></p>
+<p>設問：<span th:text="*{es[__${loop.index}__].question.get(0)} == '' ? '【非公開】' : *{es[__${loop.index}__].question.get(0)}"></span></p>
+<p>回答：<br><span th:text="*{es[__${loop.index}__].answer.get(0)} == '' ? '【非公開】' : *{es[__${loop.index}__].answer.get(0)}"></span></p>
+<p>赤入れ：<br><span th:text="*{es[__${loop.index}__].advice.get(0)} == '' ? '【非公開】' : *{es[__${loop.index}__].advice.get(0)}"></span></p>
 <div style="text-align:right;">
 <a th:href="@{/admin/experiences/{experienceId}/es/{esId}?modify(experienceId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}"><button>このESを修正する</button></a>
 <a th:href="@{/admin/experiences/{experienceId}/es/{esId}?delete(experienceId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}"><button>このESを消去する</button></a>

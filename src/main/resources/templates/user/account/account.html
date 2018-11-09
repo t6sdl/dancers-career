@@ -1,58 +1,64 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8">
-<th:block th:replace="common/head :: head"></th:block>
-<title>アカウント｜ダンサーズキャリア</title>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <title>アカウント｜ダンサーズキャリア</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../../static/css/main.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../../static/js/openclose.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 </head>
-<body>
-<header th:replace="common/header :: for-user"></header>
-<main>
-<article>
-<h1>アカウント</h1>
-<p th:if="${param.changedemail}">メールアドレスが変更されました</p>
-<p th:if="${param.changedpassword}">パスワードが変更されました</p>
-<table>
-<tbody>
-<tr>
-<th>メールアドレス</th>
-<td rowspan="3">
-<a th:href="@{/user/account/change/email}"><button>変更</button></a>
-</td>
-</tr>
-<tr>
-<td th:text="${email}"></td>
-</tr>
-<tr>
-<td><span th:unless="${validEmail}">メールアドレス未確認 <a th:href="@{/user/account/help}"><i class="far fa-question-circle"></i>メールが届かない</a></span><span th:if="${validEmail}">メールアドレス確認済</span></td>
-</tr>
-</tbody>
-<tbody>
-<tr>
-<th>パスワード</th>
-<td rowspan="2">
-<a th:href="@{/user/account/change/password}"><button>変更</button></a>
-</td>
-</tr>
-<tr>
-<td>セキュリティのため非表示</td>
-</tr>
-</tbody>
-<tbody>
-<tr>
-<th>LINE連携</th>
-<td rowspan="2"><a th:href="${isConnected} ? @{/line-notify/revoke} : @{/line-notify/apply?from=mypage}"><button th:text="${isConnected ? '解除する' : '連携する'}"></button></a></td>
-</tr>
-<tr>
-<td th:text="${isConnected ? '連携済' : '未連携'}"></td>
-</tr>
-</tbody>
-</table>
-<div><a th:href="@{/user/account/delete}"><button>退会する</button></a></div>
-</article>
-<aside th:replace="user/common/tab :: tab"></aside>
-</main>
-<footer th:replace="common/footer :: footer"></footer>
+<body class="formbg7">
+  <header th:replace="common/header :: for-user"></header>
+  <main>
+    <article>
+      <div id="formdef">
+      <h1>アカウント</h1>
+      <p th:if="${param.changedemail}" class="fins"><i class="fas fa-check-circle"></i>メールアドレスが変更されました</p>
+      <p th:if="${param.changedpassword}" class="fins"><i class="fas fa-check-circle"></i>パスワードが変更されました</p>
+      <table>
+        <tbody>
+          <tr>
+            <th>メールアドレス</th>
+            <td rowspan="3">
+              <a th:href="@{/user/account/change/email}"><button>変更</button></a>
+            </td>
+          </tr>
+          <tr>
+            <td th:text="${email}"></td>
+          </tr>
+          <tr>
+            <td><span th:unless="${validEmail}"><i class="fas fa-exclamation-circle"></i>メールアドレス未確認 <a th:href="@{/user/account/help}"><i class="far fa-question-circle"></i>メールが届かない</a></span><span th:if="${validEmail}">メールアドレス確認済</span></td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <th>パスワード</th>
+            <td rowspan="2">
+              <a th:href="@{/user/account/change/password}"><button>変更</button></a>
+            </td>
+          </tr>
+          <tr>
+            <td>セキュリティのため非表示</td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <th>LINE連携</th>
+            <td rowspan="2"><a th:href="${isConnected} ? @{/line-notify/revoke} : @{/line-notify/apply?from=mypage}"><button th:text="${isConnected ? '解除する' : '連携する'}"></button></a></td>
+          </tr>
+          <tr>
+            <td th:text="${isConnected ? '連携済' : '未連携'}"></td>
+          </tr>
+        </tbody>
+      </table>
+      <div><a th:href="@{/user/account/delete}"><button>退会する</button></a></div>
+    </div>
+    </article>
+    <aside th:replace="user/common/tab :: tab"></aside>
+  </main>
+  <footer th:replace="common/footer :: footer"></footer>
 </body>
 </html>

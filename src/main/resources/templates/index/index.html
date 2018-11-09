@@ -1,57 +1,85 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8">
-  <th:block th:replace="common/head :: head"></th:block>
   <title>ダンサーズキャリア - ダンサーのための就活サイト</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
   <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}" href="../../static/css/index.css">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../static/js/openclose.js"></script>
 </head>
  <body>
     <header th:replace="common/header :: for-user"></header>
-    <main>
-      <section>
-        <div id="message">
-          <img th:src="@{/img/top1.jpg}">
-          <h1>人事がナットクするダンスの伝え方。</h1>
-        </div>
-      </section>
-      <section>
-        <section class="discription" id="d1">
-          <h2>ダンサーズキャリアとは？</h2>
-          <img th:src="@{/img/index2.jpg}">
-          <p>このサイトは、大学生ストリートダンサーのESと面接事例を集約したサイトです。</p>
-        </section>
-        <section class="discription">
-          <h2>このサイトの使い方</h2>
-          <div>
-            <p>step1</p>
-            <p>ダンサーズキャリアで自分の興味のあるES/体験記を探す</p>
-          </div>
-          <div>
-            <p>step2</p>
-            <p>見つけたESを参考にして自分の経験をしっかり言語化する<span>（ESには現役人事の方からのアドバイスも載っています）</span></p>
-          </div>
-          <div>
-            <p>step3</p>
-            <p>実際に言語化したものをESに書く</p>
-          </div>
-          <div>
-            <p>step4</p>
-            <p>ESに書いたことを体験記を参考にしながらより詳細に言語化して面接で話す</p>
-          </div>
-        </section>
-        <section class="discription">
-          <h2>こんな人にオススメ</h2>
-          <p>これから就活をするけど、ダンスの経験をどのように人事に伝えたら良いのか分からないダンサー</p>
-        </section>
-        <section class="discription">
-          <h2>このサイトの意義</h2>
-          <p>ダンサーのESと面接には大きな負があります。それは、どんな体育会にも負けないぐらい素晴らしい努力をしているにもかかわらず、その経験が人事に理解されないまま不合格になってしまうことがある点です。</p>
-          <p>それを解決するために、私たちはこのメディアを立ち上げました。</p>
-          <p>ダンサーの皆さんがこのサイトを通じて自分の経験を言語化し、人事に分かりやすく伝える力を身に着けていただき、内定を勝ち取っていただくことが一番の願いです。</p>
-        </section>
-      </section>
-    </main>
+	<main>
+	  <section id="top">
+	    <div class="container">
+	      <h2 id="catchphrase">人事がナットクする<br class="hide-m">ダンスの伝え方。</h2>
+	      <p id="sub-catchphrase">ダンサーの就活を変えること、それが私たちの使命です。</p>
+	      <a th:href="@{/experiences?all&sort=0}" class="link-button"><button>ES/体験記を探す</button></a>
+          <a href="#description" id="scroll"><span class="scroll-arrow"></span><span class="scroll-arrow"></span><span class="scroll-arrow"></span><span class="scroll-text">SCROLL</span></a>
+	    </div>
+	  </section>
+	  <section id="description">
+	    <div id="what" class="container">
+	      <div class="theme">
+	        <p>What is Dancer's Career ?</p>
+	        <h2>ダンサーズキャリアとは</h2>
+	      </div>
+	      <div class="content">
+	        <p>ダンサーズキャリアは、大学生ストリートダンサーの過去のESと面接事例を集約した、<br class="show-l">ダンスの経験を人事にどう伝えればいいかわからない人のためのサービスです。</p>
+	      </div>
+	    </div>
+	    <div id="how" class="container">
+	      <div class="theme">
+	        <p>How to use ?</p>
+	        <h2>ダンサーズキャリアの使い方</h2>
+	      </div>
+	      <div class="flow">
+	        <div class="step">
+	          <p>ダンサーズキャリアで自分の興味のあるES/体験記を探す</p>
+	        </div>
+	        <div><a th:href="@{/experiences?all&sort=0}" class="link-button"><button>ES/体験記を探す</button></a></div>
+	        <div class="down-arrow"><i class="fas fa-angle-down"></i></div>
+	        <div class="step">
+	          <p>見つけたESを参考にして自分の経験をしっかり言語化する
+	            <br class="show-l">（ESには現役人事の方からのアドバイスも載っています）</p>
+	        </div>
+	        <div class="down-arrow"><i class="fas fa-angle-down"></i></div>
+	        <div class="step">
+	          <p>実際に言語化したものをESに書く</p>
+	        </div>
+	        <div class="down-arrow"><i class="fas fa-angle-down"></i></div>
+	        <div class="step">
+	          <p>ESに書いたことを体験記を参考にしながらより詳細に言語化して面接で話す</p>
+	        </div>
+	      </div>
+	    </div>
+	  </section>
+	  <section id="motive">
+	    <div class="container">
+	      <h2>ダンサーのESと面接には大きな負があります。</h2>
+	      <p>それは、どんな体育会にも負けないぐらい素晴らしい努力をしているにもかかわらず、その経験が人事に理解されないまま不合格になってしまうことがある点です。</p>
+	      <p>それを解決するために、私たちはこのメディアを立ち上げました。</p>
+	      <p>ダンサーの皆さんがこのサイトを通じて自分の経験を言語化し、人事に分かりやすく伝える力を身に着けていただき、内定を勝ち取っていただくことが一番の願いです。</p>
+	    </div>
+	  </section>
+	</main>
     <footer th:replace="common/footer :: footer"></footer>
-</body>
+    <script>
+    $(function() {
+      const headerHeight = $('header').outerHeight();
+      let topHeight = window.innerHeight - headerHeight;
+      $('#top').css({
+        height: topHeight,
+      });
+      $('#scroll').on('click', (event) => {
+        event.preventDefault();
+        $('html,body').animate({scrollTop: headerHeight + topHeight}, 500, 'swing');
+      });
+    });
+    </script>
+  </body>
 </html>

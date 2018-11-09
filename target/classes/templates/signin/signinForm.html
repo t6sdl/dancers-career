@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8">
-  <th:block th:replace="common/head :: head"></th:block>
   <title>ログイン｜ダンサーズキャリア</title>
-  <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}" href="../../static/css/form.css">
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../static/js/openclose.js"></script>
 </head>
-<body>
+<body class="formbg2">
+
   <header th:replace="common/header :: for-stranger"></header>
+
   <div id="formdef">
     <form name='form-login' th:action="@{/login}" method="post">
-      <h1>ログイン</h1>
-      <p class="hazard" th:if="${param.error}">メールアドレスまたはパスワードに誤りがあります</p>
+      <p class="hazard" th:if="${param.error}"><i class="fas fa-exclamation-circle"></i>メールアドレスまたはパスワードに誤りがあります</p>
       <label th:for="email"></label>
       <input type="email" placeholder="Email" name="email" class="form">
       <br>
       <label th:for="password"></label>
       <input type="password" placeholder="Password" name="password" class="form">
+
       <div>
         <input type="checkbox" id="remember-me" name="remember-me">
         <label for="remember-me">ログインしたままにする</label>
@@ -27,20 +33,16 @@
       </div>
 
       <div>
-        <p class="linkblue"><a th:href="@{/signin/forget-pwd}">パスワードをお忘れですか？</a></p>
+        <p><a th:href="@{/signin/forget-pwd}">パスワードをお忘れですか？</a></p>
       </div>
 
       <div>
-        <p class="linkblue"><a th:href="@{/signup}">アカウントをお持ちでない方はこちら</a></p>
+        <p><a th:href="@{/signup}">アカウントをお持ちでない方はこちら</a></p>
       </div>
     </form>
   </div>
 
   <footer th:replace="common/footer :: footer"></footer>
-  <script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
   <script th:src="@{/js/submit.js}"></script>
 </body>
 </html>

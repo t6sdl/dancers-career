@@ -1,62 +1,70 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8">
-<th:block th:replace="common/head :: head"></th:block>
-<title>プロフィール｜ダンサーズキャリア</title>
+
+  <title>プロフィール｜ダンサーズキャリア</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../../static/css/main.css">
+      <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../../static/js/openclose.js"></script>
+
 </head>
-<body>
-<header th:replace="common/header :: for-user"></header>
-<main>
-<article>
-<h1>プロフィール</h1>
-<p th:if="${param.modified}">修正が保存されました</p>
-<table th:object="${profile}">
-<tr>
-<th align="right">氏名：</th>
-<td th:text="|*{last_name == null ? '' : last_name} *{first_name == null ? '' : first_name}|"></td>
-</tr>
-<tr>
-<th align="right">氏名（カナ）：</th>
-<td th:text="|*{kana_last_name == null ? '' : kana_last_name} *{kana_first_name == null ? '' : kana_first_name}|"></td>
-</tr>
-<tr>
-<th align="right">生年月日：</th>
-<td th:text="*{date_of_birth_for_display == null ? '' : date_of_birth_for_display}"></td>
-</tr>
-<tr>
-<th align="right">性別：</th>
-<td th:text="*{sex == null ? '' : sex}"></td>
-</tr>
-<tr>
-<th align="right">電話番号：</th>
-<td th:text="*{phone_number == null ? '' : phone_number}"></td>
-</tr>
-<tr>
-<th align="right">文理：</th>
-<td th:text="*{major == null ? '' : major}"></td>
-</tr>
-<tr>
-<th align="right">学部・学科：</th>
-<td th:text="|*{university == null ? '' : university} *{faculty == null ? '' : faculty} *{department == null ? '' : department}|"></td>
-</tr>
-<tr>
-<th align="right">卒業年度：</th>
-<td th:text="*{graduation == null ? '' : graduation + ' 卒業'}"></td>
-</tr>
-<tr>
-<th align="right">最終学歴：</th>
-<td th:text="*{academic_degree == null ? '' : academic_degree}"></td>
-</tr>
-<tr>
-<th align="right">サークルなどでの役職・役割：</th>
-<td><span th:each="pos : *{position == null ? '' : position}" th:text="|${pos} |"></span></td>
-</tr>
-</table>
-<div><a th:href="@{/user/profile/change}"><button>修正する</button></a></div>
-</article>
-<aside th:replace="user/common/tab :: tab"></aside>
-</main>
-<footer th:replace="common/footer :: footer"></footer>
-</body>
-</html>
+  <body class="formbg9">
+    <header th:replace="common/header :: for-user"></header>
+    <main>
+      <article>
+        <div id="formdefw">
+        <h1>プロフィール</h1>
+        <p th:if="${param.modified}" class="fins"><i class="fas fa-check-circle"></i>修正が保存されました</p>
+        <table th:object="${profile}">
+          <tr>
+            <th align="right">氏名：</th>
+            <td th:text="|*{last_name == null ? '' : last_name} *{first_name == null ? '' : first_name}|"></td>
+          </tr>
+          <tr>
+            <th align="right">氏名（カナ）：</th>
+            <td th:text="|*{kana_last_name == null ? '' : kana_last_name} *{kana_first_name == null ? '' : kana_first_name}|"></td>
+          </tr>
+          <tr>
+            <th align="right">生年月日：</th>
+            <td th:text="*{date_of_birth_for_display == null ? '' : date_of_birth_for_display}"></td>
+          </tr>
+          <tr>
+            <th align="right">性別：</th>
+            <td th:text="*{sex == null ? '' : sex}"></td>
+          </tr>
+          <tr>
+            <th align="right">電話番号：</th>
+            <td th:text="*{phone_number == null ? '' : phone_number}"></td>
+          </tr>
+          <tr>
+            <th align="right">文理：</th>
+            <td th:text="*{major == null ? '' : major}"></td>
+          </tr>
+          <tr>
+            <th align="right">学部・学科：</th>
+            <td th:text="|*{university == null ? '' : university} *{faculty == null ? '' : faculty} *{department == null ? '' : department}|"></td>
+          </tr>
+          <tr>
+            <th align="right">卒業年度：</th>
+            <td th:text="*{graduation == null ? '' : graduation + ' 卒業'}"></td>
+          </tr>
+          <tr>
+            <th align="right">最終学歴：</th>
+            <td th:text="*{academic_degree == null ? '' : academic_degree}"></td>
+          </tr>
+          <tr>
+            <th align="right">サークルなどでの役職・役割：</th>
+            <td><span th:each="pos : *{position == null ? '' : position}" th:text="|${pos} |"></span></td>
+          </tr>
+        </table>
+        <div><a th:href="@{/user/profile/change}"><button>修正する</button></a></div>
+      </dv>
+      </article>
+      <aside th:replace="user/common/tab :: tab"></aside>
+    </main>
+    <footer th:replace="common/footer :: footer"></footer>
+  </body>
+  </html>

@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8">
-  <th:block th:replace="common/head :: head"></th:block>
   <title>お問い合わせ｜ダンサーズキャリア</title>
-  <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}" href="../../../static/css/form.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../../static/css/main.css">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../../static/js/openclose.js"></script>
 </head>
-<body>
+<body class="formbg2">
   <header th:replace="common/header :: ${header}"></header>
-  <main id="contactForm">
-    <h1 id="contact">お問い合わせ</h1>
+  <main id="formdefw">
+    <h1>お問い合わせ</h1>
     <form th:action="@{/about/contact}" method="post" th:object="${contactForm}">
       <div>
-        <label for="from">ご自身のメールアドレス</label><br>
-        <input type="email" th:field="*{from}" required th:readonly="${isLoggedIn}">
+        <label for="from"></label><br>
+        <input type="email" th:field="*{from}" required th:readonly="${isLoggedIn}" class="form" placeholder="ご自身のメールアドレス">
       </div>
       <div>
         <label for="content">お問い合わせ内容</label><br>
-        <textarea th:field="*{content}" cols="100" rows="10" required></textarea>
+        <textarea th:field="*{content}" cols="100" rows="10" required id="context" class="form"></textarea>
       </div>
       <div>
         <input type="submit" value="送信する">
@@ -25,10 +28,6 @@
     </form>
   </main>
   <footer th:replace="common/footer :: footer"></footer>
-  <script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
   <script th:src="@{/js/submit.js}"></script>
 </body>
 </html>

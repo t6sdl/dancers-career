@@ -132,14 +132,7 @@ public class ExperienceService {
 	public List<Es> convertEsFormIntoEs(List<EsForm> form) {
 		List<Es> es = new ArrayList<Es>();
 		form.forEach(formItem -> {;
-			Es esItem = new Es();
-			esItem.setEs_id(formItem.getEsId());
-			esItem.setCorp(formItem.getCorp());
-			esItem.setResult(formItem.getResult());
-			esItem.setQuestion(formItem.getQuestion());
-			esItem.setAnswer(formItem.getAnswer());
-			esItem.setAdvice(formItem.getAdvice());
-			es.add(esItem);
+			es.add(this.convertEsFormIntoEs(formItem));
 		});
 		return es;
 	}
@@ -147,11 +140,7 @@ public class ExperienceService {
 	public List<Interview> convertInterviewFormIntoInterview(List<InterviewForm> form) {
 		List<Interview> interview = new ArrayList<Interview>();
 		form.forEach(formItem -> {;
-			Interview interviewItem = new Interview();
-			interviewItem.setInterview_id(formItem.getInterviewId());
-			interviewItem.setQuestion(formItem.getQuestion());
-			interviewItem.setAnswer(formItem.getAnswer());
-			interview.add(interviewItem);
+			interview.add(this.convertInterviewFormIntoInterview(formItem));
 		});
 		return interview;
 	}
@@ -161,9 +150,9 @@ public class ExperienceService {
 		es.setEs_id(form.getEsId());
 		es.setCorp(form.getCorp());
 		es.setResult(form.getResult());
-		es.setQuestion(form.getQuestion());
-		es.setAnswer(form.getAnswer());
-		es.setAdvice(form.getAdvice());
+		es.getQuestion().add(form.getQuestion());
+		es.getAnswer().add(form.getAnswer());
+		es.getAdvice().add(form.getAdvice());
 		return es;
 	}
 	
@@ -212,9 +201,9 @@ public class ExperienceService {
 			formItem.setEsId(esItem.getEs_id());
 			formItem.setCorp(esItem.getCorp());
 			formItem.setResult(esItem.getResult());
-			formItem.setQuestion(esItem.getQuestion());
-			formItem.setAnswer(esItem.getAnswer());
-			formItem.setAdvice(esItem.getAdvice());
+			formItem.setQuestion(esItem.getQuestion().get(0));
+			formItem.setAnswer(esItem.getAnswer().get(0));
+			formItem.setAdvice(esItem.getAdvice().get(0));
 			form.add(formItem);
 		});
 		return form;
@@ -243,9 +232,9 @@ public class ExperienceService {
 		form.setEsId(es.getEs_id());
 		form.setCorp(es.getCorp());
 		form.setResult(es.getResult());
-		form.setQuestion(es.getQuestion());
-		form.setAnswer(es.getAnswer());
-		form.setAdvice(es.getAdvice());
+		form.setQuestion(es.getQuestion().get(0));
+		form.setAnswer(es.getAnswer().get(0));
+		form.setAdvice(es.getAdvice().get(0));
 		return form;
 	}
 	

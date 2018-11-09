@@ -8,7 +8,7 @@ main{
 }
 
 button{
-    background: #89c3eb;
+    background: #426579;
     border: 0;
     width: 100px;
     height: 30px;
@@ -19,7 +19,7 @@ button{
   }
 
 button:hover {
-    background: #426579;
+    background: #89c3eb;
   }
 
   hr{

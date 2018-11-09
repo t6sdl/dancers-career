@@ -1,34 +1,36 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8">
-<th:block th:replace="common/head :: head"></th:block>
-<title>パスワード確認｜ダンサーズキャリア</title>
+  <title>パスワード確認｜ダンサーズキャリア</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../../static/css/main.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../../static/js/openclose.js"></script>
 </head>
-<body>
-<header th:replace="common/header :: for-user"></header>
-<main>
-<article>
-<h1>本当に退会しますか？</h1>
-<p>アカウントを削除すると全てのデータが消去されます。アカウント削除のためにはパスワードの入力が必要です。</p>
-<p th:if="${param.error}">パスワードが異なります</p>
-<form th:action="@{/user/account/delete}" method="post" th:object="${verificationForm}">
-<div>
-<label for="password">パスワード</label>
-<input type="password" th:field="*{password}">
-</div>
-<div>
-<input type="submit" value="退会">
-</div>
-</form>
-</article>
-<aside th:replace="user/common/tab :: tab"></aside>
+<body class="formbg6">
+  <header th:replace="common/header :: for-user"></header>
+  <main>
+    <article>
+      <div id="formdef">
+      <h1>本当に退会しますか？</h1>
+      <p>アカウントを削除すると全てのデータが消去されます。アカウント削除のためにはパスワードの入力が必要です。</p>
+      <p th:if="${param.error}" class="hazard">パスワードが異なります</p>
+      <form th:action="@{/user/account/delete}" method="post" th:object="${verificationForm}">
+        <div>
+          <label for="password"></label>
+          <input type="password" th:field="*{password}" placeholder="パスワード">
+        </div>
+        <div>
+          <input type="submit" value="退会">
+        </div>
+      </form>
+    </div>
+  </article>
+  <aside th:replace="user/common/tab :: tab"></aside>
 </main>
 <footer th:replace="common/footer :: footer"></footer>
-<script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
 <script th:src="@{/js/submit.js}"></script>
 </body>
 </html>
