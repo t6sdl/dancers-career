@@ -9,7 +9,7 @@ import tokyo.t6sdl.dancerscareer2019.model.Interview;
 
 public interface ExperienceRepository {
 	Experience findOneById(int experience_id, boolean all, boolean pv_count);
-	Experience findOneByIdForStranger(int experience_id);
+	Experience findALittleOneById(int experience_id);
 	Map<String, Object> find(int sort);
 	Map<String, Object> findByName(int sort, String kanaLastName, String kanaFirstName);
 	Map<String, Object> findByLastName(int sort, String kanaLastName);

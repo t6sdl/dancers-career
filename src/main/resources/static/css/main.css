@@ -147,6 +147,7 @@ header #logo img:hover {
   display: inline-block;
   font-weight: bold;
   padding: 1px;
+  margin: 0 .5em;
   color: #333;
 }
 

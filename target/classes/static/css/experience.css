@@ -73,6 +73,12 @@
   align-items: center;
 }
 
+.secret p {
+  margin: .5em 0;
+  text-align: center;
+  font-size: .9em;
+}
+
 .secret a {
   display: block;
   margin: .5em 0;

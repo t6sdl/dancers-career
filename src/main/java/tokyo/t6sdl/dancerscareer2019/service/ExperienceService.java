@@ -25,8 +25,8 @@ public class ExperienceService {
 		return experienceRepository.findOneById(experienceId, all, pvCount);
 	}
 	
-	public Experience getExperienceByIdForStranger(int experienceId) {
-		return experienceRepository.findOneByIdForStranger(experienceId);
+	public Experience getALittleExperienceById(int experienceId) {
+		return experienceRepository.findALittleOneById(experienceId);
 	}
 	
 	public Map<String, Object> getExperiences(int sort) {

@@ -97,11 +97,6 @@ public class UserPageController {
 		return "user/account/account";
 	}
 	
-	@RequestMapping("/account/help")
-	public String getHelp() {
-		return "user/account/help";
-	}
-	
 	@GetMapping("/account/delete")
 	public String getVerificationToDeleteAccount(Model model) {
 		model.addAttribute(new VerificationForm());

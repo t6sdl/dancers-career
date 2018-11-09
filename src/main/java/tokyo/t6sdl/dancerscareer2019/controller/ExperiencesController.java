@@ -145,16 +145,29 @@ public class ExperiencesController {
 	
 	private String display(int id, boolean pvCount, Model model) {
 		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
+		boolean perfect = profileService.isCompleteProfile(profileService.getProfileByEmail(account.getEmail()));
 		Experience experience = new Experience();
 		if (Objects.equals(account, null)) {
 			model.addAttribute("header", "for-stranger");
-			experience = experienceService.getExperienceByIdForStranger(id);
+			model.addAttribute("isStranger", true);
+			experience = experienceService.getALittleExperienceById(id);
 			model.addAttribute("experience", experience);
-			return "experiences/articleForStranger";
+			return "experiences/aLittleArticle";
 		} else if (account.isAdmin()) {
 			model.addAttribute("header", "for-admin");
-		} else if (!(account.isValid_email()) || !(profileService.isCompleteProfile(profileService.getProfileByEmail(account.getEmail())))) {
-			return "experiences/error";
+		} else if (!(account.isValid_email()) && !(perfect)) {
+			model.addAttribute("header", "for-user");
+			model.addAttribute("isStranger", false);
+			experience = experienceService.getALittleExperienceById(id);
+			model.addAttribute("experience", experience);
+			return "experiences/aLittleArticle";
+		} else if (!(account.isValid_email()) || !(perfect)) {
+			model.addAttribute("header", "for-user");
+			experience = experienceService.getExperienceById(id, true, false);
+			model.addAttribute("otherEs", experience.getEs().size() - 1);
+			model.addAttribute("validEmail", account.isValid_email());
+			model.addAttribute("experience", experience);
+			return "experiences/halfOfArticle";
 		} else {
 			model.addAttribute("header", "for-user");
 		}
