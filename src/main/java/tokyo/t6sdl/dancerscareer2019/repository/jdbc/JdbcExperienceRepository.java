@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -28,31 +29,17 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	private final List<String> SORT_LIST = Arrays.asList("experience_id DESC", "kana_last_name ASC, kana_first_name ASC", "univ_pref ASC, univ_name ASC, faculty ASC, department ASC");
 
 	private List<String> stringToList(String str) {
-		List<String> list = new ArrayList<String>();
-		list.addAll(Arrays.asList(str.split(",")));
-		return list;
+		return new ArrayList<String>(Arrays.asList(str.split(",")));
 	}
 	
 	private String listToString(List<String> list) {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < list.size(); i++) {
-			sb.append(list.get(i));
-			if (i < list.size() - 1) {
-				sb.append(",");
-			}
-		}
-		return sb.toString();
+		return list.toString().substring(1, list.toString().length() - 1).replace(" ", "");
 	}
 	
 	private String listToString(List<String> list, String prefix, String suffix, String separator) {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < list.size(); i++) {
-			sb.append(prefix).append(list.get(i)).append(suffix);
-			if (i < list.size() - 1) {
-				sb.append(separator);
-			}
-		}
-		return sb.toString();
+		StringJoiner joiner = new StringJoiner(separator, prefix, suffix);
+		list.forEach(str -> joiner.add(str));
+		return joiner.toString();
 	}
 	
 	@Override

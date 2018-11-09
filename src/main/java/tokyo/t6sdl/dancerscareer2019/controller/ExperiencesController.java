@@ -106,15 +106,10 @@ public class ExperiencesController {
 			throw new NotFound404();
 		}
 		int id = Integer.parseInt(experienceId);
-		List<String> likesData = profileService.getLikesByEmail(securityService.findLoggedInEmail());
-		List<String> likes = new ArrayList<String>();
-		likes.addAll(likesData);
-		if (likes.contains("")) {
-			likes.remove("");
-		}
+		List<String> likes = profileService.getLikesByEmail(securityService.findLoggedInEmail());
 		if (!(likes.contains(experienceId))) {
 			likes.add(experienceId);
-			Collections.sort(likes);
+			Collections.sort(likes, (s1, s2) -> Integer.parseInt(s1) - Integer.parseInt(s2));
 			experienceService.updateLikes(id, true);
 			profileService.updateLikes(securityService.findLoggedInEmail(), likes);
 		}
@@ -128,12 +123,7 @@ public class ExperiencesController {
 			throw new NotFound404();
 		}
 		int id = Integer.parseInt(experienceId);
-		List<String> likesData = profileService.getLikesByEmail(securityService.findLoggedInEmail());
-		List<String> likes = new ArrayList<String>();
-		likes.addAll(likesData);
-		if (likes.size() == 1) {
-			likes.add("");
-		}
+		List<String> likes = profileService.getLikesByEmail(securityService.findLoggedInEmail());
 		if (likes.contains(experienceId)) {
 			likes.remove(experienceId);
 			experienceService.updateLikes(id, false);
