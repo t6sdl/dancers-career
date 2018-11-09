@@ -4,6 +4,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -76,11 +77,26 @@ public class ExcelBuilder extends AbstractXlsxView {
 			studentsRow = studentsSheet.createRow(lastRowIndex + 1);
 			String validEmail = student.isValid_email() ? "確認済" : "未確認";
 			String lastLogin = student.getLast_login().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
-			String birth = student.getDate_of_birth().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-			int positionSize = student.getPosition().size();
-			int likesSize = student.getLikes().size();
+			String birth;
+			String position;
+			String like;
+			int positionSize;
+			int likesSize;
+			if (Objects.equals(student.getDate_of_birth(), null)) {
+				birth = null;
+				position = null;
+				like = null;
+				positionSize = 0;
+				likesSize = 0;
+			} else {
+				birth = student.getDate_of_birth().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+				position = student.getPosition().get(0);
+				like = student.getLikes().get(0);
+				positionSize = student.getPosition().size();
+				likesSize = student.getLikes().size();
+			}
 			int rowRange = positionSize > likesSize ? positionSize : likesSize;
-			List<String> studentData = Arrays.asList(student.getEmail(), validEmail, lastLogin, student.getLast_name(), student.getFirst_name(), student.getKana_last_name(), student.getKana_first_name(), birth, student.getSex(), student.getPhone_number(), student.getGraduation(), student.getAcademic_degree(), student.getMajor(), student.getUniv_pref(), student.getUniv_name(), student.getFaculty(), student.getDepartment(), student.getGrad_school_pref(), student.getGrad_school_name(), student.getGrad_school_of(), student.getProgram_in(), student.getPosition().get(0), student.getLikes().get(0));
+			List<String> studentData = Arrays.asList(student.getEmail(), validEmail, lastLogin, student.getLast_name(), student.getFirst_name(), student.getKana_last_name(), student.getKana_first_name(), birth, student.getSex(), student.getPhone_number(), student.getGraduation(), student.getAcademic_degree(), student.getMajor(), student.getUniv_pref(), student.getUniv_name(), student.getFaculty(), student.getDepartment(), student.getGrad_school_pref(), student.getGrad_school_name(), student.getGrad_school_of(), student.getProgram_in(), position, like);
 			for (int i = 0; i < studentData.size(); i++) {
 				studentsRow.createCell(i).setCellValue(studentData.get(i));
 			}
