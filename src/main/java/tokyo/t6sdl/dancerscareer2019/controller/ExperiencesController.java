@@ -145,7 +145,6 @@ public class ExperiencesController {
 	
 	private String display(int id, boolean pvCount, Model model) {
 		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
-		boolean perfect = profileService.isCompleteProfile(profileService.getProfileByEmail(account.getEmail()));
 		Experience experience = new Experience();
 		if (Objects.equals(account, null)) {
 			model.addAttribute("header", "for-stranger");
@@ -153,7 +152,9 @@ public class ExperiencesController {
 			experience = experienceService.getALittleExperienceById(id);
 			model.addAttribute("experience", experience);
 			return "experiences/aLittleArticle";
-		} else if (account.isAdmin()) {
+		}
+		boolean perfect = profileService.isCompleteProfile(profileService.getProfileByEmail(account.getEmail()));
+		if (account.isAdmin()) {
 			model.addAttribute("header", "for-admin");
 		} else if (!(account.isValid_email()) && !(perfect)) {
 			model.addAttribute("header", "for-user");
