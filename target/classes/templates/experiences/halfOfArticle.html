@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <th:block th:replace="common/favicons :: favicons"></th:block>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/experience.css}" href="../../static/css/experience.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20181110}" href="../../static/css/main.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/experience.css?update=20181110}" href="../../static/css/experience.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../static/js/openclose.js"></script>
 </head>
@@ -15,10 +15,6 @@
   <header th:replace="common/header :: ${header}"></header>
   <main>
     <article th:object="${experience}">
-      <div>
-        <p th:unless="${isLiked}"><i class="fas fa-circle fa-fw"></i>お気に入りに登録されていません <a class="button" th:href="@{/experiences/{experienceId}?like(experienceId=*{experience_id})}">登録</a></p>
-        <p th:if="${isLiked}"><i class="fas fa-check-circle fa-fw"></i>お気に入りに登録されています <a class="button" th:href="@{/experiences/{experienceId}?dislike(experienceId=*{experience_id})}">削除</a></p>
-      </div>
       <div class="exp-container">
         <div style="padding: 0 3%;">
           <p><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></p>
@@ -40,17 +36,28 @@
         </div>
         <hr class="cutl">
         <h2>ES</h2>
-        <div style="margin-bottom:3.5em;" th:each="esItem, loop : *{es}">
+        <div style="margin-bottom:3.5em;">
           <div class="es-info">
-            <p>提出先企業：<span th:text="*{es[__${loop.index}__].corp} == '' ? '非公開' : *{es[__${loop.index}__].corp}"></span></p>
-            <p>選考結果：<span th:text="*{es[__${loop.index}__].result} == '' ? '非公開' : *{es[__${loop.index}__].result}"></span></p>        
+            <p>提出先企業：<span th:text="*{es[0].corp} == '' ? '非公開' : *{es[0].corp}"></span></p>
+            <p>選考結果：<span th:text="*{es[0].result} == '' ? '非公開' : *{es[0].result}"></span></p>        
           </div>
           <div class="qanda-container">
-            <div th:each="content, subloop : *{es[__${loop.index}__].question}" class="qanda">
-              <p class="ques"><span th:text="*{es[__${loop.index}__].question[__${subloop.index}__]} == '' ? '非公開' : *{es[__${loop.index}__].question[__${subloop.index}__]}"></span></p>
+            <div class="qanda">
+              <p class="ques"><span th:text="*{es[0].question[0]} == '' ? '非公開' : *{es[0].question[0]}"></span></p>
               <hr class="cutl">
-              <p class="ans"><span th:each="str, stat : *{es[__${loop.index}__].answer[__${subloop.index}__].split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
-              <p class="adv"><i class="far fa-comment-dots"></i> 現役人事からのコメント<br><span th:each="str, stat : *{es[__${loop.index}__].advice[__${subloop.index}__].split('\n', -1)}"><th:block th:text="${str == '' ? 'なし' : str}"></th:block><br th:if="${!stat.last}"></span></p>
+              <p class="ans"><span th:each="str, stat : *{es[0].answer[0].split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
+              <p class="adv"><i class="far fa-comment-dots"></i> 現役人事からのコメント<br><span th:each="str, stat : *{es[0].advice[0].split('\n', -1)}"><th:block th:text="${str == '' ? 'なし' : str}"></th:block><br th:if="${!stat.last}">ペラペラペラペラ</span></p>
+            </div>
+            <div th:if="${otherEs > 0}">
+              <div th:if="${validEmail}" class="secret">
+                <p>あと<span th:text="${otherEs}"></span>件のESがあります。全て見るには「メールアドレスの確認」が必要です。</p>
+                <p>メールアドレスの確認は「ダンサーズキャリア（dancerscareer_support@t6sdl.tokyo）」から届くメールの「メールアドレスの確認」ボタンを押すことで完了します。</p>
+                <a th:href="@{/help/get-email}"><i class="far fa-question-circle"></i>メールが届かない</a>
+              </div>
+              <div th:unless="${validEmail}" class="secret">
+                <p>あと<span th:text="${otherEs}"></span>件のESがあります。全て見るには「プロフィールの登録」が必要です。</p>
+                <a class="button" th:href="@{/user/profile/change}">プロフィールを登録する</a>
+              </div>
             </div>
           </div>
         </div>
@@ -63,13 +70,6 @@
             <p class="ans"><span th:each="str, stat : *{interview[__${loop.index}__].answer.split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
           </div>
         </div>
-        <div style="display:inline-flex; justify-content:flex-start; border:1px solid #777777; border-radius:.5em; line-height:1.8;">
-          <span style="padding:0 .5em; border-right:1px solid #777777;"><i class="fas fa-heart"></i> お気に入り</span> <span style="padding:0 .5em;" th:text="*{likes}"></span>
-        </div>
-      </div>
-      <div>
-        <p th:unless="${isLiked}"><i class="fas fa-circle fa-fw"></i>お気に入りに登録されていません <a class="button" th:href="@{/experiences/{experienceId}?like(experienceId=*{experience_id})}">登録</a></p>
-        <p th:if="${isLiked}"><i class="fas fa-check-circle fa-fw"></i>お気に入りに登録されています <a class="button" th:href="@{/experiences/{experienceId}?dislike(experienceId=*{experience_id})}">削除</a></p>
       </div>
     </article>
   </main>

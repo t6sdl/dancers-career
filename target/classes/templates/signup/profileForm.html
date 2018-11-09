@@ -8,7 +8,7 @@
   <th:block th:replace="common/favicons :: favicons"></th:block>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
     crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20181110}" href="../../static/css/main.css">
   <link rel="stylesheet" type="text/css" th:href="@{/css/window.css}" href="../../static/css/window.css">
   <link rel="stylesheet" type="text/css" th:href="@{/css/form.css}" href="../../static/css/form.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -22,6 +22,7 @@
     <div id="formdefw">
       <form th:action="@{/signup/profile}" method="post" th:object="${profileForm}">
         <h1>プロフィール登録</h1>
+        <div style="font-size:.9em;"><p>ES/体験記を全て見るには「メールアドレスの確認」と「プロフィールの登録」が必要です。</p><p>メールアドレスの確認は「ダンサーズキャリア（dancerscareer_support@t6sdl.tokyo）」から届くメールの「メールアドレスの確認」ボタンを押すことで完了します。</p><a th:href="@{/help/get-email}" target="_blank"><i class="far fa-question-circle"></i>メールが届かない</a><p>※メールが届くには数分かかる場合がございます</p></div>
         <div class="form-item">
           <p>氏名</p>
           <div>

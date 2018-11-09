@@ -6,11 +6,16 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <th:block th:replace="common/favicons :: favicons"></th:block>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../../static/css/main.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20181110}" href="../../../static/css/main.css">
   <link rel="stylesheet" type="text/css" th:href="@{/css/window.css}" href="../../../static/css/window.css">
   <link rel="stylesheet" type="text/css" th:href="@{/css/user.css}" href="../../../static/css/user.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../../static/js/openclose.js"></script>
+  <style>
+  th + td {
+    min-width: 6em;
+  }
+  </style>
 </head>
 <body class="formbg7">
   <header th:replace="common/header :: for-user"></header>
@@ -32,7 +37,7 @@
             <td th:text="${email}"></td>
           </tr>
           <tr>
-            <td style="font-size:.8em;"><span th:unless="${validEmail}"><i class="fas fa-exclamation-circle"></i>メールアドレス未確認 <a th:href="@{/user/account/help}"><i class="far fa-question-circle"></i>メールが届かない</a></span><span th:if="${validEmail}">メールアドレス確認済</span></td>
+            <td style="font-size:.8em;"><span style="color:red; word-break:break-all;" th:unless="${validEmail}"><i class="fas fa-exclamation-circle"></i>メールアドレス未確認<br>メールアドレスの確認は「ダンサーズキャリア」から届くメールの「メールアドレスの確認」ボタンを押すことで完了します。<br><a th:href="@{/help/get-email}"><i class="far fa-question-circle"></i>メールが届かない</a></span><span th:if="${validEmail}">メールアドレス確認済</span></td>
           </tr>
         </tbody>
         <tbody>

@@ -71,12 +71,12 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	}
 	
 	@Override
-	public Experience findOneByIdForStranger(int experience_id) {
+	public Experience findALittleOneById(int experience_id) {
 		try {
 			return jdbcTemplate.queryForObject(
 					this.selectExperienceIn("WHERE experience_id = ?", false, 0), (resultSet, i) -> {
 						Experience experience = new Experience();
-						this.adjustDataToExperienceForStranger(experience, resultSet);
+						this.adjustALittleDataToExperience(experience, resultSet);
 						return experience;
 					}, experience_id);
 		} catch (EmptyResultDataAccessException e) {
@@ -445,7 +445,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		}
 	}
 	
-	private void adjustDataToExperienceForStranger(Experience experience, ResultSet resultSet) throws SQLException {
+	private void adjustALittleDataToExperience(Experience experience, ResultSet resultSet) throws SQLException {
 		experience.setExperience_id(resultSet.getInt("experience_id"));
 		experience.setPage_view(resultSet.getInt("page_view"));
 		experience.setLikes(resultSet.getInt("likes"));

@@ -138,4 +138,9 @@ public class GeneralController {
 		accountService.changeLineAccessToken(loggedInEmail, null);
 		return "redirect:/user/account";
 	}
+	
+	@RequestMapping("/help/get-email")
+	public String getHowToGetEmail() {
+		return "help/howToGetEmail";
+	}
 }
