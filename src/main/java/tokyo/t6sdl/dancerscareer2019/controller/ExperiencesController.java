@@ -108,6 +108,7 @@ public class ExperiencesController {
 		int id = Integer.parseInt(experienceId);
 		List<String> likes = profileService.getLikesByEmail(securityService.findLoggedInEmail());
 		if (!(likes.contains(experienceId))) {
+			likes.remove("");
 			likes.add(experienceId);
 			Collections.sort(likes, (s1, s2) -> Integer.parseInt(s1) - Integer.parseInt(s2));
 			experienceService.updateLikes(id, true);
