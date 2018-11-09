@@ -55,16 +55,16 @@ public class UserPageController {
 	public String getMyLikes(Model model) {
 		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
 		Profile profile = profileService.getProfileByEmail(account.getEmail());
-		List<String> likes = profile.getLikes();
 		List<Experience> experiences = new ArrayList<Experience>();
+		List<String> likes = Objects.equals(profile, null) ? new ArrayList<String>() : profile.getLikes();
 		if (!(likes.remove(""))) {
 			likes.forEach(like -> {
 				int id = Integer.parseInt(like);
 				experiences.add(experienceService.getExperienceById(id, false, false));
 			});
+			Collections.reverse(experiences);
 		}
-		Collections.reverse(experiences);
-		model.addAttribute("lastName", profile.getLast_name());
+		model.addAttribute("lastName", Objects.equals(profile, null) ? null : profile.getLast_name());
 		model.addAttribute("validEmail", account.isValid_email());
 		model.addAttribute("perfect", profileService.isCompleteProfile(profile));
 		model.addAttribute("likes", likes.size());

@@ -47,7 +47,7 @@
           </div>
           <hr>
           <div style="display:flex; flex-wrap:wrap; justify-content:space-between;">
-            <span><i class="fas fa-heart"></i> <span th:text="*{likes}"></span></span>
+            <span class="likes"><i class="fas fa-heart"></i> <span th:text="*{likes}"></span></span>
             <a class="button" th:href="@{/experiences/{experienceId}(experienceId=*{experience_id})}">詳細を見る</a>
           </div>
         </article>

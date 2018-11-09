@@ -48,6 +48,10 @@
   margin: 0;
 }
 
+.likes {
+  color: #e64552;
+}
+
 @media (min-width: 480px) {
   #tab ul {
     flex-direction: row;
