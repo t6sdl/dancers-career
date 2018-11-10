@@ -245,7 +245,7 @@
     position: absolute;
     right: 1.3em;
     bottom: -1em;
-    color: #4ac8d3a4;
+    color: rgba(74, 200, 200, .8);
     line-height: 1;
     font-size: 1.5em;
     font-weight: bold;
@@ -257,7 +257,7 @@
     position: absolute;
     right: 0;
     bottom: -1em;
-    color: #4ac8d3a4;
+    color: rgba(74, 200, 200, .8);
     line-height: 1;
     font-size: 3em;
     font-weight: bold;
