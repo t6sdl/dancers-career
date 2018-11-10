@@ -88,6 +88,7 @@
   width: 90%;
   height: auto;
   border-radius: 10px;
+  z-index: 1;
 }
 
 #formdef {
@@ -98,6 +99,7 @@
   width: 90%;
   height: auto;
   border-radius: 10px;
+  z-index: 1;
 }
 
 #formdefw form, #formdef form {
