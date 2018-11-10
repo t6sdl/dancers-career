@@ -84,7 +84,7 @@
   margin: 5em auto;
   padding: 2em 1em;
   text-align: center;
-  background: #ffffffee;
+  background: #ffffffee !important;
   width: 90%;
   height: auto;
   border-radius: 10px;
@@ -94,7 +94,7 @@
   margin: 5em auto;
   padding: 2em 1em;
   text-align: center;
-  background: #ffffffee;
+  background: #ffffffee !important;
   width: 90%;
   height: auto;
   border-radius: 10px;
