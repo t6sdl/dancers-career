@@ -58,7 +58,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 
 	@Override
 	public Map<String, Object> find(int sort) {
-		Integer count = jdbcTemplate.queryForObject("SELECT count FROM counts WHERE name = 'profiles'", Integer.class);
+		Integer count = jdbcTemplate.queryForObject("SELECT count FROM counts WHERE name = 'accounts'", Integer.class);
 		List<String> emails = new ArrayList<String>();
 		List<Student> students = jdbcTemplate.query(
 				this.selectStudentIn("WHERE authority = 'ROLE_USER'", sort), (resultSet, i) -> {

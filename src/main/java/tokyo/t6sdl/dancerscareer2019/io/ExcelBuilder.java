@@ -86,8 +86,8 @@ public class ExcelBuilder extends AbstractXlsxView {
 				birth = null;
 				position = null;
 				like = null;
-				positionSize = 0;
-				likesSize = 0;
+				positionSize = 1;
+				likesSize = 1;
 			} else {
 				birth = student.getDate_of_birth().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 				position = student.getPosition().get(0);
