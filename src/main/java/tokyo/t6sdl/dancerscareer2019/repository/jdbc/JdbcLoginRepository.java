@@ -10,6 +10,6 @@ public class JdbcLoginRepository extends JdbcTokenRepositoryImpl {
 	@Override
 	public void updateToken(String series, String tokenValue, Date lastUsed) {
 		getJdbcTemplate().update(updateTokenSql, tokenValue, lastUsed, series);
-		getJdbcTemplate().update("UPDATE accounts SET last_login = CURRENT_TIMESTAMP WHERE EXISTS (SELECT 1 FROM persistent_logins WHERE persistent_logins.username = accounts.email AND series = ?", series);
+		getJdbcTemplate().update("UPDATE accounts SET last_login = CURRENT_TIMESTAMP WHERE EXISTS (SELECT 1 FROM persistent_logins WHERE persistent_logins.username = accounts.email AND series = ?)", series);
 	}
 }
