@@ -76,9 +76,9 @@ public class GeneralController {
 	
 	@PostMapping("/about/contact")
 	public String postContact(ContactForm contactForm, Model model) {
-		Mail mail = new Mail(Mail.TO_SUPPORT, Mail.SUB_CONTACT);
-		mail.setContent(contactForm.getContent());
-		emailSender.receiveMail(mail);
+		Mail ask = new Mail(Mail.TO_SUPPORT, Mail.SUB_CONTACT);
+		ask.setContent("[Email: " + contactForm.getFrom() + "]\n" + contactForm.getContent());
+		emailSender.receiveMail(ask);
 		Mail reply = new Mail(contactForm.getFrom(), Mail.SUB_REPLY_TO_CONTACT);
 		emailSender.sendMail(reply);
 		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
