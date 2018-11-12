@@ -36,7 +36,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	}
 	
 	private String listToString(List<String> list, String prefix, String suffix, String separator) {
-		return String.join(separator, (String[]) list.stream().map(e -> prefix + e + suffix).toArray());
+		return String.join(separator, list.stream().map(e -> prefix + e + suffix).collect(Collectors.toList()));
 	}
 	
 	@Override
