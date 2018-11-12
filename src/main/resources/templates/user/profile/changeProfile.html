@@ -192,7 +192,7 @@
         </div>
         <div class="form-item">
           <p>大学・学部・学科</p>
-          <input type="hidden" id="hiddenUnivCategory" value="">
+          <span style="font-size: .8em;">こちらは2018年9月時点のものを採用しております。学部・学科等の再編によりご自身の学部・学科等が存在しない場合は最も近いものを選択いただくようお願いいたします。<br>再編が行われていないにも関わらず、ご自身の学部・学科等が存在しない場合は<a th:href="@{/about/contact}">こちら</a>よりお知らせください。</span>
           <div>
             <table>
               <tr>
@@ -275,6 +275,7 @@
                 </td>
               </tr>
             </table>
+            <input type="hidden" id="hiddenUnivCategory" value="">
             <input type="hidden" id="hiddenUnivName" th:value="${hiddenUnivName == null ? 'default' : hiddenUnivName}">
             <input type="hidden" id="hiddenFac" th:value="${hiddenFac == null ? 'default' : hiddenFac}">
             <input type="hidden" id="hiddenDep" th:value="${hiddenDep == null ? 'default' : hiddenDep}">

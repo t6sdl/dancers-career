@@ -36,7 +36,7 @@
         </div>
         <hr class="cutl">
         <h2>ES</h2>
-        <div style="margin-bottom:3.5em;">
+        <div th:unless="*{es[0] == null}" style="margin-bottom:3.5em;">
           <div class="es-info">
             <p>提出先企業：<span th:text="*{es[0].corp} == '' ? '非公開' : *{es[0].corp}"></span></p>
             <p>選考結果：<span th:text="*{es[0].result} == '' ? '非公開' : *{es[0].result}"></span></p>        
@@ -61,7 +61,7 @@
         </div>
         <hr class="cutl">
         <h2>Interview</h2>
-        <div class="qanda-container">
+        <div th:unless="*{interview[0] == null}" class="qanda-container">
           <div class="qanda">
             <p class="ques"><span th:text="*{interview[0].question} == '' ? '非公開' : *{interview[0].question}"></span></p>
             <hr class="cutl">
@@ -78,8 +78,8 @@
             <a th:href="@{/help/get-email}"><i class="far fa-question-circle"></i>メールが届かない</a>
           </div>
         </div>
-        <div style="display:inline-flex; justify-content:flex-start; line-height:1.8; color:#ffffff;">
-          <span style="padding:0 .5em; border-right:2px solid #ffffff; border-radius:.5em 0 0 .5em; background:#e64552;"><i class="fas fa-heart"></i> お気に入り</span> <span style="padding:0 .5em; border-radius:0 .5em .5em 0; background:#b64552;" th:text="*{likes}"></span>
+        <div style="display:inline-flex; justify-content:flex-start; line-height:1.8; color:#ffffff; font-size:14px;">
+          <span style="padding:.5em 0; border-right:2px solid #ffffff; border-radius:.5em 0 0 .5em; background:#e64552;"><i class="fas fa-heart"></i> お気に入り</span> <span style="padding:0 .5em; border-radius:0 .5em .5em 0; background:#b64552; font-weight:bold;" th:text="*{likes}"></span>
         </div>
       </div>
     </article>

@@ -36,7 +36,7 @@
         </div>
         <hr class="cutl">
         <h2>ES</h2>
-        <div style="margin-bottom:3.5em;">
+        <div th:unless="*{es[0] == null}" style="margin-bottom:3.5em;">
           <div class="es-info">
             <p>提出先企業：<span th:text="*{es[0].corp} == '' ? '非公開' : *{es[0].corp}"></span></p>
             <p>選考結果：<span th:text="*{es[0].result} == '' ? '非公開' : *{es[0].result}"></span></p>        
