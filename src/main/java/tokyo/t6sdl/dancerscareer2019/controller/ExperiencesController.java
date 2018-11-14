@@ -141,6 +141,8 @@ public class ExperiencesController {
 			model.addAttribute("header", "for-stranger");
 			model.addAttribute("isStranger", true);
 			experience = experienceService.getALittleExperienceById(id);
+			model.addAttribute("title", experience.getUniv_name() + experience.getFaculty() + experience.getDepartment());
+			model.addAttribute("description", (experience.getEs().size() == 0 ? "" : experience.getEs().get(0).getQuestion().get(0)) + (experience.getEs().size() == 0 ? "" : experience.getEs().get(0).getAnswer().get(0)) + experience.getInterview().get(0).getQuestion() + experience.getInterview().get(0).getAnswer());
 			model.addAttribute("experience", experience);
 			return "experiences/aLittleArticle";
 		}
@@ -151,11 +153,14 @@ public class ExperiencesController {
 			model.addAttribute("header", "for-user");
 			model.addAttribute("isStranger", false);
 			experience = experienceService.getALittleExperienceById(id);
+			model.addAttribute("title", experience.getUniv_name() + experience.getFaculty() + experience.getDepartment());
+			model.addAttribute("description", (experience.getEs().size() == 0 ? "" : experience.getEs().get(0).getQuestion().get(0)) + (experience.getEs().size() == 0 ? "" : experience.getEs().get(0).getAnswer().get(0)) + experience.getInterview().get(0).getQuestion() + experience.getInterview().get(0).getAnswer());
 			model.addAttribute("experience", experience);
 			return "experiences/aLittleArticle";
 		} else if (!(account.isValid_email()) || !(perfect)) {
 			model.addAttribute("header", "for-user");
 			experience = experienceService.getExperienceById(id, true, false);
+			model.addAttribute("title", experience.getUniv_name() + experience.getFaculty() + experience.getDepartment());
 			model.addAttribute("otherEs", experience.getEs().size() - 1);
 			model.addAttribute("validEmail", account.isValid_email());
 			model.addAttribute("experience", experience);
@@ -188,6 +193,7 @@ public class ExperiencesController {
 			iterator.remove();
 		}
 		experience.setEs(es);
+		model.addAttribute("title", experience.getUniv_name() + experience.getFaculty() + experience.getDepartment());
 		model.addAttribute("experience", experience);
 		return "experiences/fullArticle";
 	}
