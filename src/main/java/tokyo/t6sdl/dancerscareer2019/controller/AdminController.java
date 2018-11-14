@@ -333,7 +333,7 @@ public class AdminController {
 		}
 		int id = Integer.parseInt(experienceId);
 		experienceService.delete(id);
-		return "redirect:/admin/search/experiences?all";
+		return "redirect:/admin/search/experiences?all&sort=0";
 	}
 	
 	@GetMapping(value="/experiences/{experienceId}", params="modify")
