@@ -10,8 +10,12 @@
   <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../static/js/openclose.js"></script>
 </head>
 <body>
-  <!-- 普通のユーザー用のヘッダー -->
-  <header id="for-user" th:fragment="for-user">
+<!-- 普通のユーザー用のヘッダー -->
+<th:block th:fragment="for-user">
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-54PS66M" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <header id="for-user">
     <div class="inner">
       <h1 id="logo"><a th:href="@{/}"><img alt="ダンサーのための就活サイト" th:src="@{/img/logo.png}" src="../../static/img/logo.png"></a></h1>
       <nav id="menubar">
@@ -47,9 +51,14 @@
     });
     </script>
   </header>
+</th:block>
 
-  <!-- 管理者アカウント用のヘッダー -->
-  <header id="for-admin" th:fragment="for-admin">
+<!-- 管理者アカウント用のヘッダー -->
+<th:block th:fragment="for-admin">
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-54PS66M" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <header id="for-admin">
     <div class="inner">
       <h1 id="logo"><a th:href="@{/}"><img alt="ダンサーのための就活サイト" th:src="@{/img/logo.png}" src="../../static/img/logo.png"></a></h1>
       <nav id="menubar">
@@ -87,9 +96,14 @@
     });
     </script>
   </header>
+</th:block>
 
-  <!-- ログインしていない人用のヘッダー -->
-  <header id="for-stranger" th:fragment="for-stranger">
+<!-- ログインしていない人用のヘッダー -->
+<th:block th:fragment="for-stranger">
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-54PS66M" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <header id="for-stranger">
     <div class="inner">
       <h1 id="logo"><a th:href="@{/}"><img alt="ダンサーのための就活サイト" th:src="@{/img/logo.png}" src="../../static/img/logo.png" class="header-logo"></a></h1>
       <div id="login">
@@ -98,5 +112,6 @@
       </div>
     </div>
   </header>
+</th:block>
 </body>
 </html>
