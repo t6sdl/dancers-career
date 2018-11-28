@@ -45,6 +45,7 @@ public class AppConfig implements WebMvcConfigurer {
 		config.setUsername(System.getenv("DB_USERNAME"));
 		config.setPassword(System.getenv("DB_PASSWORD"));
 		config.setMaximumPoolSize(8);
+		config.setMaxLifetime(50000);
 		config.setLeakDetectionThreshold(30000);
 		config.setConnectionInitSql("SET SESSION sql_mode='TRADITIONAL,NO_AUTO_VALUE_ON_ZERO,ONLY_FULL_GROUP_BY'");
 		config.addDataSourceProperty("cachePrepStmts", true);
