@@ -42,7 +42,7 @@
   /* ----- top ----- */
   #catchphrase {
     margin: 20vh auto 10vh;
-    font-size: 2em;
+    font-size: 9vw;
     font-family: Georgia, "\6E38\660E\671D\4F53", "YuMincho", "\6E38\660E\671D", "Yu Mincho", "\30D2\30E9\30AE\30CE\660E\671D  ProN W3", "Hiragino Mincho ProN W3", HiraMinProN-W3, "\30D2\30E9\30AE\30CE\660E\671D  ProN", "Hiragino Mincho ProN", "\30D2\30E9\30AE\30CE\660E\671D  Pro", "Hiragino Mincho Pro", "HGS \660E\671D E", "\FF2D\FF33\a0\FF30\660E\671D", "MS PMincho", serif;
   }
   #desc {
