@@ -10,34 +10,15 @@
     padding: 0;
   }
   section {
-    padding: 14vh 0;
+    padding: 1px;
     width: 100%;
   }
-  .container {
-    width: 80%;
-    margin: 0 auto;
-  }
-  a.link-button {
-    display: block;
-    margin: 0 auto;
-    width: 80%;
-    max-width: 280px;
-    height: auto;
-    line-height: 2.5;
-    border-radius: 5px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: all .2s ease-out;
-  }
-  br.show-l {
+  br.show-m {
     display: none;
   }
 
   /* ----- sections ----- */
   #top {
-    position: relative;
-    padding: 0;
-    height: calc(100vh - 93px);
     background-image: url('https://dancers-career.t6sdl.tokyo/img/top.jpg');
     background-position: center;
     background-repeat: no-repeat;
@@ -45,7 +26,8 @@
     color: #ffffff;
     text-align: center;
   }
-  #description {
+  #flow {
+    background: #ffffff;
     text-align: center;
   }
   #motive {
@@ -59,231 +41,79 @@
 
   /* ----- top ----- */
   #catchphrase {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 52%;
-    margin: 0;
-    font-size: 2.4em;
+    margin: 20vh auto 10vh;
+    font-size: 2em;
     font-family: Georgia, "\6E38\660E\671D\4F53", "YuMincho", "\6E38\660E\671D", "Yu Mincho", "\30D2\30E9\30AE\30CE\660E\671D  ProN W3", "Hiragino Mincho ProN W3", HiraMinProN-W3, "\30D2\30E9\30AE\30CE\660E\671D  ProN", "Hiragino Mincho ProN", "\30D2\30E9\30AE\30CE\660E\671D  Pro", "Hiragino Mincho Pro", "HGS \660E\671D E", "\FF2D\FF33\a0\FF30\660E\671D", "MS PMincho", serif;
   }
-  #sub-catchphrase {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 50%;
-    margin: 0;
-    font-size: .8em;
-  }
-  #top a.link-button {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 20%;
-    border: 2px solid #dddddd;
-    background: #426579;
-    color: #ffffff;
-    font-weight: bold;
-  }
-  #top a.link-button:hover {
-    border: 2px solid #ffffff;
-    background: #ffffff;
-    color: #000000;
-  }
-  #scroll {
-    display: block;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 1%;
-    margin: 0 auto;
-    width: 3rem;
-    height: 5rem;
-    font-size: .6em;
-    color: #ffffff;
-  }
-  #scroll span.scroll-text {
-    display: block;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: auto;
-  }
-  #scroll span.scroll-arrow {
-    display: block;
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: auto;
-    width: 2em;
-    height: 2em;
-    opacity: 0;
-    border-bottom: 1px solid #ffffff;
-    border-right: 1px solid #ffffff;
-    transform: translateZ(0) rotateZ(45deg);
-    -webkit-animation: scroll 2s infinite linear;
-    animation: scroll 2s infinite linear;
-  }
-  #scroll span.scroll-arrow:nth-of-type(1) {
-    top: 0;
-    -webkit-animation-delay: 0s;
-    animation-delay: 0s;
-  }
-  #scroll span.scroll-arrow:nth-of-type(2) {
-    top: .8rem;
-    -webkit-animation-delay: 0.15s;
-    animation-delay: 0.2s;
-  }
-  #scroll span.scroll-arrow:nth-of-type(3) {
-    top: 1.6rem;
-    -webkit-animation-delay: 0.3s;
-    animation-delay: 0.4s;
-  }
-  @-webkit-keyframes scroll {
-    0% {
-      opacity: 0;
-      transform: translateY(0) rotateZ(45deg);
-    }
-    20% {
-      opacity: 1;
-      transform: translateY(1px) rotateZ(45deg);
-    }
-    60% {
-      opacity: 1;
-      transform: translateY(3px) rotateZ(45deg);
-    }
-    80% {
-      opacity: 0;
-      transform: translateY(4px) rotateZ(45deg);
-    }
-    100% {
-      opacity: 0;
-      transform: translateY(5px) rotateZ(45deg);
-    }
-  }
-  @keyframes scroll {
-    0% {
-      opacity: 0;
-      transform: translateY(0) rotateZ(45deg);
-    }
-    20% {
-      opacity: 1;
-      transform: translateY(1px) rotateZ(45deg);
-    }
-    60% {
-      opacity: 1;
-      transform: translateY(3px) rotateZ(45deg);
-    }
-    80% {
-      opacity: 0;
-      transform: translateY(4px) rotateZ(45deg);
-    }
-    100% {
-      opacity: 0;
-      transform: translateY(5px) rotateZ(45deg);
-    }
-  }
-
-  /* ----- description ----- */
-  .theme p, .theme h2 {
-    margin: 0;
-  }
-  .theme p {
-    padding-top: .6rem;
+  #desc {
+    margin: 10vh auto 15vh;
     font-size: .9em;
   }
-  .theme h2 {
-    padding-bottom: .8rem;
-    line-height: 1.2;
+  
+  /* ----- cta-sec ----- */
+  .cta-box {
+    margin: 1.5em auto;
+    text-align: center;
   }
-  #what .theme {
-    position: relative;
-    color: #426579;
+  .cta-box div {
+    display: flex;
+    justify-content: center;
+    margin: 1em 0;
   }
-  #what .theme::after {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    width: 100px;
-    height: 100%;
-    border-top: 1px dashed #426579;
-    border-bottom: 1px dashed #426579;
+  .cta-box .button {
+    margin: 0 1em;
   }
-  #what .content {
-    margin: 3em 0;
+
+  /* ----- flow ----- */
+  #flow h2 {
+    font-size: 1.8em;
   }
-  #how {
-    margin-top: 6em;
-    width: 90%;
-    border: 1px solid #426579;
-    counter-reset: step;
-  }
-  #how .theme {
-    background: #426579;
-    color: #ffffff;
-  }
-  #how .flow {
-     padding: 4em 10%;
-     box-sizing: border-box;
-  }
-  #how .step {
-    position: relative;
-    padding: 0 1em;
-    box-sizing: border-box;
-    border-bottom: 2px solid #aaaaaa;
-    counter-increment: step;
-    z-index: 999;
-  }
-  #how .step::before {
-    content: 'step';
-    position: absolute;
-    right: 1.3em;
-    bottom: -1em;
-    color: rgba(74, 200, 200, .8);
-    line-height: 1;
-    font-size: 1.5em;
-    font-weight: bold;
-    z-index: -999;
-    overflow: hidden;    
-  }
-  #how .step::after {
-    content: counter(step);
-    position: absolute;
-    right: 0;
-    bottom: -1em;
-    color: rgba(74, 200, 200, .8);
-    line-height: 1;
-    font-size: 3em;
-    font-weight: bold;
-    z-index: -999;
-    overflow: hidden;
-  }
-  #how .step p {
+  #flow p {
     margin: 0;
   }
-  #how a.link-button {
-    margin: 1.5em auto .5em;
+  #flow .steps {
+    margin: 3em 0;
+  }
+  #flow .step {
+    display: flex;
+    min-height: 80px;
+    border: 3px solid #426579;
+    border-radius: .5em;
+    overflow: hidden;
+  }
+  #flow .step .index {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    width: 30%;
     background: #426579;
     color: #ffffff;
+    font-size: 1.5em;
+    font-weight: bold;
   }
-  #how a.link-button:hover {
-    box-shadow: 0 2px 4px #666666;
+  #flow .step .content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1em;
+    width: 70%;
+    background: #ffffff;
   }
-  #how .down-arrow {
-    margin: .5rem auto;
-    font-size: 2.6em;
-    line-height: 1;
+  #flow .down-arrow {
+    font-size: 2em;
+  }
+  #flow .goal {
+    color: #426579;
+    font-size: 2em;
+    font-weight: bold;
   }
 
   /* ----- motive ----- */
   #motive h2 {
-    margin-top: 0;
+    font-size: 1.8em;
+  }
+  #motive p {
+    font-size: .9em;
   }
 
   /* ----- in case that width > 480px ----- */
@@ -291,17 +121,26 @@
     br.hide-m {
       display: none;
     }
+    br.show-m {
+      display: block;
+    }
     #catchphrase {
-      font-size: 2em;
+      font-size: 2.4em;
+    }
+    #desc {
+      font-size: 1em;
     }
   }
 
   /* ----- in case that width > 800px ----- */
   @media (min-width: 800px) {
-    br.show-l {
-      display: block;
+    br.hide-l {
+      display: none;
     }
     #how a.link-button {
       margin: .5em auto;
+    }
+    #motive {
+      text-align: center;
     }
   }

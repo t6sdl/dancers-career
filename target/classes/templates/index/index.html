@@ -8,8 +8,8 @@
 	<meta name="google-site-verification" content="3aUVQIxa6KWFhIIqUkhCgaCFWgEhyxoD_xpMe3Spw2w">
 	<th:block th:replace="common/favicons :: favicons"></th:block>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20181110}" href="../../static/css/main.css">
-	<link rel="stylesheet" type="text/css" th:href="@{/css/index.css?update=20181110}" href="../../static/css/index.css">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20181130}" href="../../static/css/main.css">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/index.css?update=20181130}" href="../../static/css/index.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 	<script type="text/javascript" th:src="@{/js/openclose.js}" src="../../static/js/openclose.js"></script>
 </head>
@@ -18,45 +18,47 @@
 	<main>
 		<section id="top">
 			<div class="container">
-				<h2 id="catchphrase">人事がナットクする<br class="hide-m">ダンスの伝え方。</h2>
-				<p id="sub-catchphrase">ダンサーが就活で正当に評価される世界を創る。それが私たちの使命です。</p>
-				<a th:href="@{/experiences?all&sort=0}" class="link-button">ES/体験記を探す</a>
-				<a href="#description" id="scroll"><span class="scroll-arrow"></span><span class="scroll-arrow"></span><span class="scroll-arrow"></span><span class="scroll-text">SCROLL</span></a>
+				<h2 id="catchphrase">人事がナットクする<br class="hide-l">ダンスの伝え方。</h2>
+				<p id="desc">ダンサーズキャリアは、ダンサーの先輩たちが実際に就職活動で使った<br class="show-m">エントリーシート・面接体験記を公開するサービスです。</p>
 			</div>
 		</section>
-		<section id="description">
-			<div id="what" class="container">
-				<div class="theme">
-					<p>What is Dancer's Career ?</p>
-					<h2>ダンサーズキャリアとは</h2>
-				</div>
-				<div class="content">
-					<p>ダンサーズキャリアは、ダンサーの先輩たちが実際に就職活動で使った<br class="show-l">エントリーシート・面接体験記を公開するサービスです。</p>
-				</div>
+		<section class="cta-sec">
+			<div class="container cta-box">
+				<div><a th:href="@{/experiences?all&sort=0}" class="button attract">ES/体験記を探す</a></div>
+				<div th:if="${header == 'for-stranger'}"><a th:href="@{/signup}" class="button">新規登録</a><a th:href="@{/signin}" class="button">ログイン</a></div>
 			</div>
-			<div id="how" class="container">
-				<div class="theme">
-					<p>How to use ?</p>
-					<h2>ダンサーズキャリアの使い方</h2>
+		</section>
+		<section id="flow">
+			<div class="container">
+				<h2>面接に向けて準備しよう</h2>
+				<div class="steps">
+					<div class="step">
+						<div class="index"><p>Step1</p></div>
+						<div class="content"><p>ダンサーズキャリアで自分の興味のあるES/体験記を探す</p></div>
+					</div>
+					<div class="down-arrow"><i class="fas fa-angle-down"></i></div>
+					<div class="step">
+						<div class="index"><p>Step2</p></div>
+						<div class="content"><p>見つけたESを参考にして自分の経験を言葉にする<br class="show-m">（ESには現役人事の方からのアドバイスも載っています）</p></div>
+					</div>
+					<div class="down-arrow"><i class="fas fa-angle-down"></i></div>
+					<div class="step">
+						<div class="index"><p>Step3</p></div>
+						<div class="content"><p>ダンスを知らない人事への伝わりやすさを意識してESに書く</p></div>
+					</div>
+					<div class="down-arrow"><i class="fas fa-angle-down"></i></div>
+					<div class="step">
+						<div class="index"><p>Step4</p></div>
+						<div class="content"><p>面接でどのように話すかを体験記を参考にしながら考える</p></div>
+					</div>
+					<div class="down-arrow"><i class="fas fa-angle-down"></i></div>
+					<div class="goal">
+						<p>いざ面接！</p>
+					</div>
 				</div>
-				<div class="flow">
-					<div class="step">
-						<p>ダンサーズキャリアで自分の興味のあるES/体験記を探す</p>
-					</div>
-					<div><a th:href="@{/experiences?all&sort=0}" class="link-button">ES/体験記を探す</a></div>
-					<div class="down-arrow"><i class="fas fa-angle-down"></i></div>
-					<div class="step">
-						<p>見つけたESを参考にして自分の経験をしっかり言語化する
-							<br class="show-l">（ESには現役人事の方からのアドバイスも載っています）</p>
-					</div>
-					<div class="down-arrow"><i class="fas fa-angle-down"></i></div>
-					<div class="step">
-						<p>実際に言語化したものをESに書く</p>
-					</div>
-					<div class="down-arrow"><i class="fas fa-angle-down"></i></div>
-					<div class="step">
-						<p>ESに書いたことを体験記を参考にしながらより詳細に言語化して面接で話す</p>
-					</div>
+				<div class="cta-box">
+					<div><a th:href="@{/experiences?all&sort=0}" class="button attract">ES/体験記を探す</a></div>
+					<div th:if="${header == 'for-stranger'}"><a th:href="@{/signup}" class="button">新規登録</a><a th:href="@{/signin}" class="button">ログイン</a></div>
 				</div>
 			</div>
 		</section>
@@ -72,20 +74,13 @@
 				<p>本サイトを通して、1人でも多くのダンサーが就職活動を成功させることを願っています。</p>
 			</div>
 		</section>
+		<section class="cta-sec">
+			<div class="container cta-box">
+				<div><a th:href="@{/experiences?all&sort=0}" class="button attract">ES/体験記を探す</a></div>
+				<div th:if="${header == 'for-stranger'}"><a th:href="@{/signup}" class="button">新規登録</a><a th:href="@{/signin}" class="button">ログイン</a></div>
+			</div>
+		</section>
 	</main>
 	<footer th:replace="common/footer :: footer"></footer>
-	<script>
-		$(function () {
-			const headerHeight = $('header').outerHeight();
-			let topHeight = window.innerHeight - headerHeight;
-			$('#top').css({
-				height: topHeight,
-			});
-			$('#scroll').on('click', (event) => {
-				event.preventDefault();
-				$('html,body').animate({ scrollTop: headerHeight + topHeight }, 500, 'swing');
-			});
-		});
-	</script>
 </body>
 </html>
