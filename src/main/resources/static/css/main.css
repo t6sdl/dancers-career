@@ -99,6 +99,7 @@ hr {
 .button::before {
   content: '\f0da';
   font-family: 'Font Awesome 5 Free';
+  font-weight: bold;
   position: absolute;
   top: 0;
   bottom: 0;
