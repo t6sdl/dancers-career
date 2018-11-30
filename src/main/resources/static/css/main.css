@@ -48,6 +48,12 @@ hr {
   border-top: 1px solid #426579;
 }
 
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 5em auto;
+}
+
 .position-tag {
   display: inline-block;
   padding: .5em;
@@ -59,8 +65,9 @@ hr {
 }
 
 .button {
+  position: relative;
   display: inline-block;
-  padding: 0 1em;
+  padding: 0 2em;
   min-width: auto;
   line-height: 2.6;
   background: #89c3eb;
@@ -69,12 +76,37 @@ hr {
   text-align: center;
   font-size: .9em;
   cursor: pointer;
-  transition: background .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+
+.button.attract {
+  padding: 0 3em;
+  background: #ff9719;
+  font-size: 1.2em;
 }
 
 .button:hover {
   background: #426579;
   color: #ffffff;
+}
+
+.button.attract:hover {
+  background: #ff9719;
+  color: #ffffff;
+  box-shadow: 0 2px 4px #666666;
+}
+
+.button::before {
+  content: '\f0da';
+  font-family: 'Font Awesome 5 Free';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 1em;
+}
+
+.button.attract::before {
+  content: '\f002';
 }
 
 @media (min-width: 800px) {
@@ -85,7 +117,7 @@ hr {
 
 @media (min-width: 480px) {
   .button {
-    padding: 0 2em;
+    padding: 0 3em;
     min-width: 100px;
   }
 }
@@ -98,13 +130,11 @@ header {
   line-height: 2;
 }
 
-header .inner {
+header .container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0;
   height: 90px;
-  padding: 0 5%;
   line-height: 2;
 }
 
@@ -139,16 +169,18 @@ header #logo img:hover {
 #login {
   display: block;
   margin-bottom: 5px;
-  font-size: 12px;
 }
 
 #login a {
   position: relative;
   display: inline-block;
+  font-size: .9em;
   font-weight: bold;
-  padding: 1px;
-  margin: 0 .5em;
   color: #333;
+}
+
+#login a:last-child {
+  margin-left: 1em;
 }
 
 #login a::before {
@@ -322,7 +354,7 @@ header #logo img:hover {
 
 
 /* ----- footer ----- */
-.footer {
+footer .container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -352,7 +384,7 @@ header #logo img:hover {
 }
 
 @media (min-width: 800px) {
-  .footer {
+  footer .container {
     flex-direction: row;
     justify-content: space-between;
   }
