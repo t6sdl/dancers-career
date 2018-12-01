@@ -65,6 +65,8 @@ public class ProfileForm {
 	@NotEmpty
 	private String academicDegree;
 	@NotEmpty
+	private String club;
+	@NotEmpty
 	private List<String> position;
 	private boolean applyLineNotify;
 }
