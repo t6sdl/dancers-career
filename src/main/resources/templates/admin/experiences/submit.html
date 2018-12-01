@@ -296,7 +296,7 @@
 <input class="clubItem" type="text" th:field="*{club[__${loop.index}__]}" placeholder="空欄可">
 </th:block>
 <div>
-<input type="button" id="addClub" value="追加" class="button">
+<button type="button" id="addClub" value="addClub" class="button">追加</button>
 </div>
 </div>
 <div>
@@ -305,7 +305,7 @@
 <input class="offerItem" type="text" th:field="*{offer[__${loop.index}__]}" placeholder="空欄可">
 </th:block>
 <div>
-<input type="button" id="addOffer" value="追加" class="button">
+<button type="button" id="addOffer" value="addOffer" class="button">追加</button>
 </div>
 </div>
 </fieldset>
@@ -335,7 +335,7 @@
 <hr>
 </div>
 <div>
-<input type="button" id="addEs" value="追加" class="button">
+<button type="button" id="addEs" class="button">追加</button>
 </div>
 </fieldset>
 <fieldset>
@@ -352,11 +352,11 @@
 <hr>
 </div>
 <div>
-<input type="button" id="addInterview" value="追加" class="button">
+<button type="button" id="addInterview" class="button">追加</button>
 </div>
 </fieldset>
 <div>
-<input type="submit" name="post" value="登録" class="button">
+<button type="submit" name="post" value="post" class="button">登録</button>
 <input type="hidden" id="contextPath" th:value="@{/}">
 <input type="hidden" id="experienceId" th:value="${experienceId}">
 </div>
