@@ -67,6 +67,10 @@
             <td th:text="|*{grad_school_name == null ? '' : grad_school_name} *{grad_school_of == null ? '' : grad_school_of} *{program_in == null ? '' : program_in}|"></td>
           </tr>
           <tr>
+            <th>所属サークル</th>
+            <td th:text="*{club == null ? '' : club}"></td>
+          </tr>
+          <tr>
             <th>サークル等での役職</th>
             <td><span th:each="pos : *{position == null ? '' : position}" th:text="${pos}" class="position-tag"></span></td>
           </tr>
