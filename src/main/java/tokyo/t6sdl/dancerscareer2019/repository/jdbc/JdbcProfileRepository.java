@@ -27,7 +27,7 @@ import tokyo.t6sdl.dancerscareer2019.repository.ProfileRepository;
 @Repository
 public class JdbcProfileRepository implements ProfileRepository {
 	private final JdbcTemplate jdbcTemplate;
-	private final String QUERIED_VALUE = "accounts.email, valid_email, last_login, last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, univ_pref, univ_name, faculty, department, grad_school_pref, grad_school_name, grad_school_of, program_in, graduation, academic_degree, position, likes";
+	private final String QUERIED_VALUE = "accounts.email, valid_email, last_login, last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, univ_pref, univ_name, faculty, department, grad_school_pref, grad_school_name, grad_school_of, program_in, graduation, academic_degree, club, position, likes";
 	private final List<String> SORT_LIST = Arrays.asList("last_login DESC", "kana_last_name ASC, kana_first_name ASC", "univ_pref ASC, univ_name ASC, faculty ASC, department ASC");
 	
 	private List<String> stringToList(String str) {
@@ -46,7 +46,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 	public Profile findOneByEmail(String email) {
 		 try {
 				return jdbcTemplate.queryForObject(
-						"SELECT email, last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, univ_pref, univ_name, faculty, department, grad_school_pref, grad_school_name, grad_school_of, program_in, graduation, academic_degree, position, likes FROM profiles WHERE email = ?", (resultSet, i) -> {
+						"SELECT email, last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, univ_pref, univ_name, faculty, department, grad_school_pref, grad_school_name, grad_school_of, program_in, graduation, academic_degree, club, position, likes FROM profiles WHERE email = ?", (resultSet, i) -> {
 							Profile profile = new Profile();
 							this.adjustDataToProfile(profile, resultSet);
 							return profile;
@@ -233,11 +233,11 @@ public class JdbcProfileRepository implements ProfileRepository {
 	public void insert(Profile newProfile) {
 		Date date_of_birth = Date.from(newProfile.getDate_of_birth().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		jdbcTemplate.update(
-				"INSERT INTO profiles VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+				"INSERT INTO profiles VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 				newProfile.getEmail(), newProfile.getLast_name(), newProfile.getFirst_name(), newProfile.getKana_last_name(), newProfile.getKana_first_name(),
 				date_of_birth, newProfile.getSex(), newProfile.getPhone_number(), newProfile.getMajor(), newProfile.getUniv_pref(), newProfile.getUniv_name(),
 				newProfile.getFaculty(), newProfile.getDepartment(), newProfile.getGrad_school_pref(), newProfile.getGrad_school_name(), newProfile.getGrad_school_of(),
-				newProfile.getProgram_in(), newProfile.getGraduation(), newProfile.getAcademic_degree(), this.listToString(newProfile.getPosition()), "");
+				newProfile.getProgram_in(), newProfile.getGraduation(), newProfile.getAcademic_degree(), newProfile.getClub(), this.listToString(newProfile.getPosition()), "");
 		if (!(newProfile.getPosition().contains(""))) {
 			String insertPos = this.listToString(newProfile.getPosition(), "('", "', '" + newProfile.getEmail() + "')", ", ");
 			jdbcTemplate.update("INSERT INTO positions VALUES " + insertPos);
@@ -259,10 +259,10 @@ public class JdbcProfileRepository implements ProfileRepository {
 		Date date_of_birth = Date.from(profile.getDate_of_birth().atStartOfDay(ZoneId.systemDefault()).toInstant());
 		jdbcTemplate.update(
 				"UPDATE profiles SET last_name = ?, first_name = ?, kana_last_name = ?, kana_first_name = ?, date_of_birth = ?, sex = ?, phone_number = ?, major = ?, univ_pref = ?, univ_name = ?, "
-				+ "faculty = ?, department = ?, grad_school_pref = ?, grad_school_name = ?, grad_school_of = ?, program_in = ?, graduation = ?, academic_degree = ?, position = ? WHERE email = ?",
+				+ "faculty = ?, department = ?, grad_school_pref = ?, grad_school_name = ?, grad_school_of = ?, program_in = ?, graduation = ?, academic_degree = ?, club = ?, position = ? WHERE email = ?",
 				profile.getLast_name(), profile.getFirst_name(), profile.getKana_last_name(), profile.getKana_first_name(), date_of_birth, profile.getSex(), profile.getPhone_number(),
 				profile.getMajor(), profile.getUniv_pref(), profile.getUniv_name(), profile.getFaculty(), profile.getDepartment(), profile.getGrad_school_pref(), profile.getGrad_school_name(),
-				profile.getGrad_school_of(), profile.getProgram_in(), profile.getGraduation(), profile.getAcademic_degree(), this.listToString(newPos), profile.getEmail());
+				profile.getGrad_school_of(), profile.getProgram_in(), profile.getGraduation(), profile.getAcademic_degree(), profile.getClub(), this.listToString(newPos), profile.getEmail());
 		List<String> duplication = new ArrayList<String>();
 		oldPos.forEach(pos -> {
 			if (newPos.contains(pos)) duplication.add(pos);
@@ -318,6 +318,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 		profile.setProgram_in(resultSet.getString("program_in"));
 		profile.setGraduation(resultSet.getString("graduation"));
 		profile.setAcademic_degree(resultSet.getString("academic_degree"));
+		profile.setClub(resultSet.getString("club"));
 		profile.setLikes(this.stringToList(resultSet.getString("likes")));
 		profile.setPosition(this.stringToList(resultSet.getString("position")));
 	}
@@ -347,6 +348,7 @@ public class JdbcProfileRepository implements ProfileRepository {
 			student.setProgram_in(resultSet.getString("program_in"));
 			student.setGraduation(resultSet.getString("graduation"));
 			student.setAcademic_degree(resultSet.getString("academic_degree"));
+			student.setClub(resultSet.getString("club"));
 			student.setLikes(this.stringToList(resultSet.getString("likes")));
 			student.setPosition(this.stringToList(resultSet.getString("position")));
 			student.convertForDisplay();

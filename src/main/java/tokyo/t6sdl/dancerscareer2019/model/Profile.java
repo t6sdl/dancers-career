@@ -31,6 +31,7 @@ public class Profile {
 	private String program_in;
 	private String graduation;
 	private String academic_degree;
+	private String club;
 	private List<String> position;
 	private List<String> likes;
 	
