@@ -108,6 +108,7 @@ public class ProfileService {
 		profile.setProgram_in(form.getProgramIn());
 		profile.setGraduation(graduation);
 		profile.setAcademic_degree(form.getAcademicDegree());
+		profile.setClub(form.getClub());
 		profile.setPosition(form.getPosition());
 		return profile;
 	}
@@ -146,6 +147,7 @@ public class ProfileService {
 		form.setGraduationYear(split[0]);
 		form.setGraduationMonth(split[1]);
 		form.setAcademicDegree(profile.getAcademic_degree());
+		form.setClub(profile.getClub());
 		form.setPosition(profile.getPosition());
 		return form;
 	}
@@ -174,6 +176,7 @@ public class ProfileService {
 		student.setProgram_in(profile.getProgram_in());
 		student.setGraduation(profile.getGraduation());
 		student.setAcademic_degree(profile.getAcademic_degree());
+		student.setClub(profile.getClub());
 		student.setPosition(profile.getPosition());
 		student.setLikes(profile.getLikes());
 		return student;

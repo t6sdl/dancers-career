@@ -3,6 +3,7 @@
 input {
   border: none;
   font-size: 12px;
+  height: 3.5em;
   line-height: 1.5em;
   padding: 0;
   outline: none;
@@ -11,7 +12,7 @@ input {
 
 select {
   margin: .5em;
-  height: 50px;
+  height: 3em;
   border: 1px solid #555555;
   outline: none;
   max-width: 30em;
@@ -39,7 +40,6 @@ input[type="password"] {
   margin: .5em 0;
   padding: 0 16px;
   width: 90%;
-  height: 50px;
   border: 1px solid #555555;
 }
 
@@ -48,7 +48,6 @@ input[type="email"] {
   margin: .5em 0;
   padding: 0 16px;
   width: 90%;
-  height: 50px;
   border: 1px solid #555555;
 }
 
@@ -56,7 +55,6 @@ input[type="submit"] {
   background: #89c3eb;
   border: 0;
   width: 90%;
-  height: 40px;
   border-radius: 3px;
   color: white;
   cursor: pointer;
@@ -69,7 +67,6 @@ input[type="button"] {
   background: #89c3eb;
   border: 0;
   min-width: 100px;
-  height: 40px;
   border-radius: 3px;
   color: white;
   cursor: pointer;
@@ -92,7 +89,6 @@ input[type="text"] {
   padding: 0 16px;
   width: 45%;
   min-width: 200px;
-  height: 50px;
   border: 1px solid #555555;
 }
 
@@ -102,7 +98,6 @@ input[type="tel"] {
   padding: 0 16px;
   min-width: 200px;
   width: 45%;
-  height: 50px;
   border: 1px solid #555555;
 }
 
