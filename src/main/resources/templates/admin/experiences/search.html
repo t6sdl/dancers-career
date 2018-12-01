@@ -25,7 +25,7 @@
 <input type="text" th:field="*{kanaFirstName}">
 </div>
 <div>
-<input type="submit" value="検索" name="by-name">
+<input type="submit" value="検索" name="by-name" class="button">
 </div>
 </fieldset>
 <fieldset>
@@ -130,7 +130,7 @@
 <input type="hidden" id="hiddenDep" th:value="${hiddenDep == null ? '' : hiddenDep}">
 </div>
 <div>
-<input type="submit" value="検索" name="by-university">
+<input type="submit" value="検索" name="by-university" class="button">
 </div>
 </fieldset>
 <fieldset>
@@ -234,7 +234,7 @@
 <input type="hidden" id="hiddenProgramIn" th:value="${hiddenProgramIn == null ? '' : hiddenProgramIn}">
 </div>
 <div>
-<input type="submit" value="今後対応予定" name="by-gradschool" disabled>
+<input type="submit" value="今後対応予定" name="by-gradschool" class="button" disabled>
 </div>
 </fieldset>
 <fieldset>
@@ -246,8 +246,8 @@
 </th:block>
 </div>
 <div>
-<input type="submit" value="AND検索" name="and-search-by-position">
-<input type="submit" value="OR検索" name="or-search-by-position">
+<input type="submit" value="AND検索" name="and-search-by-position" class="button">
+<input type="submit" value="OR検索" name="or-search-by-position" class="button">
 </div>
 </fieldset>
 <select th:field="*{sort}">
@@ -257,7 +257,7 @@
 </select>
 <input type="hidden" id="contextPath" th:value="@{/}">
 <input type="hidden" name="start" value="1">
-<input type="submit" value="絞り込み解除" name="all">
+<input type="submit" value="絞り込み解除" name="all" class="button">
 </form>
 <hr>
 <div>
