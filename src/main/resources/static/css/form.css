@@ -25,6 +25,11 @@ textarea {
   height: 150px;
 }
 
+button {
+  outline: none;
+  border: none;
+}
+
 input::placeholder {
   color: #606468;
 }
