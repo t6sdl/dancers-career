@@ -319,6 +319,10 @@ td, th {
 <td th:text="|${student.grad_school_name} ${student.grad_school_of} ${student.program_in}|"></td>
 </tr>
 <tr>
+<th align="right">サークル</th>
+<td th:text="*{club}"></td>
+</tr>
+<tr>
 <th align="right">役職</th>
 <td><span th:each="pos : ${student.position}" th:text="|${pos} |"></span></td>
 </tr>
