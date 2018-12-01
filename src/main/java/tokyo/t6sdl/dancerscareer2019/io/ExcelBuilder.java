@@ -31,7 +31,7 @@ public class ExcelBuilder extends AbstractXlsxView {
 		List<String> filter = (List<String>) model.get("filter");
 		@SuppressWarnings("unchecked")
 		List<Student> students = (List<Student>) model.get("students");
-		List<String> header = Arrays.asList("メールアドレス", "認証可否", "最終ログイン日時", "姓", "名", "セイ", "メイ", "生年月日", "性別", "電話番号", "卒業年度", "最終学歴", "文理", "大学所在地", "大学", "学部", "学科", "大学院所在地", "大学院", "研究科", "専攻", "役職", "お気に入りのES/体験記");
+		List<String> header = Arrays.asList("メールアドレス", "認証可否", "最終ログイン日時", "姓", "名", "セイ", "メイ", "生年月日", "性別", "電話番号", "卒業年度", "最終学歴", "文理", "大学所在地", "大学", "学部", "学科", "大学院所在地", "大学院", "研究科", "専攻", "サークル", "役職", "お気に入りのES/体験記");
 		
 		Sheet filterSheet = workbook.createSheet("検索条件");
 		filterSheet.setDefaultColumnWidth(15);
@@ -96,7 +96,7 @@ public class ExcelBuilder extends AbstractXlsxView {
 				likesSize = student.getLikes().size();
 			}
 			int rowRange = positionSize > likesSize ? positionSize : likesSize;
-			List<String> studentData = Arrays.asList(student.getEmail(), validEmail, lastLogin, student.getLast_name(), student.getFirst_name(), student.getKana_last_name(), student.getKana_first_name(), birth, student.getSex(), student.getPhone_number(), student.getGraduation(), student.getAcademic_degree(), student.getMajor(), student.getUniv_pref(), student.getUniv_name(), student.getFaculty(), student.getDepartment(), student.getGrad_school_pref(), student.getGrad_school_name(), student.getGrad_school_of(), student.getProgram_in(), position, like);
+			List<String> studentData = Arrays.asList(student.getEmail(), validEmail, lastLogin, student.getLast_name(), student.getFirst_name(), student.getKana_last_name(), student.getKana_first_name(), birth, student.getSex(), student.getPhone_number(), student.getGraduation(), student.getAcademic_degree(), student.getMajor(), student.getUniv_pref(), student.getUniv_name(), student.getFaculty(), student.getDepartment(), student.getGrad_school_pref(), student.getGrad_school_name(), student.getGrad_school_of(), student.getProgram_in(), student.getClub(), position, like);
 			for (int i = 0; i < studentData.size(); i++) {
 				studentsRow.createCell(i).setCellValue(studentData.get(i));
 			}
