@@ -143,4 +143,17 @@ public class GeneralController {
 	public String getHowToGetEmail() {
 		return "help/howToGetEmail";
 	}
+	
+	@RequestMapping("/topics/1")
+	public String getTopics1(Model model) {
+		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
+		if (Objects.equals(account, null)) {
+			model.addAttribute("header", "for-stranger");
+		} else if (account.isAdmin()) {
+			model.addAttribute("header", "for-admin");
+		} else {
+			model.addAttribute("header", "for-user");
+		}
+		return "topics/20181206";		
+	}
 }

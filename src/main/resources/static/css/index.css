@@ -26,7 +26,7 @@
     color: #ffffff;
     text-align: center;
   }
-  #flow {
+  #topics, #flow {
     background: #ffffff;
     text-align: center;
   }
@@ -63,9 +63,17 @@
   .cta-box .button {
     margin: 0 1em;
   }
+  
+  /* ----- topics ----- */
+  #topics a {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 600px;
+  }
 
   /* ----- flow ----- */
-  #flow h2 {
+  #topics h2, #flow h2 {
     font-size: 1.8em;
   }
   #flow p {
