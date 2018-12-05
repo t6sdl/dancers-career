@@ -8,8 +8,8 @@
   <th:block th:replace="common/favicons :: favicons"></th:block>
   <meta property="og:title" content="ダンサー向け就活セミナーが開催されます！｜ダンサーズキャリア">
   <meta property="og:type" content="article">
-  <meta property="og:url" th:content="@{/topics/1}">
-  <meta property="og:image" th:content="@{/img/flyer.jpg}">
+  <meta property="og:url" th:content="${#httpServletRequest.requestURI}">
+  <meta property="og:image" th:content="${#httpServletRequest.requestURI + '/img/flyer.jpg'}">
   <meta property="og:description" content="サークルで役職についてたし、コンテストで受賞歴あるし、就活ぶっちゃけいけるっしょ！という皆さん。せっかくの素晴らしい実績なのに、、そのまま就活しても落ちまくるのが現状です。。ダンスを一生懸命やりながら、なんとか夏インターンに申し込んで両立しようとしてきた。けど、夏インターンで就活の壁を既に少し知った。このままじゃまずいことはわかってるけどどうしよう。。。という方。就活におけるダンスエピソードの生かし方、教えます！">
   <meta property="og:site_name" content="ダンサーズキャリア">
   <meta property="fb:app_id" content="547642575658499">
