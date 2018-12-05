@@ -22,12 +22,7 @@ table {
 
 a {
   color: #6495ed;
-  transition: .5s;
   text-decoration: none;
-}
-
-a:hover {
-  color: #0000cd;
 }
 
 h1 {
@@ -40,12 +35,21 @@ li {
 }
 
 ul {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
 }
 
 hr {
-  border-top: 1px solid #426579;
+  border: none;
+  border-top: 1px solid #000000;
+}
+
+img {
+  width: 100%;
+}
+
+div, article, section {
+  box-sizing: border-box;
 }
 
 .container {
@@ -110,8 +114,12 @@ hr {
   left: 1em;
 }
 
-.button.attract::before {
+.button.search::before {
   content: '\f002';
+}
+
+.button.calendar::before {
+  content: '\f274';
 }
 
 @media (min-width: 800px) {
@@ -369,7 +377,7 @@ footer .container {
   align-items: center;
   margin: 0 auto;
   background-color: #ffffff;
-  padding: 1rem 5%;
+  padding: 1rem 0;
 }
 
 .copy {
@@ -381,7 +389,7 @@ footer .container {
 
 .footer-logo {
   display: inline-block;
-  padding: .5em;
+  margin: .5em 0;
   font-size: 25px;
   color:#426579;
 }
