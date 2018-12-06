@@ -80,6 +80,13 @@ public class JdbcAccountRepository implements AccountRepository {
 	}
 	
 	@Override
+	public List<String> findEmailByNewEsMail() {
+		return jdbcTemplate.query("SELECT email FROM accounts WHERE new_es_mail = true", (resultSet, i) -> {
+			return resultSet.getString("email");
+		});
+	}
+	
+	@Override
 	public String findEmailTokenByEmail(String email) {
 		try {
 			return jdbcTemplate.queryForObject("SELECT email_token FROM accounts WHERE email = ?", String.class, email);
@@ -109,7 +116,7 @@ public class JdbcAccountRepository implements AccountRepository {
 	@Override
 	public void insert(Account newAccount) {
 		jdbcTemplate.update(
-				"INSERT INTO accounts (email, password, updated_at, created_at, last_login) VALUES (?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)",
+				"INSERT INTO accounts (email, password, updated_at, created_at, last_login, new_es_mail) VALUES (?, ?, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, true)",
 				newAccount.getEmail(), newAccount.getPassword());
 		jdbcTemplate.update("UPDATE counts SET count = count + 1 WHERE name = 'accounts'");
 	}
@@ -155,6 +162,13 @@ public class JdbcAccountRepository implements AccountRepository {
 		jdbcTemplate.update(
 				"UPDATE accounts SET line_access_token = ?, updated_at = CURRENT_TIMESTAMP WHERE email = ?",
 				lineAccessToken, loggedInEmail);
+	}
+	
+	@Override
+	public void updateNewEsMail(String loggedInEmail, boolean newEsMail) {
+		jdbcTemplate.update(
+				"UPDATE accounts SET new_es_mail = ? WHERE email = ?",
+				newEsMail, loggedInEmail);
 	}
 
 	@Override

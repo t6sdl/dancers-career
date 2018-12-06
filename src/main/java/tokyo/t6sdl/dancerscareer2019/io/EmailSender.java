@@ -89,6 +89,27 @@ public class EmailSender {
 		}
 	}
 	
+	public void sendMailMagazine(Mail mail) {
+		try {
+			MimeMessage message = mailSender.createMimeMessage();
+			message.setHeader("Content-type", "text/html");
+			message.setHeader("Errors-To", Mail.TO_ERROR);
+			MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
+			helper.setFrom(Mail.TO_SUPPORT, Mail.NAME_OF_SUPPORT);
+			helper.setSubject(mail.getSubject());
+			this.readContent(mail);
+			helper.setText(mail.getContent(), true);
+			for (String to : mail.getManyTo()) {
+				helper.setTo(to);
+				mailSender.send(message);
+			}
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void receiveMail(Mail mail) {
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
@@ -146,6 +167,8 @@ public class EmailSender {
 			return "/mails/forget-pwd?to=" + mail.getTo();
 		case Mail.SUB_REPLY_TO_CONTACT:
 			return "/mails/reply-to-contact";
+		case Mail.SUB_NEW_ES:
+			return "/mails/new-es-mail";
 		default:
 			throw new IllegalArgumentException();
 		}
