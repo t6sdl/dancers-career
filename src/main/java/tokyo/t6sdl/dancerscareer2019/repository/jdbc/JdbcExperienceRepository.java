@@ -203,9 +203,9 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	
 	@Override
 	public Map<String, Object> findByCreatedAt() {
-		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM experiences WHERE created_at > CURRENT_TIMESTAMP - INTERVAL 1 MONTH", Integer.class);
+		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM experiences WHERE created_at > CURRENT_TIMESTAMP - INTERVAL 1 WEEK", Integer.class);
 		List<Experience> experiences = jdbcTemplate.query(
-				this.selectExperienceIn("WHERE created_at > CURRENT_TIMESTAMP - INTERVAL 1 MONTH", true, 0), (resultSet, i) -> {
+				this.selectExperienceIn("WHERE created_at > CURRENT_TIMESTAMP - INTERVAL 1 WEEK", true, 0), (resultSet, i) -> {
 					Experience experience = new Experience();
 					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;

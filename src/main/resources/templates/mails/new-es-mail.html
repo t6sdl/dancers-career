@@ -146,8 +146,10 @@
       width: 100%;
       border: 1px solid #333;
       box-sizing: border-box;
+      color: #333;
     }
     .exp-container h2 {
+      margin: .5em 0;
       text-align: center;
       color: #426579;
     }
@@ -229,10 +231,10 @@
               <td>
                 <a th:href="${expurl + __*{experience_id}__}" class="exp-container">
                   <div>
-                    <p style="margin: 0;"><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></p>
+                    <p><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></p>
                     <h2 th:text="*{univ_name}"></h2>
-                    <p>内定先：<span class="divide-slash" th:each="off : *{offer}" th:text="${off} == '' ? '非公開' : ${off}"></span></p>
-                    <p><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'"></span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></p>
+                    <p style="color: #333 !important;">内定先：<span class="divide-slash" th:each="off : *{offer}" th:text="${off} == '' ? '非公開' : ${off}"></span></p>
+                    <p style="color: #333 !important;"><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'"></span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></p>
                   </div>
                 </a>
               </td>
@@ -276,7 +278,7 @@
             </tr>
             <tr>
               <td colspan="2">
-                <p class="contact"><a th:href="${mailSetting}">配信停止</a></p>
+                <p class="contact"><a th:href="${mailSetting}">配信設定</a></p>
               </td>
             </tr>
             <tr>
