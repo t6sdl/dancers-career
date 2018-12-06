@@ -144,6 +144,26 @@ public class GeneralController {
 		return "help/howToGetEmail";
 	}
 	
+	@GetMapping("/mail-setting")
+	public String getMailSetting(Model model) {
+		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
+		if (Objects.equals(account, null)) {
+			model.addAttribute("header", "for-stranger");
+			return "help/login";
+		} else if (account.isAdmin()) {
+			model.addAttribute("header", "for-admin");
+			return "redirect:/admin";
+		} else {
+			model.addAttribute("header", "for-user");
+			return "help/mailSetting";
+		}
+	}
+	
+	@PostMapping("/mail-setting")
+	public String postMailSetting(Model model) {
+		return "help/mailSetting";
+	}
+	
 	@RequestMapping("/topics/1")
 	public String getTopics1(Model model) {
 		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
