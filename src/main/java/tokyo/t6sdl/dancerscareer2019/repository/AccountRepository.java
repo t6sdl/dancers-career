@@ -12,6 +12,7 @@ public interface AccountRepository {
 	String findEmailTokenByEmail(String email);
 	String findPasswordTokenByEmail(String email);
 	String findLineAccessTokenByEmail(String email);
+	List<String> findEmailByNewEsMail();
 	void insert(Account newAccount);
 	void delete(String email);
 	void updateEmail(String loggedInEmail, String newEmail);
@@ -19,6 +20,7 @@ public interface AccountRepository {
 	void updateValidEmail(String loggedInEmail, boolean validEmail);
 	void updateLastLogin(String loggedInEmail);
 	void updateLineAccessToken(String loggedInEmail, String lineAccessToken);
+	void updateNewEsMail(String loggedInEmail, boolean newEsMail);
 	void recordEmailToken(String loggedEmail, String emailToken);
 	void refreshEmailToken(String loggedInEmail);
 	void recordPasswordToken(String loggedInEmail, String passwordToken);
