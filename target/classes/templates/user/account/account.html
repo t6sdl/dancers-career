@@ -13,7 +13,7 @@
   <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../../static/js/openclose.js"></script>
   <style>
   th + td {
-    min-width: 6em;
+    min-width: 9em;
     padding: 1em 0;
   }
   </style>
@@ -36,7 +36,7 @@
             </td>
           </tr>
           <tr>
-            <td th:text="${email}"></td>
+            <td style="word-break:break-all;" th:text="${email}"></td>
           </tr>
           <tr>
             <td style="font-size:.8em;"><span style="color:red; word-break:break-all;" th:unless="${validEmail}"><i class="fas fa-exclamation-circle"></i>メールアドレス未確認<br>メールアドレスの確認は「ダンサーズキャリア」から届くメールの「メールアドレスの確認」ボタンを押すことで完了します。<br><a th:href="@{/help/get-email}"><i class="far fa-question-circle"></i>メールが届かない</a></span><span th:if="${validEmail}">メールアドレス確認済</span></td>
