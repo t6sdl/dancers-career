@@ -23,6 +23,7 @@ import tokyo.t6sdl.dancerscareer2019.model.Account;
 import tokyo.t6sdl.dancerscareer2019.model.Experience;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.model.Profile;
+import tokyo.t6sdl.dancerscareer2019.model.form.MailMagazineForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.NewEmailForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.NewPasswordForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.ProfileForm;
@@ -163,6 +164,28 @@ public class UserPageController {
 		} else {
 			return "redirect:/user/account/change/password?error";
 		}
+	}
+	
+	
+	@GetMapping("/account/change/mail-setting")
+	public String getMailSetting(Model model) {
+		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
+		if (Objects.equals(account, null)) {
+			return "redirect:/signin?from=mail-setting";
+		} else if (account.isAdmin()) {
+			return "redirect:/admin";
+		} else {
+			MailMagazineForm form = new MailMagazineForm();
+			form.setNewEs(account.isNew_es_mail());
+			model.addAttribute(form);
+			return "user/account/mailSetting";
+		}
+	}
+	
+	@PostMapping("/account/change/mail-setting")
+	public String postMailSetting(MailMagazineForm form, Model model) {
+		accountService.changeNewEsMail(securityService.findLoggedInEmail(), form.isNewEs());
+		return "redirect:/user/account?changedsetting";
 	}
 	
 	@RequestMapping("/profile")

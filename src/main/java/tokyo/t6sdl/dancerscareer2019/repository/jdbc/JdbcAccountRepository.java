@@ -17,7 +17,7 @@ import tokyo.t6sdl.dancerscareer2019.repository.AccountRepository;
 @Repository
 public class JdbcAccountRepository implements AccountRepository {
 	private final JdbcTemplate jdbcTemplate;
-	private final String QUERIED_VALUE = "email, password, authority, valid_email, updated_at, created_at, last_login, email_token, password_token";
+	private final String QUERIED_VALUE = "email, password, authority, valid_email, updated_at, created_at, last_login, email_token, password_token, new_es_mail";
 	
 	public JdbcAccountRepository (JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
@@ -212,6 +212,7 @@ public class JdbcAccountRepository implements AccountRepository {
 		account.setLast_login(LocalDateTime.ofInstant(lastLogin.toInstant(), ZoneId.of("Asia/Tokyo")));
 		account.setEmail_token(resultSet.getString("email_token"));
 		account.setPassword_token(resultSet.getString("password_token"));
+		account.setNew_es_mail(resultSet.getBoolean("new_es_mail"));
 	}
 	
 	private String selectAccountIn(String conditions, boolean multiple) {

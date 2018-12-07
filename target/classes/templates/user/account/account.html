@@ -14,6 +14,7 @@
   <style>
   th + td {
     min-width: 6em;
+    padding: 1em 0;
   }
   </style>
 </head>
@@ -25,6 +26,7 @@
       <h1>アカウント</h1>
       <p th:if="${param.changedemail}" class="fins"><i class="fas fa-check-circle"></i>メールアドレスが変更されました</p>
       <p th:if="${param.changedpassword}" class="fins"><i class="fas fa-check-circle"></i>パスワードが変更されました</p>
+      <p th:if="${param.changedsetting}" class="fins"><i class="fas fa-check-circle"></i>配信設定が変更されました</p>
       <table>
         <tbody>
           <tr>
@@ -58,6 +60,12 @@
           </tr>
           <tr>
             <td th:text="${isConnected ? '連携済' : '未連携'}"></td>
+          </tr>
+        </tbody>
+        <tbody>
+          <tr>
+            <th>メール配信設定</th>
+            <td><a class="button" th:href="@{/user/account/change/mail-setting}">確認・変更</a></td>
           </tr>
         </tbody>
       </table>
