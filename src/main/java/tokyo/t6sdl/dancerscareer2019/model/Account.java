@@ -23,6 +23,7 @@ public class Account implements UserDetails {
 	private LocalDateTime created_at;
 	private String email_token;
 	private String password_token;
+	private boolean new_es_mail;
 	
 	public boolean isAdmin() {
 		return this.getAuthority().equals("ROLE_ADMIN");

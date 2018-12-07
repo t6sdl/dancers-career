@@ -14,28 +14,20 @@
   <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../static/js/openclose.js"></script>
 </head>
 <body class="formbg2">
-
   <header th:replace="common/header :: for-stranger"></header>
   <main>
   <div id="formdef">
     <h1>ログイン</h1>
-    <form th:action="@{/login}" method="post">
+    <form th:action="@{/signin}" th:object="${signinForm}" method="post">
       <p class="hazard" th:if="${param.error}"><i class="fas fa-exclamation-circle"></i>メールアドレスまたはパスワードに誤りがあります</p>
-      <input type="email" placeholder="Email" name="email"><br><input type="password" placeholder="Password" name="password">
-
+      <input type="email" placeholder="Email" th:field="*{email}"><br><input type="password" placeholder="Password" th:field="*{password}">
       <div>
-        <input type="checkbox" id="remember-me" name="remember-me">
-        <label for="remember-me">ログインしたままにする</label>
-      </div>
-
-      <div>
+        <input type="hidden" th:field="*{from}">
         <button type="submit" class="button">ログイン</button>
       </div>
-
       <div>
         <p><a th:href="@{/signin/forget-pwd}">パスワードをお忘れですか？</a></p>
       </div>
-
       <div>
         <p><a th:href="@{/signup}">アカウントをお持ちでない方はこちら</a></p>
       </div>
