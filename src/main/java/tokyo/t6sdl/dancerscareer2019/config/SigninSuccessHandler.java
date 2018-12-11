@@ -27,22 +27,22 @@ public class SigninSuccessHandler implements AuthenticationSuccessHandler {
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		Object account = authentication.getPrincipal();
-		String query = request.getQueryString();
-		log.info(query);
-		if (account instanceof Account) {
-			accountService.changeLastLogin(((Account) account).getEmail());
-			LocalDateTime updatedAt = ((Account) account).getUpdated_at();
-			LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
-			if (now.isAfter(updatedAt.plusMinutes(30)) && (!(Objects.equals(((Account) account).getEmail_token(), null)) || !(Objects.equals(((Account) account).getPassword_token(), null)))) {
-				accountService.refreshToken(((Account) account).getEmail());
-			}
-			if (((Account) account).isAdmin()) {
-				response.sendRedirect("/admin");
-			} else {
-				response.sendRedirect("/");
-			}
-		} else {
+		String from = request.getParameter("from");
+		if (!(account instanceof Account)) {
 			response.sendError(403);
+		}
+		accountService.changeLastLogin(((Account) account).getEmail());
+		LocalDateTime updatedAt = ((Account) account).getUpdated_at();
+		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
+		if (now.isAfter(updatedAt.plusMinutes(30)) && (!(Objects.equals(((Account) account).getEmail_token(), null)) || !(Objects.equals(((Account) account).getPassword_token(), null)))) {
+			accountService.refreshToken(((Account) account).getEmail());
+		}
+		if (((Account) account).isAdmin()) {
+			response.sendRedirect("/admin");
+		} else if (Objects.equals(from, "mail-setting")) {
+			response.sendRedirect("/user/account/change/mail-setting");
+		} else {
+			response.sendRedirect("/");
 		}
 	}
 	
