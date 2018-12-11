@@ -19,7 +19,7 @@
   <main>
   <div id="formdef">
     <h1>ログイン</h1>
-    <form th:action="@{/login?from=index}" method="post">
+    <form th:action="@{/login(from=${from})}" method="post">
       <p class="hazard" th:if="${param.error}"><i class="fas fa-exclamation-circle"></i>メールアドレスまたはパスワードに誤りがあります</p>
       <input type="email" placeholder="Email" name="email"><br><input type="password" placeholder="Password" name="password">
 
