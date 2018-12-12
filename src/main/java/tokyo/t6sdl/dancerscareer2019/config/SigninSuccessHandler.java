@@ -14,11 +14,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-import lombok.extern.slf4j.Slf4j;
 import tokyo.t6sdl.dancerscareer2019.model.Account;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 
-@Slf4j
 @Component
 public class SigninSuccessHandler implements AuthenticationSuccessHandler {
 	private AccountService accountService;
