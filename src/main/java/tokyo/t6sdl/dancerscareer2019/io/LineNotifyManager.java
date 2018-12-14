@@ -121,6 +121,8 @@ public class LineNotifyManager {
 		case Mail.SUB_REPLY_TO_CONTACT:
 			draft.append("お問い合わせいただきありがとうございます。\nお返事に数日程度かかる場合もございます。ご了承ください。\n\n");
 			break;
+		case Mail.SUB_NEW_ES:
+			draft.append("1件の新着のES/体験記があります！\n\n↓新着のES/体験記はこちら！\n" + mail.getUrl() + "\n\n");
 		default:
 			break;
 		}
