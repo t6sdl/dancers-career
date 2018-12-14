@@ -102,6 +102,10 @@ public class EmailSender {
 			for (String to : mail.getManyTo()) {
 				helper.setTo(to);
 				mailSender.send(message);
+				String accessToken = accountService.getLineAccessTokenByEmail(mail.getTo());
+				if (!(Objects.equals(accessToken, null))) {
+					lineNotify.notifyMessage(accessToken, lineNotify.getMessage(mail));
+				}
 			}
 		} catch (MessagingException e) {
 			e.printStackTrace();
