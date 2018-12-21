@@ -1,5 +1,7 @@
 package tokyo.t6sdl.dancerscareer2019.io;
 
+import java.util.List;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -16,6 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.model.AccessToken;
 import tokyo.t6sdl.dancerscareer2019.model.Account;
+import tokyo.t6sdl.dancerscareer2019.model.Experience;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.model.Notify;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
@@ -100,7 +103,7 @@ public class LineNotifyManager {
 	public String getMessage(Mail mail) {
 		Account account = accountService.getAccountByEmail(mail.getTo());
 		StringBuilder draft = new StringBuilder();
-		draft.append("\n");
+		draft.append("\n\n");
 		switch (mail.getSubject()) {
 		case Mail.SUB_WELCOME_TO_US:
 			draft.append("ダンサーズキャリアにご登録いただきありがとうございます！\n");
@@ -122,7 +125,16 @@ public class LineNotifyManager {
 			draft.append("お問い合わせいただきありがとうございます。\nお返事に数日程度かかる場合もございます。ご了承ください。\n\n");
 			break;
 		case Mail.SUB_NEW_ES:
-			draft.append("1件の新着のES/体験記があります！\n\n↓新着のES/体験記はこちら！\n" + mail.getUrl() + "\n\n");
+			List<Experience> experiences = mail.getExperiences();
+			draft.append(experiences.size() + "件の新着のES/体験記があります！\n\n");
+			for (Experience experience : experiences) {
+				draft.append("★☆ ");
+				for (String pos : experience.getPosition()) {
+					draft.append("[[" + pos + "]] ");
+				}
+				draft.append(experience.getUniv_name() + " ☆★\n");
+				draft.append(Mail.URI_EXPERIENCES + "/" + experience.getExperience_id() + "\n\n");
+			}
 		default:
 			break;
 		}

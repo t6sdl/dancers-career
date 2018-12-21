@@ -22,18 +22,19 @@ public class Mail {
 	public static final String SUB_NEW_ES = "新しいES/体験記が公開されました！";
 	
 	private String to;
-	private List<String> manyTo;
+	private List<AccessToken> tokens;
 	private String subject;
 	private String content;
 	private String url;
+	private List<Experience> experiences;
 	
 	public Mail(String to, String subject) {
 		this.to = to;
 		this.subject = subject;
 	}
 	
-	public Mail(List<String> manyTo, String subject) {
-		this.manyTo = manyTo;
+	public Mail(List<AccessToken> tokens, String subject) {
+		this.tokens = tokens;
 		this.subject = subject;
 	}
 }
