@@ -22,7 +22,7 @@ public class MailMagazineService {
 	private final AccountRepository accountRepository;
 	private final EmailSender emailSender;
 	
-	@Scheduled(cron="0 10 19 * * 5", zone="Asia/Tokyo")
+	@Scheduled(cron="0 15 19 * * 5", zone="Asia/Tokyo")
 	public void sendNewEsMail() {
 		List<Account> accounts = accountRepository.findByNewEsMail();
 		if (Objects.equals(accounts, null) || accounts.isEmpty()) return;
@@ -32,6 +32,7 @@ public class MailMagazineService {
 		@SuppressWarnings("unchecked")
 		List<Experience> experiences = (List<Experience>) results.get("experiences");
 		mail.setExperiences(experiences);
+		mail.setAccounts(accounts);
 		emailSender.sendMailMagazine(mail);
 	}
 }
