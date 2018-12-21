@@ -2,6 +2,7 @@ package tokyo.t6sdl.dancerscareer2019.repository;
 
 import java.util.List;
 
+import tokyo.t6sdl.dancerscareer2019.model.AccessToken;
 import tokyo.t6sdl.dancerscareer2019.model.Account;
 
 public interface AccountRepository {
@@ -12,7 +13,7 @@ public interface AccountRepository {
 	String findEmailTokenByEmail(String email);
 	String findPasswordTokenByEmail(String email);
 	String findLineAccessTokenByEmail(String email);
-	List<String> findEmailByNewEsMail();
+	List<AccessToken> findByNewEsMail();
 	void insert(Account newAccount);
 	void delete(String email);
 	void updateEmail(String loggedInEmail, String newEmail);

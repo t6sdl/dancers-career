@@ -2,7 +2,6 @@ package tokyo.t6sdl.dancerscareer2019.service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.List;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +26,6 @@ public class AccountService implements UserDetailsService {
 			return null;
 		}
 		return accountRepository.findOneByEmail(email);
-	}
-	
-	public List<String> getEmailByNewEsMail() {
-		return accountRepository.findEmailByNewEsMail();
 	}
 	
 	public String getEmailTokenByEmail(String email) {
