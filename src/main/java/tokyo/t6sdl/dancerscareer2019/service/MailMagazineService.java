@@ -22,7 +22,7 @@ public class MailMagazineService {
 	private final AccountRepository accountRepository;
 	private final EmailSender emailSender;
 	
-	@Scheduled(cron="0 15 19 * * 5", zone="Asia/Tokyo")
+	@Scheduled(cron="0 28 19 * * 5", zone="Asia/Tokyo")
 	public void sendNewEsMail() {
 		List<Account> accounts = accountRepository.findByNewEsMail();
 		if (Objects.equals(accounts, null) || accounts.isEmpty()) return;

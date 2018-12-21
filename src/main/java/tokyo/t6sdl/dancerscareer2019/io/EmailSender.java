@@ -104,7 +104,7 @@ public class EmailSender {
 			for (Account account : mail.getAccounts()) {
 				helper.setTo(account.getEmail());
 				mailSender.send(message);
-				if (!(Objects.equals(account.getLine_access_token(), null)) || !(account.getLine_access_token().isEmpty())) {
+				if (!(Objects.equals(account.getLine_access_token(), null)) && !(account.getLine_access_token().isEmpty())) {
 					lineNotify.notifyMessage(account.getLine_access_token(), lineText);
 				}
 			}
