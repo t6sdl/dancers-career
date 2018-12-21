@@ -42,7 +42,7 @@ public class EmailSender {
 			helper.setText(mail.getContent(), true);
 			mailSender.send(message);
 			String accessToken = accountService.getLineAccessTokenByEmail(mail.getTo());
-			if (!(Objects.equals(accessToken, null)) || !(accessToken.isEmpty())) {
+			if (!(Objects.equals(accessToken, null)) && !(accessToken.isEmpty())) {
 				lineNotify.notifyMessage(accessToken, lineNotify.getMessage(mail));
 			}
 		} catch (MessagingException e) {
@@ -80,7 +80,7 @@ public class EmailSender {
 			helper.setText(mail.getContent(), true);
 			mailSender.send(message);
 			String accessToken = accountService.getLineAccessTokenByEmail(mail.getTo());
-			if (!(Objects.equals(accessToken, null)) || !(accessToken.isEmpty())) {
+			if (!(Objects.equals(accessToken, null)) && !(accessToken.isEmpty())) {
 				lineNotify.notifyMessage(accessToken, lineNotify.getMessage(mail));
 			}
 		} catch (MessagingException e) {
