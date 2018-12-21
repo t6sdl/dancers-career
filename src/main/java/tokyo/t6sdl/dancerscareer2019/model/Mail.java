@@ -22,7 +22,7 @@ public class Mail {
 	public static final String SUB_NEW_ES = "新しいES/体験記が公開されました！";
 	
 	private String to;
-	private List<AccessToken> tokens;
+	private List<Account> accounts;
 	private String subject;
 	private String content;
 	private String url;
@@ -33,8 +33,8 @@ public class Mail {
 		this.subject = subject;
 	}
 	
-	public Mail(List<AccessToken> tokens, String subject) {
-		this.tokens = tokens;
+	public Mail(List<Account> accounts, String subject) {
+		this.accounts = accounts;
 		this.subject = subject;
 	}
 }
