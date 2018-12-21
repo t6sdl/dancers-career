@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.io.EmailSender;
-import tokyo.t6sdl.dancerscareer2019.model.AccessToken;
+import tokyo.t6sdl.dancerscareer2019.model.Account;
 import tokyo.t6sdl.dancerscareer2019.model.Experience;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.repository.AccountRepository;
@@ -22,13 +22,13 @@ public class MailMagazineService {
 	private final AccountRepository accountRepository;
 	private final EmailSender emailSender;
 	
-	@Scheduled(cron="0 0 18 * * 5", zone="Asia/Tokyo")
+	@Scheduled(cron="0 10 19 * * 5", zone="Asia/Tokyo")
 	public void sendNewEsMail() {
-		List<AccessToken> tokens = accountRepository.findByNewEsMail();
-		if (Objects.equals(tokens, null) || tokens.isEmpty()) return;
+		List<Account> accounts = accountRepository.findByNewEsMail();
+		if (Objects.equals(accounts, null) || accounts.isEmpty()) return;
 		Map<String, Object> results = experienceRepository.findByCreatedAt();
 		if (Objects.equals(results, null) || (Integer) results.get("count") == 0) return;
-		Mail mail = new Mail(tokens, Mail.SUB_NEW_ES);
+		Mail mail = new Mail(accounts, Mail.SUB_NEW_ES);
 		@SuppressWarnings("unchecked")
 		List<Experience> experiences = (List<Experience>) results.get("experiences");
 		mail.setExperiences(experiences);

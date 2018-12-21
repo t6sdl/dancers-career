@@ -17,7 +17,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
-import tokyo.t6sdl.dancerscareer2019.model.AccessToken;
+import tokyo.t6sdl.dancerscareer2019.model.Account;
 import tokyo.t6sdl.dancerscareer2019.model.Mail;
 import tokyo.t6sdl.dancerscareer2019.service.AccountService;
 
@@ -101,11 +101,11 @@ public class EmailSender {
 			this.readContent(mail);
 			helper.setText(mail.getContent(), true);
 			String lineText = lineNotify.getMessage(mail);
-			for (AccessToken token : mail.getTokens()) {
-				helper.setTo(token.getEmail());
+			for (Account account : mail.getAccounts()) {
+				helper.setTo(account.getEmail());
 				mailSender.send(message);
-				if (!(Objects.equals(token.getAccess_token(), null)) || !(token.getAccess_token().isEmpty())) {
-					lineNotify.notifyMessage(token.getAccess_token(), lineText);
+				if (!(Objects.equals(account.getLine_access_token(), null)) || !(account.getLine_access_token().isEmpty())) {
+					lineNotify.notifyMessage(account.getLine_access_token(), lineText);
 				}
 			}
 		} catch (MessagingException e) {

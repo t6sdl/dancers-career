@@ -11,7 +11,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import tokyo.t6sdl.dancerscareer2019.model.AccessToken;
 import tokyo.t6sdl.dancerscareer2019.model.Account;
 import tokyo.t6sdl.dancerscareer2019.repository.AccountRepository;
 
@@ -81,12 +80,12 @@ public class JdbcAccountRepository implements AccountRepository {
 	}
 	
 	@Override
-	public List<AccessToken> findByNewEsMail() {
+	public List<Account> findByNewEsMail() {
 		return jdbcTemplate.query("SELECT email, line_access_token FROM accounts WHERE new_es_mail = true", (resultSet, i) -> {
-			AccessToken tokens = new AccessToken();
-			tokens.setEmail(resultSet.getString("email"));
-			tokens.setAccess_token(resultSet.getString("line_access_token"));
-			return tokens;
+			Account account = new Account();
+			account.setEmail(resultSet.getString("email"));
+			account.setLine_access_token(resultSet.getString("line_access_token"));
+			return account;
 		});
 	}
 	
