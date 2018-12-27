@@ -115,6 +115,29 @@ public class EmailSender {
 		}
 	}
 	
+	public void sendMassTextMail(Mail mail) {
+		try {
+			MimeMessage message = mailSender.createMimeMessage();
+			message.setHeader("Content-type", "text/html");
+			message.setHeader("Errors-To", Mail.TO_ERROR);
+			MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
+			helper.setFrom(Mail.TO_SUPPORT, Mail.NAME_OF_SUPPORT);
+			helper.setSubject(mail.getSubject());
+			helper.setText(mail.getContent(), false);
+			for (Account account : mail.getAccounts()) {
+				helper.setTo(account.getEmail());
+				mailSender.send(message);
+				if (!(Objects.equals(account.getLine_access_token(), null)) && !(account.getLine_access_token().isEmpty())) {
+					lineNotify.notifyMessage(account.getLine_access_token(), mail.getContent());
+				}
+			}
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void receiveMail(Mail mail) {
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
