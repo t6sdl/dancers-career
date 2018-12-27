@@ -90,7 +90,7 @@ public class EmailSender {
 		}
 	}
 	
-	public void sendMailMagazine(Mail mail) {
+	public void sendMassMail(Mail mail) {
 		try {
 			MimeMessage message = mailSender.createMimeMessage();
 			message.setHeader("Content-type", "text/html");
@@ -174,6 +174,8 @@ public class EmailSender {
 			return "/mails/reply-to-contact";
 		case Mail.SUB_NEW_ES:
 			return "/mails/new-es-mail";
+		case Mail.SUB_SURVEY:
+			return "/mails/survey";
 		default:
 			throw new IllegalArgumentException();
 		}

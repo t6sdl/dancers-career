@@ -52,7 +52,7 @@ public class MailsController {
 	}
 	
 	@RequestMapping("/new-es-mail")
-	public String getNewEsMail(Model model) {
+	public String getAnnouncementAboutNewEs(Model model) {
 		Map<String, Object> results = experienceService.getExperiencesByCreatedAt();
 		model.addAttribute("count", results.get("count"));
 		model.addAttribute("experiences", results.get("experiences"));
@@ -60,5 +60,11 @@ public class MailsController {
 		model.addAttribute("expurl", Mail.URI_EXPERIENCES + "/");
 		model.addAttribute("mailSetting", Mail.URI_MAIL_SETTING);
 		return "mails/new-es-mail";
+	}
+	
+	@RequestMapping("/survey")
+	public String getSurvey(Model model) {
+		model.addAttribute("top", Mail.CONTEXT_PATH);
+		return "mails/survey";
 	}
 }

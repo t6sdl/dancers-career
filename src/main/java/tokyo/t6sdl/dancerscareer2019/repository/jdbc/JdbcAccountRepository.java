@@ -80,8 +80,19 @@ public class JdbcAccountRepository implements AccountRepository {
 	}
 	
 	@Override
-	public List<Account> findByNewEsMail() {
-		return jdbcTemplate.query("SELECT email, line_access_token FROM accounts WHERE new_es_mail = true", (resultSet, i) -> {
+	public List<Account> findForMassMailBy(int by) {
+		String sql;
+		switch (by) {
+		case 0:
+			sql = "SELECT email, line_access_token FROM accounts WHERE authority = 'ROLE_USER'";
+			break;
+		case 1:
+			sql = "SELECT email, line_access_token FROM accounts WHERE new_es_mail = true";
+			break;
+		default:
+			return null;
+		}
+		return jdbcTemplate.query(sql, (resultSet, i) -> {
 			Account account = new Account();
 			account.setEmail(resultSet.getString("email"));
 			account.setLine_access_token(resultSet.getString("line_access_token"));
