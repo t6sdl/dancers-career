@@ -20,6 +20,7 @@ public class Mail {
 	public static final String SUB_CONTACT = "問い合わせ";
 	public static final String SUB_REPLY_TO_CONTACT = "ダンサーズキャリアへお問い合わせいただきありがとうございます";
 	public static final String SUB_NEW_ES = "新しいES/体験記が公開されました！";
+	public static final String SUB_SURVEY = "アンケートへのご協力をお願いします！";
 	
 	private String to;
 	private List<Account> accounts;

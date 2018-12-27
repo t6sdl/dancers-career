@@ -12,7 +12,7 @@ public interface AccountRepository {
 	String findEmailTokenByEmail(String email);
 	String findPasswordTokenByEmail(String email);
 	String findLineAccessTokenByEmail(String email);
-	List<Account> findByNewEsMail();
+	List<Account> findForMassMailBy(int by);
 	void insert(Account newAccount);
 	void delete(String email);
 	void updateEmail(String loggedInEmail, String newEmail);

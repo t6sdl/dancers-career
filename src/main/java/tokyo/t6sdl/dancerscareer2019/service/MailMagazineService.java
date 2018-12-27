@@ -22,9 +22,9 @@ public class MailMagazineService {
 	private final AccountRepository accountRepository;
 	private final EmailSender emailSender;
 	
-	@Scheduled(cron="0 28 19 * * 5", zone="Asia/Tokyo")
-	public void sendNewEsMail() {
-		List<Account> accounts = accountRepository.findByNewEsMail();
+	@Scheduled(cron="0 0 18 * * 5", zone="Asia/Tokyo")
+	public void announceNewEs() {
+		List<Account> accounts = accountRepository.findForMassMailBy(1);
 		if (Objects.equals(accounts, null) || accounts.isEmpty()) return;
 		Map<String, Object> results = experienceRepository.findByCreatedAt();
 		if (Objects.equals(results, null) || (Integer) results.get("count") == 0) return;
@@ -32,7 +32,14 @@ public class MailMagazineService {
 		@SuppressWarnings("unchecked")
 		List<Experience> experiences = (List<Experience>) results.get("experiences");
 		mail.setExperiences(experiences);
-		mail.setAccounts(accounts);
-		emailSender.sendMailMagazine(mail);
+		emailSender.sendMassMail(mail);
+	}
+	
+	@Scheduled(cron="0 35 03 28 12 5", zone="Asia/Tokyo")
+	public void surveyUserFriendly() {
+		List<Account> accounts = accountRepository.findForMassMailBy(0);
+		if (Objects.equals(accounts, null) || accounts.isEmpty()) return;
+		Mail mail = new Mail(accounts, Mail.SUB_SURVEY);
+		emailSender.sendMassMail(mail);
 	}
 }
