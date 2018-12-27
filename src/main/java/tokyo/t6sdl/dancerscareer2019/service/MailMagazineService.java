@@ -22,7 +22,7 @@ public class MailMagazineService {
 	private final AccountRepository accountRepository;
 	private final EmailSender emailSender;
 	
-	@Scheduled(cron="0 0 18 * * 5", zone="Asia/Tokyo")
+	@Scheduled(cron="0 10 18 * * 5", zone="Asia/Tokyo")
 	public void announceNewEs() {
 		List<Account> accounts = accountRepository.findForMassMailBy(1);
 		if (Objects.equals(accounts, null) || accounts.isEmpty()) return;
@@ -35,7 +35,7 @@ public class MailMagazineService {
 		emailSender.sendMassMail(mail);
 	}
 	
-	@Scheduled(cron="0 30 4 28 12 5", zone="Asia/Tokyo")
+	@Scheduled(cron="0 0 18 28 12 5", zone="Asia/Tokyo")
 	public void surveyUserFriendly() {
 		List<Account> accounts = accountRepository.findForMassMailBy(0);
 		if (Objects.equals(accounts, null) || accounts.isEmpty()) return;
@@ -43,7 +43,7 @@ public class MailMagazineService {
 		emailSender.sendMassMail(mail);
 	}
 	
-	@Scheduled(cron="0 30 4 28 12 5", zone="Asia/Tokyo")
+	@Scheduled(cron="0 0 8 28 12 5", zone="Asia/Tokyo")
 	public void apologize() {
 		List<Account> accounts = accountRepository.findForMassMailBy(0);
 		if (Objects.equals(accounts, null) || accounts.isEmpty()) return;

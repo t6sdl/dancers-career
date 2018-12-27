@@ -140,7 +140,7 @@ public class LineNotifyManager {
 			draft.append("アンケートへのご協力をお願いします！\n\n");
 			draft.append("ただいまサービス向上のため、ダンサーズキャリアをご利用の皆様にアンケート調査を実施しております。\n5分程度で完了いたしますので、お時間のあるときにぜひご回答ください！\n\n");
 			draft.append("▼アンケートはこちら▼\n");
-			draft.append("https://goo.gl/forms/NI9fNt4YmrDSAs4s1\n\n");
+			draft.append("https://goo.gl/forms/p3ax5dBmmPipB9J23\n\n");
 			draft.append("今後の更なるサービス向上のため、1人でも多くの方の回答をお待ちしております！\n\n");
 			break;
 		default:
