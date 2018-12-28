@@ -381,6 +381,8 @@ public class AdminController {
 					return "admin/experiences/confirm";
 				}
 			default:
+				form.setClub(this.cleanUp(form.getClub(), ""));
+				form.setOffer(this.cleanUp(form.getOffer(), ""));
 				if (result.hasErrors()) {
 					model.addAttribute("positionList", Profile.POSITION_LIST);
 					model.addAttribute("hiddenUnivPref", form.getUnivPref());
