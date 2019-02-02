@@ -16,6 +16,7 @@
 <body>
   <header th:replace="common/header :: ${header}"></header>
   <main>
+  	<div class="container">
     <form th:action="@{/experiences}" method="get" th:object="${searchForm}" id="exp-form">
       <div>
         <span th:each="pos : ${positionList}" class="position-tag">
@@ -31,30 +32,33 @@
       </div>
       <input type="hidden" name="sort" value="0">
     </form>
-    <hr>
-    <div>
-      <p style="font-size:12px; color:#606468;"><i class="fas fa-search fa-fw"></i> 検索結果： <span th:text="${count}"></span> 件</p>
-    </div>
-    <section th:if="${count == 0 ? false : true}">
+    <section>
+      <hr>
+      <div>
+        <p style="font-size:12px; color:#606468;"><i class="fas fa-search fa-fw"></i> 検索結果： <span th:text="${count}"></span> 件</p>
+      </div>
       <article th:each="experience : ${experiences}" th:object="${experience}" class="exp-container">
-        <div>
-          <p style="margin: 0;"><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></p>
-          <h1 th:text="*{univ_name}" style="font-size:1.5em; margin-top:0;"></h1>
-        </div>
-        <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
-          <p>内定先：<span class="divide-slash" th:each="off : *{offer}" th:text="${off} == '' ? '非公開' : ${off}"></span></p>
-          <p><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'"></span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></p>
-        </div>
-        <hr>
-        <div style="display:flex; flex-wrap:wrap; justify-content:space-between;">
-          <span class="likes"><i class="fas fa-heart"></i> <span th:text="*{likes}"></span></span>
-          <a class="button" th:href="@{/experiences/{experienceId}(experienceId=*{experience_id})}">詳細を見る</a>
-        </div>
+        <a href="#" th:href="@{/experiences/{experienceId}(experienceId=*{experience_id})}">
+          <div class="upper">
+          	<div style="display:flex; justify-content:space-between">
+         	  <div><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></div>
+              <div class="likes"><span><i class="fas fa-heart"></i></span><span><i class="far fa-heart"></i></span></div>
+         	</div>
+            <h2 class="univ-name" th:text="*{univ_name}"></h2>
+            <div><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'"></span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></div>
+          </div>
+          <hr>
+          <div class="lower">
+            <div class="offers">内定先</div>
+            <div><span class="divide-slash" th:each="off : *{offer}" th:text="${off} == '' ? '非公開' : ${off}"></span></div>
+          </div>
+        </a>
+      </article>
+      <article th:if="${count == 0}">
+        <p style="text-align:center;">お探しのES/体験記は見つかりません</p>
       </article>
     </section>
-    <section  th:unless="${count == 0 ? false : true}">
-      <p>お探しのES/体験記は見つかりません</p>
-    </section>
+    </div>
   </main>
   <footer th:replace="common/footer :: footer"></footer>
   <script th:src="@{/js/submit.js}"></script>
