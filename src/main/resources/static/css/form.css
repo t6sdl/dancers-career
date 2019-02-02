@@ -34,7 +34,7 @@ input::placeholder {
   color: #606468;
 }
 
-input:not([type="radio"]):focus, textarea:focus {
+input:not([type="radio"]):not([type="checkbox"]):focus, textarea:focus {
   box-shadow: 0 0 7px #3498db;
   border: 1px solid #3498db;
 }
@@ -106,4 +106,79 @@ table .label {
 
 table .pulldown {
   text-align: left;
+}
+
+form .how-to-search {
+  padding: .3em 1em;
+  text-align: left;
+  background: #666666;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+form .items {
+  text-align: left;
+  background: #dddddd;
+}
+
+#exp-form {
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+#position-search .items .item label {
+  display: block;
+  position:relative;
+  padding: .2em 1em .2em 3em;
+  border-bottom: 1px solid #cccccc;
+}
+
+#position-search .items .item label::before {
+  content: '\f00c';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: bold;
+  position: absolute;
+  left: 1em;
+  bottom: .5em;
+  color: #aaaaaa;
+}
+
+#position-search .items .item:hover {
+  background: #ffffff;
+}
+
+#position-search .items .item input:checked + input + label {
+  background: #ffffff;
+}
+
+#position-search .items .item input:checked + input + label::before {
+  transform: scale(1.2);
+  color: #426579;
+}
+
+#position-search .items .item input[type="checkbox"] {
+  display: none;
+}
+
+@media (min-width: 600px) {
+  main#find-es .container {
+    display: flex;
+  }
+  main#find-es .container form {
+    flex-grow: 1;
+    margin-right: 2em;
+  }
+  main#find-es .container section {
+    flex-grow: 3;
+  }
+  main#find-es .container form .items .item label {
+    padding-top: .5em;
+    padding-bottom: .5em;
+  }
+  main#find-es .container form .items .item label::before {
+    bottom: .8em;
+  }
+  main#find-es .container form .button.search {
+    margin: 2em auto;
+  }
 }
