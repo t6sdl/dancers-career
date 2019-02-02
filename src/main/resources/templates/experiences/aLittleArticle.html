@@ -36,7 +36,7 @@
           </div>
         </div>
         <hr class="cutl">
-        <h2>ES</h2>
+        <h2 class="sec-title">ES</h2>
         <div style="margin-bottom:3.5em;" th:each="esItem : *{es}">
           <div class="es-info">
             <p>提出先企業：<span th:text="*{es[0].corp} == '' ? '非公開' : *{es[0].corp}"></span></p>
@@ -61,7 +61,7 @@
           </div>
         </div>
         <hr class="cutl">
-        <h2>Interview</h2>
+        <h2 class="sec-title">Interview</h2>
         <div class="qanda-container">
           <div th:each="interviewItem : *{interview}" class="qanda">
             <p class="ques"><span th:text="*{interview[0].question} == '' ? '非公開' : *{interview[0].question}"></span></p>

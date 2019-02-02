@@ -54,7 +54,7 @@ div, article, section {
 .container {
   width: 90%;
   max-width: 1200px;
-  margin: 5em auto;
+  margin: 3em auto;
 }
 
 .title {
@@ -63,12 +63,12 @@ div, article, section {
 
 .position-tag {
   display: inline-block;
-  padding: .5em;
-  margin: .5em;
+  padding: 3px 6px;
+  margin: 0 .5em .5em 0;
   background: #426579;
   color: #ffffff;
   border-radius: 3px;
-  font-size: .9em;
+  font-size: 12px;
 }
 
 .button {

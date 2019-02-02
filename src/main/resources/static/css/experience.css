@@ -5,23 +5,46 @@
   padding: 3%;
   border-radius: .5em;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .exp-container {
   margin: 1em 0;
-  padding: 3%;
+  padding: 1em;
   background: #ffffff;
-  border-radius: .5em;
+  border-top: 3px solid #426579;
+  font-size: 14px;
 }
 
-.exp-container h2 {
+.exp-container:hover {
+  opacity: .7;
+}
+
+.exp-container a {
+  color: #333;
+}
+
+.exp-container .sec-title {
   margin-top: 2em;
   text-align: center;
   text-decoration: underline;
 }
 
+.exp-container .upper .univ-name {
+  margin: 0 0 0 0;
+  text-align: left;
+  color: #426579;
+}
+
 .exp-container p {
   margin: 0;
+}
+
+.exp-container .lower {
+}
+
+.exp-container .lower .offers {
+  font-weight: bold;
 }
 
 .es-info {
@@ -85,10 +108,27 @@
 }
 
 .likes {
+  min-width: 4em;
+  text-align: right;
+  font-size: 18px;
+}
+
+.likes .fa-heart.fas {
   color: #e64552;
 }
 
+.likes .fa-heart.far {
+  color: #888888;
+}
+
 @media (min-width: 600px) {
+  .exp-container .lower {
+    display: flex;
+  }
+  .exp-container .lower .offers {
+    max-width: 5em;
+    min-width: 5em;
+  }
   .es-info {
     flex-direction: row;
   }
