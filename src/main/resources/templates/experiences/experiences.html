@@ -15,30 +15,30 @@
 </head>
 <body>
   <header th:replace="common/header :: ${header}"></header>
-  <main>
+  <main id="find-es">
+    <h1 class="title">ES/体験記 検索</h1>
   	<div class="container">
     <form th:action="@{/experiences}" method="get" th:object="${searchForm}" id="exp-form">
-      <div>
-        <span th:each="pos : ${positionList}" class="position-tag">
-          <input type="checkbox" th:field="*{position}" th:value="${pos}">
-          <label th:for="${#ids.prev('position')}" th:text="${pos}"></label>
-        </span>
+      <div id="position-search">
+        <div class="how-to-search">役職検索</div>
+        <div class="items">
+          <div th:each="pos : ${positionList}" class="item">
+            <input type="checkbox" th:field="*{position}" th:value="${pos}">
+            <label th:for="${#ids.prev('position')}" th:text="${pos}"></label>
+          </div>
+        </div>
       </div>
       <div>
         <button type="submit" name="by-position" value="by-position" class="button attract search">検索</button>
       </div>
-      <div>
-        <button type="submit" name="all" value="all" class="button">絞り込み解除</button>
-      </div>
       <input type="hidden" name="sort" value="0">
     </form>
     <section>
-      <hr>
       <div>
         <p style="font-size:12px; color:#606468;"><i class="fas fa-search fa-fw"></i> 検索結果： <span th:text="${count}"></span> 件</p>
       </div>
       <article th:each="experience : ${experiences}" th:object="${experience}" class="exp-container">
-        <a href="#" th:href="@{/experiences/{experienceId}(experienceId=*{experience_id})}">
+        <a th:href="@{/experiences/{experienceId}(experienceId=*{experience_id})}">
           <div class="upper">
           	<div style="display:flex; justify-content:space-between">
          	  <div><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></div>
