@@ -22,7 +22,7 @@ public class MailMagazineService {
 	private final AccountRepository accountRepository;
 	private final EmailSender emailSender;
 	
-	@Scheduled(cron="0 0 18 * * 5", zone="Asia/Tokyo")
+	@Scheduled(cron="0 0 18 * * 6", zone="Asia/Tokyo")
 	public void announceNewEs() {
 		List<Account> accounts = accountRepository.findForMassMailBy(1);
 		if (Objects.equals(accounts, null) || accounts.isEmpty()) return;
@@ -34,7 +34,7 @@ public class MailMagazineService {
 		mail.setExperiences(experiences);
 		emailSender.sendMassMail(mail);
 	}
-//	
+
 //	@Scheduled(cron="0 0 18 28 12 5", zone="Asia/Tokyo")
 //	public void surveyUserFriendly() {
 //		List<Account> accounts = accountRepository.findForMassMailBy(0);
@@ -42,13 +42,4 @@ public class MailMagazineService {
 //		Mail mail = new Mail(accounts, Mail.SUB_SURVEY);
 //		emailSender.sendMassMail(mail);
 //	}
-//	
-	@Scheduled(cron="0 0 16 30 12 *", zone="Asia/Tokyo")
-	public void apologize() {
-		List<Account> accounts = accountRepository.findForMassMailBy(0);
-		if (Objects.equals(accounts, null) || accounts.isEmpty()) return;
-		Mail mail = new Mail(accounts, "Webサイト閲覧障害のお詫びと復旧のお知らせ");
-		mail.setContent("ダンサーズキャリアをご利用の皆様へ\n\n【Webサイト閲覧障害のお詫びと復旧のお知らせ】\n\nいつもダンサーズキャリアをご利用いただきありがとうございます。\n\n昨日からダンサーズキャリアWebサイトが閲覧できない障害が発生いたしておりました。ダンサーズキャリアをご利用の皆様に多大なご迷惑をおかけいたしましたことを深くお詫び申し上げます。\n現在障害は解消されており、これまで通り閲覧いただけます。\n\n今後ともダンサーズキャリアをよろしくお願いいたします。\n\n\nマイページ\nhttps://dancers-career.t6sdl.tokyo/user\n\nお問い合わせ\nhttps://dancers-career.t6sdl.tokyo/about/contact");
-		emailSender.sendMassTextMail(mail);
-	}
 }
