@@ -57,7 +57,7 @@ public class ExperiencesController {
 		@SuppressWarnings("unchecked")
 		List<Experience> experiences = (List<Experience>) result.get("experiences");
 		List<String> likes = profileService.getLikesByEmail(securityService.findLoggedInEmail());
-		if (experiences.size() > 0) {
+		if (!Objects.equals(experiences, null) && experiences.size() > 0) {
 			experiences.forEach(exp -> {
 				exp.set_liked(likes.contains(String.valueOf(exp.getExperience_id())));
 			});
@@ -94,7 +94,7 @@ public class ExperiencesController {
 		@SuppressWarnings("unchecked")
 		List<Experience> experiences = (List<Experience>) result.get("experiences");
 		List<String> likes = profileService.getLikesByEmail(securityService.findLoggedInEmail());
-		if (experiences.size() > 0) {
+		if (!Objects.equals(experiences, null) && experiences.size() > 0) {
 			experiences.forEach(exp -> {
 				exp.set_liked(likes.contains(String.valueOf(exp.getExperience_id())));
 			});
