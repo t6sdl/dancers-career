@@ -20,7 +20,7 @@
         <div class="exp-info">
           <div style="display:flex; justify-content:space-between">
          	<div><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></div>
-            <div class="likes"><span th:if="${isLiked}"><i class="fas fa-heart"></i></span><span th:unless="${isLiked}"><i class="far fa-heart"></i></span></div>
+            <div class="likes"><span th:if="*{is_liked}"><i class="fas fa-heart"></i></span><span th:unless="*{is_liked}"><i class="far fa-heart"></i></span></div>
           </div>
           <h2>
             <span th:text="*{univ_name} == '' ? '非公開' : *{univ_name}"></span>
@@ -72,8 +72,8 @@
         </div>
       </div>
       <div>
-        <p th:unless="${isLiked}"><i class="fas fa-circle fa-fw"></i>お気に入りに登録されていません <a class="button" th:href="@{/experiences/{experienceId}?like(experienceId=*{experience_id})}">登録</a></p>
-        <p th:if="${isLiked}"><i class="fas fa-check-circle fa-fw"></i>お気に入りに登録されています <a class="button" th:href="@{/experiences/{experienceId}?dislike(experienceId=*{experience_id})}">削除</a></p>
+        <p th:unless="*{is_liked}"><i class="fas fa-circle fa-fw"></i>お気に入りに登録されていません <a class="button" th:href="@{/experiences/{experienceId}?like(experienceId=*{experience_id})}">登録</a></p>
+        <p th:if="*{is_liked}"><i class="fas fa-check-circle fa-fw"></i>お気に入りに登録されています <a class="button" th:href="@{/experiences/{experienceId}?dislike(experienceId=*{experience_id})}">削除</a></p>
       </div>
     </article>
   </main>

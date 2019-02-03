@@ -54,8 +54,16 @@ public class ExperiencesController {
 			throw new NotFound404();
 		}
 		Map<String, Object> result = experienceService.getExperiences(sortId);
+		@SuppressWarnings("unchecked")
+		List<Experience> experiences = (List<Experience>) result.get("experiences");
+		List<String> likes = profileService.getLikesByEmail(securityService.findLoggedInEmail());
+		if (experiences.size() > 0) {
+			experiences.forEach(exp -> {
+				exp.set_liked(likes.contains(String.valueOf(exp.getExperience_id())));
+			});
+		}
 		model.addAttribute("count", result.get("count"));
-		model.addAttribute("experiences", result.get("experiences"));
+		model.addAttribute("experiences", experiences);
 		return "experiences/experiences";
 	}
 	
@@ -83,8 +91,16 @@ public class ExperiencesController {
 		} else {
 			result = experienceService.getExperiences(sortId);
 		}
+		@SuppressWarnings("unchecked")
+		List<Experience> experiences = (List<Experience>) result.get("experiences");
+		List<String> likes = profileService.getLikesByEmail(securityService.findLoggedInEmail());
+		if (experiences.size() > 0) {
+			experiences.forEach(exp -> {
+				exp.set_liked(likes.contains(String.valueOf(exp.getExperience_id())));
+			});
+		}
 		model.addAttribute("count", result.get("count"));
-		model.addAttribute("experiences", result.get("experiences"));
+		model.addAttribute("experiences", experiences);
 		return "experiences/experiences";
 	}
 	
@@ -92,12 +108,7 @@ public class ExperiencesController {
 	public String getExperience(@PathVariable(name="experienceId") String experienceId, Model model) {
 		int id = Integer.parseInt(experienceId);
 		List<String> likes = profileService.getLikesByEmail(securityService.findLoggedInEmail());
-		if (likes.contains(experienceId)) {
-			model.addAttribute("isLiked", true);
-		} else {
-			model.addAttribute("isLiked", false);
-		}
-		return this.display(id, true, model);
+		return this.display(id, true, likes.contains(experienceId), model);
 	}
 	
 	@RequestMapping(value="/{experienceId}", params="like")
@@ -114,8 +125,7 @@ public class ExperiencesController {
 			experienceService.updateLikes(id, true);
 			profileService.updateLikes(securityService.findLoggedInEmail(), likes);
 		}
-		model.addAttribute("isLiked", true);
-		return this.display(id, false, model);
+		return this.display(id, false, true, model);
 	}
 	
 	@RequestMapping(value="/{experienceId}", params="dislike")
@@ -130,17 +140,17 @@ public class ExperiencesController {
 			experienceService.updateLikes(id, false);
 			profileService.updateLikes(securityService.findLoggedInEmail(), likes);
 		}
-		model.addAttribute("isLiked", false);
-		return this.display(id, false, model);
+		return this.display(id, false, false, model);
 	}
 	
-	private String display(int id, boolean pvCount, Model model) {
+	private String display(int id, boolean pvCount, boolean isLiked, Model model) {
 		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
 		Experience experience = new Experience();
 		if (Objects.equals(account, null)) {
 			model.addAttribute("header", "for-stranger");
 			model.addAttribute("isStranger", true);
 			experience = experienceService.getALittleExperienceById(id);
+			experience.set_liked(isLiked);
 			model.addAttribute("title", experience.getUniv_name() + experience.getFaculty() + experience.getDepartment());
 			model.addAttribute("description", (experience.getEs().size() == 0 ? "" : experience.getEs().get(0).getQuestion().get(0)) + (experience.getEs().size() == 0 ? "" : experience.getEs().get(0).getAnswer().get(0)) + experience.getInterview().get(0).getQuestion() + experience.getInterview().get(0).getAnswer());
 			model.addAttribute("experience", experience);
@@ -153,6 +163,7 @@ public class ExperiencesController {
 			model.addAttribute("header", "for-user");
 			model.addAttribute("isStranger", false);
 			experience = experienceService.getALittleExperienceById(id);
+			experience.set_liked(isLiked);
 			model.addAttribute("title", experience.getUniv_name() + experience.getFaculty() + experience.getDepartment());
 			model.addAttribute("description", (experience.getEs().size() == 0 ? "" : experience.getEs().get(0).getQuestion().get(0)) + (experience.getEs().size() == 0 ? "" : experience.getEs().get(0).getAnswer().get(0)) + experience.getInterview().get(0).getQuestion() + experience.getInterview().get(0).getAnswer());
 			model.addAttribute("experience", experience);
@@ -160,6 +171,7 @@ public class ExperiencesController {
 		} else if (!(account.isValid_email()) || !(perfect)) {
 			model.addAttribute("header", "for-user");
 			experience = experienceService.getExperienceById(id, true, false);
+			experience.set_liked(isLiked);
 			model.addAttribute("title", experience.getUniv_name() + experience.getFaculty() + experience.getDepartment());
 			model.addAttribute("otherEs", experience.getEs().size() - 1);
 			model.addAttribute("validEmail", account.isValid_email());
@@ -169,6 +181,7 @@ public class ExperiencesController {
 			model.addAttribute("header", "for-user");
 		}
 		experience = experienceService.getExperienceById(id, true, pvCount);
+		experience.set_liked(isLiked);
 		List<Es> es = new ArrayList<Es>();
 		Iterator<Es> iterator = experience.getEs().iterator();
 		String corp = null;

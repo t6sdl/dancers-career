@@ -64,12 +64,12 @@
 .qanda-container {
   margin-bottom: 1em;
   background-color: #f5f5f5;
-  padding: .5em 1em;
+  padding: .3em 1em;
   border-radius: .5em;
 }
 
 .qanda {
-  padding: .5em 0;
+  padding: .7em 0;
 }
 
 .divide-slash + .divide-slash::before {
