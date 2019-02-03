@@ -85,9 +85,6 @@
   #flow .step {
     display: flex;
     min-height: 80px;
-    border: 3px solid #426579;
-    border-radius: .5em;
-    overflow: hidden;
   }
   #flow .step .index {
     display: flex;
@@ -98,6 +95,7 @@
     color: #ffffff;
     font-size: 1.5em;
     font-weight: bold;
+    border-radius: 8px 0 0 8px;
   }
   #flow .step .content {
     display: flex;
@@ -106,6 +104,9 @@
     padding: 1em;
     width: 70%;
     background: #ffffff;
+    border: 3px solid #426579;
+    border-left: none;
+    border-radius: 0 8px 8px 0;
   }
   #flow .down-arrow {
     font-size: 2em;
