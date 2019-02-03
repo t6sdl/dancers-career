@@ -20,7 +20,7 @@
         <div class="exp-info">
           <div style="display:flex; justify-content:space-between">
          	<div><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></div>
-            <div class="likes"><span th:if="*{is_liked}"><i class="fas fa-heart"></i></span><span th:unless="*{is_liked}"><i class="far fa-heart"></i></span></div>
+            <div class="likes"><span th:if="*{_liked}"><i class="fas fa-heart"></i></span><span th:unless="*{_liked}"><i class="far fa-heart"></i></span></div>
           </div>
           <h2>
             <span th:text="*{univ_name} == '' ? '非公開' : *{univ_name}"></span>
