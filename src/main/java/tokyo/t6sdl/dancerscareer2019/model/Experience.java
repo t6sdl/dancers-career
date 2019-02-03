@@ -30,4 +30,5 @@ public class Experience {
 	private List<String> offer;
 	private List<Es> es;
 	private List<Interview> interview;
+	private boolean is_liked;
 }
