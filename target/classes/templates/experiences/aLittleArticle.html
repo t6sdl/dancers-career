@@ -45,7 +45,7 @@
           </div>
         </div>
         <hr>
-        <h3 th:unless="${#lists.isEmpty(*{es})}">ES</h3>
+        <h3 th:unless="*{#lists.isEmpty(es)}">ES</h3>
         <div th:each="esItem : *{es}">
           <div class="es-info">
             <p>提出先企業：<span th:text="*{es[0].corp} == '' ? '非公開' : *{es[0].corp}"></span></p>
