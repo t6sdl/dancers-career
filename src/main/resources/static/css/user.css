@@ -1,11 +1,6 @@
 @font-face('utf-8'){}
 
-#tab {
-  margin: 2em 0;
-  width: 100%;
-}
-
-#tab ul {
+nav.container ul {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,7 +9,7 @@
 .sidebutton {
   display: inline-block;
   text-align: center;
-  width: 50%;
+  width: 100%;
   margin: .3em 0;
 }
 
@@ -53,9 +48,9 @@
 }
 
 @media (min-width: 480px) {
-  #tab ul {
+  nav.container ul {
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
   }
 
   .sidebutton {

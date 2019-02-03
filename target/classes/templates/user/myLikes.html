@@ -15,7 +15,7 @@
   <header th:replace="common/header :: for-user"></header>
   <main>
     <h1 class="title">お気に入りES一覧</h1>
-    <section>
+    <section class="container">
       <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
         <p th:text="|こんにちは ${lastName == null ? '名無しさん' : lastName + 'さん'}|"></p>
         <p>お気に入りに登録されたES/体験記：<span th:text="${likes}"></span>件</p>
