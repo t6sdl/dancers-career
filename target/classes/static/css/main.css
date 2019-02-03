@@ -27,6 +27,10 @@ a {
 
 h1 {
   text-align: center;
+}
+
+h1.title {
+  margin: 1em 0;
   color: #426579;
 }
 
@@ -40,10 +44,7 @@ ul {
 }
 
 hr {
-  border: none;
-  width: 100%;
-  height: 1px;
-  background: #333;
+  border: .5px solid #333;
 }
 
 img {
@@ -55,13 +56,9 @@ div, article, section {
 }
 
 .container {
-  width: 90%;
+  width: 96%;
   max-width: 1200px;
   margin: 3em auto;
-}
-
-h1.title {
-  margin: 1.5em 0;
 }
 
 .position-tag {
@@ -127,9 +124,6 @@ h1.title {
 @media (min-width: 800px) {
   body {
     font-size: 16px;
-  }
-  .container {
-    width: 80%;
   }
 }
 

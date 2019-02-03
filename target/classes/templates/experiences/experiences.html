@@ -37,20 +37,20 @@
       <div>
         <p style="font-size:12px; color:#606468;"><i class="fas fa-search fa-fw"></i> 検索結果： <span th:text="${count}"></span> 件</p>
       </div>
-      <article th:each="experience : ${experiences}" th:object="${experience}" class="exp-container">
-        <a th:href="@{/experiences/{experienceId}(experienceId=*{experience_id})}">
-          <div class="upper">
+      <article th:each="experience : ${experiences}" th:object="${experience}">
+        <a class="exp-container" th:href="@{/experiences/{experienceId}(experienceId=*{experience_id})}">
+          <div class="exp-info">
           	<div style="display:flex; justify-content:space-between">
          	  <div><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></div>
               <div class="likes"><span><i class="fas fa-heart"></i></span><span><i class="far fa-heart"></i></span></div>
          	</div>
-            <h2 class="univ-name" th:text="*{univ_name}"></h2>
+            <h2 th:text="*{univ_name}"></h2>
             <div><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'"></span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></div>
-          </div>
-          <hr>
-          <div class="lower">
-            <div class="offers">内定先</div>
-            <div><span class="divide-slash" th:each="off : *{offer}" th:text="${off} == '' ? '非公開' : ${off}"></span></div>
+            <hr>
+            <div class="table">
+              <div><strong>内定先</strong></div>
+              <div><span class="divide-slash" th:each="off : *{offer}" th:text="${off} == '' ? '非公開' : ${off}"></span></div>
+            </div>
           </div>
         </a>
       </article>

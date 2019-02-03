@@ -15,29 +15,38 @@
 <body>
   <header th:replace="common/header :: ${header}"></header>
   <main>
-    <article th:object="${experience}">
+    <h1 th:text="|ES/体験記【${experience.univ_name}】|" class="title">ES/体験記【慶應義塾大学】</h1>
+    <article class="container" th:object="${experience}">
       <div class="exp-container">
-        <div style="padding: 0 3%;">
-          <p><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></p>
-          <h1>
-            <span th:text="*{univ_name} == '' ? '非公開' : *{univ_name}"></span>
-            <span style="display:inline-block;">
-              <span th:text="*{faculty}"></span>
-              <span th:text="*{department}"></span>
-            </span>
-          </h1>
-          <div style="display:flex; justify-content:space-between; flex-wrap:wrap-reverse;">
-            <p>所属サークル：<span class="divide-slash" th:each="cl : *{club}" th:text="|${cl == '' ? '非公開' : cl} |"></span></p>
-            <p th:if="*{last_name != '' && first_name != ''}" th:text="|*{last_name} *{first_name} さん|"></p>
+        <div class="exp-info">
+          <div style="display:flex; justify-content:space-between">
+         	<div><span th:each="pos : *{position}" th:text="${pos}" class="position-tag">イベントオーガナイザー</span></div>
+            <div class="likes"><span><i class="fas fa-heart"></i></span><span><i class="far fa-heart"></i></span></div>
           </div>
-          <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
-            <p>内定先：<span class="divide-slash" th:each="off : *{offer}" th:text="|${off == '' ? '非公開' : off} |"></span></p>
-            <p><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'"></span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></p>
+          <h2>
+            <span th:text="*{univ_name} == '' ? '非公開' : *{univ_name}">慶應義塾大学</span>
+            <span style="display:inline-block;">
+              <span th:text="*{faculty}">経済学部</span>
+              <span th:text="*{department}">経済学科</span>
+            </span>
+          </h2>
+          <div>
+            <p th:if="*{last_name != '' && first_name != ''}" th:text="|*{last_name} *{first_name} さん|">浅田 美咲 さん</p>
+            <p><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'">非公開</span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}">非公開</span>｜<span th:text="*{major} == '' ? '非公開' : *{major}">非公開</span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}">非公開</span></p>
+          </div>
+          <hr style="border-style:dashed;">
+          <div class="table">
+            <div><strong>サークル</strong></div>
+            <div><span class="divide-slash" th:each="cl : *{club}" th:text="|${cl == '' ? '非公開' : cl} |">es</span></div>
+          </div>
+          <div class="table">
+            <div><strong>内定先</strong></div>
+            <div><span class="divide-slash" th:each="off : *{offer}" th:text="|${off == '' ? '非公開' : off} |">リクルート</span></div>
           </div>
         </div>
-        <hr class="cutl">
-        <h2 class="sec-title">ES</h2>
-        <div style="margin-bottom:3.5em;" th:each="esItem : *{es}">
+        <hr>
+        <h3>ES</h3>
+        <div th:each="esItem : *{es}">
           <div class="es-info">
             <p>提出先企業：<span th:text="*{es[0].corp} == '' ? '非公開' : *{es[0].corp}"></span></p>
             <p>選考結果：<span th:text="*{es[0].result} == '' ? '非公開' : *{es[0].result}"></span></p>        
@@ -45,7 +54,7 @@
           <div class="qanda-container">
             <div class="qanda">
               <p class="ques"><span th:text="*{es[0].question[0]} == '' ? '非公開' : *{es[0].question[0]}"></span></p>
-              <hr class="cutl">
+              <hr>
               <p class="ans"><span th:each="str, stat : *{es[0].answer[0].split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
             </div>
             <div th:if="${isStranger}" class="secret">
@@ -60,12 +69,11 @@
             </div>
           </div>
         </div>
-        <hr class="cutl">
-        <h2 class="sec-title">Interview</h2>
+        <h3>Interview</h3>
         <div class="qanda-container">
           <div th:each="interviewItem : *{interview}" class="qanda">
             <p class="ques"><span th:text="*{interview[0].question} == '' ? '非公開' : *{interview[0].question}"></span></p>
-            <hr class="cutl">
+            <hr>
             <p class="ans"><span th:each="str, stat : *{interview[0].answer.split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
           </div>
           <div th:if="${isStranger}" class="secret">
