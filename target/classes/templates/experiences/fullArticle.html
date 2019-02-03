@@ -44,7 +44,7 @@
           </div>
         </div>
         <hr>
-        <h3>ES</h3>
+        <h3 th:if="*{es.size > 0}">ES</h3>
         <div th:each="esItem, loop : *{es}">
           <div class="es-info">
             <p>提出先企業：<span th:text="*{es[__${loop.index}__].corp} == '' ? '非公開' : *{es[__${loop.index}__].corp}"></span></p>
