@@ -42,7 +42,7 @@
           <div class="exp-info">
           	<div style="display:flex; justify-content:space-between">
          	  <div><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></div>
-              <div class="likes"><span th:if="*{_liked}"><i class="fas fa-heart"></i></span><span th:unless="*{_liked}"><i class="far fa-heart"></i></span></div>
+              <div class="likes"><span th:text="*{likes}"></span> <span th:if="*{_liked}"><i class="far fa-heart"></i></span><span th:unless="*{_liked}"><i class="fas fa-heart"></i></span></div>
          	</div>
             <h2 th:text="*{univ_name}"></h2>
             <div><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'"></span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></div>
@@ -62,5 +62,22 @@
   </main>
   <footer th:replace="common/footer :: footer"></footer>
   <script th:src="@{/js/submit.js}"></script>
+  <script>
+  $(() => {
+	 const $likes = $('.likes');
+	 $likes.each(function () {
+		 const $heart = $(this).children().children('.fa-heart');
+		 if ($heart.hasClass('far')) {
+			 $(this).children('span').css({
+				 color: '#888888',		 
+			 });
+		 } else if ($heart.hasClass('fas')) {
+			 $(this).children('span').css({
+				 color: '#e64552',
+			 });
+		 }
+	 });
+  });
+  </script>
 </body>
 </html>
