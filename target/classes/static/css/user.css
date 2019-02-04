@@ -27,24 +27,40 @@ nav.container ul {
 }
 
 .exp-container {
+  display: block;
   margin: 1em 0;
-  padding: 1em 2em 1.5em;
+  padding: 1em;
   background: #ffffff;
-  border-radius: .5em;
+  border-top: 3px solid #426579;
+  font-size: 14px;
 }
 
 .exp-container h2 {
-  margin-top: 2em;
-  text-align: center;
-  text-decoration: underline;
+  margin: 0;
+  text-align: left;
+  color: #426579;
 }
 
 .exp-container p {
   margin: 0;
 }
 
+.exp-info hr {
+  border-style: dashed;
+}
+
+.exp-info .table {
+  margin: .2em 0;
+}
+
+.divide-slash + .divide-slash::before {
+  content: ' / ';
+}
+
 .likes {
-  color: #e64552;
+  min-width: 4em;
+  text-align: right;
+  font-size: 18px;
 }
 
 @media (min-width: 480px) {
