@@ -65,11 +65,31 @@
   }
   
   /* ----- topics ----- */
-  #topics a {
+  #topics .topics-box div a {
     display: block;
     margin: 0 auto;
-    width: 100%;
-    max-width: 600px;
+    width: 92vw;
+    height: 28vw;
+    max-width: 360px;
+    max-height: 108px;
+  }
+  
+  #topics .topics-box div:first-of-type a {
+    background-image: url("../../static/img/topics/20181206/banner.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  
+  #topics .topics-box div:last-of-type a {
+    background-image: url("../../static/img/topics/20190206/1.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  
+  #topics .topics-box > div {
+    margin-bottom: 1em;
   }
 
   /* ----- flow ----- */
@@ -145,6 +165,13 @@
   @media (min-width: 800px) {
     br.hide-l {
       display: none;
+    }
+    #topics .topics-box {
+      display: flex;
+      justify-content: space-around;
+    }
+    #topics .topics-box > div {
+      width: 48%;
     }
     #how a.link-button {
       margin: .5em auto;
