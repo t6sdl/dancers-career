@@ -75,16 +75,14 @@
   }
   
   #topics .topics-box div:first-of-type a {
-    background-image: url('https://dancers-career-2019-stg.herokuapp.com/img/topics/20181206/banner.jpg');
-    /*background-image: url('https://dancers-career.t6sdl.tokyo/img/topics/20181206/banner.jpg');*/
+    background-image: url('https://dancers-career.t6sdl.tokyo/img/topics/20181206/banner.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
   }
   
   #topics .topics-box div:last-of-type a {
-    background-image: url('https://dancers-career-2019-stg.herokuapp.com/img/topics/20190206/1.jpg');
-    /*background-image: url('https://dancers-career.t6sdl.tokyo/img/topics/20190206/1.jpg');*/
+    background-image: url('https://dancers-career.t6sdl.tokyo/img/topics/20190206/1.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
