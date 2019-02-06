@@ -163,6 +163,7 @@ form .items {
 @media (min-width: 600px) {
   main#find-es .container {
     display: flex;
+    align-items: flex-start;
   }
   main#find-es .container form {
     flex-grow: 1;
