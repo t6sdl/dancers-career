@@ -156,4 +156,17 @@ public class GeneralController {
 		}
 		return "topics/20181206";		
 	}
+	
+	@RequestMapping("/topics/11")
+	public String getTopics11(Model model) {
+		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
+		if (Objects.equals(account, null)) {
+			model.addAttribute("header", "for-stranger");
+		} else if (account.isAdmin()) {
+			model.addAttribute("header", "for-admin");
+		} else {
+			model.addAttribute("header", "for-user");
+		}
+		return "topics/20190206";		
+	}
 }
