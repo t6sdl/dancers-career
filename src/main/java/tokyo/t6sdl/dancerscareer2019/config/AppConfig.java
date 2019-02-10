@@ -15,6 +15,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @EnableAsync
 @Configuration
 public class AppConfig implements WebMvcConfigurer {
@@ -53,6 +56,7 @@ public class AppConfig implements WebMvcConfigurer {
 		config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
 		config.addDataSourceProperty("userServerPrepStmts", true);
 		config.addDataSourceProperty("characterEncoding", "utf-8");
+		log.debug("----------------------------------");
 		HikariDataSource dataSource = new HikariDataSource(config);
 		return dataSource;
 	}
