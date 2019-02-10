@@ -42,7 +42,7 @@ public class AppConfig implements WebMvcConfigurer {
 		
 	@Bean
 	public DataSource dataSource() {
-		log.info("----------------------------------1");
+		log.debug("----------------------------------1");
 		HikariConfig config = new HikariConfig();
 		config.setDriverClassName("com.mysql.jdbc.Driver");
 		config.setJdbcUrl(System.getenv("DB_URL_JDBC"));
@@ -51,14 +51,13 @@ public class AppConfig implements WebMvcConfigurer {
 		config.setMaximumPoolSize(8);
 		config.setMaxLifetime(50000);
 		config.setLeakDetectionThreshold(30000);
-		config.setIdleTimeout(40000);
 		config.setConnectionInitSql("SET SESSION sql_mode='TRADITIONAL,NO_AUTO_VALUE_ON_ZERO,ONLY_FULL_GROUP_BY'");
 		config.addDataSourceProperty("cachePrepStmts", true);
 		config.addDataSourceProperty("prepStmtCacheSize", "250");
 		config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
 		config.addDataSourceProperty("userServerPrepStmts", true);
 		config.addDataSourceProperty("characterEncoding", "utf-8");
-		log.info("----------------------------------2");
+		log.debug("----------------------------------2");
 		HikariDataSource dataSource = new HikariDataSource(config);
 		return dataSource;
 	}
