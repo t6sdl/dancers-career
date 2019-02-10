@@ -132,7 +132,7 @@ public class UserPageController {
 	public String postChangeEmail(@Validated NewEmailForm form, BindingResult result, Model model) {
 		if (passwordEncoder.matches(form.getCurrentPassword(), securityService.findLoggedInPassword())) {
 			if (result.hasErrors()) {
-				return "user/account/changeEamil";
+				return "user/account/changeEmail";
 			}
 			String loggedInEmail = securityService.findLoggedInEmail();
 			accountService.changeEmail(loggedInEmail, form.getNewEmail());
