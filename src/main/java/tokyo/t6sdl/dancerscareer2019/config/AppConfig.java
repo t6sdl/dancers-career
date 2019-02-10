@@ -42,6 +42,7 @@ public class AppConfig implements WebMvcConfigurer {
 		
 	@Bean
 	public DataSource dataSource() {
+		log.debug("----------------------------------");
 		HikariConfig config = new HikariConfig();
 		config.setDriverClassName("com.mysql.jdbc.Driver");
 		config.setJdbcUrl(System.getenv("DB_URL_JDBC"));
@@ -56,7 +57,6 @@ public class AppConfig implements WebMvcConfigurer {
 		config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
 		config.addDataSourceProperty("userServerPrepStmts", true);
 		config.addDataSourceProperty("characterEncoding", "utf-8");
-		log.debug("----------------------------------");
 		HikariDataSource dataSource = new HikariDataSource(config);
 		return dataSource;
 	}
