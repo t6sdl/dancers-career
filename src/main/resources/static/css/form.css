@@ -129,6 +129,7 @@ form .items {
 #position-search .items .item label {
   display: block;
   position:relative;
+  min-width: 11em;
   padding: .2em 1em .2em 3em;
   border-bottom: 1px solid #cccccc;
 }
