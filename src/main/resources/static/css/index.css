@@ -19,7 +19,7 @@
 
   /* ----- sections ----- */
   #top {
-    background-image: url('https://dancers-career.t6sdl.tokyo/img/top.jpg');
+    background-image: url('https://dancers-career.t6sdl.tokyo/img/top_s.png');
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -31,7 +31,7 @@
     text-align: center;
   }
   #motive {
-    background-image: url('https://dancers-career.t6sdl.tokyo/img/motive.jpg');
+    background-image: url('https://dancers-career.t6sdl.tokyo/img/motive_s.png');
     background-position: top;
     background-repeat: no-repeat;
     background-size: cover;
@@ -163,6 +163,9 @@
 
   /* ----- in case that width > 800px ----- */
   @media (min-width: 800px) {
+    #top {
+      background-image: url('https://dancers-career.t6sdl.tokyo/img/top_l.png');
+    }
     br.hide-l {
       display: none;
     }
@@ -177,6 +180,17 @@
       margin: .5em auto;
     }
     #motive {
+      background-image: url('https://dancers-career.t6sdl.tokyo/img/motive_l.png');
       text-align: center;
+    }
+  }
+  
+  /* ----- in case that width > 1200px -----  */
+  @media (min-width: 1200px) {
+    #top {
+      background-image: url('https://dancers-career.t6sdl.tokyo/img/top_xl.png');
+    }
+    #motive {
+      background-image: url('https://dancers-career.t6sdl.tokyo/img/motive_xl.png');
     }
   }
