@@ -61,7 +61,6 @@ public class AdminController {
 		}
 		Map<String, Object> result = profileService.getProfiles(sortId);
 		model.addAttribute("count", result.get("count"));
-		model.addAttribute("emails", result.get("emails"));
 		model.addAttribute("students", result.get("students"));
 		return "admin/students/search";
 	}
@@ -105,7 +104,6 @@ public class AdminController {
 			result = profileService.getProfiles(sortId);
 		}
 		model.addAttribute("count", result.get("count"));
-		model.addAttribute("emails", result.get("emails"));
 		model.addAttribute("students", result.get("students"));
 		return "admin/students/search";
 	}
@@ -168,7 +166,6 @@ public class AdminController {
 			result = profileService.getProfiles(sortId);
 		}
 		model.addAttribute("count", result.get("count"));
-		model.addAttribute("emails", result.get("emails"));
 		model.addAttribute("students", result.get("students"));
 		return "admin/students/search";
 	}
@@ -221,7 +218,6 @@ public class AdminController {
 			result = profileService.getProfiles(sortId);
 		}
 		model.addAttribute("count", result.get("count"));
-		model.addAttribute("emails", result.get("emails"));
 		model.addAttribute("students", result.get("students"));
 		return "admin/students/search";
 	}
@@ -273,7 +269,6 @@ public class AdminController {
 			result = profileService.getProfiles(sortId);
 		}
 		model.addAttribute("count", result.get("count"));
-		model.addAttribute("emails", result.get("emails"));
 		model.addAttribute("students", result.get("students"));
 		return "admin/students/search";
 	}
