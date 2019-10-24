@@ -228,8 +228,8 @@ legend {
 <legend>役職検索</legend>
 <div class="form-group">
 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-<label th:each="pos : ${positionList}" th:for="${#ids.next('position')}" th:text="${pos}" class="btn btn-outline-info">
-<input type="checkbox" th:field="*{position}" th:value="${pos}" autocomplete="off">
+<label th:each="pos : ${positionList}" th:for="${#ids.next('position')}" class="btn btn-outline-info">
+<input type="checkbox" th:field="*{position}" th:value="${pos}" autocomplete="off">[[${pos}]]
 </label>
 </div>
 </div>
