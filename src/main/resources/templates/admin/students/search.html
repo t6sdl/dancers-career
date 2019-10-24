@@ -229,7 +229,7 @@ legend {
 <div class="form-group">
 <div class="btn-group btn-group-toggle" data-toggle="buttons">
 <th:block th:each="pos : ${positionList}">
-<label th:for="${#ids.prev('position')}" th:text="${pos}" class="btn btn-outline-info">
+<label th:for="${#ids.next('position')}" th:text="${pos}" class="btn btn-outline-info">
 <input type="checkbox" th:field="*{position}" th:value="${pos}" autocomplete="off"> aaa
 </label>
 </th:block>
