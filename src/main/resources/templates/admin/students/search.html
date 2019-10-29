@@ -15,6 +15,11 @@ legend {
 .btn-group {
   flex-wrap: wrap;
 }
+.sticky-bottom {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+}
 </style>
 </head>
 <body>
@@ -255,13 +260,8 @@ legend {
 </div>
 </form>
 <hr>
-<div>
-<p class="text-center">検索結果： <span th:text="${count}"></span> 件</p>
-</div>
+<div class="text-center my-3">検索結果： <span th:text="${count}"></span> 件</div>
 <section th:unless="${count == 0}">
-<div class="sticky-top py-2" th:with="downloadURL=(${#request.requestURI + '/download?' + #strings.defaultString(#request.queryString, '')})">
-<a class="btn btn-success btn-block text-light" th:href="@{__${downloadURL}__}">Excel形式で出力</a>
-</div>
 <article th:each="student : ${students}">
 <div>
 <table class="table table-sm table-secondary table-bordered mw-100">
@@ -327,6 +327,9 @@ legend {
 </table>
 </div>
 </article>
+<div class="sticky-bottom py-2" th:with="downloadURL=(${#request.requestURI + '/download?' + #strings.defaultString(#request.queryString, '')})">
+<a class="btn btn-success btn-block text-light" th:href="@{__${downloadURL}__}">Excel形式で出力</a>
+</div>
 </section>
 <section  th:unless="${count == 0 ? false : true}">
 <div class="alert alert-warning">
