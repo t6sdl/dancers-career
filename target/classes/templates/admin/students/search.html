@@ -261,7 +261,7 @@ legend {
 </form>
 <hr>
 <div class="text-center my-3">検索結果： <span th:text="${count}"></span> 件</div>
-<section th:unless="${count == 0}">
+<section th:if="${count > 0}">
 <article th:each="student : ${students}">
 <div>
 <table class="table table-sm table-secondary table-bordered mw-100">
@@ -331,7 +331,7 @@ legend {
 <a class="btn btn-success btn-block text-light" th:href="@{__${downloadURL}__}">Excel形式で出力</a>
 </div>
 </section>
-<section  th:unless="${count == 0 ? false : true}">
+<section  th:unless="${count > 0}">
 <div class="alert alert-warning">
 お探しの学生は見つかりません
 </div>
