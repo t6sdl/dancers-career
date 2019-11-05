@@ -37,7 +37,7 @@ legend {
 </fieldset>
 <fieldset class="form-group p-2 border border-dark">
 <legend>大学検索</legend>
-<div class="form-group row">
+<div class="form-group form-row">
 <label for="univPref" class="col-sm-3 col-form-label">大学所在地</label>
 <div class="col-sm-9">
 <select th:field="*{univPref}" class="custom-select">
@@ -92,7 +92,7 @@ legend {
 </select>
 </div>
 </div>
-<div class="form-group row">
+<div class="form-group form-row">
 <label for="univCategory" class="col-sm-3 col-form-label">大学種別</label>
 <div class="col-sm-9">
 <select th:field="*{univCategory}" class="custom-select">
@@ -104,7 +104,7 @@ legend {
 </select>
 </div>
 </div>
-<div class="form-group row">
+<div class="form-group form-row">
 <label for="univName" class="col-sm-3 col-form-label">大学</label>
 <div class="col-sm-9">
 <select th:field="*{univName}" class="custom-select">
@@ -112,7 +112,7 @@ legend {
 </select>
 </div>
 </div>
-<div class="form-group row">
+<div class="form-group form-row">
 <label for="faculty" class="col-sm-3 col-form-label">学部</label>
 <div class="col-sm-9">
 <select th:field="*{faculty}" class="custom-select">
@@ -120,7 +120,7 @@ legend {
 </select>
 </div>
 </div>
-<div class="form-group row">
+<div class="form-group form-row">
 <label for="department" class="col-sm-3 col-form-label">学科</label>
 <div class="col-sm-9">
 <select th:field="*{department}" class="custom-select">
@@ -136,7 +136,7 @@ legend {
 </fieldset>
 <fieldset class="form-group p-2 border border-dark">
 <legend>大学院検索</legend>
-<div class="form-group row">
+<div class="form-group form-row">
 <label for="gradSchoolPref" class="col-sm-3 col-form-label">大学院所在地</label>
 <div class="col-sm-9">
 <select th:field="*{gradSchoolPref}" class="custom-select">
@@ -191,7 +191,7 @@ legend {
 </select>
 </div>
 </div>
-<div class="form-group row">
+<div class="form-group form-row">
 <label for="gradSchoolCategory" class="col-sm-3 col-form-label">大学院種別</label>
 <div class="col-sm-9">
 <select th:field="*{gradSchoolCategory}" class="custom-select">
@@ -202,7 +202,7 @@ legend {
 </select>
 </div>
 </div>
-<div class="form-group row">
+<div class="form-group form-row">
 <label for="gradSchoolName" class="col-sm-3 col-form-label">大学院</label>
 <div class="col-sm-9">
 <select th:field="*{gradSchoolName}" class="custom-select">
@@ -210,7 +210,7 @@ legend {
 </select>
 </div>
 </div>
-<div class="form-group row">
+<div class="form-group form-row">
 <label for="gradSchoolOf" class="col-sm-3 col-form-label">研究科等</label>
 <div class="col-sm-9">
 <select th:field="*{gradSchoolOf}" class="custom-select">
@@ -218,7 +218,7 @@ legend {
 </select>
 </div>
 </div>
-<div class="form-group row">
+<div class="form-group form-row">
 <label for="programIn" class="col-sm-3 col-form-label">専攻等</label>
 <div class="col-sm-9">
 <select th:field="*{programIn}" class="custom-select">
@@ -236,7 +236,7 @@ legend {
 <legend>役職検索</legend>
 <div class="form-group">
 <div id="positions" class="btn-group btn-group-toggle" data-toggle="buttons">
-<label th:each="pos : ${positionList}" th:for="${#ids.next('position')}" class="btn btn-sm btn-outline-info my-1 rounded-0">
+<label th:each="pos : ${positionList}" th:for="${#ids.next('position')}" class="btn btn-sm btn-outline-info my-1 rounded-0 manualcomplete">
 <input type="checkbox" th:field="*{position}" th:value="${pos}" autocomplete="off">[[${pos}]]
 </label>
 </div>
@@ -341,13 +341,13 @@ legend {
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script th:src="@{/js/setUniversity.js}"></script>
-<script th:src="@{/js/submit.js}"></script>
+<script th:src="@{/js/setUniversity.js}" src="../../../static/js/setUniversity.js"></script>
+<script th:src="@{/js/submit.js}" src="../../../static/js/submit.js"></script>
 <script>
 $(function() {
-	const $positions = $('#positions label');
-	$positions.each(function() {
-		if ($('input[type="checkbox"]', this).is(':checked')) {
+	const $manualcomplete = $('.manualcomplete');
+	$manualcomplete.each(function() {
+		if ($('input[autocomplete="off"]', this).is(':checked')) {
 			$(this).addClass('active');
 		}	
 	});
