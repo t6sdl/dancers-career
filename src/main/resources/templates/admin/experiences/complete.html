@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>ES/体験記【登録完了】｜ダンサーズキャリア</title>
+<title>ES/体験記登録｜ダンサーズキャリア</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <th:block th:replace="common/favicons :: favicons"></th:block>
@@ -11,10 +11,11 @@
 </head>
 <body>
 <header th:replace="common/header :: for-admin"></header>
-<main>
-<h1>ES/体験記【登録完了】</h1>
-<p>登録が完了しました</p>
-<p><a class="btn btn-primary" th:href="@{/admin/experiences/new}">続けて登録する</a></p>
+<main class="container-fluid">
+<h1>ES/体験記 登録</h1>
+<div class="alert alert-success" role="alert">登録が完了しました</div>
+<a class="btn btn-primary" th:href="@{/admin/experiences/new}">続けて登録する</a>
+<a class="btn btn-secondary" th:href="@{/}">トップに戻る</a>
 </main>
 <footer th:replace="common/footer :: footer"></footer>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
