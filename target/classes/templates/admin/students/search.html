@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>登録学生検索｜ダンサーズキャリア</title>
+<title>ユーザー検索｜ダンサーズキャリア</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <th:block th:replace="common/favicons :: favicons"></th:block>
@@ -25,7 +25,7 @@ legend {
 <body>
 <header th:replace="common/header :: for-admin"></header>
 <main class="container-fluid">
-<h1>登録学生検索</h1>
+<h1>ユーザー検索</h1>
 <form th:action="@{/admin/search/students}" method="get" th:object="${searchForm}">
 <fieldset class="form-group p-2 border border-dark">
 <legend>氏名検索</legend>
