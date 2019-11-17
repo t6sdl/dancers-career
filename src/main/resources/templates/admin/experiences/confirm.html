@@ -15,6 +15,12 @@ legend {
 .btn-group {
   flex-wrap: wrap;
 }
+.disabled {
+  color: #6c757d!important;
+  background-color: #e9ecef!important;
+  opacity: 1;
+  word-break: break-all;
+}
 </style>
 </head>
 <body>
@@ -29,10 +35,10 @@ legend {
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">氏名</div>
 <div class="col-sm-5">
-<input class="form-control text-muted" th:value="*{lastName} == '' ? '非公開' : *{lastName}" disabled>
+<span class="form-control disabled" th:text="*{lastName} == '' ? '非公開' : *{lastName}"></span>
 </div>
 <div class="col-sm-5">
-<input class="form-control text-muted" th:value="*{firstName} == '' ? '非公開' : *{firstName}" disabled>
+<span class="form-control disabled" th:text="*{firstName} == '' ? '非公開' : *{firstName}"></span>
 </div>
 <input type="hidden" th:field="*{lastName}">
 <input type="hidden" th:field="*{firstName}">
@@ -40,10 +46,10 @@ legend {
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">シメイ</div>
 <div class="col-sm-5">
-<input class="form-control text-muted" th:value="*{kanaLastName} == '' ? '非公開' : *{kanaLastName}" disabled>
+<span class="form-control disabled" th:text="*{kanaLastName} == '' ? '非公開' : *{kanaLastName}"></span>
 </div>
 <div class="col-sm-5">
-<input class="form-control text-muted" th:value="*{kanaFirstName} == '' ? '非公開' : *{kanaFirstName}" disabled>
+<span class="form-control disabled" th:text="*{kanaFirstName} == '' ? '非公開' : *{kanaFirstName}"></span>
 </div>
 <input type="hidden" th:field="*{kanaLastName}">
 <input type="hidden" th:field="*{kanaFirstName}">
@@ -174,7 +180,7 @@ legend {
 <div>所属サークル</div>
 <div class="form-row">
 <div class="col-sm-6 my-2" th:each="clubItem : *{club}">
-<input type="text" class="form-control text-muted" th:value="${clubItem == '' ? '非公開' : clubItem}" disabled>
+<span class="form-control disabled" th:text="${clubItem == '' ? '非公開' : clubItem}"></span>
 </div>
 </div>
 <input th:each="clubItem, loop : *{club}" type="hidden" th:field="*{club[__${loop.index}__]}">
@@ -183,7 +189,7 @@ legend {
 <div>内定先</div>
 <div class="form-row">
 <div class="col-sm-6 my-2" th:each="offerItem : *{offer}">
-<input type="text" class="form-control text-muted" th:value="${offerItem == '' ? '非公開' : offerItem}" disabled>
+<span class="form-control disabled" th:text="${offerItem == '' ? '非公開' : offerItem}"></span>
 </div>
 </div>
 <input th:each="offerItem, loop : *{offer}" type="hidden" th:field="*{offer[__${loop.index}__]}">
@@ -197,28 +203,28 @@ legend {
 <div class="form-row">
 <div class="form-group col-sm-6">
 <div>提出先企業</div>
-<input type="text" class="form-control text-muted" th:value="*{es[__${loop.index}__].corp} == '' ? '非公開' : *{es[__${loop.index}__].corp}" disabled>
+<span class="form-control disabled" th:text="*{es[__${loop.index}__].corp} == '' ? '非公開' : *{es[__${loop.index}__].corp}"></span>
 <input type="hidden" th:field="*{es[__${loop.index}__].corp}">
 </div>
 <div class="form-group col-sm-6">
 <div>選考結果</div>
-<input type="text" class="form-control text-muted" th:value="*{es[__${loop.index}__].result} == '' ? '非公開' : *{es[__${loop.index}__].result}" disabled>
+<span class="form-control disabled" th:text="*{es[__${loop.index}__].result} == '' ? '非公開' : *{es[__${loop.index}__].result}"></span>
 <input type="hidden" th:field="*{es[__${loop.index}__].result}">
 </div>
 </div>
 <div class="form-group">
 <div>設問</div>
-<textarea class="form-control text-muted" th:text="*{es[__${loop.index}__].question} == '' ? '非公開' : *{es[__${loop.index}__].question}" disabled></textarea>
+<span class="form-control disabled h-auto" th:text="*{es[__${loop.index}__].question} == '' ? '非公開' : *{es[__${loop.index}__].question}"></span>
 <input type="hidden" th:field="*{es[__${loop.index}__].question}">
 </div>
 <div class="form-group">
 <div>回答</div>
-<textarea class="form-control text-muted" th:text="*{es[__${loop.index}__].answer} == '' ? '非公開' : *{es[__${loop.index}__].answer}" disabled></textarea>
+<span class="form-control disabled h-auto" th:text="*{es[__${loop.index}__].answer} == '' ? '非公開' : *{es[__${loop.index}__].answer}"></span>
 <input type="hidden" th:field="*{es[__${loop.index}__].answer}">
 </div>
 <div class="form-group">
 <div>添削</div>
-<textarea class="form-control text-muted" th:text="*{es[__${loop.index}__].advice} == '' ? '非公開' : *{es[__${loop.index}__].advice}" disabled></textarea>
+<span class="form-control disabled h-auto" th:text="*{es[__${loop.index}__].advice} == '' ? '非公開' : *{es[__${loop.index}__].advice}"></span>
 <input type="hidden" th:field="*{es[__${loop.index}__].advice}">
 </div>
 </div>
@@ -229,12 +235,12 @@ legend {
 <hr th:if="${loop.index > 0}">
 <div class="form-group">
 <div>設問</div>
-<textarea class="form-control text-muted" th:text="*{interview[__${loop.index}__].question} == '' ? '非公開' : *{interview[__${loop.index}__].question}" disabled></textarea>
+<span class="form-control disabled h-auto" th:text="*{interview[__${loop.index}__].question} == '' ? '非公開' : *{interview[__${loop.index}__].question}"></span>
 <input type="hidden" th:field="*{interview[__${loop.index}__].question}">
 </div>
 <div class="form-group">
 <div>回答</div>
-<textarea class="form-control text-muted" th:text="*{interview[__${loop.index}__].answer} == '' ? '非公開' : *{interview[__${loop.index}__].answer}" disabled></textarea>
+<span class="form-control disabled h-auto" th:text="*{interview[__${loop.index}__].answer} == '' ? '非公開' : *{interview[__${loop.index}__].answer}"></span>
 <input type="hidden" th:field="*{interview[__${loop.index}__].answer}">
 </div>
 </div>
