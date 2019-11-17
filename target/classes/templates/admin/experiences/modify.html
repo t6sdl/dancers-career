@@ -45,7 +45,10 @@ legend {
 </div>
 </div>
 <div class="form-group form-row">
-<label class="col-sm-2 col-form-label">性別</label>
+<label class="col-sm-2 col-form-label">
+性別
+<span class="badge badge-danger">必須</span>
+</label>
 <div class="col-sm-10">
 <div class="btn-group btn-group-toggle" data-toggle="buttons">
 <label th:for="${#ids.next('sex')}" class="btn btn-sm btn-outline-info my-1 manualcomplete">
@@ -84,7 +87,10 @@ legend {
 </div>
 </div>
 <div class="form-group form-row">
-<label class="col-sm-2 col-form-label">最終学歴</label>
+<label class="col-sm-2 col-form-label">
+最終学歴
+<span class="badge badge-danger">必須</span>
+</label>
 <div class="col-sm-10">
 <div class="btn-group btn-group-toggle" data-toggle="buttons">
 <label th:for="${#ids.next('academicDegree')}" class="btn btn-sm btn-outline-info my-1 manualcomplete">
@@ -103,7 +109,10 @@ legend {
 </div>
 </div>
 <div class="form-group form-row">
-<label class="col-sm-2 col-form-label">文理</label>
+<label class="col-sm-2 col-form-label">
+文理
+<span class="badge badge-danger">必須</span>
+</label>
 <div class="form-group col-sm-10">
 <div class="btn-group btn-group-toggle" data-toggle="buttons">
 <label th:for="${#ids.next('major')}" class="btn btn-sm btn-outline-info my-1 manualcomplete">
@@ -122,7 +131,10 @@ legend {
 <div class="mb-4">
 <h2>大学</h2>
 <div class="form-group form-row">
-<label for="univPref" class="col-sm-2 col-form-label">都道府県</label>
+<label for="univPref" class="col-sm-2 col-form-label">
+都道府県
+<span class="badge badge-danger">必須</span>
+</label>
 <div class="col-sm-10">
 <select th:field="*{univPref}" class="custom-select" required>
 <option value="">非公開</option>
@@ -177,7 +189,10 @@ legend {
 </div>
 </div>
 <div class="form-group form-row">
-<label for="univCategory" class="col-sm-2 col-form-label">種別</label>
+<label for="univCategory" class="col-sm-2 col-form-label">
+種別
+<span class="badge badge-danger">必須</span>
+</label>
 <div class="col-sm-10">
 <select th:field="*{univCategory}" class="custom-select" required>
 <option value="">非公開</option>
@@ -189,7 +204,10 @@ legend {
 </div>
 </div>
 <div class="form-group form-row">
-<label for="univName" class="col-sm-2 col-form-label">大学</label>
+<label for="univName" class="col-sm-2 col-form-label">
+大学
+<span class="badge badge-danger">必須</span>
+</label>
 <div class="col-sm-10">
 <select th:field="*{univName}" class="custom-select" th:errorclass="is-invalid" required>
 <option value="">非公開</option>
@@ -324,7 +342,10 @@ legend {
 <div>
 <h2>その他</h2>
 <div class="form-group">
-<label>サークルなどでの役職・役割（複数選択可・必須）</label>
+<label>
+サークルなどでの役職・役割（複数可）
+<span class="badge badge-danger">必須</span>
+</label>
 <div id="positions" class="btn-group btn-group-toggle" data-toggle="buttons">
 <label th:each="pos : ${positionList}" th:for="${#ids.next('position')}" class="btn btn-sm btn-outline-info my-1 rounded-0 manualcomplete">
 <input type="checkbox" th:field="*{position}" th:value="${pos}" autocomplete="off">[[${pos}]]
@@ -339,27 +360,27 @@ legend {
 </div>
 <div class="form-group">
 <div class="row">
-<label class="col-sm-10 my-auto">所属サークル（複数登録可・非公開の場合は空欄）</label>
+<label class="col-sm-10 my-auto">所属サークル（複数可）</label>
 <div class="col-sm-2">
 <button type="button" id="addClub" value="addClub" class="btn btn-success d-block mr-sm-0 ml-sm-auto">追加</button>
 </div>
 </div>
 <div class="form-row">
 <div class="clubItem col-sm-6 my-2" th:each="clubItem, loop : *{club}">
-<input class="form-control" type="text" th:field="*{club[__${loop.index}__]}" placeholder="大学名 サークル名">
+<input class="form-control" type="text" th:field="*{club[__${loop.index}__]}" placeholder="大学 サークル（非公開は空欄）">
 </div>
 </div>
 </div>
 <div class="form-group">
 <div class="row">
-<label class="col-sm-10 my-auto">内定先（複数登録可・非公開の場合は空欄）</label>
+<label class="col-sm-10 my-auto">内定先（複数可）</label>
 <div class="col-sm-2">
 <button type="button" id="addOffer" value="addOffer" class="btn btn-success d-block mr-sm-0 ml-sm-auto">追加</button>
 </div>
 </div>
 <div class="form-row">
 <div class="offerItem col-sm-6 my-2" th:each="offerItem, loop : *{offer}">
-<input class="form-control" type="text" th:field="*{offer[__${loop.index}__]}" placeholder="企業名">
+<input class="form-control" type="text" th:field="*{offer[__${loop.index}__]}" placeholder="企業（非公開は空欄）">
 </div>
 </div>
 </div>
@@ -375,7 +396,7 @@ legend {
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script th:src="@{/js/setUniversity.js}"></script>
 <script th:src="@{/js/submit.js}"></script>
-<script th:src="@{/js/add.js?update=20191105}" src="../../../static/js/add.js"></script>
+<script th:src="@{/js/add.js?update=20191117}" src="../../../static/js/add.js"></script>
 <script>
 $(function() {
 	const $manualcomplete = $('.manualcomplete');

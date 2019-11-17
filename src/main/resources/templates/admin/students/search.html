@@ -38,7 +38,7 @@ legend {
 <fieldset class="form-group p-2 border border-dark">
 <legend>大学検索</legend>
 <div class="form-group form-row">
-<label for="univPref" class="col-sm-3 col-form-label">大学所在地</label>
+<label for="univPref" class="col-sm-3 col-form-label">都道府県</label>
 <div class="col-sm-9">
 <select th:field="*{univPref}" class="custom-select">
 <option value="">選択してください</option>
@@ -93,7 +93,7 @@ legend {
 </div>
 </div>
 <div class="form-group form-row">
-<label for="univCategory" class="col-sm-3 col-form-label">大学種別</label>
+<label for="univCategory" class="col-sm-3 col-form-label">種別</label>
 <div class="col-sm-9">
 <select th:field="*{univCategory}" class="custom-select">
 <option value="">選択してください</option>
@@ -137,7 +137,7 @@ legend {
 <fieldset class="form-group p-2 border border-dark">
 <legend>大学院検索</legend>
 <div class="form-group form-row">
-<label for="gradSchoolPref" class="col-sm-3 col-form-label">大学院所在地</label>
+<label for="gradSchoolPref" class="col-sm-3 col-form-label">都道府県</label>
 <div class="col-sm-9">
 <select th:field="*{gradSchoolPref}" class="custom-select">
 <option value="">選択してください</option>
@@ -192,7 +192,7 @@ legend {
 </div>
 </div>
 <div class="form-group form-row">
-<label for="gradSchoolCategory" class="col-sm-3 col-form-label">大学院種別</label>
+<label for="gradSchoolCategory" class="col-sm-3 col-form-label">種別</label>
 <div class="col-sm-9">
 <select th:field="*{gradSchoolCategory}" class="custom-select">
 <option value="">選択してください</option>
@@ -263,69 +263,71 @@ legend {
 <div class="text-center my-3">検索結果： <span th:text="${count}"></span> 件</div>
 <section th:if="${count > 0}">
 <article th:each="student : ${students}">
-<div>
-<table class="table table-sm table-secondary table-bordered mw-100">
+<table class="table table-sm table-secondary table-bordered mw-100 small">
 <thead class="thead-dark">
 <tr>
-<th colspan="2"><span th:text="|${student.last_name} ${student.first_name}|"></span>（<span th:text="|${student.kana_last_name} ${student.kana_first_name}|"></span>）
-最終ログイン：<span th:text="${student.last_login_for_display}"></span></th>
+<th colspan="2">
+<span th:text="|${student.last_name} ${student.first_name}|"></span>（<span th:text="|${student.kana_last_name} ${student.kana_first_name}|"></span>）
+最終ログイン：<span th:text="${student.last_login_for_display}"></span>
+</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<th align="right">メールアドレス</th>
+<th>メールアドレス</th>
 <td>
 <span th:text="${student.email}"></span>
 メールアドレス<span th:unless="${student.valid_email}">未</span>確認<span th:if="${student.valid_email}">済</span>
 </td>
 </tr>
 <tr>
-<th align="right">生年月日</th>
+<th>生年月日</th>
 <td th:text="${student.date_of_birth_for_display}"></td>
 </tr>
 <tr>
-<th align="right">性別</th>
+<th>性別</th>
 <td th:text="${student.sex}"></td>
 </tr>
 <tr>
-<th align="right">電話番号</th>
+<th>電話番号</th>
 <td th:text="${student.phone_number}"></td>
 </tr>
 <tr>
-<th align="right">卒業年度</th>
+<th>卒業年度</th>
 <td th:text="|${student.graduation} 卒業|"></td>
 </tr>
 <tr>
-<th align="right">最終学歴</th>
+<th>最終学歴</th>
 <td th:text="${student.academic_degree}"></td>
 </tr>
 <tr>
-<th align="right">文理</th>
+<th>文理</th>
 <td th:text="${student.major}"></td>
 </tr>
 <tr>
-<th align="right">大学・学部・学科</th>
+<th>大学</th>
 <td th:text="|${student.univ_name} ${student.faculty} ${student.department}|"></td>
 </tr>
 <tr>
-<th align="right">大学院・研究科・専攻</th>
+<th>大学院</th>
 <td th:text="|${student.grad_school_name} ${student.grad_school_of} ${student.program_in}|"></td>
 </tr>
 <tr>
-<th align="right">サークル</th>
+<th>サークル</th>
 <td th:text="${student.club}"></td>
 </tr>
 <tr>
-<th align="right">役職</th>
+<th>役職</th>
 <td><span th:each="pos : ${student.position}" th:text="|${pos} |"></span></td>
 </tr>
 <tr>
-<th align="right">お気に入りの記事</th>
-<td><a th:href="@{/admin/experiences/{like}(like=${like})}" th:each="like : ${student.likes}" th:text="|${like} |"></a></td>
+<th>お気に入り</th>
+<td>
+<a class="badge badge-info" th:href="@{/admin/experiences/{like}(like=${like})}" th:each="like : ${student.likes}" th:text="${like}"></a>
+</td>
 </tr>
 </tbody>
 </table>
-</div>
 </article>
 <div class="sticky-bottom py-2" th:with="downloadURL=(${#request.requestURI + '/download?' + #strings.defaultString(#request.queryString, '')})">
 <a class="btn btn-success btn-block text-light" th:href="@{__${downloadURL}__}">Excel形式で出力</a>

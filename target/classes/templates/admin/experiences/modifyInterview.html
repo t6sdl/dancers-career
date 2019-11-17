@@ -21,7 +21,6 @@ legend {
 <form th:action="@{/admin/experiences/{experienceId}/interview/{interviewId}(experienceId=${experienceId},interviewId=${interviewId})}" method="post" th:object="${interviewForm}">
 <fieldset class="form-group p-2 border border-dark">
 <legend>Interview</legend>
-<div>
 <div class="form-group">
 <label for="question">質問</label>
 <textarea th:field="*{question}" class="form-control" placeholder="ESを書く上で意識したことは？など"></textarea>
@@ -29,8 +28,6 @@ legend {
 <div class="form-group">
 <label for="answer">回答</label>
 <textarea th:field="*{answer}" class="form-control" placeholder="質問への回答"></textarea>
-</div>
-<hr>
 </div>
 </fieldset>
 <button type="submit" name="post" value="post" class="btn btn-primary">完了</button>

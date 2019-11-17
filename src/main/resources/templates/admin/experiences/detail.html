@@ -162,24 +162,24 @@ legend {
 <div class="form-row">
 <div class="form-group col-sm-6">
 <div>提出先企業</div>
-<span class="form-control text-muted" th:text="*{es[__${loop.index}__].corp} == '' ? '【非公開】' : *{es[__${loop.index}__].corp}"></span>
+<span class="form-control text-muted" th:text="*{es[__${loop.index}__].corp} == '' ? '非公開' : *{es[__${loop.index}__].corp}"></span>
 </div>
 <div class="form-group col-sm-6">
 <div>選考結果</div>
-<span class="form-control text-muted" th:text="*{es[__${loop.index}__].result} == '' ? '【非公開】' : *{es[__${loop.index}__].result}"></span>
+<span class="form-control text-muted" th:text="*{es[__${loop.index}__].result} == '' ? '非公開' : *{es[__${loop.index}__].result}"></span>
 </div>
 </div>
 <div class="form-group">
 <div>設問</div>
-<span class="form-control text-muted h-auto" th:text="*{es[__${loop.index}__].question.get(0)} == '' ? '【非公開】' : *{es[__${loop.index}__].question.get(0)}"></span>
+<span class="form-control text-muted h-auto" th:text="*{es[__${loop.index}__].question.get(0)} == '' ? '非公開' : *{es[__${loop.index}__].question.get(0)}"></span>
 </div>
 <div class="form-group">
 <div>回答</div>
-<span class="form-control text-muted h-auto" th:text="*{es[__${loop.index}__].answer.get(0)} == '' ? '【非公開】' : *{es[__${loop.index}__].answer.get(0)}"></span>
+<span class="form-control text-muted h-auto" th:text="*{es[__${loop.index}__].answer.get(0)} == '' ? '非公開' : *{es[__${loop.index}__].answer.get(0)}"></span>
 </div>
 <div class="form-group">
 <div>添削</div>
-<span class="form-control text-muted h-auto" th:text="*{es[__${loop.index}__].advice.get(0)} == '' ? '【非公開】' : *{es[__${loop.index}__].advice.get(0)}"></span>
+<span class="form-control text-muted h-auto" th:text="*{es[__${loop.index}__].advice.get(0)} == '' ? '非公開' : *{es[__${loop.index}__].advice.get(0)}"></span>
 </div>
 <a class="btn btn-primary" th:href="@{/admin/experiences/{experienceId}/es/{esId}?modify(experienceId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}">修正</a>
 <button type="button" class="btn btn-danger" data-toggle="modal" th:data-target="|#deleteEs*{es[__${loop.index}__].es_id}|">削除</button>
@@ -209,11 +209,11 @@ legend {
 <div th:each="interviewItem, loop : *{interview}">
 <div class="form-group">
 <div>設問</div>
-<span class="form-control text-muted h-auto" th:text="*{interview[__${loop.index}__].question} == '' ? '【非公開】' : *{interview[__${loop.index}__].question}"></span>
+<span class="form-control text-muted h-auto" th:text="*{interview[__${loop.index}__].question} == '' ? '非公開' : *{interview[__${loop.index}__].question}"></span>
 </div>
 <div class="form-group">
 <div>回答</div>
-<span class="form-control text-muted h-auto" th:text="*{interview[__${loop.index}__].answer} == '' ? '【非公開】' : *{interview[__${loop.index}__].answer}"></span>
+<span class="form-control text-muted h-auto" th:text="*{interview[__${loop.index}__].answer} == '' ? '非公開' : *{interview[__${loop.index}__].answer}"></span>
 </div>
 <a class="btn btn-primary" th:href="@{/admin/experiences/{experienceId}/interview/{interviewId}?modify(experienceId=*{experience_id},interviewId=*{interview[__${loop.index}__].interview_id})}">修正</a>
 <button type="button" class="btn btn-danger" data-toggle="modal" th:data-target="|#deleteInterview*{interview[__${loop.index}__].interview_id}|">削除</button>
