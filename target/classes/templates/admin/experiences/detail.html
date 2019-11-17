@@ -1,114 +1,260 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>ES/体験記【詳細】｜ダンサーズキャリア</title>
+<title>ES/体験記検索｜ダンサーズキャリア</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <th:block th:replace="common/favicons :: favicons"></th:block>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20190206}" href="../../../static/css/main.css">
+<style>
+legend {
+  width: auto;
+}
+.btn-group {
+  flex-wrap: wrap;
+}
+</style>
 </head>
 <body>
 <header th:replace="common/header :: for-admin"></header>
-<main>
-<h1>ES/体験記【詳細】</h1>
+<main class="container-fluid">
+<h1>ES/体験記 検索</h1>
 <article th:object="${experience}">
-<p th:text="|PV数 *{page_view} ｜ お気に入り登録者数 *{likes}|"></p>
-<fieldset>
+<div th:text="|PV数 *{page_view} ｜ お気に入り登録者数 *{likes}|"></div>
+<fieldset class="form-group p-2 border border-dark">
 <legend>提供者情報</legend>
-<div>
-<p>氏名</p>
-<p>姓：【<span th:text="*{last_name} == '' ? '非公開' : *{last_name}"></span>】
-名：【<span th:text="*{first_name} == '' ? '非公開' : *{first_name}"></span>】</p>
+<div class="mb-4">
+<h2>基本情報</h2>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">氏名</div>
+<div class="col-sm-5">
+<span class="form-control text-muted" th:text="*{last_name} == '' ? '非公開' : *{last_name}"></span>
+</div>
+<div class="col-sm-5">
+<span class="form-control text-muted" th:text="*{first_name} == '' ? '非公開' : *{first_name}"></span>
+</div>
+</div>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">シメイ</div>
+<div class="col-sm-5">
+<span class="form-control text-muted" th:text="*{kana_last_name} == '' ? '非公開' : *{kana_last_name}"></span>
+</div>
+<div class="col-sm-5">
+<span class="form-control text-muted" th:text="*{kana_first_name} == '' ? '非公開' : *{kana_first_name}"></span>
+</div>
+</div>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">性別</div>
+<div class="col-sm-10">
+<button class="btn btn-sm btn-info" th:text="*{sex} == '' ? '非公開' : *{sex}" disabled></button>
+</div>
+</div>
+</div>
+<div class="mb-4">
+<h2>学歴基本情報</h2>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">卒業年度</div>
+<div class="col-sm-10">
+<span class="form-control text-muted d-inline-block w-auto" th:text="*{graduation} == '' ? '非公開' : *{graduation}"></span>
+<span>年度</span>
+</div>
+</div>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">最終学歴</div>
+<div class="col-sm-10">
+<button class="btn btn-sm btn-info" th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}" disabled></button>
+</div>
+</div>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">文理</div>
+<div class="col-sm-10">
+<button class="btn btn-sm btn-info" th:text="*{major} == '' ? '非公開' : *{major}" disabled></button>
+</div>
+</div>
+</div>
+<div class="mb-4">
+<h2>大学</h2>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">都道府県</div>
+<div class="col-sm-10">
+<span class="form-control text-muted" th:text="*{univ_pref} == '' ? '非公開' : *{univ_pref}"></span>
+</div>
+</div>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">大学</div>
+<div class="col-sm-10">
+<span class="form-control text-muted" th:text="*{univ_name} == '' ? '非公開' : *{univ_name}"></span>
+</div>
+</div>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">学部</div>
+<div class="col-sm-10">
+<span class="form-control text-muted" th:text="*{faculty} == '' ? '非公開' : *{faculty}"></span>
+</div>
+</div>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">学科</div>
+<div class="col-sm-10">
+<span class="form-control text-muted" th:text="*{department} == '' ? '非公開' : *{department}"></span>
+</div>
+</div>
+</div>
+<div th:classappend="*{grad_school_pref.isEmpty()} ? 'd-none' : ''" class="mb-4">
+<h2>大学院</h2>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">都道府県</div>
+<div class="col-sm-10">
+<span class="form-control text-muted" th:text="*{grad_school_pref} == '' ? '' : *{grad_school_pref}"></span>
+</div>
+</div>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">大学院</div>
+<div class="col-sm-10">
+<span class="form-control text-muted" th:text="*{grad_school_name} == '' ? '' : *{grad_school_name}"></span>
+</div>
+</div>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">研究科等</div>
+<div class="col-sm-10">
+<span class="form-control text-muted" th:text="*{grad_school_of} == '' ? '' : *{grad_school_of}"></span>
+</div>
+</div>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">専攻等</div>
+<div class="col-sm-10">
+<span class="form-control text-muted" th:text="*{program_in} == '' ? '' : *{program_in}"></span>
+</div>
+</div>
 </div>
 <div>
-<p>氏名（カナ）</p>
-<p>セイ：【<span th:text="*{kana_last_name} == '' ? '非公開' : *{kana_last_name}"></span>】
-メイ：【<span th:text="*{kana_first_name} == '' ? '非公開' : *{kana_first_name}"></span>】</p>
+<h2>その他</h2>
+<div class="form-group">
+<div>サークルなどでの役職・役割</div>
+<div class="btn-group" role="group">
+<button type="button" class="btn btn-sm btn-info" th:each="pos : *{position}" th:text="${pos}" disabled></button>
 </div>
-<div>
-<p>性別</p>
-<p>【<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span>】</p>
 </div>
-<div>
-<p>卒業年度</p>
-<p>【<span th:text="*{graduation} == '' ? '非公開' : *{graduation}"></span>】 年度</p>
+<div class="form-group">
+<div>所属サークル</div>
+<div class="form-row">
+<div class="col-sm-6 my-2" th:each="clubItem : *{club}">
+<span class="form-control text-muted" th:text="${clubItem == '' ? '非公開' : clubItem}"></span>
 </div>
-<div>
-<p>最終学歴</p>
-<p>【<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>】</p>
 </div>
-<div>
-<p>文理</p>
-<p>【<span th:text="*{major} == '' ? '非公開' : *{major}"></span>】</p>
 </div>
-<div>
-<p>大学・学部・学科</p>
-<p>大学所在地：【<span th:text="*{univ_pref} == '' ? '非公開' : *{univ_pref}"></span>】
-大学：【<span th:text="*{univ_name} == '' ? '非公開' : *{univ_name}"></span>】
-学部：【<span th:text="*{faculty} == '' ? '非公開' : *{faculty}"></span>】
-学科：【<span th:text="*{department} == '' ? '非公開' : *{department}"></span>】</p>
+<div class="form-group">
+<div>内定先</div>
+<div class="form-row">
+<div class="col-sm-6 my-2" th:each="offerItem : *{offer}">
+<span class="form-control text-muted" th:text="${offerItem == '' ? '非公開' : offerItem}"></span>
 </div>
-<div>
-<p>大学院・研究科・専攻</p>
-<p>大学院所在地：【<span th:text="*{grad_school_pref} == '' ? '' : *{grad_school_pref}"></span>】
-大学院：【<span th:text="*{grad_school_name} == '' ? '' : *{grad_school_name}"></span>】
-研究科：【<span th:text="*{grad_school_of} == '' ? '' : *{grad_school_of}"></span>】
-専攻：【<span th:text="*{program_in} == '' ? '' : *{program_in}"></span>】</p>
 </div>
-<div>
-<p>サークルなどでの役職・役割</p>
-<p><span th:each="pos : *{position}" th:text="|【${pos}】 |"></span></p>
 </div>
-<div>
-<p>所属サークル</p>
-<p><span th:each="clubItem : *{club}" th:text="|【${clubItem == '' ? '非公開' : clubItem}】 |"></span></p>
-</div>
-<div>
-<p>内定先</p>
-<p><span th:each="offerItem : *{offer}" th:text="|【${offerItem == '' ? '非公開' : offerItem}】 |"></span></p>
 </div>
 <hr>
-<div style="text-align:right;">
-<a class="button" th:href="@{/admin/experiences/{experienceId}?modify(experienceId=*{experience_id})}">提供者情報を修正する</a>
-</div>
+<a class="btn btn-primary" th:href="@{/admin/experiences/{experienceId}?modify(experienceId=*{experience_id})}">修正</a>
 </fieldset>
-<fieldset>
+<fieldset class="form-group p-2 border border-dark">
 <legend>ES</legend>
 <div th:each="esItem, loop : *{es}">
-<p>提出先企業：<span th:text="*{es[__${loop.index}__].corp} == '' ? '【非公開】' : *{es[__${loop.index}__].corp}"></span></p>
-<p>選考結果：<span th:text="*{es[__${loop.index}__].result} == '' ? '【非公開】' : *{es[__${loop.index}__].result}"></span></p>
-<p>設問：<span th:text="*{es[__${loop.index}__].question.get(0)} == '' ? '【非公開】' : *{es[__${loop.index}__].question.get(0)}"></span></p>
-<p>回答：<br><span th:text="*{es[__${loop.index}__].answer.get(0)} == '' ? '【非公開】' : *{es[__${loop.index}__].answer.get(0)}"></span></p>
-<p>赤入れ：<br><span th:text="*{es[__${loop.index}__].advice.get(0)} == '' ? '【非公開】' : *{es[__${loop.index}__].advice.get(0)}"></span></p>
-<div style="text-align:right;">
-<a class="button" th:href="@{/admin/experiences/{experienceId}/es/{esId}?modify(experienceId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}">このESを修正する</a>
-<a class="button" th:href="@{/admin/experiences/{experienceId}/es/{esId}?delete(experienceId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}">このESを消去する</a>
+<div class="form-row">
+<div class="form-group col-sm-6">
+<div>提出先企業</div>
+<span class="form-control text-muted" th:text="*{es[__${loop.index}__].corp} == '' ? '【非公開】' : *{es[__${loop.index}__].corp}"></span>
+</div>
+<div class="form-group col-sm-6">
+<div>選考結果</div>
+<span class="form-control text-muted" th:text="*{es[__${loop.index}__].result} == '' ? '【非公開】' : *{es[__${loop.index}__].result}"></span>
+</div>
+</div>
+<div class="form-group">
+<div>設問</div>
+<span class="form-control text-muted h-auto" th:text="*{es[__${loop.index}__].question.get(0)} == '' ? '【非公開】' : *{es[__${loop.index}__].question.get(0)}"></span>
+</div>
+<div class="form-group">
+<div>回答</div>
+<span class="form-control text-muted h-auto" th:text="*{es[__${loop.index}__].answer.get(0)} == '' ? '【非公開】' : *{es[__${loop.index}__].answer.get(0)}"></span>
+</div>
+<div class="form-group">
+<div>添削</div>
+<span class="form-control text-muted h-auto" th:text="*{es[__${loop.index}__].advice.get(0)} == '' ? '【非公開】' : *{es[__${loop.index}__].advice.get(0)}"></span>
+</div>
+<a class="btn btn-primary" th:href="@{/admin/experiences/{experienceId}/es/{esId}?modify(experienceId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}">修正</a>
+<button type="button" class="btn btn-danger" data-toggle="modal" th:data-target="|#deleteEs*{es[__${loop.index}__].es_id}|">削除</button>
+<div class="modal fade" th:id="|deleteEs*{es[__${loop.index}__].es_id}|" tabindex="-1" role="dialog" aria-labelledby="deleteEsLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="deleteEsLabel">本当に削除しますか？</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body">この操作は取り消せません。</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
+<a class="btn btn-danger" th:href="@{/admin/experiences/{experienceId}/es/{esId}?delete(experienceId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}">削除</a>
+</div>
+</div>
+</div>
 </div>
 <hr>
 </div>
-<div>
-<a class="button" th:href="@{/admin/experiences/{experienceId}/es/new(experienceId=*{experience_id})}">ESを追加する</a>
-</div>
+<a class="btn btn-success" th:href="@{/admin/experiences/{experienceId}/es/new(experienceId=*{experience_id})}">追加</a>
 </fieldset>
-<fieldset>
+<fieldset class="form-group p-2 border border-dark">
 <legend>Interview</legend>
 <div th:each="interviewItem, loop : *{interview}">
-<p>設問：<span th:text="*{interview[__${loop.index}__].question} == '' ? '【非公開】' : *{interview[__${loop.index}__].question}"></span></p>
-<p>回答：<br><span th:text="*{interview[__${loop.index}__].answer} == '' ? '【非公開】' : *{interview[__${loop.index}__].answer}"></span></p>
-<div style="text-align:right;">
-<a class="button" th:href="@{/admin/experiences/{experienceId}/interview/{interviewId}?modify(experienceId=*{experience_id},interviewId=*{interview[__${loop.index}__].interview_id})}">このInterviewを修正する</a>
-<a class="button" th:href="@{/admin/experiences/{experienceId}/interview/{interviewId}?delete(experienceId=*{experience_id},interviewId=*{interview[__${loop.index}__].interview_id})}">このInterviewを消去する</a>
+<div class="form-group">
+<div>設問</div>
+<span class="form-control text-muted h-auto" th:text="*{interview[__${loop.index}__].question} == '' ? '【非公開】' : *{interview[__${loop.index}__].question}"></span>
+</div>
+<div class="form-group">
+<div>回答</div>
+<span class="form-control text-muted h-auto" th:text="*{interview[__${loop.index}__].answer} == '' ? '【非公開】' : *{interview[__${loop.index}__].answer}"></span>
+</div>
+<a class="btn btn-primary" th:href="@{/admin/experiences/{experienceId}/interview/{interviewId}?modify(experienceId=*{experience_id},interviewId=*{interview[__${loop.index}__].interview_id})}">修正</a>
+<button type="button" class="btn btn-danger" data-toggle="modal" th:data-target="|#deleteInterview*{interview[__${loop.index}__].interview_id}|">削除</button>
+<div class="modal fade" th:id="|deleteInterview*{interview[__${loop.index}__].interview_id}|" tabindex="-1" role="dialog" aria-labelledby="deleteInterviewLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="deleteInterviewLabel">本当に削除しますか？</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body">この操作は取り消せません。</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
+<a class="btn btn-danger" th:href="@{/admin/experiences/{experienceId}/interview/{interviewId}?delete(experienceId=*{experience_id},interviewId=*{interview[__${loop.index}__].interview_id})}">削除</a>
+</div>
+</div>
+</div>
 </div>
 <hr>
 </div>
-<div>
-<a class="button" th:href="@{/admin/experiences/{experienceId}/interview/new(experienceId=*{experience_id})}">Interviewを追加する</a>
-</div>
+<a class="btn btn-success" th:href="@{/admin/experiences/{experienceId}/interview/new(experienceId=*{experience_id})}">追加</a>
 </fieldset>
-<div style="text-align:right;">
-<a class="button" th:href="@{/admin/experiences/{experienceId}?delete(experienceId=*{experience_id})}">このES/体験記を消去する</a>
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteExperience">このES/体験記を削除</button>
+<div class="modal fade" id="deleteExperience" tabindex="-1" role="dialog" aria-labelledby="deleteExperienceLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="deleteExperienceLabel">本当に削除しますか？</h5>
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="modal-body">この操作は取り消せません。</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
+<a class="btn btn-danger" th:href="@{/admin/experiences/{experienceId}?delete(experienceId=*{experience_id})}">削除</a>
+</div>
+</div>
+</div>
 </div>
 </article>
 </main>

@@ -260,7 +260,7 @@ article .d-flex {
 <hr>
 <div class="text-center my-3">検索結果： <span th:text="${count}"></span> 件</div>
 <section th:if="${count > 0}">
-<article class="p-2 border border-dark my-2" th:each="experience : ${experiences}" th:object="${experience}">
+<article class="p-2 border border-dark my-2 bg-white" th:each="experience : ${experiences}" th:object="${experience}">
 <div><span class="badge badge-info mr-2" th:each="pos : *{position}" th:text="${pos}"></span></div>
 <h2 class="my-2 text-center" th:text="*{univ_name}"></h2>
 <div class="d-flex justify-content-between">
