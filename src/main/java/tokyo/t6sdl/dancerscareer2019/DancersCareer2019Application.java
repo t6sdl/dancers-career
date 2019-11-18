@@ -1,5 +1,7 @@
 package tokyo.t6sdl.dancerscareer2019;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.util.ResourceBundle;
 
 //import org.flywaydb.core.Flyway;
@@ -21,7 +23,10 @@ public class DancersCareer2019Application {
 //			flyway.repair();
 //			flyway.clean();			
 //		}
+		System.out.println("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+		System.out.println(System.getProperty("SPRING_PROFILES_ACTIVE"));
 		if (System.getProperty("SPRING_PROFILES_ACTIVE", "development").equals("development")) {
+			System.out.println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
 			ResourceBundle rb = ResourceBundle.getBundle("application-development");
 			System.setProperty("DB_URL_JDBC", rb.getString("db.url.jdbc"));
 			System.setProperty("DB_USERNAME", rb.getString("db.username"));
