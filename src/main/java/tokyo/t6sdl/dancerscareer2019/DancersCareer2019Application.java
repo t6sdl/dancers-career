@@ -1,7 +1,5 @@
 package tokyo.t6sdl.dancerscareer2019;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-
 import java.util.ResourceBundle;
 
 //import org.flywaydb.core.Flyway;
