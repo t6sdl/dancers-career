@@ -37,7 +37,7 @@ public class Student {
 	private List<String> likes;
 	
 	public void convertForDisplay() {
-		String last_login = this.getLast_login().format(DateTimeFormatter.ofPattern("yyyy年M月d日 H時m分s秒"));
+		String last_login = this.getLast_login().format(DateTimeFormatter.ofPattern("yyyy/M/d H:m"));
 		String date_of_birth = this.getDate_of_birth().format(DateTimeFormatter.ofPattern("yyyy年M月d日"));
 		StringBuilder graduation = new StringBuilder();
 		String[] split = this.getGraduation().split("/");

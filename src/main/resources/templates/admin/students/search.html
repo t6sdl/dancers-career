@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>登録学生検索｜ダンサーズキャリア</title>
+<title>ユーザー検索｜ダンサーズキャリア</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <th:block th:replace="common/favicons :: favicons"></th:block>
@@ -12,12 +12,20 @@
 legend {
   width: auto;
 }
+.btn-group {
+  flex-wrap: wrap;
+}
+.sticky-bottom {
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+}
 </style>
 </head>
 <body>
-<!-- <header th:replace="common/header :: for-admin"></header> -->
+<header th:replace="common/header :: for-admin"></header>
 <main class="container-fluid">
-<h1>登録学生検索</h1>
+<h1>ユーザー検索</h1>
 <form th:action="@{/admin/search/students}" method="get" th:object="${searchForm}">
 <fieldset class="form-group p-2 border border-dark">
 <legend>氏名検索</legend>
@@ -29,8 +37,8 @@ legend {
 </fieldset>
 <fieldset class="form-group p-2 border border-dark">
 <legend>大学検索</legend>
-<div class="form-group row">
-<label for="univPref" class="col-sm-3 col-form-label">大学所在地</label>
+<div class="form-group form-row">
+<label for="univPref" class="col-sm-3 col-form-label">都道府県</label>
 <div class="col-sm-9">
 <select th:field="*{univPref}" class="custom-select">
 <option value="">選択してください</option>
@@ -84,8 +92,8 @@ legend {
 </select>
 </div>
 </div>
-<div class="form-group row">
-<label for="univCategory" class="col-sm-3 col-form-label">大学種別</label>
+<div class="form-group form-row">
+<label for="univCategory" class="col-sm-3 col-form-label">種別</label>
 <div class="col-sm-9">
 <select th:field="*{univCategory}" class="custom-select">
 <option value="">選択してください</option>
@@ -96,7 +104,7 @@ legend {
 </select>
 </div>
 </div>
-<div class="form-group row">
+<div class="form-group form-row">
 <label for="univName" class="col-sm-3 col-form-label">大学</label>
 <div class="col-sm-9">
 <select th:field="*{univName}" class="custom-select">
@@ -104,7 +112,7 @@ legend {
 </select>
 </div>
 </div>
-<div class="form-group row">
+<div class="form-group form-row">
 <label for="faculty" class="col-sm-3 col-form-label">学部</label>
 <div class="col-sm-9">
 <select th:field="*{faculty}" class="custom-select">
@@ -112,7 +120,7 @@ legend {
 </select>
 </div>
 </div>
-<div class="form-group row">
+<div class="form-group form-row">
 <label for="department" class="col-sm-3 col-form-label">学科</label>
 <div class="col-sm-9">
 <select th:field="*{department}" class="custom-select">
@@ -128,8 +136,8 @@ legend {
 </fieldset>
 <fieldset class="form-group p-2 border border-dark">
 <legend>大学院検索</legend>
-<div class="form-group row">
-<label for="gradSchoolPref" class="col-sm-3 col-form-label">大学院所在地</label>
+<div class="form-group form-row">
+<label for="gradSchoolPref" class="col-sm-3 col-form-label">都道府県</label>
 <div class="col-sm-9">
 <select th:field="*{gradSchoolPref}" class="custom-select">
 <option value="">選択してください</option>
@@ -183,8 +191,8 @@ legend {
 </select>
 </div>
 </div>
-<div class="form-group row">
-<label for="gradSchoolCategory" class="col-sm-3 col-form-label">大学院種別</label>
+<div class="form-group form-row">
+<label for="gradSchoolCategory" class="col-sm-3 col-form-label">種別</label>
 <div class="col-sm-9">
 <select th:field="*{gradSchoolCategory}" class="custom-select">
 <option value="">選択してください</option>
@@ -194,7 +202,7 @@ legend {
 </select>
 </div>
 </div>
-<div class="form-group row">
+<div class="form-group form-row">
 <label for="gradSchoolName" class="col-sm-3 col-form-label">大学院</label>
 <div class="col-sm-9">
 <select th:field="*{gradSchoolName}" class="custom-select">
@@ -202,7 +210,7 @@ legend {
 </select>
 </div>
 </div>
-<div class="form-group row">
+<div class="form-group form-row">
 <label for="gradSchoolOf" class="col-sm-3 col-form-label">研究科等</label>
 <div class="col-sm-9">
 <select th:field="*{gradSchoolOf}" class="custom-select">
@@ -210,7 +218,7 @@ legend {
 </select>
 </div>
 </div>
-<div class="form-group row">
+<div class="form-group form-row">
 <label for="programIn" class="col-sm-3 col-form-label">専攻等</label>
 <div class="col-sm-9">
 <select th:field="*{programIn}" class="custom-select">
@@ -228,7 +236,7 @@ legend {
 <legend>役職検索</legend>
 <div class="form-group">
 <div id="positions" class="btn-group btn-group-toggle" data-toggle="buttons">
-<label th:each="pos : ${positionList}" th:for="${#ids.next('position')}" class="btn btn-sm btn-outline-info">
+<label th:each="pos : ${positionList}" th:for="${#ids.next('position')}" class="btn btn-sm btn-outline-info my-1 rounded-0 manualcomplete">
 <input type="checkbox" th:field="*{position}" th:value="${pos}" autocomplete="off">[[${pos}]]
 </label>
 </div>
@@ -252,80 +260,81 @@ legend {
 </div>
 </form>
 <hr>
-<div>
-<p class="text-center">検索結果： <span th:text="${count}"></span> 件</p>
-</div>
-<section th:unless="${count == 0}">
-<div class="sticky-top py-2" th:with="downloadURL=(${#request.requestURI + '/download?' + #strings.defaultString(#request.queryString, '')})">
-<a class="btn btn-success btn-block text-light" th:href="@{__${downloadURL}__}">Excel形式で出力</a>
-</div>
+<div class="text-center my-3">検索結果： <span th:text="${count}"></span> 件</div>
+<section th:if="${count > 0}">
 <article th:each="student : ${students}">
-<div>
-<table class="table table-sm table-secondary table-bordered mw-100">
+<table class="table table-sm table-secondary table-bordered mw-100 small">
 <thead class="thead-dark">
 <tr>
-<th colspan="2"><span th:text="|${student.last_name} ${student.first_name}|"></span>（<span th:text="|${student.kana_last_name} ${student.kana_first_name}|"></span>）
-最終ログイン：<span th:text="${student.last_login_for_display}"></span></th>
+<th colspan="2">
+<span th:text="|${student.last_name} ${student.first_name}|"></span>（<span th:text="|${student.kana_last_name} ${student.kana_first_name}|"></span>）
+最終ログイン：<span th:text="${student.last_login_for_display}"></span>
+</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<th align="right">メールアドレス</th>
+<th>メール</th>
 <td>
 <span th:text="${student.email}"></span>
-メールアドレス<span th:unless="${student.valid_email}">未</span>確認<span th:if="${student.valid_email}">済</span>
+<span th:if="${student.valid_email}" class="badge badge-success">認証済</span>
+<span th:unless="${student.valid_email}" class="badge badge-warning">未認証</span>
 </td>
 </tr>
 <tr>
-<th align="right">生年月日</th>
+<th>生年月日</th>
 <td th:text="${student.date_of_birth_for_display}"></td>
 </tr>
 <tr>
-<th align="right">性別</th>
+<th>性別</th>
 <td th:text="${student.sex}"></td>
 </tr>
 <tr>
-<th align="right">電話番号</th>
+<th>電話番号</th>
 <td th:text="${student.phone_number}"></td>
 </tr>
 <tr>
-<th align="right">卒業年度</th>
+<th>卒業年度</th>
 <td th:text="|${student.graduation} 卒業|"></td>
 </tr>
 <tr>
-<th align="right">最終学歴</th>
+<th>最終学歴</th>
 <td th:text="${student.academic_degree}"></td>
 </tr>
 <tr>
-<th align="right">文理</th>
+<th>文理</th>
 <td th:text="${student.major}"></td>
 </tr>
 <tr>
-<th align="right">大学・学部・学科</th>
+<th>大学</th>
 <td th:text="|${student.univ_name} ${student.faculty} ${student.department}|"></td>
 </tr>
 <tr>
-<th align="right">大学院・研究科・専攻</th>
+<th>大学院</th>
 <td th:text="|${student.grad_school_name} ${student.grad_school_of} ${student.program_in}|"></td>
 </tr>
 <tr>
-<th align="right">サークル</th>
+<th>サークル</th>
 <td th:text="${student.club}"></td>
 </tr>
 <tr>
-<th align="right">役職</th>
+<th>役職</th>
 <td><span th:each="pos : ${student.position}" th:text="|${pos} |"></span></td>
 </tr>
 <tr>
-<th align="right">お気に入りの記事</th>
-<td><a th:href="@{/admin/experiences/{like}(like=${like})}" th:each="like : ${student.likes}" th:text="|${like} |"></a></td>
+<th>お気に入り</th>
+<td>
+<a class="badge badge-info mr-1" th:href="@{/admin/experiences/{like}(like=${like})}" th:each="like : ${student.likes}" th:text="${like}"></a>
+</td>
 </tr>
 </tbody>
 </table>
-</div>
 </article>
+<div class="sticky-bottom py-2" th:with="downloadURL=(${#request.requestURI + '/download?' + #strings.defaultString(#request.queryString, '')})">
+<a class="btn btn-success btn-block text-light" th:href="@{__${downloadURL}__}">Excel形式で出力</a>
+</div>
 </section>
-<section  th:unless="${count == 0 ? false : true}">
+<section  th:unless="${count > 0}">
 <div class="alert alert-warning">
 お探しの学生は見つかりません
 </div>
@@ -335,13 +344,13 @@ legend {
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script th:src="@{/js/setUniversity.js}"></script>
-<script th:src="@{/js/submit.js}"></script>
+<script th:src="@{/js/setUniversity.js}" src="../../../static/js/setUniversity.js"></script>
+<script th:src="@{/js/submit.js}" src="../../../static/js/submit.js"></script>
 <script>
 $(function() {
-	const positions = $('#positions input');
-	$positions.each(function() => {
-		if ($(this).is(':checked')) {
+	const $manualcomplete = $('.manualcomplete');
+	$manualcomplete.each(function() {
+		if ($('input[autocomplete="off"]', this).is(':checked')) {
 			$(this).addClass('active');
 		}	
 	});

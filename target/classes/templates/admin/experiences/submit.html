@@ -1,49 +1,75 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>ES/体験記【登録】｜ダンサーズキャリア</title>
+<title>ES/体験記登録｜ダンサーズキャリア</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <th:block th:replace="common/favicons :: favicons"></th:block>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20190206}" href="../../../static/css/main.css">
-<link rel="stylesheet" type="text/css" th:href="@{/css/form.css?update=20190206}" href="../../../static/css/form.css">
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script type="text/javascript" th:src="@{/js/openclose.js}" src="../../../static/js/openclose.js"></script>
+<style>
+legend {
+  width: auto;
+}
+.btn-group {
+  flex-wrap: wrap;
+}
+</style>
 </head>
 <body>
 <header th:replace="common/header :: for-admin"></header>
-<main>
-<h1>ES/体験記【登録】</h1>
+<main class="container-fluid">
+<h1>ES/体験記 登録</h1>
 <form th:action="@{/admin/experiences/{experienceId}(experienceId=${experienceId})}" method="post" th:object="${experienceForm}">
-<fieldset>
+<fieldset class="form-group p-2 border border-dark">
 <legend>提供者情報</legend>
-<div>
-<p>氏名</p>
-<label for="lastName">姓</label>
-<input type="text" th:field="*{lastName}" placeholder="空欄可">
-<label for="firstName">名</label>
-<input type="text" th:field="*{firstName}" placeholder="空欄可">
+<div class="mb-4">
+<h2>基本情報</h2>
+<div class="form-group form-row">
+<label class="col-sm-2 col-form-label">氏名</label>
+<div class="col-sm-5">
+<input type="text" class="form-control" th:field="*{lastName}" placeholder="姓（非公開は空欄）">
 </div>
-<div>
-<p>氏名（カナ）</p>
-<label for="kanaLastName">セイ</label>
-<input type="text" th:field="*{kanaLastName}" placeholder="空欄可">
-<label for="kanaFirstName">メイ</label>
-<input type="text" th:field="*{kanaFirstName}" placeholder="空欄可">
+<div class="col-sm-5">
+<input type="text" class="form-control" th:field="*{firstName}" placeholder="名（非公開は空欄）">
 </div>
-<div>
-<p>性別</p>
-<input type="radio" th:field="*{sex}" value="男性" required>
-<label th:for="${#ids.prev('sex')}">男性</label>
-<input type="radio" th:field="*{sex}" value="女性">
-<label th:for="${#ids.prev('sex')}">女性</label>
-<input type="radio" th:field="*{sex}" value="">
-<label th:for="${#ids.prev('sex')}">非公開</label>
 </div>
-<div>
-<p>卒業年度</p>
-<select th:field="*{graduation}">
+<div class="form-group form-row">
+<label class="col-sm-2 col-form-label">シメイ</label>
+<div class="col-sm-5">
+<input type="text" class="form-control" th:field="*{kanaLastName}" placeholder="セイ（非公開は空欄）">
+</div>
+<div class="col-sm-5">
+<input type="text" class="form-control" th:field="*{kanaFirstName}" placeholder="メイ（非公開は空欄）">
+</div>
+</div>
+<div class="form-group form-row">
+<label class="col-sm-2 col-form-label">
+性別
+<span class="badge badge-danger">必須</span>
+</label>
+<div class="col-sm-10">
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+<label th:for="${#ids.next('sex')}" class="btn btn-sm btn-outline-info my-1 manualcomplete">
+<input type="radio" th:field="*{sex}" value="男性" autocomplete="off" required>男性
+</label>
+<label th:for="${#ids.next('sex')}" class="btn btn-sm btn-outline-info my-1 manualcomplete">
+<input type="radio" th:field="*{sex}" value="女性" autocomplete="off">女性
+</label>
+<label th:for="${#ids.next('sex')}" class="btn btn-sm btn-outline-info my-1 manualcomplete">
+<input type="radio" th:field="*{sex}" value="" autocomplete="off">非公開
+</label>
+</div>
+</div>
+</div>
+</div>
+<div class="mb-4">
+<h2>学歴基本情報</h2>
+<div class="form-group form-row">
+<label for="graduation" class="col-sm-2 col-form-label">卒業年度</label>
+<div class="col-sm-10">
+<select th:field="*{graduation}" class="custom-select w-auto">
 <option value="">非公開</option>
 <option value="2011">2011</option>
 <option value="2012">2012</option>
@@ -55,37 +81,62 @@
 <option value="2018">2018</option>
 <option value="2019">2019</option>
 <option value="2020">2020</option>
+<option value="2021">2021</option>
 </select>
 <label for="graduation">年度</label>
 </div>
-<div>
-<p>最終学歴</p>
-<input type="radio" th:field="*{academicDegree}" value="学部卒" required>
-<label th:for="${#ids.prev('academicDegree')}">学部卒</label>
-<input type="radio" th:field="*{academicDegree}" value="修士卒">
-<label th:for="${#ids.prev('academicDegree')}">修士卒</label>
-<input type="radio" th:field="*{academicDegree}" value="博士卒">
-<label th:for="${#ids.prev('academicDegree')}">博士卒</label>
-<input type="radio" th:field="*{academicDegree}" value="">
-<label th:for="${#ids.prev('academicDegree')}">非公開</label>
 </div>
-<div>
-<p>文理</p>
-<input type="radio" th:field="*{major}" value="文系" required>
-<label th:for="${#ids.prev('major')}">文系</label>
-<input type="radio" th:field="*{major}" value="理系">
-<label th:for="${#ids.prev('major')}">理系</label>
-<input type="radio" th:field="*{major}" value="">
-<label th:for="${#ids.prev('major')}">非公開</label>
+<div class="form-group form-row">
+<label class="col-sm-2 col-form-label">
+最終学歴
+<span class="badge badge-danger">必須</span>
+</label>
+<div class="col-sm-10">
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+<label th:for="${#ids.next('academicDegree')}" class="btn btn-sm btn-outline-info my-1 manualcomplete">
+<input type="radio" th:field="*{academicDegree}" value="学部卒" autocomplete="off" required>学部卒
+</label>
+<label th:for="${#ids.next('academicDegree')}" class="btn btn-sm btn-outline-info my-1 manualcomplete">
+<input type="radio" th:field="*{academicDegree}" value="修士卒" autocomplete="off">修士卒
+</label>
+<label th:for="${#ids.next('academicDegree')}" class="btn btn-sm btn-outline-info my-1 manualcomplete">
+<input type="radio" th:field="*{academicDegree}" value="博士卒" autocomplete="off">博士卒
+</label>
+<label th:for="${#ids.next('academicDegree')}" class="btn btn-sm btn-outline-info my-1 manualcomplete">
+<input type="radio" th:field="*{academicDegree}" value="" autocomplete="off">非公開
+</label>
 </div>
-<div>
-<p>大学・学部・学科</p>
-<div>
-<table>
-<tr>
-<td class="label"><label for="univPref">大学所在地</label></td>
-<td class="pulldown">
-<select th:field="*{univPref}" required>
+</div>
+</div>
+<div class="form-group form-row">
+<label class="col-sm-2 col-form-label">
+文理
+<span class="badge badge-danger">必須</span>
+</label>
+<div class="form-group col-sm-10">
+<div class="btn-group btn-group-toggle" data-toggle="buttons">
+<label th:for="${#ids.next('major')}" class="btn btn-sm btn-outline-info my-1 manualcomplete">
+<input type="radio" th:field="*{major}" value="文系" autocomplete="off" required>文系
+</label>
+<label th:for="${#ids.next('major')}" class="btn btn-sm btn-outline-info my-1 manualcomplete">
+<input type="radio" th:field="*{major}" value="理系" autocomplete="off">理系
+</label>
+<label th:for="${#ids.next('major')}" class="btn btn-sm btn-outline-info my-1 manualcomplete">
+<input type="radio" th:field="*{major}" value="" autocomplete="off">非公開
+</label>
+</div>
+</div>
+</div>
+</div>
+<div class="mb-4">
+<h2>大学</h2>
+<div class="form-group form-row">
+<label for="univPref" class="col-sm-2 col-form-label">
+都道府県
+<span class="badge badge-danger">必須</span>
+</label>
+<div class="col-sm-10">
+<select th:field="*{univPref}" class="custom-select" required>
 <option value="">非公開</option>
 <option value="北海道">北海道</option>
 <option value="青森県">青森県</option>
@@ -135,61 +186,68 @@
 <option value="鹿児島県">鹿児島県</option>
 <option value="沖縄県">沖縄県</option>
 </select>
-</td>
-</tr>
-<tr>
-<td class="label"><label for="univCategory">大学種別</label></td>
-<td class="pulldown">
-<select th:field="*{univCategory}" required>
+</div>
+</div>
+<div class="form-group form-row">
+<label for="univCategory" class="col-sm-2 col-form-label">
+種別
+<span class="badge badge-danger">必須</span>
+</label>
+<div class="col-sm-10">
+<select th:field="*{univCategory}" class="custom-select" required>
 <option value="">非公開</option>
 <option value="国立">国立</option>
 <option value="公立">公立</option>
 <option value="私立">私立</option>
 <option value="短期">短期</option>
 </select>
-</td>
-</tr>
-<tr>
-<td class="label"><label for="univName">大学</label></td>
-<td class="pulldown">
-<select th:field="*{univName}" required>
+</div>
+</div>
+<div class="form-group form-row">
+<label for="univName" class="col-sm-2 col-form-label">
+大学
+<span class="badge badge-danger">必須</span>
+</label>
+<div class="col-sm-10">
+<select th:field="*{univName}" class="custom-select" th:errorclass="is-invalid" required>
 <option value="">非公開</option>
 </select>
-</td>
-</tr>
-<tr>
-<td class="label"><label for="faculty">学部</label></td>
-<td class="pulldown">
-<select th:field="*{faculty}">
+</div>
+</div>
+<div th:if="${#fields.hasErrors('univName')}" class="alert alert-danger alert-dismissible fade show" role="alert">
+選択してください
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
+<div class="form-group form-row">
+<label for="faculty" class="col-sm-2 col-form-label">学部</label>
+<div class="col-sm-10">
+<select th:field="*{faculty}" class="custom-select">
 <option value="">非公開</option>
 </select>
-</td>
-</tr>
-<tr>
-<td class="label"><label for="department">学科</label></td>
-<td class="pulldown">
-<select th:field="*{department}">
+</div>
+</div>
+<div class="form-group form-row">
+<label for="department" class="col-sm-2 col-form-label">学科</label>
+<div class="col-sm-10">
+<select th:field="*{department}" class="custom-select">
 <option value="">非公開</option>
 </select>
-</td>
-</tr>
-</table>
+</div>
+</div>
 <input type="hidden" id="hiddenUnivPref" th:value="${hiddenUnivPref == null ? '' : hiddenUnivPref}">
 <input type="hidden" id="hiddenUnivName" th:value="${hiddenUnivName == null ? '' : hiddenUnivName}">
 <input type="hidden" id="hiddenFac" th:value="${hiddenFac == null ? '' : hiddenFac}">
 <input type="hidden" id="hiddenDep" th:value="${hiddenDep == null ? '' : hiddenDep}">
-<p th:if="${#fields.hasErrors('univName')}" class="hazard"><i class="fas fa-exclamation-circle"></i>必須項目です</p>
 </div>
-</div>
-<div>
-<p>大学院・研究科・専攻</p>
-<span style="font-size: .8em;">大学院卒でない場合はそのままでお願いします。</span>
-<div>
-<table>
-<tr>
-<td class="label"><label for="gradSchoolPref">大学院所在地</label></td>
-<td class="pulldown">
-<select th:field="*{gradSchoolPref}">
+<div class="mb-4">
+<h2>大学院</h2>
+<div class="text-muted small">大学院卒でない場合は入力不要。</div>
+<div class="form-group form-row">
+<label for="gradSchoolPref" class="col-sm-2 col-form-label">都道府県</label>
+<div class="col-sm-10">
+<select th:field="*{gradSchoolPref}" class="custom-select">
 <option value="">非公開</option>
 <option value="北海道">北海道</option>
 <option value="青森県">青森県</option>
@@ -239,133 +297,162 @@
 <option value="鹿児島県">鹿児島県</option>
 <option value="沖縄県">沖縄県</option>
 </select>
-</td>
-</tr>
-<tr>
-<td class="label"><label for="gradSchoolCategory">大学院種別</label></td>
-<td class="pulldown">
-<select th:field="*{gradSchoolCategory}">
+</div>
+</div>
+<div class="form-group form-row">
+<label for="gradSchoolCategory" class="col-sm-2 col-form-label">種別</label>
+<div class="col-sm-10">
+<select th:field="*{gradSchoolCategory}" class="custom-select">
 <option value="">非公開</option>
 <option value="国立">国立</option>
 <option value="公立">公立</option>
 <option value="私立">私立</option>
 </select>
-</td>
-</tr>
-<tr>
-<td class="label"><label for="gradSchoolName">大学院</label></td>
-<td class="pulldown">
-<select th:field="*{gradSchoolName}">
+</div>
+</div>
+<div class="form-group form-row">
+<label for="gradSchoolName" class="col-sm-2 col-form-label">大学院</label>
+<div class="col-sm-10">
+<select th:field="*{gradSchoolName}" class="custom-select">
 <option value="">非公開</option>
 </select>
-</td>
-</tr>
-<tr>
-<td class="label"><label for="gradSchoolOf">研究科等</label></td>
-<td class="pulldown">
-<select th:field="*{gradSchoolOf}">
+</div>
+</div>
+<div class="form-group form-row">
+<label for="gradSchoolOf" class="col-sm-2 col-form-label">研究科等</label>
+<div class="col-sm-10">
+<select th:field="*{gradSchoolOf}" class="custom-select">
 <option value="">非公開</option>
 </select>
-</td>
-</tr>
-<tr>
-<td class="label"><label for="programIn">専攻等</label></td>
-<td class="pulldown">
-<select th:field="*{programIn}">
+</div>
+</div>
+<div class="form-group form-row">
+<label for="programIn" class="col-sm-2 col-form-label">専攻等</label>
+<div class="col-sm-10">
+<select th:field="*{programIn}" class="custom-select">
 <option value="">非公開</option>
 </select>
-</td>
-</tr>
-</table>
+</div>
+</div>
 <input type="hidden" id="hiddenGradSchoolPref" th:value="${hiddenGradSchoolPref == null ? '' : hiddenGradSchoolPref}">
 <input type="hidden" id="hiddenGradSchoolName" th:value="${hiddenGradSchoolName == null ? '' : hiddenGradSchoolName}">
 <input type="hidden" id="hiddenGradSchoolOf" th:value="${hiddenGradSchoolOf == null ? '' : hiddenGradSchoolOf}">
 <input type="hidden" id="hiddenProgramIn" th:value="${hiddenProgramIn == null ? '' : hiddenProgramIn}">
 </div>
+<div>
+<h2>その他</h2>
+<div class="form-group">
+<label>
+サークルなどでの役職・役割（複数可）
+<span class="badge badge-danger">必須</span>
+</label>
+<div id="positions" class="btn-group btn-group-toggle" data-toggle="buttons">
+<label th:each="pos : ${positionList}" th:for="${#ids.next('position')}" class="btn btn-sm btn-outline-info my-1 rounded-0 manualcomplete">
+<input type="checkbox" th:field="*{position}" th:value="${pos}" autocomplete="off">[[${pos}]]
+</label>
 </div>
-<div>
-<p>サークルなどでの役職・役割（複数選択可・必須）</p>
-<th:block th:each="pos : ${positionList}">
-<input type="checkbox" th:field="*{position}" th:value="${pos}">
-<label th:for="${#ids.prev('position')}" th:text="${pos}"></label>
-</th:block>
-<p th:if="${#fields.hasErrors('position')}">１つ以上選択してください</p>
-</div>
-<div>
-<p>所属サークル（複数登録可）</p>
-<th:block th:each="clubItem, loop : *{club}">
-<input class="clubItem" type="text" th:field="*{club[__${loop.index}__]}" placeholder="空欄可">
-</th:block>
-<div>
-<button type="button" id="addClub" value="addClub" class="button">追加</button>
+<div th:if="${#fields.hasErrors('position')}" class="alert alert-danger alert-dismissible fade show" role="alert">
+1つ以上選択してください
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
 </div>
 </div>
-<div>
-<p>内定先（複数登録可）</p>
-<th:block th:each="offerItem, loop : *{offer}">
-<input class="offerItem" type="text" th:field="*{offer[__${loop.index}__]}" placeholder="空欄可">
-</th:block>
-<div>
-<button type="button" id="addOffer" value="addOffer" class="button">追加</button>
+<div class="form-group">
+<div class="row">
+<label class="col-sm-10 my-auto">所属サークル（複数可）</label>
+<div class="col-sm-2">
+<button type="button" id="addClub" value="addClub" class="btn btn-success d-block mr-sm-0 ml-sm-auto">追加</button>
+</div>
+</div>
+<div class="form-row">
+<div class="clubItem col-sm-6 my-2" th:each="clubItem, loop : *{club}">
+<input class="form-control" type="text" th:field="*{club[__${loop.index}__]}" placeholder="大学 サークル（非公開は空欄）">
+</div>
+</div>
+</div>
+<div class="form-group">
+<div class="row">
+<label class="col-sm-10 my-auto">内定先（複数可）</label>
+<div class="col-sm-2">
+<button type="button" id="addOffer" value="addOffer" class="btn btn-success d-block mr-sm-0 ml-sm-auto">追加</button>
+</div>
+</div>
+<div class="form-row">
+<div class="offerItem col-sm-6 my-2" th:each="offerItem, loop : *{offer}">
+<input class="form-control" type="text" th:field="*{offer[__${loop.index}__]}" placeholder="企業（非公開は空欄）">
+</div>
+</div>
 </div>
 </div>
 </fieldset>
-<fieldset>
+<fieldset class="form-group p-2 border border-dark">
 <legend>ES</legend>
 <div class="esItem" th:each="esItem, loop : *{es}">
-<div>
+<div class="form-row">
+<div class="form-group col-sm-6">
 <label th:for="es__${loop.index}__.corp">提出先企業</label>
-<input type="text" th:field="*{es[__${loop.index}__].corp}" placeholder="空欄可">
+<input type="text" th:field="*{es[__${loop.index}__].corp}" class="form-control" placeholder="企業">
 </div>
-<div>
+<div class="form-group col-sm-6">
 <label th:for="es__${loop.index}__.result">選考結果</label>
-<input type="text" th:field="*{es[__${loop.index}__].result}" placeholder="空欄可">
+<input type="text" th:field="*{es[__${loop.index}__].result}" class="form-control" placeholder="合否等">
 </div>
-<div>
+</div>
+<div class="form-group">
 <label th:for="es__${loop.index}__.question">設問</label>
-<br><textarea th:field="*{es[__${loop.index}__].question}" rows="5" cols="100" placeholder="空欄可"></textarea>
+<input type="text" th:field="*{es[__${loop.index}__].question}" class="form-control" placeholder="挫折した経験は？など">
 </div>
-<div>
+<div class="form-group">
 <label th:for="es__${loop.index}__.answer">回答</label>
-<br><textarea th:field="*{es[__${loop.index}__].answer}" rows="10" cols="100" placeholder="空欄可"></textarea>
+<textarea th:field="*{es[__${loop.index}__].answer}" class="form-control" placeholder="設問に対する回答"></textarea>
 </div>
-<div>
-<label th:for="es__${loop.index}__.advice">赤入れ</label>
-<br><textarea th:field="*{es[__${loop.index}__].advice}" rows="10" cols="100" placeholder="空欄可"></textarea>
+<div class="form-group">
+<label th:for="es__${loop.index}__.advice">添削</label>
+<textarea th:field="*{es[__${loop.index}__].advice}" class="form-control" placeholder="回答に対する添削"></textarea>
 </div>
 <hr>
 </div>
-<div>
-<button type="button" id="addEs" class="button">追加</button>
-</div>
+<button type="button" id="addEs" class="btn btn-success">追加</button>
 </fieldset>
-<fieldset>
+<fieldset class="form-group p-2 border border-dark">
 <legend>Interview</legend>
 <div class="interviewItem" th:each="interviewItem, loop : *{interview}">
-<div>
+<div class="form-group">
 <label th:for="interview__${loop.index}__.question">質問</label>
-<br><textarea th:field="*{interview[__${loop.index}__].question}" rows="5" cols="100" placeholder="空欄可"></textarea>
+<input type="text" th:field="*{interview[__${loop.index}__].question}" class="form-control" placeholder="ESを書く上で意識したことは？など">
 </div>
-<div>
+<div class="form-group">
 <label th:for="interview__${loop.index}__.answer">回答</label>
-<br><textarea th:field="*{interview[__${loop.index}__].answer}" rows="10" cols="100" placeholder="空欄可"></textarea>
+<textarea th:field="*{interview[__${loop.index}__].answer}" class="form-control" placeholder="質問への回答"></textarea>
 </div>
 <hr>
 </div>
-<div>
-<button type="button" id="addInterview" class="button">追加</button>
-</div>
+<button type="button" id="addInterview" class="btn btn-success">追加</button>
 </fieldset>
 <div>
-<button type="submit" name="post" value="post" class="button">登録</button>
+<button type="submit" name="post" value="post" class="btn btn-primary">登録</button>
 <input type="hidden" id="contextPath" th:value="@{/}">
 <input type="hidden" id="experienceId" th:value="${experienceId}">
 </div>
 </form>
 </main>
 <footer th:replace="common/footer :: footer"></footer>
-<script th:src="@{/js/setUniversity.js}"></script>
-<script th:src="@{/js/submit.js}"></script>
-<script th:src="@{/js/add.js}"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script th:src="@{/js/setUniversity.js}" src="../../../static/js/setUniversity.js"></script>
+<script th:src="@{/js/submit.js}" src="../../../static/js/submit.js"></script>
+<script th:src="@{/js/add.js?update=20191117}" src="../../../static/js/add.js"></script>
+<script>
+$(function() {
+	const $manualcomplete = $('.manualcomplete');
+	$manualcomplete.each(function() {
+		if ($('input[autocomplete="off"]', this).is(':checked')) {
+			$(this).addClass('active');
+		}	
+	});
+});
+</script>
 </body>
 </html>

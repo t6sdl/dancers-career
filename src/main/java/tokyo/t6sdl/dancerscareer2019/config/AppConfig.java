@@ -41,9 +41,9 @@ public class AppConfig implements WebMvcConfigurer {
 	public DataSource dataSource() {
 		HikariConfig config = new HikariConfig();
 		config.setDriverClassName("com.mysql.jdbc.Driver");
-		config.setJdbcUrl(System.getenv("DB_URL_JDBC"));
-		config.setUsername(System.getenv("DB_USERNAME"));
-		config.setPassword(System.getenv("DB_PASSWORD"));
+		config.setJdbcUrl(System.getProperty("DB_URL_JDBC"));
+		config.setUsername(System.getProperty("DB_USERNAME"));
+		config.setPassword(System.getProperty("DB_PASSWORD"));
 		config.setMaximumPoolSize(8);
 		config.setMaxLifetime(50000);
 		config.setLeakDetectionThreshold(30000);

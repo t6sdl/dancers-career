@@ -1,123 +1,280 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>ES/体験記【確認】｜ダンサーズキャリア</title>
+<title>ES/体験記登録｜ダンサーズキャリア</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <th:block th:replace="common/favicons :: favicons"></th:block>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20190206}" href="../../../static/css/main.css">
-<link rel="stylesheet" type="text/css" th:href="@{/css/form.css?update=20190206}" href="../../../static/css/form.css">
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script type="text/javascript" th:src="@{/js/openclose.js}" src="../../../static/js/openclose.js"></script>
+<style>
+legend {
+  width: auto;
+}
+.btn-group {
+  flex-wrap: wrap;
+}
+.form-control.disabled {
+  color: #6c757d!important;
+  background-color: #e9ecef!important;
+  opacity: 1;
+  word-break: break-all;
+}
+</style>
 </head>
 <body>
 <header th:replace="common/header :: for-admin"></header>
-<main>
-<h1>ES/体験記【確認】</h1>
+<main class="container-fluid">
+<h1>ES/体験記 登録</h1>
 <form th:action="@{/admin/experiences/new}" method="post" th:object="${experienceForm}">
-<fieldset>
+<fieldset class="form-group p-2 border border-dark">
 <legend>提供者情報</legend>
-<div>
-<p>氏名</p>
-<p>姓：【<span th:text="*{lastName} == '' ? '非公開' : *{lastName}"></span>】
-名：【<span th:text="*{firstName} == '' ? '非公開' : *{firstName}"></span>】</p>
+<div class="mb-4">
+<h2>基本情報</h2>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">氏名</div>
+<div class="col-sm-5">
+<span class="form-control disabled" th:text="*{lastName} == '' ? '非公開' : *{lastName}"></span>
+</div>
+<div class="col-sm-5">
+<span class="form-control disabled" th:text="*{firstName} == '' ? '非公開' : *{firstName}"></span>
+</div>
 <input type="hidden" th:field="*{lastName}">
 <input type="hidden" th:field="*{firstName}">
 </div>
-<div>
-<p>氏名（カナ）</p>
-<p>セイ：【<span th:text="*{kanaLastName} == '' ? '非公開' : *{kanaLastName}"></span>】
-メイ：【<span th:text="*{kanaFirstName} == '' ? '非公開' : *{kanaFirstName}"></span>】</p>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">シメイ</div>
+<div class="col-sm-5">
+<span class="form-control disabled" th:text="*{kanaLastName} == '' ? '非公開' : *{kanaLastName}"></span>
+</div>
+<div class="col-sm-5">
+<span class="form-control disabled" th:text="*{kanaFirstName} == '' ? '非公開' : *{kanaFirstName}"></span>
+</div>
 <input type="hidden" th:field="*{kanaLastName}">
 <input type="hidden" th:field="*{kanaFirstName}">
 </div>
-<div>
-<p>性別</p>
-<p>【<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span>】</p>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">性別</div>
+<div class="col-sm-10">
+<button class="btn btn-sm btn-info" th:text="*{sex} == '' ? '非公開' : *{sex}" disabled></button>
+</div>
 <input type="hidden" th:field="*{sex}">
 </div>
-<div>
-<p>卒業年度</p>
-<p>【<span th:text="*{graduation} == '' ? '非公開' : *{graduation}"></span>】 年度</p>
+</div>
+<div class="mb-4">
+<h2>学歴基本情報</h2>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">卒業年度</div>
+<div class="col-sm-10">
+<select class="custom-select w-auto" th:with="graduation=(*{graduation} == '' ? '非公開' : *{graduation})" disabled>
+<option th:value="${graduation}" th:text="${graduation}"></option>
+</select>
+<span>年度</span>
+</div>
 <input type="hidden" th:field="*{graduation}">
 </div>
-<div>
-<p>最終学歴</p>
-<p>【<span th:text="*{academicDegree} == '' ? '非公開' : *{academicDegree}"></span>】</p>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">最終学歴</div>
+<div class="col-sm-10">
+<button class="btn btn-sm btn-info" th:text="*{academicDegree} == '' ? '非公開' : *{academicDegree}" disabled></button>
+</div>
 <input type="hidden" th:field="*{academicDegree}">
 </div>
-<div>
-<p>文理</p>
-<p>【<span th:text="*{major} == '' ? '非公開' : *{major}"></span>】</p>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">文理</div>
+<div class="col-sm-10">
+<button class="btn btn-sm btn-info" th:text="*{major} == '' ? '非公開' : *{major}" disabled></button>
+</div>
 <input type="hidden" th:field="*{major}">
 </div>
-<div>
-<p>大学・学部・学科</p>
-<p>大学所在地：【<span th:text="*{univPref} == '' ? '非公開' : *{univPref}"></span>】
-大学：【<span th:text="*{univName} == '' ? '非公開' : *{univName}"></span>】
-学部：【<span th:text="*{faculty} == '' ? '非公開' : *{faculty}"></span>】
-学科：【<span th:text="*{department} == '' ? '非公開' : *{department}"></span>】</p>
+</div>
+<div class="mb-4">
+<h2>大学</h2>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">都道府県</div>
+<div class="col-sm-10">
+<select class="custom-select" th:with="univPref=(*{univPref} == '' ? '非公開' : *{univPref})" disabled>
+<option th:value="${univPref}" th:text="${univPref}"></option>
+</select>
+</div>
 <input type="hidden" th:field="*{univPref}">
+</div>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">大学</div>
+<div class="col-sm-10">
+<select class="custom-select" th:with="univName=(*{univName} == '' ? '非公開' : *{univName})" disabled>
+<option th:value="${univName}" th:text="${univName}"></option>
+</select>
+</div>
 <input type="hidden" th:field="*{univName}">
+</div>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">学部</div>
+<div class="col-sm-10">
+<select class="custom-select" th:with="faculty=(*{faculty} == '' ? '非公開' : *{faculty})" disabled>
+<option th:value="${faculty}" th:text="${faculty}"></option>
+</select>
+</div>
 <input type="hidden" th:field="*{faculty}">
+</div>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">学科</div>
+<div class="col-sm-10">
+<select class="custom-select" th:with="department=(*{department} == '' ? '非公開' : *{department})" disabled>
+<option th:value="${department}" th:text="${department}"></option>
+</select>
+</div>
 <input type="hidden" th:field="*{department}">
 </div>
-<div style="display:none;">
-<p>大学院・研究科・専攻</p>
+</div>
+<div th:classappend="*{gradSchoolPref.isEmpty()} ? 'd-none' : ''" class="mb-4">
+<h2>大学院</h2>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">都道府県</div>
+<div class="col-sm-10">
+<select class="custom-select" th:with="gradSchoolPref=(*{gradSchoolPref} == '' ? '非公開' : *{gradSchoolPref})" disabled>
+<option th:value="${gradSchoolPref}" th:text="${gradSchoolPref}"></option>
+</select>
+</div>
 <input type="hidden" th:field="*{gradSchoolPref}">
+</div>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">大学院</div>
+<div class="col-sm-10">
+<select class="custom-select" th:with="gradSchoolName=(*{gradSchoolName} == '' ? '非公開' : *{gradSchoolName})" disabled>
+<option th:value="${gradSchoolName}" th:text="${gradSchoolName}"></option>
+</select>
+</div>
 <input type="hidden" th:field="*{gradSchoolName}">
+</div>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">研究科等</div>
+<div class="col-sm-10">
+<select class="custom-select" th:with="gradSchoolOf=(*{gradSchoolOf} == '' ? '非公開' : *{gradSchoolOf})" disabled>
+<option th:value="${gradSchoolOf}" th:text="${gradSchoolOf}"></option>
+</select>
+</div>
 <input type="hidden" th:field="*{gradSchoolOf}">
+</div>
+<div class="form-group form-row">
+<div class="col-sm-2 col-form-label">専攻等</div>
+<div class="col-sm-10">
+<select class="custom-select" th:with="programIn=(*{programIn} == '' ? '非公開' : *{programIn})" disabled>
+<option th:value="${programIn}" th:text="${programIn}"></option>
+</select>
+</div>
 <input type="hidden" th:field="*{programIn}">
 </div>
+</div>
 <div>
-<p>サークルなどでの役職・役割</p>
-<p><span th:each="pos : *{position}" th:text="|【${pos}】 |"></span></p>
+<h2>その他</h2>
+<div class="form-group">
+<div>サークルなどでの役職・役割</div>
+<div class="btn-group" role="group">
+<button type="button" class="btn btn-sm btn-info" th:each="pos : *{position}" th:text="${pos}" disabled></button>
+</div>
 <input type="hidden" th:field="*{position}">
 </div>
-<div>
-<p>所属サークル</p>
-<p><span th:each="clubItem : *{club}" th:text="|【${clubItem == '' ? '非公開' : clubItem}】 |"></span></p>
+<div class="form-group">
+<div>所属サークル</div>
+<div class="form-row">
+<div class="col-sm-6 my-2" th:each="clubItem : *{club}">
+<span class="form-control disabled" th:text="${clubItem == '' ? '非公開' : clubItem}"></span>
+</div>
+</div>
 <input th:each="clubItem, loop : *{club}" type="hidden" th:field="*{club[__${loop.index}__]}">
 </div>
-<div>
-<p>内定先</p>
-<p><span th:each="offerItem : *{offer}" th:text="|【${offerItem == '' ? '非公開' : offerItem}】 |"></span></p>
+<div class="form-group">
+<div>内定先</div>
+<div class="form-row">
+<div class="col-sm-6 my-2" th:each="offerItem : *{offer}">
+<span class="form-control disabled" th:text="${offerItem == '' ? '非公開' : offerItem}"></span>
+</div>
+</div>
 <input th:each="offerItem, loop : *{offer}" type="hidden" th:field="*{offer[__${loop.index}__]}">
 </div>
-</fieldset>
-<fieldset>
-<legend>ES</legend>
-<div th:each="esItem, loop : *{es}">
-<hr th:if="${loop.index > 0}">
-<p>提出先企業：<span th:text="*{es[__${loop.index}__].corp} == '' ? '【非公開】' : *{es[__${loop.index}__].corp}"></span></p>
-<input type="hidden" th:field="*{es[__${loop.index}__].corp}">
-<p>選考結果：<span th:text="*{es[__${loop.index}__].result} == '' ? '【非公開】' : *{es[__${loop.index}__].result}"></span></p>
-<input type="hidden" th:field="*{es[__${loop.index}__].result}">
-<p>設問：<span th:text="*{es[__${loop.index}__].question} == '' ? '【非公開】' : *{es[__${loop.index}__].question}"></span></p>
-<input type="hidden" th:field="*{es[__${loop.index}__].question}">
-<p>回答：<br><span th:text="*{es[__${loop.index}__].answer} == '' ? '【非公開】' : *{es[__${loop.index}__].answer}"></span></p>
-<input type="hidden" th:field="*{es[__${loop.index}__].answer}">
-<p>赤入れ：<br><span th:text="*{es[__${loop.index}__].advice} == '' ? '【非公開】' : *{es[__${loop.index}__].advice}"></span></p>
-<input type="hidden" th:field="*{es[__${loop.index}__].advice}">
 </div>
 </fieldset>
-<fieldset>
-<legend>Interview</legend>
-<div th:each="interviewItem, loop : *{interview}">
+<fieldset class="form-group p-2 border border-dark">
+<legend>ES</legend>
+<div th:each="esItem, loop : *{es}" th:classappend="${esItem.toString().isEmpty()} ? 'd-none' : ''">
 <hr th:if="${loop.index > 0}">
-<p>設問：<span th:text="*{interview[__${loop.index}__].question} == '' ? '【非公開】' : *{interview[__${loop.index}__].question}"></span></p>
+<div class="form-row">
+<div class="form-group col-sm-6">
+<div>提出先企業</div>
+<span class="form-control disabled" th:text="*{es[__${loop.index}__].corp} == '' ? '非公開' : *{es[__${loop.index}__].corp}"></span>
+<input type="hidden" th:field="*{es[__${loop.index}__].corp}">
+</div>
+<div class="form-group col-sm-6">
+<div>選考結果</div>
+<span class="form-control disabled" th:text="*{es[__${loop.index}__].result} == '' ? '非公開' : *{es[__${loop.index}__].result}"></span>
+<input type="hidden" th:field="*{es[__${loop.index}__].result}">
+</div>
+</div>
+<div class="form-group">
+<div>設問</div>
+<span class="form-control disabled h-auto" th:text="*{es[__${loop.index}__].question} == '' ? '非公開' : *{es[__${loop.index}__].question}"></span>
+<input type="hidden" th:field="*{es[__${loop.index}__].question}">
+</div>
+<div class="form-group">
+<div>回答</div>
+<span class="form-control disabled h-auto">
+<th:block th:if="*{es[__${loop.index}__].answer} == ''">非公開</th:block>
+<th:block th:unless="*{es[__${loop.index}__].answer} == ''">
+<th:block th:each="sent, par : *{es[__${loop.index}__].answer.split('\n', -1)}">
+[[${sent}]]<br th:unless="${par.last}">
+</th:block>
+</th:block>
+</span>
+<input type="hidden" th:field="*{es[__${loop.index}__].answer}">
+</div>
+<div class="form-group">
+<div>添削</div>
+<span class="form-control disabled h-auto">
+<th:block th:if="*{es[__${loop.index}__].advice} == ''">非公開</th:block>
+<th:block th:unless="*{es[__${loop.index}__].advice} == ''">
+<th:block th:each="sent, par : *{es[__${loop.index}__].advice.split('\n', -1)}">
+[[${sent}]]<br th:unless="${par.last}">
+</th:block>
+</th:block>
+</span>
+<input type="hidden" th:field="*{es[__${loop.index}__].advice}">
+</div>
+</div>
+</fieldset>
+<fieldset class="form-group p-2 border border-dark">
+<legend>Interview</legend>
+<div th:each="interviewItem, loop : *{interview}" th:classappend="${interviewItem.toString().isEmpty()} ? 'd-none' : ''">
+<hr th:if="${loop.index > 0}">
+<div class="form-group">
+<div>設問</div>
+<span class="form-control disabled h-auto" th:text="*{interview[__${loop.index}__].question} == '' ? '非公開' : *{interview[__${loop.index}__].question}"></span>
 <input type="hidden" th:field="*{interview[__${loop.index}__].question}">
-<p>回答：<br><span th:text="*{interview[__${loop.index}__].answer} == '' ? '【非公開】' : *{interview[__${loop.index}__].answer}"></span></p>
+</div>
+<div class="form-group">
+<div>回答</div>
+<span class="form-control disabled h-auto">
+<th:block th:if="*{interview[__${loop.index}__].answer} == ''">非公開</th:block>
+<th:block th:unless="*{interview[__${loop.index}__].answer} == ''">
+<th:block th:each="sent, par : *{interview[__${loop.index}__].answer.split('\n', -1)}">
+[[${sent}]]<br th:unless="${par.last}">
+</th:block>
+</th:block>
+</span>
 <input type="hidden" th:field="*{interview[__${loop.index}__].answer}">
+</div>
 </div>
 </fieldset>
 <div>
-<button type="submit" name="modify" value="modify" class="button">修正</button>
-<button type="submit" name="complete" value="complete" class="button">完了</button>
+<button type="submit" name="modify" value="modify" class="btn btn-secondary">修正</button>
+<button type="submit" name="complete" value="complete" class="btn btn-primary">完了</button>
 </div>
 </form>
 </main>
 <footer th:replace="common/footer :: footer"></footer>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
