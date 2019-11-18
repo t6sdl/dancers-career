@@ -15,7 +15,7 @@ legend {
 .btn-group {
   flex-wrap: wrap;
 }
-.disabled {
+.form-control.disabled {
   color: #6c757d!important;
   background-color: #e9ecef!important;
   opacity: 1;
@@ -181,11 +181,25 @@ legend {
 </div>
 <div class="form-group">
 <div>回答</div>
-<span class="form-control disabled h-auto" th:text="*{es[__${loop.index}__].answer.get(0)} == '' ? '非公開' : *{es[__${loop.index}__].answer.get(0)}"></span>
+<span class="form-control disabled h-auto">
+<th:block th:if="*{es[__${loop.index}__].answer.get(0)} == ''">非公開</th:block>
+<th:block th:unless="*{es[__${loop.index}__].answer.get(0)} == ''">
+<th:block th:each="sent, par : *{es[__${loop.index}__].answer.get(0).split('\n', -1)}">
+[[${sent}]]<br th:unless="${par.last}">
+</th:block>
+</th:block>
+</span>
 </div>
 <div class="form-group">
 <div>添削</div>
-<span class="form-control disabled h-auto" th:text="*{es[__${loop.index}__].advice.get(0)} == '' ? '非公開' : *{es[__${loop.index}__].advice.get(0)}"></span>
+<span class="form-control disabled h-auto">
+<th:block th:if="*{es[__${loop.index}__].advice.get(0)} == ''">非公開</th:block>
+<th:block th:unless="*{es[__${loop.index}__].advice.get(0)} == ''">
+<th:block th:each="sent, par : *{es[__${loop.index}__].advice.get(0).split('\n', -1)}">
+[[${sent}]]<br th:unless="${par.last}">
+</th:block>
+</th:block>
+</span>
 </div>
 <a class="btn btn-primary" th:href="@{/admin/experiences/{experienceId}/es/{esId}?modify(experienceId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}">修正</a>
 <button type="button" class="btn btn-danger" data-toggle="modal" th:data-target="|#deleteEs*{es[__${loop.index}__].es_id}|">削除</button>
@@ -219,7 +233,14 @@ legend {
 </div>
 <div class="form-group">
 <div>回答</div>
-<span class="form-control disabled h-auto" th:text="*{interview[__${loop.index}__].answer} == '' ? '非公開' : *{interview[__${loop.index}__].answer}"></span>
+<span class="form-control disabled h-auto">
+<th:block th:if="*{interview[__${loop.index}__].answer} == ''">非公開</th:block>
+<th:block th:unless="*{interview[__${loop.index}__].answer} == ''">
+<th:block th:each="sent, par : *{interview[__${loop.index}__].answer.split('\n', -1)}">
+[[${sent}]]<br th:unless="${par.last}">
+</th:block>
+</th:block>
+</span>
 </div>
 <a class="btn btn-primary" th:href="@{/admin/experiences/{experienceId}/interview/{interviewId}?modify(experienceId=*{experience_id},interviewId=*{interview[__${loop.index}__].interview_id})}">修正</a>
 <button type="button" class="btn btn-danger" data-toggle="modal" th:data-target="|#deleteInterview*{interview[__${loop.index}__].interview_id}|">削除</button>

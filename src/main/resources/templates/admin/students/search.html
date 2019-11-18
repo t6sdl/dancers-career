@@ -274,10 +274,11 @@ legend {
 </thead>
 <tbody>
 <tr>
-<th>メールアドレス</th>
+<th>メール</th>
 <td>
 <span th:text="${student.email}"></span>
-メールアドレス<span th:unless="${student.valid_email}">未</span>確認<span th:if="${student.valid_email}">済</span>
+<span th:if="${student.valid_email}" class="badge badge-success">認証済</span>
+<span th:unless="${student.valid_email}" class="badge badge-warning">未認証</span>
 </td>
 </tr>
 <tr>
@@ -323,7 +324,7 @@ legend {
 <tr>
 <th>お気に入り</th>
 <td>
-<a class="badge badge-info" th:href="@{/admin/experiences/{like}(like=${like})}" th:each="like : ${student.likes}" th:text="${like}"></a>
+<a class="badge badge-info mr-1" th:href="@{/admin/experiences/{like}(like=${like})}" th:each="like : ${student.likes}" th:text="${like}"></a>
 </td>
 </tr>
 </tbody>

@@ -401,7 +401,7 @@ legend {
 </div>
 <div class="form-group">
 <label th:for="es__${loop.index}__.question">設問</label>
-<textarea th:field="*{es[__${loop.index}__].question}" class="form-control" placeholder="挫折した経験は？など"></textarea>
+<input type="text" th:field="*{es[__${loop.index}__].question}" class="form-control" placeholder="挫折した経験は？など">
 </div>
 <div class="form-group">
 <label th:for="es__${loop.index}__.answer">回答</label>
@@ -420,7 +420,7 @@ legend {
 <div class="interviewItem" th:each="interviewItem, loop : *{interview}">
 <div class="form-group">
 <label th:for="interview__${loop.index}__.question">質問</label>
-<textarea th:field="*{interview[__${loop.index}__].question}" class="form-control" placeholder="ESを書く上で意識したことは？など"></textarea>
+<input type="text" th:field="*{interview[__${loop.index}__].question}" class="form-control" placeholder="ESを書く上で意識したことは？など">
 </div>
 <div class="form-group">
 <label th:for="interview__${loop.index}__.answer">回答</label>
