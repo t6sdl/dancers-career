@@ -137,7 +137,7 @@ legend {
 </label>
 <div class="col-sm-10">
 <select th:field="*{univPref}" class="custom-select" required>
-<option value="">非公開</option>
+<option value="">–</option>
 <option value="北海道">北海道</option>
 <option value="青森県">青森県</option>
 <option value="岩手県">岩手県</option>
@@ -195,7 +195,7 @@ legend {
 </label>
 <div class="col-sm-10">
 <select th:field="*{univCategory}" class="custom-select" required>
-<option value="">非公開</option>
+<option value="">–</option>
 <option value="国立">国立</option>
 <option value="公立">公立</option>
 <option value="私立">私立</option>
@@ -209,8 +209,8 @@ legend {
 <span class="badge badge-danger">必須</span>
 </label>
 <div class="col-sm-10">
-<select th:field="*{univName}" class="custom-select" th:errorclass="is-invalid" required>
-<option value="">非公開</option>
+<select th:field="*{univName}" class="custom-select" required>
+<option value="">–</option>
 </select>
 </div>
 </div>
