@@ -23,6 +23,7 @@ public class DancersCareer2019Application {
 //		}
 		System.out.println("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
 		System.out.println(System.getProperty("SPRING_PROFILES_ACTIVE"));
+		System.out.println(System.getenv("SPRING_PROFILES_ACTIVE"));
 		if (System.getProperty("SPRING_PROFILES_ACTIVE", "development").equals("development")) {
 			System.out.println("TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT");
 			ResourceBundle rb = ResourceBundle.getBundle("application-development");
