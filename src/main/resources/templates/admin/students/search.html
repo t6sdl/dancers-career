@@ -30,8 +30,14 @@ legend {
 <fieldset class="form-group p-2 border border-dark">
 <legend>氏名検索</legend>
 <div class="form-group form-row">
-<div class="col"><input type="text" th:field="*{kanaLastName}" class="form-control" placeholder="セイ"></div>
-<div class="col"><input type="text" th:field="*{kanaFirstName}" class="form-control" placeholder="メイ"></div>
+<div class="col">
+<label for="kanaLastName">セイ</label>
+<input type="text" th:field="*{kanaLastName}" class="form-control" placeholder="カナ">
+</div>
+<div class="col">
+<label for="kanaFirstName">メイ</label>
+<input type="text" th:field="*{kanaFirstName}" class="form-control" placeholder="カナ">
+</div>
 </div>
 <button type="submit" value="by-name" name="by-name" class="btn btn-primary">検索</button>
 </fieldset>

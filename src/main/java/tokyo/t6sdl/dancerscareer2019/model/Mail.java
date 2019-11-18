@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class Mail {
-	public static String CONTEXT_PATH = System.getProperty("DOMAIN", "http://localhost:8080");
+	public static String CONTEXT_PATH = System.getProperty("domain", "http://localhost:8080");
 	public static final String URI_VERIFY_EMAIL = Mail.CONTEXT_PATH + "/signup/verify-email?token=";
 	public static final String URI_RESET_PWD = Mail.CONTEXT_PATH + "/signin/forget-pwd?token=";
 	public static final String URI_EXPERIENCES = Mail.CONTEXT_PATH + "/experiences";
