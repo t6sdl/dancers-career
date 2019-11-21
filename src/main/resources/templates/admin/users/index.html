@@ -26,27 +26,31 @@ legend {
 <header th:replace="common/header :: for-admin"></header>
 <main class="container-fluid">
 <h1>ユーザー検索</h1>
-<form th:action="@{/admin/search/students}" method="get" th:object="${searchForm}">
+<input type="hidden" id="contextPath" th:value="@{/}">
+<form th:action="@{/admin/users}" method="get">
 <fieldset class="form-group p-2 border border-dark">
 <legend>氏名検索</legend>
 <div class="form-group form-row">
 <div class="col">
-<label for="kanaLastName">セイ</label>
-<input type="text" th:field="*{kanaLastName}" class="form-control" placeholder="カナ">
+<label for="kanaFamilyName">セイ</label>
+<input type="text" id="kanaFamilyName" name="kana-family-name" th:value="${kanaFamilyName}" class="form-control" placeholder="カナ">
 </div>
 <div class="col">
-<label for="kanaFirstName">メイ</label>
-<input type="text" th:field="*{kanaFirstName}" class="form-control" placeholder="カナ">
+<label for="kanaGivenName">メイ</label>
+<input type="text" id="kanaGivenName" name="kana-given-name" th:value="${kanaGivenName}" class="form-control" placeholder="カナ">
 </div>
 </div>
-<button type="submit" value="by-name" name="by-name" class="btn btn-primary">検索</button>
+<button type="submit" class="btn btn-primary">検索</button>
 </fieldset>
+<input type="hidden" name="sort" th:value="${sortId}">
+</form>
+<form th:action="@{/admin/users}" method="get">
 <fieldset class="form-group p-2 border border-dark">
 <legend>大学検索</legend>
 <div class="form-group form-row">
-<label for="univPref" class="col-sm-3 col-form-label">都道府県</label>
+<label for="univLoc" class="col-sm-3 col-form-label">都道府県</label>
 <div class="col-sm-9">
-<select th:field="*{univPref}" class="custom-select">
+<select id="univLoc" name="univ-loc" class="custom-select">
 <option value="">選択してください</option>
 <option value="北海道">北海道</option>
 <option value="青森県">青森県</option>
@@ -97,11 +101,12 @@ legend {
 <option value="沖縄県">沖縄県</option>
 </select>
 </div>
+<input type="hidden" id="hiddenUnivLoc" th:value="${hiddenUnivLoc}">
 </div>
 <div class="form-group form-row">
-<label for="univCategory" class="col-sm-3 col-form-label">種別</label>
+<label for="univType" class="col-sm-3 col-form-label">種別</label>
 <div class="col-sm-9">
-<select th:field="*{univCategory}" class="custom-select">
+<select id="univType" name="univ-type" class="custom-select">
 <option value="">選択してください</option>
 <option value="国立">国立</option>
 <option value="公立">公立</option>
@@ -113,39 +118,41 @@ legend {
 <div class="form-group form-row">
 <label for="univName" class="col-sm-3 col-form-label">大学</label>
 <div class="col-sm-9">
-<select th:field="*{univName}" class="custom-select">
+<select id="univName" name="univ-name" class="custom-select">
 <option value="">選択してください</option>
 </select>
 </div>
+<input type="hidden" id="hiddenUnivName" th:value="${hiddenUnivName}">
 </div>
 <div class="form-group form-row">
-<label for="faculty" class="col-sm-3 col-form-label">学部</label>
+<label for="univFac" class="col-sm-3 col-form-label">学部</label>
 <div class="col-sm-9">
-<select th:field="*{faculty}" class="custom-select">
+<select id="univFac" name="univ-fac" class="custom-select">
 <option value="">選択してください</option>
 </select>
 </div>
+<input type="hidden" id="hiddenUnivFac" th:value="${hiddenUnivFac}">
 </div>
 <div class="form-group form-row">
-<label for="department" class="col-sm-3 col-form-label">学科</label>
+<label for="univDep" class="col-sm-3 col-form-label">学科</label>
 <div class="col-sm-9">
-<select th:field="*{department}" class="custom-select">
+<select id="univDep" name="univ-dep" class="custom-select">
 <option value="">選択してください</option>
 </select>
 </div>
+<input type="hidden" id="hiddenUnivDep" th:value="${hiddenUnivDep}">
 </div>
-<input type="hidden" id="hiddenUnivPref" th:value="${hiddenUnivPref == null ? '' : hiddenUnivPref}">
-<input type="hidden" id="hiddenUnivName" th:value="${hiddenUnivName == null ? '' : hiddenUnivName}">
-<input type="hidden" id="hiddenFac" th:value="${hiddenFac == null ? '' : hiddenFac}">
-<input type="hidden" id="hiddenDep" th:value="${hiddenDep == null ? '' : hiddenDep}">
-<button type="submit" value="by-university" name="by-university" class="btn btn-primary">検索</button>
+<button type="submit" class="btn btn-primary">検索</button>
 </fieldset>
+<input type="hidden" name="sort" th:value="${sortId}">
+</form>
+<form th:action="@{/admin/users}" method="get">
 <fieldset class="form-group p-2 border border-dark">
 <legend>大学院検索</legend>
 <div class="form-group form-row">
-<label for="gradSchoolPref" class="col-sm-3 col-form-label">都道府県</label>
+<label for="gradLoc" class="col-sm-3 col-form-label">都道府県</label>
 <div class="col-sm-9">
-<select th:field="*{gradSchoolPref}" class="custom-select">
+<select id="gradLoc" name="grad-loc" class="custom-select" disabled>
 <option value="">選択してください</option>
 <option value="北海道">北海道</option>
 <option value="青森県">青森県</option>
@@ -196,11 +203,12 @@ legend {
 <option value="沖縄県">沖縄県</option>
 </select>
 </div>
+<input type="hidden" id="hiddenGradLoc" th:value="${hiddenGradLoc}">
 </div>
 <div class="form-group form-row">
-<label for="gradSchoolCategory" class="col-sm-3 col-form-label">種別</label>
+<label for="gradType" class="col-sm-3 col-form-label">種別</label>
 <div class="col-sm-9">
-<select th:field="*{gradSchoolCategory}" class="custom-select">
+<select id="gradType" name="grad-type" class="custom-select" disabled>
 <option value="">選択してください</option>
 <option value="国立">国立</option>
 <option value="公立">公立</option>
@@ -209,59 +217,62 @@ legend {
 </div>
 </div>
 <div class="form-group form-row">
-<label for="gradSchoolName" class="col-sm-3 col-form-label">大学院</label>
+<label for="gradName" class="col-sm-3 col-form-label">大学院</label>
 <div class="col-sm-9">
-<select th:field="*{gradSchoolName}" class="custom-select">
+<select id="gradName" name="grad-name" class="custom-select" disabled>
 <option value="">選択してください</option>
 </select>
 </div>
+<input type="hidden" id="hiddenGradName" th:value="${hiddenGradName}">
 </div>
 <div class="form-group form-row">
-<label for="gradSchoolOf" class="col-sm-3 col-form-label">研究科等</label>
+<label for="gradSchool" class="col-sm-3 col-form-label">研究科等</label>
 <div class="col-sm-9">
-<select th:field="*{gradSchoolOf}" class="custom-select">
+<select id="gradSchool" name="grad-school" class="custom-select" disabled>
 <option value="">選択してください</option>
 </select>
 </div>
+<input type="hidden" id="hiddenGradSchool" th:value="${hiddenGradSchool}">
 </div>
 <div class="form-group form-row">
-<label for="programIn" class="col-sm-3 col-form-label">専攻等</label>
+<label for="gradDiv" class="col-sm-3 col-form-label">専攻等</label>
 <div class="col-sm-9">
-<select th:field="*{programIn}" class="custom-select">
+<select id="gradDiv" name="grad-div" class="custom-select" disabled>
 <option value="">選択してください</option>
 </select>
 </div>
+<input type="hidden" id="hiddenGradDiv" th:value="${hiddenGradDiv}">
 </div>
-<input type="hidden" id="hiddenGradSchoolPref" th:value="${hiddenGradSchoolPref == null ? '' : hiddenGradSchoolPref}">
-<input type="hidden" id="hiddenGradSchoolName" th:value="${hiddenGradSchoolName == null ? '' : hiddenGradSchoolName}">
-<input type="hidden" id="hiddenGradSchoolOf" th:value="${hiddenGradSchoolOf == null ? '' : hiddenGradSchoolOf}">
-<input type="hidden" id="hiddenProgramIn" th:value="${hiddenProgramIn == null ? '' : hiddenProgramIn}">
-<button type="submit" value="by-gradschool" name="by-gradschool" class="btn btn-secondary" disabled>今後対応予定</button>
+<button type="submit" class="btn btn-secondary" disabled>今後対応予定</button>
 </fieldset>
+<input type="hidden" name="sort" th:value="${sortId}">
+</form>
+<form th:action="@{/admin/users}" method="get">
 <fieldset class="form-group p-2 border border-dark">
 <legend>役職検索</legend>
 <div class="form-group">
 <div id="positions" class="btn-group btn-group-toggle" data-toggle="buttons">
-<label th:each="pos : ${positionList}" th:for="${#ids.next('position')}" class="btn btn-sm btn-outline-info my-1 rounded-0 manualcomplete">
-<input type="checkbox" th:field="*{position}" th:value="${pos}" autocomplete="off">[[${pos}]]
+<label th:each="pos, idx : ${positionList}" th:for="|pos${idx}|" class="btn btn-sm btn-outline-info my-1 rounded-0 manualcomplete">
+<input type="checkbox" th:id="|pos${idx}|" name="pos" th:value="${pos}" th:checked="${positions == null ? false : #lists.contains(positions, pos)}" autocomplete="off">[[${pos}]]
 </label>
 </div>
 </div>
-<button type="submit" value="and-search-by-position" name="and-search-by-position" class="btn btn-primary">AND検索</button>
-<button type="submit" value="or-search-by-position" name="or-search-by-position" class="btn btn-primary">OR検索</button>
+<button type="submit" name="cond" value="and" class="btn btn-primary">AND検索</button>
+<button type="submit" name="cond" value="or" class="btn btn-primary">OR検索</button>
 </fieldset>
+<input type="hidden" name="sort" th:value="${sortId}">
+</form>
+<form th:action="@{/admin/users}" method="get">
 <div class="row p-2">
 <div class="col-sm-6 form-group">
-<select th:field="*{sort}" class="custom-select custom-select-sm">
-<option value="0">最終ログイン順</option>
-<option value="1">名前順</option>
-<option value="2">大学名順</option>
+<select name="sort" class="custom-select custom-select-sm">
+<option value="0" th:selected="${sortId == 0}">最終ログイン順</option>
+<option value="1" th:selected="${sortId == 1}">名前順</option>
+<option value="2" th:selected="${sortId == 2}">大学名順</option>
 </select>
 </div>
-<input type="hidden" id="contextPath" th:value="@{/}">
-<input type="hidden" name="start" value="1">
 <div class="col-sm-6 text-sm-right form-group">
-<button type="submit" name="all" value="all" class="btn btn-sm btn-primary">絞り込み解除</button>
+<button type="submit" class="btn btn-sm btn-primary">絞り込み解除</button>
 </div>
 </div>
 </form>
@@ -336,7 +347,7 @@ legend {
 </tbody>
 </table>
 </article>
-<div class="sticky-bottom py-2" th:with="downloadURL=(${#request.requestURI + '/download?' + #strings.defaultString(#request.queryString, '')})">
+<div class="sticky-bottom py-2" th:with="downloadURL=(${#request.requestURI + '?download&' + #strings.defaultString(#request.queryString, '')})">
 <a class="btn btn-success btn-block text-light" th:href="@{__${downloadURL}__}">Excel形式で出力</a>
 </div>
 </section>
@@ -350,7 +361,7 @@ legend {
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script th:src="@{/js/setUniversity.js}" src="../../../static/js/setUniversity.js"></script>
+<script th:src="@{/js/setUniversity.js?update=20191121}" src="../../../static/js/setUniversity.js?update=20191121"></script>
 <script th:src="@{/js/submit.js}" src="../../../static/js/submit.js"></script>
 <script>
 $(function() {
