@@ -132,7 +132,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	public Map<String, Object> findByUniversity(int sort, String univPref, String univName) {
 		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM experiences WHERE univ_pref = ? AND univ_name = ?", Integer.class, univPref, univName);
 		List<Experience> experiences = jdbcTemplate.query(
-				this.selectExperienceIn("WHERE uinvPref = ? AND univName = ?", true, sort), (resultSet, i) -> {
+				this.selectExperienceIn("WHERE univ_pref = ? AND univ_name = ?", true, sort), (resultSet, i) -> {
 					Experience experience = new Experience();
 					this.adjustDataToExperience(experience, resultSet, false);
 					return experience;

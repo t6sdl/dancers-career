@@ -35,7 +35,6 @@ import tokyo.t6sdl.dancerscareer2019.model.Student;
 import tokyo.t6sdl.dancerscareer2019.model.form.EsForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.ExperienceForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.InterviewForm;
-import tokyo.t6sdl.dancerscareer2019.model.form.SearchForm;
 import tokyo.t6sdl.dancerscareer2019.service.ExperienceService;
 import tokyo.t6sdl.dancerscareer2019.service.ProfileService;
 
@@ -288,6 +287,122 @@ public class AdminController {
 		return mav;
 	}
 	
+	@GetMapping(value = "/experiences")
+	public String expsIndex(@RequestParam(name = "sort", defaultValue = "0") String sort, Model model) {
+		int sortId;
+		try {
+			sortId = Integer.parseInt(sort);
+		} catch (NumberFormatException e) {
+			throw new NotFound404();
+		}
+		Map<String, Object> result = experienceService.getExperiences(sortId);
+		model.addAttribute("count", result.get("count"));
+		model.addAttribute("experiences", result.get("experiences"));
+		model.addAttribute("sortId", sortId);
+		model.addAttribute("positionList", Profile.POSITION_LIST);
+		return "admin/experiences/index";
+	}
+	
+	@GetMapping(value = "/experiences", params = {"kana-family-name", "kana-given-name"})
+	public String expsIndexFilteredByName(@RequestParam(name = "sort", defaultValue = "0") String sort, @RequestParam("kana-family-name") String kanaFamilyName, @RequestParam("kana-given-name") String kanaGivenName, Model model) {
+		int sortId;
+		try {
+			sortId = Integer.parseInt(sort);
+		} catch (NumberFormatException e) {
+			throw new NotFound404();
+		}
+		Map<String, Object> result = new HashMap<String, Object>();
+		if (!(kanaFamilyName.isEmpty()) && !(kanaGivenName.isEmpty())) {
+			result = experienceService.getExperiencesByName(sortId, kanaFamilyName, kanaGivenName);
+		} else if (!(kanaFamilyName.isEmpty())) {
+			result = experienceService.getExperiencesByLastName(sortId, kanaFamilyName);
+		} else {
+			return "redirect:/admin/experiences?sort=" + sortId;
+		}
+		model.addAttribute("count", result.get("count"));
+		model.addAttribute("experiences", result.get("experiences"));
+		model.addAttribute("sortId", sortId);
+		model.addAttribute("kanaFamilyName", kanaFamilyName);
+		model.addAttribute("kanaGivenName", kanaGivenName);
+		model.addAttribute("positionList", Profile.POSITION_LIST);
+		return "admin/experiences/index";
+	}
+	
+	@GetMapping(value = "/experiences", params = {"univ-loc", "univ-type", "univ-name", "univ-fac", "univ-dep"})
+	public String expsIndexFilteredByUniv(@RequestParam(name = "sort", defaultValue = "0") String sort, @RequestParam("univ-loc") String univLoc, @RequestParam("univ-name") String univName, @RequestParam("univ-fac") String univFac, @RequestParam("univ-dep") String univDep, Model model) {
+		int sortId;
+		try {
+			sortId = Integer.parseInt(sort);
+		} catch (NumberFormatException e) {
+			throw new NotFound404();
+		}
+		Map<String, Object> result = new HashMap<String, Object>();
+		if (!(univDep.isEmpty())) {
+			result = experienceService.getExperiencesByDepartment(sortId, univLoc, univName, univFac, univDep);
+		} else if (!(univFac.isEmpty())) {
+			result = experienceService.getExperiencesByFaculty(sortId, univLoc, univName, univFac);
+		} else if (!(univName.isEmpty())) {
+			result = experienceService.getExperiencesByUniversity(sortId, univLoc, univName);
+		} else if (!(univLoc.isEmpty())) {
+			result = experienceService.getExperiencesByPrefecture(sortId, univLoc);
+		} else {
+			return "redirect:/admin/experiences?sort=" + sortId;
+		}
+		model.addAttribute("count", result.get("count"));
+		model.addAttribute("experiences", result.get("experiences"));
+		model.addAttribute("sortId", sortId);
+		model.addAttribute("positionList", Profile.POSITION_LIST);
+		model.addAttribute("hiddenUnivLoc", univLoc);
+		model.addAttribute("hiddenUnivName", univName);
+		model.addAttribute("hiddenUnivFac", univFac);
+		model.addAttribute("hiddenUnivDep", univDep);
+		return "admin/experiences/index";
+	}
+	
+	@GetMapping(value = "/experiences", params = {"pos", "cond=and"})
+	public String expsIndexFilteredByPosAndPos(@RequestParam(name = "sort", defaultValue = "0") String sort, @RequestParam("pos") List<String> positions, Model model) {
+		int sortId;
+		try {
+			sortId = Integer.parseInt(sort);
+		} catch (NumberFormatException e) {
+			throw new NotFound404();
+		}
+		Map<String, Object> result = new HashMap<String, Object>();
+		if (!(positions.isEmpty()) && !(positions.get(0).isEmpty())) {
+			result = experienceService.getExperiencesByPosition(sortId, positions, true);
+		} else {
+			return "redirect:/admin/experiences?sort=" + sortId;
+		}
+		model.addAttribute("count", result.get("count"));
+		model.addAttribute("experiences", result.get("experiences"));
+		model.addAttribute("sortId", sortId);
+		model.addAttribute("positions", positions);
+		model.addAttribute("positionList", Profile.POSITION_LIST);
+		return "admin/experiences/index";
+	}
+	
+	@GetMapping(value = "/experiences", params = {"pos", "cond=or"})
+	public String expsIndexFilteredByPosOrPos(@RequestParam(name = "sort", defaultValue = "0") String sort, @RequestParam("pos") List<String> positions, Model model) {
+		int sortId;
+		try {
+			sortId = Integer.parseInt(sort);
+		} catch (NumberFormatException e) {
+			throw new NotFound404();
+		}
+		Map<String, Object> result = new HashMap<String, Object>();
+		if (!(positions.isEmpty()) && !(positions.get(0).isEmpty())) {
+			result = experienceService.getExperiencesByPosition(sortId, positions, false);
+		} else {
+			return "redirect:/admin/experiences?sort=" + sortId;
+		}
+		model.addAttribute("count", result.get("count"));
+		model.addAttribute("experiences", result.get("experiences"));
+		model.addAttribute("sortId", sortId);
+		model.addAttribute("positions", positions);
+		model.addAttribute("positionList", Profile.POSITION_LIST);
+		return "admin/experiences/index";
+	}
+	
 	@GetMapping(value="/experiences/{experienceId}")
 	public String getSubmitExperiences(@PathVariable(name="experienceId") String experienceId, Model model) {
 		model.addAttribute("experienceId", experienceId);
@@ -312,7 +427,7 @@ public class AdminController {
 		}
 		int id = Integer.parseInt(experienceId);
 		experienceService.delete(id);
-		return "redirect:/admin/search/experiences?all&sort=0";
+		return "redirect:/admin/experiences";
 	}
 	
 	@GetMapping(value="/experiences/{experienceId}", params="modify")
@@ -504,124 +619,8 @@ public class AdminController {
 		return list;
 	}
 		
-//	@Mapping(value="/search/experiences", params="all")
-	public String getSearchExperiences(@RequestParam(name="sort") String sort, Model model) {
-		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute(new SearchForm(sort));
-		int sortId;
-		try {
-			sortId = Integer.parseInt(sort);
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
-		Map<String, Object> result = experienceService.getExperiences(sortId);
-		model.addAttribute("count", result.get("count"));
-		model.addAttribute("experiences", result.get("experiences"));
-		return "admin/experiences/search";
-	}
-	
-//	@Mapping(value="/search/experiences", params="by-name")
-	public String getSearchExperiencesByName(SearchForm form, Model model) {
-		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute(form);
-		int sortId;
-		try {
-			sortId = Integer.parseInt(form.getSort());
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
-		Map<String, Object> result = new HashMap<String, Object>();
-		if (!(form.getKanaLastName().isEmpty()) && !(form.getKanaFirstName().isEmpty())) {
-			result = experienceService.getExperiencesByName(sortId, form.getKanaLastName(), form.getKanaFirstName());
-		} else if (!(form.getKanaLastName().isEmpty())) {
-			result = experienceService.getExperiencesByLastName(sortId, form.getKanaLastName());
-		} else {
-			result = experienceService.getExperiences(sortId);
-		}
-		model.addAttribute("count", result.get("count"));
-		model.addAttribute("experiences", result.get("experiences"));
-		return "admin/experiences/search";
-	}
-	
-//	@Mapping(value="/search/experiences", params="by-university")
-	public String getSearchExperiencesByUniveristy(SearchForm form, Model model) {
-		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute("hiddenUnivPref", form.getUnivPref());
-		model.addAttribute("hiddenUnivName", form.getUnivName());
-		model.addAttribute("hiddenFac", form.getFaculty());
-		model.addAttribute("hiddenDep", form.getDepartment());
-		model.addAttribute("hiddenGradSchoolPref", form.getGradSchoolPref());
-		model.addAttribute("hiddenGradSchoolName", form.getGradSchoolName());
-		model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
-		model.addAttribute("hiddenProgramIn", form.getProgramIn());
-		model.addAttribute(form);
-		int sortId;
-		try {
-			sortId = Integer.parseInt(form.getSort());
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
-		Map<String, Object> result = new HashMap<String, Object>();
-		if (!(form.getDepartment().isEmpty())) {
-			result = experienceService.getExperiencesByDepartment(sortId, form.getUnivPref(), form.getUnivName(), form.getFaculty(), form.getDepartment());
-		} else if (!(form.getFaculty().isEmpty())) {
-			result = experienceService.getExperiencesByFaculty(sortId, form.getUnivPref(), form.getUnivName(), form.getFaculty());
-		} else if (!(form.getUnivName().isEmpty())) {
-			result = experienceService.getExperiencesByUniversity(sortId, form.getUnivPref(), form.getUnivName());
-		} else if (!(form.getUnivPref().isEmpty())) {
-			result = experienceService.getExperiencesByPrefecture(sortId, form.getUnivPref());
-		} else {
-			result = experienceService.getExperiences(sortId);
-		}
-		model.addAttribute("count", result.get("count"));
-		model.addAttribute("experiences", result.get("experiences"));
-		return "admin/experiences/search";
-	}
-	
-//	@Mapping(value="/search/experiences", params="and-search-by-position")
-	public String getAndSearchExperiencesByPosition(SearchForm form, Model model) {
-		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute(form);
-		int sortId;
-		try {
-			sortId = Integer.parseInt(form.getSort());
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
-		Map<String, Object> result = new HashMap<String, Object>();
-		if (!(form.getPosition().isEmpty()) && !(form.getPosition().get(0).isEmpty())) {
-			result = experienceService.getExperiencesByPosition(sortId, form.getPosition(), true);
-		} else {
-			result = experienceService.getExperiences(sortId);
-		}
-		model.addAttribute("count", result.get("count"));
-		model.addAttribute("experiences", result.get("experiences"));
-		return "admin/experiences/search";
-	}
-	
-//	@Mapping(value="/search/experiences", params="or-search-by-position")
-	public String getOrSearchExperiencesByPosition(SearchForm form, Model model) {
-		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute(form);
-		int sortId;
-		try {
-			sortId = Integer.parseInt(form.getSort());
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
-		Map<String, Object> result = new HashMap<String, Object>();
-		if (!(form.getPosition().isEmpty()) && !(form.getPosition().get(0).isEmpty())) {
-			result = experienceService.getExperiencesByPosition(sortId, form.getPosition(), false);
-		} else {
-			result = experienceService.getExperiences(sortId);
-		}
-		model.addAttribute("count", result.get("count"));
-		model.addAttribute("experiences", result.get("experiences"));
-		return "admin/experiences/search";
-	}
-	
-	@GetMapping(value = "/mail", params="develop")
-	public String redirectToIndex() {
+	@GetMapping(value = "/mail", params = "develop")
+	public String mailIndex() {
 		return "redirect:/admin";
 	}
 }
