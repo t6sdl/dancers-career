@@ -42,7 +42,7 @@ legend {
 </div>
 <button type="submit" class="btn btn-primary">検索</button>
 </fieldset>
-<input type="hidden" name="sort" th:value="${sortId}">
+<input type="hidden" name="sort" th:value="${sort}">
 </form>
 <form th:action="@{/admin/users}" method="get">
 <fieldset class="form-group p-2 border border-dark">
@@ -144,7 +144,7 @@ legend {
 </div>
 <button type="submit" class="btn btn-primary">検索</button>
 </fieldset>
-<input type="hidden" name="sort" th:value="${sortId}">
+<input type="hidden" name="sort" th:value="${sort}">
 </form>
 <form th:action="@{/admin/users}" method="get">
 <fieldset class="form-group p-2 border border-dark" disabled>
@@ -245,7 +245,7 @@ legend {
 </div>
 <button type="submit" class="btn btn-secondary">今後対応予定</button>
 </fieldset>
-<input type="hidden" name="sort" th:value="${sortId}">
+<input type="hidden" name="sort" th:value="${sort}">
 </form>
 <form th:action="@{/admin/users}" method="get">
 <fieldset class="form-group p-2 border border-dark">
@@ -260,15 +260,15 @@ legend {
 <button type="submit" name="cond" value="and" class="btn btn-primary">AND検索</button>
 <button type="submit" name="cond" value="or" class="btn btn-primary">OR検索</button>
 </fieldset>
-<input type="hidden" name="sort" th:value="${sortId}">
+<input type="hidden" name="sort" th:value="${sort}">
 </form>
 <form th:action="@{/admin/users}" method="get">
 <div class="row p-2">
 <div class="col-sm-6 form-group">
 <select name="sort" class="custom-select custom-select-sm">
-<option value="0" th:selected="${sortId == 0}">最終ログイン順</option>
-<option value="1" th:selected="${sortId == 1}">名前順</option>
-<option value="2" th:selected="${sortId == 2}">大学名順</option>
+<option value="0" th:selected="${sort == 0}">最終ログイン順</option>
+<option value="1" th:selected="${sort == 1}">名前順</option>
+<option value="2" th:selected="${sort == 2}">大学名順</option>
 </select>
 </div>
 <div class="col-sm-6 text-sm-right form-group">

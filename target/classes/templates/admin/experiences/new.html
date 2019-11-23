@@ -21,7 +21,7 @@ legend {
 <header th:replace="common/header :: for-admin"></header>
 <main class="container-fluid">
 <h1>ES/体験記 登録</h1>
-<form th:action="@{/admin/experiences/{experienceId}(experienceId=${experienceId})}" method="post" th:object="${experienceForm}">
+<form th:action="@{/admin/experiences}" method="post" th:object="${experienceForm}">
 <fieldset class="form-group p-2 border border-dark">
 <legend>提供者情報</legend>
 <div class="mb-4">
@@ -433,7 +433,6 @@ legend {
 <div>
 <button type="submit" name="post" value="post" class="btn btn-primary">登録</button>
 <input type="hidden" id="contextPath" th:value="@{/}">
-<input type="hidden" id="experienceId" th:value="${experienceId}">
 </div>
 </form>
 </main>

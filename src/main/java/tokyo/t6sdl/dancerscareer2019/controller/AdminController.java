@@ -51,33 +51,21 @@ public class AdminController {
 	}
 	
 	@GetMapping(value = "/users")
-	public String usersIndex(@RequestParam(name = "sort", defaultValue = "0") String sort, Model model) {
-		int sortId;
-		try {
-			sortId = Integer.parseInt(sort);
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
-		Map<String, Object> result = profileService.getProfiles(sortId);
+	public String usersIndex(@RequestParam(name = "sort", defaultValue = "0") Integer sort, Model model) {
+		Map<String, Object> result = profileService.getProfiles(sort);
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("students", result.get("students"));
-		model.addAttribute("sortId", sortId);
+		model.addAttribute("sort", sort);
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		return "admin/users/index";
 	}
 	
 	@GetMapping(value = "/users", params = "download")
-	public ModelAndView downloadUsersIndex(@RequestParam(name = "sort", defaultValue = "0") String sort) {
-		int sortId;
-		try {
-			sortId = Integer.parseInt(sort);
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
+	public ModelAndView downloadUsersIndex(@RequestParam(name = "sort", defaultValue = "0") Integer sort) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<String> filter = Arrays.asList("なし", "-");
 		@SuppressWarnings("unchecked")
-		List<Student> students = (List<Student>) profileService.getProfiles(sortId).get("students");
+		List<Student> students = (List<Student>) profileService.getProfiles(sort).get("students");
 		map.put("filter", filter);
 		map.put("students", students);
 		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
@@ -87,24 +75,18 @@ public class AdminController {
 	}
 	
 	@GetMapping(value = "/users", params = {"kana-family-name", "kana-given-name"})
-	public String usersIndexFilteredByName(@RequestParam(name = "sort", defaultValue = "0") String sort, @RequestParam("kana-family-name") String kanaFamilyName, @RequestParam("kana-given-name") String kanaGivenName, Model model) {
-		int sortId;
-		try {
-			sortId = Integer.parseInt(sort);
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
+	public String usersIndexFilteredByName(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("kana-family-name") String kanaFamilyName, @RequestParam("kana-given-name") String kanaGivenName, Model model) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		if (!(kanaFamilyName.isEmpty()) && !(kanaGivenName.isEmpty())) {
-			result = profileService.getProfilesByName(sortId, kanaFamilyName, kanaGivenName);
+			result = profileService.getProfilesByName(sort, kanaFamilyName, kanaGivenName);
 		} else if (!(kanaFamilyName.isEmpty())) {
-			result = profileService.getProfilesByLastName(sortId, kanaFamilyName);
+			result = profileService.getProfilesByLastName(sort, kanaFamilyName);
 		} else {
-			return "redirect:/admin/users?sort=" + sortId;
+			return "redirect:/admin/users?sort=" + sort;
 		}
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("students", result.get("students"));
-		model.addAttribute("sortId", sortId);
+		model.addAttribute("sort", sort);
 		model.addAttribute("kanaFamilyName", kanaFamilyName);
 		model.addAttribute("kanaGivenName", kanaGivenName);
 		model.addAttribute("positionList", Profile.POSITION_LIST);
@@ -113,20 +95,14 @@ public class AdminController {
 	
 	@SuppressWarnings("unchecked")
 	@GetMapping(value = "/users", params = {"kana-family-name", "kana-given-name", "download"})
-	public ModelAndView downloadUsersIndexFilteredByName(@RequestParam(name = "sort", defaultValue = "0") String sort, @RequestParam("kana-family-name") String kanaFamilyName, @RequestParam("kana-given-name") String kanaGivenName) {
-		int sortId;
-		try {
-			sortId = Integer.parseInt(sort);
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
+	public ModelAndView downloadUsersIndexFilteredByName(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("kana-family-name") String kanaFamilyName, @RequestParam("kana-given-name") String kanaGivenName) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<String> filter = Arrays.asList("氏名(カナ)", kanaFamilyName + "," + kanaGivenName);
 		List<Student> students = new ArrayList<Student>();
 		if (!(kanaFamilyName.isEmpty()) && !(kanaGivenName.isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByName(sortId, kanaFamilyName, kanaGivenName).get("students");
+			students = (List<Student>) profileService.getProfilesByName(sort, kanaFamilyName, kanaGivenName).get("students");
 		} else if (!(kanaFamilyName.isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByLastName(sortId, kanaFamilyName).get("students");
+			students = (List<Student>) profileService.getProfilesByLastName(sort, kanaFamilyName).get("students");
 		}
 		map.put("filter", filter);
 		map.put("students", students);
@@ -137,28 +113,22 @@ public class AdminController {
 	}
 	
 	@GetMapping(value = "/users", params = {"univ-loc", "univ-type", "univ-name", "univ-fac", "univ-dep"})
-	public String usersIndexFilteredByUniv(@RequestParam(name = "sort", defaultValue = "0") String sort, @RequestParam("univ-loc") String univLoc, @RequestParam("univ-name") String univName, @RequestParam("univ-fac") String univFac, @RequestParam("univ-dep") String univDep, Model model) {
-		int sortId;
-		try {
-			sortId = Integer.parseInt(sort);
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
+	public String usersIndexFilteredByUniv(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("univ-loc") String univLoc, @RequestParam("univ-name") String univName, @RequestParam("univ-fac") String univFac, @RequestParam("univ-dep") String univDep, Model model) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		if (!(univDep.isEmpty())) {
-			result = profileService.getProfilesByDepartment(sortId, univLoc, univName, univFac, univDep);
+			result = profileService.getProfilesByDepartment(sort, univLoc, univName, univFac, univDep);
 		} else if (!(univFac.isEmpty())) {
-			result = profileService.getProfilesByFaculty(sortId, univLoc, univName, univFac);
+			result = profileService.getProfilesByFaculty(sort, univLoc, univName, univFac);
 		} else if (!(univName.isEmpty())) {
-			result = profileService.getProfilesByUniversity(sortId, univLoc, univName);
+			result = profileService.getProfilesByUniversity(sort, univLoc, univName);
 		} else if (!(univLoc.isEmpty())) {
-			result = profileService.getProfilesByPrefecture(sortId, univLoc);
+			result = profileService.getProfilesByPrefecture(sort, univLoc);
 		} else {
-			return "redirect:/admin/users?sort=" + sortId;
+			return "redirect:/admin/users?sort=" + sort;
 		}
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("students", result.get("students"));
-		model.addAttribute("sortId", sortId);
+		model.addAttribute("sort", sort);
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		model.addAttribute("hiddenUnivLoc", univLoc);
 		model.addAttribute("hiddenUnivName", univName);
@@ -169,24 +139,18 @@ public class AdminController {
 	
 	@SuppressWarnings("unchecked")
 	@GetMapping(value = "/users", params = {"univ-loc", "univ-type", "univ-name", "univ-fac", "univ-dep", "download"})
-	public ModelAndView downloadUsersIndexFilteredByUniv(@RequestParam(name = "sort", defaultValue = "0") String sort, @RequestParam("univ-loc") String univLoc, @RequestParam("univ-name") String univName, @RequestParam("univ-fac") String univFac, @RequestParam("univ-dep") String univDep) {
-		int sortId;
-		try {
-			sortId = Integer.parseInt(sort);
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
+	public ModelAndView downloadUsersIndexFilteredByUniv(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("univ-loc") String univLoc, @RequestParam("univ-name") String univName, @RequestParam("univ-fac") String univFac, @RequestParam("univ-dep") String univDep) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<String> filter = Arrays.asList("大学", univLoc + "," + univName + "," + univFac + "," + univDep);
 		List<Student> students = new ArrayList<Student>();
 		if (!(univDep.isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByDepartment(sortId, univLoc, univName, univFac, univDep).get("students");
+			students = (List<Student>) profileService.getProfilesByDepartment(sort, univLoc, univName, univFac, univDep).get("students");
 		} else if (!(univFac.isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByFaculty(sortId, univLoc, univName, univFac).get("students");
+			students = (List<Student>) profileService.getProfilesByFaculty(sort, univLoc, univName, univFac).get("students");
 		} else if (!(univName.isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByUniversity(sortId, univLoc, univName).get("students");
+			students = (List<Student>) profileService.getProfilesByUniversity(sort, univLoc, univName).get("students");
 		} else if (!(univLoc.isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByPrefecture(sortId, univLoc).get("students");
+			students = (List<Student>) profileService.getProfilesByPrefecture(sort, univLoc).get("students");
 		}
 		map.put("filter", filter);
 		map.put("students", students);
@@ -197,22 +161,16 @@ public class AdminController {
 	}
 	
 	@GetMapping(value = "/users", params = {"pos", "cond=and"})
-	public String usersIndexFilteredByPosAndPos(@RequestParam(name = "sort", defaultValue = "0") String sort, @RequestParam("pos") List<String> positions, Model model) {
-		int sortId;
-		try {
-			sortId = Integer.parseInt(sort);
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
+	public String usersIndexFilteredByPosAndPos(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("pos") List<String> positions, Model model) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		if (!(positions.isEmpty()) && !(positions.get(0).isEmpty())) {
-			result = profileService.getProfilesByPosition(sortId, positions, true);
+			result = profileService.getProfilesByPosition(sort, positions, true);
 		} else {
-			return "redirect:/admin/users?sort=" + sortId;
+			return "redirect:/admin/users?sort=" + sort;
 		}
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("students", result.get("students"));
-		model.addAttribute("sortId", sortId);
+		model.addAttribute("sort", sort);
 		model.addAttribute("positions", positions);
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		return "admin/users/index";
@@ -220,18 +178,12 @@ public class AdminController {
 	
 	@SuppressWarnings("unchecked")
 	@GetMapping(value = "/users", params = {"pos", "cond=and", "download"})
-	public ModelAndView downloadUsersIndexFilteredByPosAndPos(@RequestParam(name="sort") String sort, @RequestParam(name="pos") List<String> positions) {
-		int sortId;
-		try {
-			sortId = Integer.parseInt(sort);
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
+	public ModelAndView downloadUsersIndexFilteredByPosAndPos(@RequestParam(name="sort") Integer sort, @RequestParam(name="pos") List<String> positions) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<String> filter = Arrays.asList("役職(AND)", String.join(",", positions));
 		List<Student> students = new ArrayList<Student>();
 		if (!(positions.isEmpty()) && !(positions.get(0).isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByPosition(sortId, positions, true).get("students");
+			students = (List<Student>) profileService.getProfilesByPosition(sort, positions, true).get("students");
 		}
 		map.put("filter", filter);
 		map.put("students", students);
@@ -242,22 +194,16 @@ public class AdminController {
 	}
 	
 	@GetMapping(value = "/users", params = {"pos", "cond=or"})
-	public String usersIndexFilteredByPosOrPos(@RequestParam(name = "sort", defaultValue = "0") String sort, @RequestParam("pos") List<String> positions, Model model) {
-		int sortId;
-		try {
-			sortId = Integer.parseInt(sort);
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
+	public String usersIndexFilteredByPosOrPos(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("pos") List<String> positions, Model model) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		if (!(positions.isEmpty()) && !(positions.get(0).isEmpty())) {
-			result = profileService.getProfilesByPosition(sortId, positions, false);
+			result = profileService.getProfilesByPosition(sort, positions, false);
 		} else {
-			return "redirect:/admin/users?sort=" + sortId;
+			return "redirect:/admin/users?sort=" + sort;
 		}
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("students", result.get("students"));
-		model.addAttribute("sortId", sortId);
+		model.addAttribute("sort", sort);
 		model.addAttribute("positions", positions);
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		return "admin/users/index";
@@ -265,18 +211,12 @@ public class AdminController {
 	
 	@SuppressWarnings("unchecked")
 	@GetMapping(value = "/users", params = {"pos", "cond=or", "download"})
-	public ModelAndView downloadUsersIndexFilteredByPosOrPos(@RequestParam(name="sort") String sort, @RequestParam(name="pos") List<String> positions) {
-		int sortId;
-		try {
-			sortId = Integer.parseInt(sort);
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
+	public ModelAndView downloadUsersIndexFilteredByPosOrPos(@RequestParam(name="sort") Integer sort, @RequestParam(name="pos") List<String> positions) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<String> filter = Arrays.asList("役職(OR)", String.join(",", positions));
 		List<Student> students = new ArrayList<Student>();
 		if (!(positions.isEmpty()) && !(positions.get(0).isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByPosition(sortId, positions, true).get("students");
+			students = (List<Student>) profileService.getProfilesByPosition(sort, positions, true).get("students");
 		}
 		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
 		map.put("filter", filter);
@@ -288,40 +228,28 @@ public class AdminController {
 	}
 	
 	@GetMapping(value = "/experiences")
-	public String expsIndex(@RequestParam(name = "sort", defaultValue = "0") String sort, Model model) {
-		int sortId;
-		try {
-			sortId = Integer.parseInt(sort);
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
-		Map<String, Object> result = experienceService.getExperiences(sortId);
+	public String expsIndex(@RequestParam(name = "sort", defaultValue = "0") Integer sort, Model model) {
+		Map<String, Object> result = experienceService.getExperiences(sort);
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("experiences", result.get("experiences"));
-		model.addAttribute("sortId", sortId);
+		model.addAttribute("sort", sort);
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		return "admin/experiences/index";
 	}
 	
 	@GetMapping(value = "/experiences", params = {"kana-family-name", "kana-given-name"})
-	public String expsIndexFilteredByName(@RequestParam(name = "sort", defaultValue = "0") String sort, @RequestParam("kana-family-name") String kanaFamilyName, @RequestParam("kana-given-name") String kanaGivenName, Model model) {
-		int sortId;
-		try {
-			sortId = Integer.parseInt(sort);
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
+	public String expsIndexFilteredByName(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("kana-family-name") String kanaFamilyName, @RequestParam("kana-given-name") String kanaGivenName, Model model) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		if (!(kanaFamilyName.isEmpty()) && !(kanaGivenName.isEmpty())) {
-			result = experienceService.getExperiencesByName(sortId, kanaFamilyName, kanaGivenName);
+			result = experienceService.getExperiencesByName(sort, kanaFamilyName, kanaGivenName);
 		} else if (!(kanaFamilyName.isEmpty())) {
-			result = experienceService.getExperiencesByLastName(sortId, kanaFamilyName);
+			result = experienceService.getExperiencesByLastName(sort, kanaFamilyName);
 		} else {
-			return "redirect:/admin/experiences?sort=" + sortId;
+			return "redirect:/admin/experiences?sort=" + sort;
 		}
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("experiences", result.get("experiences"));
-		model.addAttribute("sortId", sortId);
+		model.addAttribute("sort", sort);
 		model.addAttribute("kanaFamilyName", kanaFamilyName);
 		model.addAttribute("kanaGivenName", kanaGivenName);
 		model.addAttribute("positionList", Profile.POSITION_LIST);
@@ -329,28 +257,22 @@ public class AdminController {
 	}
 	
 	@GetMapping(value = "/experiences", params = {"univ-loc", "univ-type", "univ-name", "univ-fac", "univ-dep"})
-	public String expsIndexFilteredByUniv(@RequestParam(name = "sort", defaultValue = "0") String sort, @RequestParam("univ-loc") String univLoc, @RequestParam("univ-name") String univName, @RequestParam("univ-fac") String univFac, @RequestParam("univ-dep") String univDep, Model model) {
-		int sortId;
-		try {
-			sortId = Integer.parseInt(sort);
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
+	public String expsIndexFilteredByUniv(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("univ-loc") String univLoc, @RequestParam("univ-name") String univName, @RequestParam("univ-fac") String univFac, @RequestParam("univ-dep") String univDep, Model model) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		if (!(univDep.isEmpty())) {
-			result = experienceService.getExperiencesByDepartment(sortId, univLoc, univName, univFac, univDep);
+			result = experienceService.getExperiencesByDepartment(sort, univLoc, univName, univFac, univDep);
 		} else if (!(univFac.isEmpty())) {
-			result = experienceService.getExperiencesByFaculty(sortId, univLoc, univName, univFac);
+			result = experienceService.getExperiencesByFaculty(sort, univLoc, univName, univFac);
 		} else if (!(univName.isEmpty())) {
-			result = experienceService.getExperiencesByUniversity(sortId, univLoc, univName);
+			result = experienceService.getExperiencesByUniversity(sort, univLoc, univName);
 		} else if (!(univLoc.isEmpty())) {
-			result = experienceService.getExperiencesByPrefecture(sortId, univLoc);
+			result = experienceService.getExperiencesByPrefecture(sort, univLoc);
 		} else {
-			return "redirect:/admin/experiences?sort=" + sortId;
+			return "redirect:/admin/experiences?sort=" + sort;
 		}
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("experiences", result.get("experiences"));
-		model.addAttribute("sortId", sortId);
+		model.addAttribute("sort", sort);
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		model.addAttribute("hiddenUnivLoc", univLoc);
 		model.addAttribute("hiddenUnivName", univName);
@@ -360,64 +282,54 @@ public class AdminController {
 	}
 	
 	@GetMapping(value = "/experiences", params = {"pos", "cond=and"})
-	public String expsIndexFilteredByPosAndPos(@RequestParam(name = "sort", defaultValue = "0") String sort, @RequestParam("pos") List<String> positions, Model model) {
-		int sortId;
-		try {
-			sortId = Integer.parseInt(sort);
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
+	public String expsIndexFilteredByPosAndPos(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("pos") List<String> positions, Model model) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		if (!(positions.isEmpty()) && !(positions.get(0).isEmpty())) {
-			result = experienceService.getExperiencesByPosition(sortId, positions, true);
+			result = experienceService.getExperiencesByPosition(sort, positions, true);
 		} else {
-			return "redirect:/admin/experiences?sort=" + sortId;
+			return "redirect:/admin/experiences?sort=" + sort;
 		}
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("experiences", result.get("experiences"));
-		model.addAttribute("sortId", sortId);
+		model.addAttribute("sort", sort);
 		model.addAttribute("positions", positions);
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		return "admin/experiences/index";
 	}
 	
 	@GetMapping(value = "/experiences", params = {"pos", "cond=or"})
-	public String expsIndexFilteredByPosOrPos(@RequestParam(name = "sort", defaultValue = "0") String sort, @RequestParam("pos") List<String> positions, Model model) {
-		int sortId;
-		try {
-			sortId = Integer.parseInt(sort);
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
+	public String expsIndexFilteredByPosOrPos(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("pos") List<String> positions, Model model) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		if (!(positions.isEmpty()) && !(positions.get(0).isEmpty())) {
-			result = experienceService.getExperiencesByPosition(sortId, positions, false);
+			result = experienceService.getExperiencesByPosition(sort, positions, false);
 		} else {
-			return "redirect:/admin/experiences?sort=" + sortId;
+			return "redirect:/admin/experiences?sort=" + sort;
 		}
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("experiences", result.get("experiences"));
-		model.addAttribute("sortId", sortId);
+		model.addAttribute("sort", sort);
 		model.addAttribute("positions", positions);
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		return "admin/experiences/index";
+	}
+	
+	@GetMapping("/experiences/new")
+	public String expsNew(Model model) {
+		ExperienceForm form = new ExperienceForm();
+		form.init();
+		model.addAttribute(form);
+		model.addAttribute("positionList", Profile.POSITION_LIST);
+		return "admin/experiences/new";
 	}
 	
 	@GetMapping(value="/experiences/{experienceId}")
 	public String getSubmitExperiences(@PathVariable(name="experienceId") String experienceId, Model model) {
 		model.addAttribute("experienceId", experienceId);
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		if (experienceId.equals("new")) {
-			ExperienceForm form = new ExperienceForm();
-			form.init();
-			model.addAttribute(form);
-			return "admin/experiences/submit";
-		} else {
-			int id = Integer.parseInt(experienceId);
-			Experience experience = experienceService.getExperienceById(id, true, false);
-			model.addAttribute(experience);
-			return "admin/experiences/detail";
-		}
+		int id = Integer.parseInt(experienceId);
+		Experience experience = experienceService.getExperienceById(id, true, false);
+		model.addAttribute(experience);
+		return "admin/experiences/detail";
 	}
 	
 	@GetMapping(value="/experiences/{experienceId}", params="delete")
