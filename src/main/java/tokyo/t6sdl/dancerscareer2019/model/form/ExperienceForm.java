@@ -10,27 +10,27 @@ import lombok.Data;
 
 @Data
 public class ExperienceForm {
-	private String lastName;
-	private String firstName;
-	private String kanaLastName;
-	private String kanaFirstName;
+	private String familyName;
+	private String givenName;
+	private String kanaFamilyName;
+	private String kanaGivenName;
 	private String sex;
 	private String major;
 	@NotEmpty
-	private String univPref;
+	private String univLoc;
 	@NotEmpty
-	private String univCategory;
+	private String univType;
 	@NotEmpty
 	private String univName;
-	private String faculty;
-	private String department;
-	private String gradSchoolPref;
-	private String gradSchoolCategory;
-	private String gradSchoolName;
-	private String gradSchoolOf;
-	private String programIn;
-	private String graduation;
-	private String academicDegree;
+	private String univFac;
+	private String univDep;
+	private String gradLoc;
+	private String gradType;
+	private String gradName;
+	private String gradSchool;
+	private String gradDiv;
+	private String graduatedIn;
+	private String degree;
 	@NotEmpty
 	private List<String> position;
 	private List<String> club;

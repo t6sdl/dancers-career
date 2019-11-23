@@ -27,7 +27,7 @@ legend {
 <header th:replace="common/header :: for-admin"></header>
 <main class="container-fluid">
 <h1>ES/体験記 登録</h1>
-<form th:action="@{/admin/experiences/new}" method="post" th:object="${experienceForm}">
+<form th:action="@{/admin/experiences}" method="post" th:object="${experienceForm}">
 <fieldset class="form-group p-2 border border-dark">
 <legend>提供者情報</legend>
 <div class="mb-4">
@@ -35,24 +35,24 @@ legend {
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">氏名</div>
 <div class="col-sm-5">
-<span class="form-control disabled" th:text="*{lastName} == '' ? '非公開' : *{lastName}"></span>
+<span class="form-control disabled" th:text="*{familyName} == '' ? '非公開' : *{familyName}"></span>
 </div>
 <div class="col-sm-5">
-<span class="form-control disabled" th:text="*{firstName} == '' ? '非公開' : *{firstName}"></span>
+<span class="form-control disabled" th:text="*{givenName} == '' ? '非公開' : *{givenName}"></span>
 </div>
-<input type="hidden" th:field="*{lastName}">
-<input type="hidden" th:field="*{firstName}">
+<input type="hidden" th:field="*{familyName}">
+<input type="hidden" th:field="*{givenName}">
 </div>
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">シメイ</div>
 <div class="col-sm-5">
-<span class="form-control disabled" th:text="*{kanaLastName} == '' ? '非公開' : *{kanaLastName}"></span>
+<span class="form-control disabled" th:text="*{kanaFamilyName} == '' ? '非公開' : *{kanaFamilyName}"></span>
 </div>
 <div class="col-sm-5">
-<span class="form-control disabled" th:text="*{kanaFirstName} == '' ? '非公開' : *{kanaFirstName}"></span>
+<span class="form-control disabled" th:text="*{kanaGivenName} == '' ? '非公開' : *{kanaGivenName}"></span>
 </div>
-<input type="hidden" th:field="*{kanaLastName}">
-<input type="hidden" th:field="*{kanaFirstName}">
+<input type="hidden" th:field="*{kanaFamilyName}">
+<input type="hidden" th:field="*{kanaGivenName}">
 </div>
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">性別</div>
@@ -67,19 +67,19 @@ legend {
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">卒業年度</div>
 <div class="col-sm-10">
-<select class="custom-select w-auto" th:with="graduation=(*{graduation} == '' ? '非公開' : *{graduation})" disabled>
-<option th:value="${graduation}" th:text="${graduation}"></option>
+<select class="custom-select w-auto" th:with="graduatedIn=(*{graduatedIn} == '' ? '非公開' : *{graduatedIn})" disabled>
+<option th:value="${graduatedIn}" th:text="${graduatedIn}"></option>
 </select>
 <span>年度</span>
 </div>
-<input type="hidden" th:field="*{graduation}">
+<input type="hidden" th:field="*{graduatedIn}">
 </div>
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">最終学歴</div>
 <div class="col-sm-10">
-<button class="btn btn-sm btn-info" th:text="*{academicDegree} == '' ? '非公開' : *{academicDegree}" disabled></button>
+<button class="btn btn-sm btn-info" th:text="*{degree} == '' ? '非公開' : *{degree}" disabled></button>
 </div>
-<input type="hidden" th:field="*{academicDegree}">
+<input type="hidden" th:field="*{degree}">
 </div>
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">文理</div>
@@ -94,11 +94,11 @@ legend {
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">都道府県</div>
 <div class="col-sm-10">
-<select class="custom-select" th:with="univPref=(*{univPref} == '' ? '非公開' : *{univPref})" disabled>
-<option th:value="${univPref}" th:text="${univPref}"></option>
+<select class="custom-select" th:with="univLoc=(*{univLoc} == '' ? '非公開' : *{univLoc})" disabled>
+<option th:value="${univLoc}" th:text="${univLoc}"></option>
 </select>
 </div>
-<input type="hidden" th:field="*{univPref}">
+<input type="hidden" th:field="*{univLoc}">
 </div>
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">大学</div>
@@ -112,59 +112,59 @@ legend {
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">学部</div>
 <div class="col-sm-10">
-<select class="custom-select" th:with="faculty=(*{faculty} == '' ? '非公開' : *{faculty})" disabled>
-<option th:value="${faculty}" th:text="${faculty}"></option>
+<select class="custom-select" th:with="univFac=(*{univFac} == '' ? '非公開' : *{univFac})" disabled>
+<option th:value="${univFac}" th:text="${univFac}"></option>
 </select>
 </div>
-<input type="hidden" th:field="*{faculty}">
+<input type="hidden" th:field="*{univFac}">
 </div>
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">学科</div>
 <div class="col-sm-10">
-<select class="custom-select" th:with="department=(*{department} == '' ? '非公開' : *{department})" disabled>
-<option th:value="${department}" th:text="${department}"></option>
+<select class="custom-select" th:with="univDep=(*{univDep} == '' ? '非公開' : *{univDep})" disabled>
+<option th:value="${univDep}" th:text="${univDep}"></option>
 </select>
 </div>
-<input type="hidden" th:field="*{department}">
+<input type="hidden" th:field="*{univDep}">
 </div>
 </div>
-<div th:classappend="*{gradSchoolPref.isEmpty()} ? 'd-none' : ''" class="mb-4">
+<div th:classappend="*{gradLoc.isEmpty()} ? 'd-none' : ''" class="mb-4">
 <h2>大学院</h2>
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">都道府県</div>
 <div class="col-sm-10">
-<select class="custom-select" th:with="gradSchoolPref=(*{gradSchoolPref} == '' ? '非公開' : *{gradSchoolPref})" disabled>
-<option th:value="${gradSchoolPref}" th:text="${gradSchoolPref}"></option>
+<select class="custom-select" th:with="gradLoc=(*{gradLoc} == '' ? '非公開' : *{gradLoc})" disabled>
+<option th:value="${gradLoc}" th:text="${gradLoc}"></option>
 </select>
 </div>
-<input type="hidden" th:field="*{gradSchoolPref}">
+<input type="hidden" th:field="*{gradLoc}">
 </div>
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">大学院</div>
 <div class="col-sm-10">
-<select class="custom-select" th:with="gradSchoolName=(*{gradSchoolName} == '' ? '非公開' : *{gradSchoolName})" disabled>
-<option th:value="${gradSchoolName}" th:text="${gradSchoolName}"></option>
+<select class="custom-select" th:with="gradName=(*{gradName} == '' ? '非公開' : *{gradName})" disabled>
+<option th:value="${gradName}" th:text="${gradName}"></option>
 </select>
 </div>
-<input type="hidden" th:field="*{gradSchoolName}">
+<input type="hidden" th:field="*{gradName}">
 </div>
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">研究科等</div>
 <div class="col-sm-10">
-<select class="custom-select" th:with="gradSchoolOf=(*{gradSchoolOf} == '' ? '非公開' : *{gradSchoolOf})" disabled>
-<option th:value="${gradSchoolOf}" th:text="${gradSchoolOf}"></option>
+<select class="custom-select" th:with="gradSchool=(*{gradSchool} == '' ? '非公開' : *{gradSchool})" disabled>
+<option th:value="${gradSchool}" th:text="${gradSchool}"></option>
 </select>
 </div>
-<input type="hidden" th:field="*{gradSchoolOf}">
+<input type="hidden" th:field="*{gradSchool}">
 </div>
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">専攻等</div>
 <div class="col-sm-10">
-<select class="custom-select" th:with="programIn=(*{programIn} == '' ? '非公開' : *{programIn})" disabled>
-<option th:value="${programIn}" th:text="${programIn}"></option>
+<select class="custom-select" th:with="gradDiv=(*{gradDiv} == '' ? '非公開' : *{gradDiv})" disabled>
+<option th:value="${gradDiv}" th:text="${gradDiv}"></option>
 </select>
 </div>
-<input type="hidden" th:field="*{programIn}">
+<input type="hidden" th:field="*{gradDiv}">
 </div>
 </div>
 <div>
@@ -267,8 +267,8 @@ legend {
 </div>
 </fieldset>
 <div>
-<button type="submit" name="modify" value="modify" class="btn btn-secondary">修正</button>
-<button type="submit" name="complete" value="complete" class="btn btn-primary">完了</button>
+<button type="submit" th:formaction="@{/admin/experiences/new}" name="edit" class="btn btn-secondary">修正</button>
+<button type="submit" class="btn btn-primary">完了</button>
 </div>
 </form>
 </main>

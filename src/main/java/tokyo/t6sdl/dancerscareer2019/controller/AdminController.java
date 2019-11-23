@@ -313,6 +313,13 @@ public class AdminController {
 		return "admin/experiences/index";
 	}
 	
+	@PostMapping("/experiences")
+	public String expsCreate(@Validated ExperienceForm form, BindingResult result, Model model) {
+		Experience newExperience = experienceService.convertExperienceFormIntoExperience(form);
+		experienceService.register(newExperience);
+		return "admin/experiences/create";
+	}
+	
 	@GetMapping("/experiences/new")
 	public String expsNew(Model model) {
 		ExperienceForm form = new ExperienceForm();
@@ -321,6 +328,47 @@ public class AdminController {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		return "admin/experiences/new";
 	}
+	
+	@PostMapping("/experiences/new")
+	public String expsView(@Validated ExperienceForm form, BindingResult result, Model model) {
+		form.setClub(this.cleanUp(form.getClub(), ""));
+		form.setOffer(this.cleanUp(form.getOffer(), ""));
+		form.setEs(this.cleanUp(form.getEs(), new EsForm()));
+		form.setInterview(this.cleanUp(form.getInterview(), new InterviewForm()));
+		if (result.hasErrors()) {
+			model.addAttribute("positionList", Profile.POSITION_LIST);
+			model.addAttribute("hiddenUnivLoc", form.getUnivLoc());
+			model.addAttribute("hiddenUnivName", form.getUnivName());
+			model.addAttribute("hiddenUnivFac", form.getUnivFac());
+			model.addAttribute("hiddenUnivDep", form.getUnivDep());
+			model.addAttribute("hiddenGradLoc", form.getGradLoc());
+			model.addAttribute("hiddenGradName", form.getGradName());
+			model.addAttribute("hiddenGradSchool", form.getGradSchool());
+			model.addAttribute("hiddenGradDiv", form.getGradDiv());
+			return "admin/experiences/new";
+		} else {
+			model.addAttribute(form);
+			return "admin/experiences/view";
+		}
+	}
+	
+	@PostMapping(value = "/experiences/new", params = "edit")
+	public String expsNewEdit(@Validated ExperienceForm form, BindingResult result, Model model) {
+		model.addAttribute("experienceId", "new");
+		model.addAttribute("positionList", Profile.POSITION_LIST);
+		model.addAttribute("hiddenUnivLoc", form.getUnivLoc());
+		model.addAttribute("hiddenUnivName", form.getUnivName());
+		model.addAttribute("hiddenUnivFac", form.getUnivFac());
+		model.addAttribute("hiddenUnivDep", form.getUnivDep());
+		model.addAttribute("hiddenGradLoc", form.getGradLoc());
+		model.addAttribute("hiddenGradName", form.getGradName());
+		model.addAttribute("hiddenGradSchool", form.getGradSchool());
+		model.addAttribute("hiddenGradDiv", form.getGradDiv());
+		model.addAttribute(form);
+		return "admin/experiences/new";
+	}
+	
+//	unmodified below
 	
 	@GetMapping(value="/experiences/{experienceId}")
 	public String getSubmitExperiences(@PathVariable(name="experienceId") String experienceId, Model model) {
@@ -350,14 +398,14 @@ public class AdminController {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		int id = Integer.parseInt(experienceId);
 		ExperienceForm form = experienceService.convertExperienceIntoExperienceForm(experienceService.getExperienceById(id, false, false));
-		model.addAttribute("hiddenUnivPref", form.getUnivPref());
+		model.addAttribute("hiddenUnivLoc", form.getUnivLoc());
 		model.addAttribute("hiddenUnivName", form.getUnivName());
-		model.addAttribute("hiddenFac", form.getFaculty());
-		model.addAttribute("hiddenDep", form.getDepartment());
-		model.addAttribute("hiddenGradSchoolPref", form.getGradSchoolPref());
-		model.addAttribute("hiddenGradSchoolName", form.getGradSchoolName());
-		model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
-		model.addAttribute("hiddenProgramIn", form.getProgramIn());
+		model.addAttribute("hiddenUnivFac", form.getUnivFac());
+		model.addAttribute("hiddenUnivDep", form.getUnivDep());
+		model.addAttribute("hiddenGradLoc", form.getGradLoc());
+		model.addAttribute("hiddenGradName", form.getGradName());
+		model.addAttribute("hiddenGradSchool", form.getGradSchool());
+		model.addAttribute("hiddenGradDiv", form.getGradDiv());
 		model.addAttribute(form);
 		return "admin/experiences/modify";
 	}
@@ -365,72 +413,26 @@ public class AdminController {
 	@PostMapping(value="/experiences/{experienceId}", params="post")
 	public String postSubmitExperiences(@PathVariable(name="experienceId") String experienceId, @Validated ExperienceForm form, BindingResult result, Model model) {
 		model.addAttribute("experienceId", experienceId);
-		switch (experienceId) {
-			case "new":
-				form.setClub(this.cleanUp(form.getClub(), ""));
-				form.setOffer(this.cleanUp(form.getOffer(), ""));
-				form.setEs(this.cleanUp(form.getEs(), new EsForm()));
-				form.setInterview(this.cleanUp(form.getInterview(), new InterviewForm()));
-				if (result.hasErrors()) {
-					model.addAttribute("positionList", Profile.POSITION_LIST);
-					model.addAttribute("hiddenUnivPref", form.getUnivPref());
-					model.addAttribute("hiddenUnivName", form.getUnivName());
-					model.addAttribute("hiddenFac", form.getFaculty());
-					model.addAttribute("hiddenDep", form.getDepartment());
-					model.addAttribute("hiddenGradSchoolPref", form.getGradSchoolPref());
-					model.addAttribute("hiddenGradSchoolName", form.getGradSchoolName());
-					model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
-					model.addAttribute("hiddenProgramIn", form.getProgramIn());
-					return "admin/experiences/submit";
-				} else {
-					model.addAttribute(form);
-					return "admin/experiences/confirm";
-				}
-			default:
-				form.setClub(this.cleanUp(form.getClub(), ""));
-				form.setOffer(this.cleanUp(form.getOffer(), ""));
-				if (result.hasErrors()) {
-					model.addAttribute("positionList", Profile.POSITION_LIST);
-					model.addAttribute("hiddenUnivPref", form.getUnivPref());
-					model.addAttribute("hiddenUnivName", form.getUnivName());
-					model.addAttribute("hiddenFac", form.getFaculty());
-					model.addAttribute("hiddenDep", form.getDepartment());
-					model.addAttribute("hiddenGradSchoolPref", form.getGradSchoolPref());
-					model.addAttribute("hiddenGradSchoolName", form.getGradSchoolName());
-					model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
-					model.addAttribute("hiddenProgramIn", form.getProgramIn());
-					return "admin/experiences/modify";
-				} else {
-					int experience_id = Integer.parseInt(experienceId);
-					Experience experience = experienceService.convertExperienceFormIntoExperience(form);
-					experience.setExperience_id(experience_id);
-					experienceService.update(experience);
-					return "redirect:/admin/experiences/" + experienceId;
-				}
+		form.setClub(this.cleanUp(form.getClub(), ""));
+		form.setOffer(this.cleanUp(form.getOffer(), ""));
+		if (result.hasErrors()) {
+			model.addAttribute("positionList", Profile.POSITION_LIST);
+			model.addAttribute("hiddenUnivLoc", form.getUnivLoc());
+			model.addAttribute("hiddenUnivName", form.getUnivName());
+			model.addAttribute("hiddenUnivFac", form.getUnivFac());
+			model.addAttribute("hiddenUnivDep", form.getUnivDep());
+			model.addAttribute("hiddenGradLoc", form.getGradLoc());
+			model.addAttribute("hiddenGradName", form.getGradName());
+			model.addAttribute("hiddenGradSchool", form.getGradSchool());
+			model.addAttribute("hiddenGradDiv", form.getGradDiv());
+			return "admin/experiences/modify";
+		} else {
+			int experience_id = Integer.parseInt(experienceId);
+			Experience experience = experienceService.convertExperienceFormIntoExperience(form);
+			experience.setExperience_id(experience_id);
+			experienceService.update(experience);
+			return "redirect:/admin/experiences/" + experienceId;
 		}
-	}
-	
-	@PostMapping(value="/experiences/new", params="modify")
-	public String postNotCompleteExperiences(@Validated ExperienceForm form, BindingResult result, Model model) {
-		model.addAttribute("experienceId", "new");
-		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute("hiddenUnivPref", form.getUnivPref());
-		model.addAttribute("hiddenUnivName", form.getUnivName());
-		model.addAttribute("hiddenFac", form.getFaculty());
-		model.addAttribute("hiddenDep", form.getDepartment());
-		model.addAttribute("hiddenGradSchoolPref", form.getGradSchoolPref());
-		model.addAttribute("hiddenGradSchoolName", form.getGradSchoolName());
-		model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
-		model.addAttribute("hiddenProgramIn", form.getProgramIn());
-		model.addAttribute(form);
-		return "admin/experiences/submit";
-	}
-	
-	@PostMapping(value="/experiences/new", params="complete")
-	public String postCompleteExperiences(@Validated ExperienceForm form, BindingResult result, Model model) {
-		Experience newExperience = experienceService.convertExperienceFormIntoExperience(form);
-		experienceService.register(newExperience);
-		return "admin/experiences/complete";
 	}
 	
 	@GetMapping("/experiences/{experienceId}/es/new")
