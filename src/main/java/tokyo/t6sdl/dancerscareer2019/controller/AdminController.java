@@ -370,14 +370,11 @@ public class AdminController {
 	
 //	unmodified below
 	
-	@GetMapping(value="/experiences/{experienceId}")
-	public String getSubmitExperiences(@PathVariable(name="experienceId") String experienceId, Model model) {
-		model.addAttribute("experienceId", experienceId);
-		model.addAttribute("positionList", Profile.POSITION_LIST);
-		int id = Integer.parseInt(experienceId);
-		Experience experience = experienceService.getExperienceById(id, true, false);
-		model.addAttribute(experience);
-		return "admin/experiences/detail";
+	@GetMapping(value="/experiences/{expId}")
+	public String expsShow(@PathVariable(name="expId") Integer expId, Model model) {
+		Experience experience = experienceService.getExperienceById(expId, true, false);
+		model.addAttribute("experience", experience);
+		return "admin/experiences/show";
 	}
 	
 	@GetMapping(value="/experiences/{experienceId}", params="delete")

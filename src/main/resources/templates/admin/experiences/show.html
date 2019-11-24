@@ -160,7 +160,7 @@ legend {
 </div>
 </div>
 <hr>
-<a class="btn btn-primary" th:href="@{/admin/experiences/{experienceId}?modify(experienceId=*{experience_id})}">修正</a>
+<a class="btn btn-primary" th:href="@{/admin/experiences/{expId}?modify(expId=*{experience_id})}">修正</a>
 </fieldset>
 <fieldset class="form-group p-2 border border-dark">
 <legend>ES</legend>
@@ -201,7 +201,7 @@ legend {
 </th:block>
 </span>
 </div>
-<a class="btn btn-primary" th:href="@{/admin/experiences/{experienceId}/es/{esId}?modify(experienceId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}">修正</a>
+<a class="btn btn-primary" th:href="@{/admin/experiences/{expId}/es/{esId}?modify(expId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}">修正</a>
 <button type="button" class="btn btn-danger" data-toggle="modal" th:data-target="|#deleteEs*{es[__${loop.index}__].es_id}|">削除</button>
 <div class="modal fade" th:id="|deleteEs*{es[__${loop.index}__].es_id}|" tabindex="-1" role="dialog" aria-labelledby="deleteEsLabel" aria-hidden="true">
 <div class="modal-dialog" role="document">
@@ -215,14 +215,14 @@ legend {
 <div class="modal-body">この操作は取り消せません。</div>
 <div class="modal-footer">
 <button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
-<a class="btn btn-danger" th:href="@{/admin/experiences/{experienceId}/es/{esId}?delete(experienceId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}">削除</a>
+<a class="btn btn-danger" th:href="@{/admin/experiences/{expId}/es/{esId}?delete(expId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}">削除</a>
 </div>
 </div>
 </div>
 </div>
 <hr>
 </div>
-<a class="btn btn-success" th:href="@{/admin/experiences/{experienceId}/es/new(experienceId=*{experience_id})}">追加</a>
+<a class="btn btn-success" th:href="@{/admin/experiences/{expId}/es/new(expId=*{experience_id})}">追加</a>
 </fieldset>
 <fieldset class="form-group p-2 border border-dark">
 <legend>Interview</legend>
@@ -242,7 +242,7 @@ legend {
 </th:block>
 </span>
 </div>
-<a class="btn btn-primary" th:href="@{/admin/experiences/{experienceId}/interview/{interviewId}?modify(experienceId=*{experience_id},interviewId=*{interview[__${loop.index}__].interview_id})}">修正</a>
+<a class="btn btn-primary" th:href="@{/admin/experiences/{expId}/interview/{interviewId}?modify(expId=*{experience_id},interviewId=*{interview[__${loop.index}__].interview_id})}">修正</a>
 <button type="button" class="btn btn-danger" data-toggle="modal" th:data-target="|#deleteInterview*{interview[__${loop.index}__].interview_id}|">削除</button>
 <div class="modal fade" th:id="|deleteInterview*{interview[__${loop.index}__].interview_id}|" tabindex="-1" role="dialog" aria-labelledby="deleteInterviewLabel" aria-hidden="true">
 <div class="modal-dialog" role="document">
@@ -256,14 +256,14 @@ legend {
 <div class="modal-body">この操作は取り消せません。</div>
 <div class="modal-footer">
 <button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
-<a class="btn btn-danger" th:href="@{/admin/experiences/{experienceId}/interview/{interviewId}?delete(experienceId=*{experience_id},interviewId=*{interview[__${loop.index}__].interview_id})}">削除</a>
+<a class="btn btn-danger" th:href="@{/admin/experiences/{expId}/interview/{interviewId}?delete(expId=*{experience_id},interviewId=*{interview[__${loop.index}__].interview_id})}">削除</a>
 </div>
 </div>
 </div>
 </div>
 <hr>
 </div>
-<a class="btn btn-success" th:href="@{/admin/experiences/{experienceId}/interview/new(experienceId=*{experience_id})}">追加</a>
+<a class="btn btn-success" th:href="@{/admin/experiences/{expId}/interview/new(expId=*{experience_id})}">追加</a>
 </fieldset>
 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteExperience">このES/体験記を削除</button>
 <div class="modal fade" id="deleteExperience" tabindex="-1" role="dialog" aria-labelledby="deleteExperienceLabel" aria-hidden="true">
@@ -278,7 +278,7 @@ legend {
 <div class="modal-body">この操作は取り消せません。</div>
 <div class="modal-footer">
 <button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
-<a class="btn btn-danger" th:href="@{/admin/experiences/{experienceId}?delete(experienceId=*{experience_id})}">削除</a>
+<a class="btn btn-danger" th:href="@{/admin/experiences/{expId}?delete(expId=*{experience_id})}">削除</a>
 </div>
 </div>
 </div>
