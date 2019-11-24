@@ -201,7 +201,7 @@ legend {
 </th:block>
 </span>
 </div>
-<a class="btn btn-primary" th:href="@{/admin/experiences/{expId}/es/{esId}?modify(expId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}">修正</a>
+<a class="btn btn-primary" th:href="@{/admin/experiences/{expId}/es/{esId}/edit(expId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}">修正</a>
 <button type="button" class="btn btn-danger" data-toggle="modal" th:data-target="|#deleteEs*{es[__${loop.index}__].es_id}|">削除</button>
 <div class="modal fade" th:id="|deleteEs*{es[__${loop.index}__].es_id}|" tabindex="-1" role="dialog" aria-labelledby="deleteEsLabel" aria-hidden="true">
 <div class="modal-dialog" role="document">
@@ -215,7 +215,9 @@ legend {
 <div class="modal-body">この操作は取り消せません。</div>
 <div class="modal-footer">
 <button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
-<a class="btn btn-danger" th:href="@{/admin/experiences/{expId}/es/{esId}?delete(expId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}">削除</a>
+<form th:action="@{/admin/experiences/{expId}/es/{esId}(expId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}" th:method="delete" class="d-inline-block">
+<button type="submit" class="btn btn-danger">削除</button>
+</form>
 </div>
 </div>
 </div>

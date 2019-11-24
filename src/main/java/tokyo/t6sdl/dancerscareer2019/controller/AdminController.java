@@ -49,7 +49,7 @@ public class AdminController {
 		return "admin/index";
 	}
 	
-	@GetMapping(value = "/users")
+	@GetMapping("/users")
 	public String usersIndex(@RequestParam(name = "sort", defaultValue = "0") Integer sort, Model model) {
 		Map<String, Object> result = profileService.getProfiles(sort);
 		model.addAttribute("count", result.get("count"));
@@ -366,7 +366,7 @@ public class AdminController {
 		model.addAttribute(form);
 		return "admin/experiences/new";
 	}
-		
+	
 	@GetMapping("/experiences/{expId}")
 	public String expsShow(@PathVariable("expId") Integer expId, Model model) {
 		Experience experience = experienceService.getExperienceById(expId, true, false);
@@ -421,46 +421,56 @@ public class AdminController {
 		return "redirect:/admin/experiences";
 	}
 	
-	@GetMapping("/experiences/{experienceId}/es/new")
-	public String getSubmitEs(@PathVariable(name="experienceId") String experienceId, Model model) {
-		model.addAttribute("experienceId", experienceId);
-		model.addAttribute("esId", "new");
+	@GetMapping("/experiences/{expId}/es/new")
+	public String esNew(@PathVariable("expId") Integer expId, Model model) {
+		model.addAttribute("expId", expId);
 		model.addAttribute(new EsForm());
-		return "admin/experiences/modifyEs";
+		return "admin/experiences/newEs";
 	}
 	
-	@GetMapping(value="/experiences/{experienceId}/es/{esId}", params="modify")
-	public String getModifyEs(@PathVariable(name="experienceId") String experienceId, @PathVariable(name="esId") String esId, Model model) {
-		model.addAttribute("experienceId", experienceId);
-		model.addAttribute("esId", esId);
-		int experience_id = Integer.parseInt(experienceId);
-		int es_id = Integer.parseInt(esId);
-		EsForm form = experienceService.convertEsIntoEsForm(experienceService.getEsById(experience_id, es_id));
-		model.addAttribute(form);
-		return "admin/experiences/modifyEs";
-	}
-		
-	@PostMapping(value="/experiences/{experienceId}/es/{esId}", params="post")
-	public String postSubmitEs(@PathVariable(name="experienceId") String experienceId, @PathVariable(name="esId") String esId, EsForm form, BindingResult result, Model model) {
-		Es es = experienceService.convertEsFormIntoEs(form);
-		int experience_id = Integer.parseInt(experienceId);
-		es.setExperience_id(experience_id);
-		if (esId.equals("new")) {
-			experienceService.registerEs(es);
+	@PostMapping("/experiences/{expId}/es")
+	public String esCreate(@PathVariable("expId") Integer expId, @Validated EsForm form, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("expId", expId);
+			model.addAttribute(form);
+			return "admin/experiences/newEs";
 		} else {
-			int es_id = Integer.parseInt(esId);
-			es.setEs_id(es_id);
-			experienceService.updateEs(es);
+			Es newEs = experienceService.convertEsFormIntoEs(form);
+			newEs.setExperience_id(expId);
+			experienceService.registerEs(newEs);
+			return "redirect:/admin/experiences/" + expId;
 		}
-		return "redirect:/admin/experiences/" + experienceId;
 	}
 	
-	@GetMapping(value="/experiences/{experienceId}/es/{esId}", params="delete")
-	public String getDeleteEs(@PathVariable(name="experienceId") String experienceId, @PathVariable(name="esId") String esId, Model model) {
-		int experience_id = Integer.parseInt(experienceId);
-		int es_id = Integer.parseInt(esId);
-		experienceService.deleteEs(experience_id, es_id);
-		return "redirect:/admin/experiences/" + experienceId;
+	@GetMapping("/experiences/{expId}/es/{esId}/edit")
+	public String esEdit(@PathVariable("expId") Integer expId, @PathVariable("esId") Integer esId, Model model) {
+		EsForm form = experienceService.convertEsIntoEsForm(experienceService.getEsById(expId, esId));
+		model.addAttribute("expId", expId);
+		model.addAttribute("esId", esId);
+		model.addAttribute(form);
+		return "admin/experiences/editEs";
+	}
+	
+	@PutMapping("/experiences/{expId}/es/{esId}")
+	public String esUpdate(@PathVariable("expId") Integer expId, @PathVariable("esId") Integer esId, @Validated EsForm form, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("expId", expId);
+			model.addAttribute("esId", esId);
+			model.addAttribute(form);
+			return "admin/experiences/editEs";
+		} else {
+			Es es = experienceService.convertEsFormIntoEs(form);
+			es.setExperience_id(expId);
+			es.setEs_id(esId);
+			experienceService.updateEs(es);
+			return "redirect:/admin/experiences/" + expId;
+		}
+	}
+	
+	@DeleteMapping("/experiences/{expId}/es/{esId}")
+	public String esDestroy(@PathVariable("expId") Integer expId, @PathVariable("esId") Integer esId, Model model) {
+		experienceService.deleteEs(expId, esId);
+		return "redirect:/admin/experiences/" + expId;
 	}
 	
 	@GetMapping("/experiences/{experienceId}/interview/new")
