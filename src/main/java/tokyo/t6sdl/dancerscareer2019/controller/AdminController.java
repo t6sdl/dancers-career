@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.RequiredArgsConstructor;
-import tokyo.t6sdl.dancerscareer2019.httpresponse.NotFound404;
 import tokyo.t6sdl.dancerscareer2019.io.ExcelBuilder;
 import tokyo.t6sdl.dancerscareer2019.model.Es;
 import tokyo.t6sdl.dancerscareer2019.model.Experience;
@@ -367,14 +366,29 @@ public class AdminController {
 		model.addAttribute(form);
 		return "admin/experiences/new";
 	}
-	
-//	unmodified below
-	
-	@GetMapping(value="/experiences/{expId}")
-	public String expsShow(@PathVariable(name="expId") Integer expId, Model model) {
+		
+	@GetMapping("/experiences/{expId}")
+	public String expsShow(@PathVariable("expId") Integer expId, Model model) {
 		Experience experience = experienceService.getExperienceById(expId, true, false);
 		model.addAttribute("experience", experience);
 		return "admin/experiences/show";
+	}
+	
+	@GetMapping("/experiences/{expId}/edit")
+	public String expsEdit(@PathVariable("expId") Integer expId, Model model) {
+		ExperienceForm form = experienceService.convertExperienceIntoExperienceForm(experienceService.getExperienceById(expId, false, false));
+		model.addAttribute("expId", expId);
+		model.addAttribute("hiddenUnivLoc", form.getUnivLoc());
+		model.addAttribute("hiddenUnivName", form.getUnivName());
+		model.addAttribute("hiddenUnivFac", form.getUnivFac());
+		model.addAttribute("hiddenUnivDep", form.getUnivDep());
+		model.addAttribute("hiddenGradLoc", form.getGradLoc());
+		model.addAttribute("hiddenGradName", form.getGradName());
+		model.addAttribute("hiddenGradSchool", form.getGradSchool());
+		model.addAttribute("hiddenGradDiv", form.getGradDiv());
+		model.addAttribute("positionList", Profile.POSITION_LIST);
+		model.addAttribute(form);
+		return "admin/experiences/edit";
 	}
 	
 	@GetMapping(value="/experiences/{experienceId}", params="delete")
@@ -385,26 +399,6 @@ public class AdminController {
 		int id = Integer.parseInt(experienceId);
 		experienceService.delete(id);
 		return "redirect:/admin/experiences";
-	}
-	
-	@GetMapping(value="/experiences/{experienceId}", params="modify")
-	public String getModifyExperiences(@PathVariable(name="experienceId") String experienceId, Model model) {
-		if (experienceId.equals("new")) {
-			return "redirect:/admin";
-		}
-		model.addAttribute("positionList", Profile.POSITION_LIST);
-		int id = Integer.parseInt(experienceId);
-		ExperienceForm form = experienceService.convertExperienceIntoExperienceForm(experienceService.getExperienceById(id, false, false));
-		model.addAttribute("hiddenUnivLoc", form.getUnivLoc());
-		model.addAttribute("hiddenUnivName", form.getUnivName());
-		model.addAttribute("hiddenUnivFac", form.getUnivFac());
-		model.addAttribute("hiddenUnivDep", form.getUnivDep());
-		model.addAttribute("hiddenGradLoc", form.getGradLoc());
-		model.addAttribute("hiddenGradName", form.getGradName());
-		model.addAttribute("hiddenGradSchool", form.getGradSchool());
-		model.addAttribute("hiddenGradDiv", form.getGradDiv());
-		model.addAttribute(form);
-		return "admin/experiences/modify";
 	}
 	
 	@PostMapping(value="/experiences/{experienceId}", params="post")
