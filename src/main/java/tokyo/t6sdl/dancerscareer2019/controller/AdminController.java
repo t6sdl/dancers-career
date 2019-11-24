@@ -473,46 +473,56 @@ public class AdminController {
 		return "redirect:/admin/experiences/" + expId;
 	}
 	
-	@GetMapping("/experiences/{experienceId}/interview/new")
-	public String getSubmitInterview(@PathVariable(name="experienceId") String experienceId, Model model) {
-		model.addAttribute("experienceId", experienceId);
-		model.addAttribute("interviewId", "new");
+	@GetMapping("/experiences/{expId}/interview/new")
+	public String interviewNew(@PathVariable("expId") Integer expId, Model model) {
+		model.addAttribute("expId", expId);
 		model.addAttribute(new InterviewForm());
-		return "admin/experiences/modifyInterview";
+		return "admin/experiences/newInterview";
 	}
 	
-	@GetMapping(value="/experiences/{experienceId}/interview/{interviewId}", params="modify")
-	public String getModifyInterview(@PathVariable(name="experienceId") String experienceId, @PathVariable(name="interviewId") String interviewId, Model model) {
-		model.addAttribute("experienceId", experienceId);
-		model.addAttribute("interviewId", interviewId);
-		int experience_id = Integer.parseInt(experienceId);
-		int interview_id = Integer.parseInt(interviewId);
-		InterviewForm form = experienceService.convertInterviewIntoInterviewForm(experienceService.getInterviewById(experience_id, interview_id));
-		model.addAttribute(form);
-		return "admin/experiences/modifyInterview";
-	}
-		
-	@PostMapping(value="/experiences/{experienceId}/interview/{interviewId}", params="post")
-	public String postSubmitInterview(@PathVariable(name="experienceId") String experienceId, @PathVariable(name="interviewId") String interviewId, InterviewForm form, BindingResult result, Model model) {
-		Interview interview = experienceService.convertInterviewFormIntoInterview(form);
-		int experience_id = Integer.parseInt(experienceId);
-		interview.setExperience_id(experience_id);
-		if (interviewId.equals("new")) {
-			experienceService.registerInterview(interview);
+	@PostMapping("/experiences/{expId}/interview")
+	public String interviewCreate(@PathVariable("expId") Integer expId, @Validated InterviewForm form, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("expId", expId);
+			model.addAttribute(form);
+			return "admin/experiences/newInterview";
 		} else {
-			int interview_id = Integer.parseInt(interviewId);
-			interview.setInterview_id(interview_id);
-			experienceService.updateInterview(interview);
+			Interview newInterview = experienceService.convertInterviewFormIntoInterview(form);
+			newInterview.setExperience_id(expId);
+			experienceService.registerInterview(newInterview);
+			return "redirect:/admin/experiences/" + expId;
 		}
-		return "redirect:/admin/experiences/" + experienceId;
 	}
 	
-	@GetMapping(value="/experiences/{experienceId}/interview/{interviewId}", params="delete")
-	public String getDeleteInterview(@PathVariable(name="experienceId") String experienceId, @PathVariable(name="interviewId") String interviewId, Model model) {
-		int experience_id = Integer.parseInt(experienceId);
-		int interview_id = Integer.parseInt(interviewId);
-		experienceService.deleteInterview(experience_id, interview_id);
-		return "redirect:/admin/experiences/" + experienceId;
+	@GetMapping("/experiences/{expId}/interview/{intId}/edit")
+	public String interviewEdit(@PathVariable("expId") Integer expId, @PathVariable("intId") Integer intId, Model model) {
+		InterviewForm form = experienceService.convertInterviewIntoInterviewForm(experienceService.getInterviewById(expId, intId));
+		model.addAttribute("expId", expId);
+		model.addAttribute("intId", intId);
+		model.addAttribute(form);
+		return "admin/experiences/editInterview";
+	}
+	
+	@PutMapping("/experiences/{expId}/interview/{intId}")
+	public String interviewUpdate(@PathVariable("expId") Integer expId, @PathVariable("intId") Integer intId, @Validated InterviewForm form, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("expId", expId);
+			model.addAttribute("intId", intId);
+			model.addAttribute(form);
+			return "admin/experiences/editInterview";
+		} else {
+			Interview interview = experienceService.convertInterviewFormIntoInterview(form);
+			interview.setExperience_id(expId);
+			interview.setInterview_id(intId);
+			experienceService.updateInterview(interview);
+			return "redirect:/admin/experiences/" + expId;
+		}
+	}
+	
+	@DeleteMapping("/experiences/{expId}/interview/{intId}")
+	public String interviewDestroy(@PathVariable("expId") Integer expId, @PathVariable("intId") Integer intId, Model model) {
+		experienceService.deleteInterview(expId, intId);
+		return "redirect:/admin/experiences/" + expId;
 	}
 	
 	private <T> List<T> cleanUp(List<T> list, T empty) {

@@ -244,7 +244,7 @@ legend {
 </th:block>
 </span>
 </div>
-<a class="btn btn-primary" th:href="@{/admin/experiences/{expId}/interview/{interviewId}?modify(expId=*{experience_id},interviewId=*{interview[__${loop.index}__].interview_id})}">修正</a>
+<a class="btn btn-primary" th:href="@{/admin/experiences/{expId}/interview/{intId}/edit(expId=*{experience_id},intId=*{interview[__${loop.index}__].interview_id})}">修正</a>
 <button type="button" class="btn btn-danger" data-toggle="modal" th:data-target="|#deleteInterview*{interview[__${loop.index}__].interview_id}|">削除</button>
 <div class="modal fade" th:id="|deleteInterview*{interview[__${loop.index}__].interview_id}|" tabindex="-1" role="dialog" aria-labelledby="deleteInterviewLabel" aria-hidden="true">
 <div class="modal-dialog" role="document">
@@ -258,7 +258,9 @@ legend {
 <div class="modal-body">この操作は取り消せません。</div>
 <div class="modal-footer">
 <button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
-<a class="btn btn-danger" th:href="@{/admin/experiences/{expId}/interview/{interviewId}?delete(expId=*{experience_id},interviewId=*{interview[__${loop.index}__].interview_id})}">削除</a>
+<form th:action="@{/admin/experiences/{expId}/interview/{intId}(expId=*{experience_id},intId=*{interview[__${loop.index}__].interview_id})}" th:method="delete" class="d-inline-block">
+<button type="submit" class="btn btn-danger">削除</button>
+</form>
 </div>
 </div>
 </div>

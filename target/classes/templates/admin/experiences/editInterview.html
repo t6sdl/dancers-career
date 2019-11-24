@@ -18,19 +18,31 @@ legend {
 <header th:replace="common/header :: for-admin"></header>
 <main class="container-fluid">
 <h1>ES/体験記 修正</h1>
-<form th:action="@{/admin/experiences/{experienceId}/interview/{interviewId}(experienceId=${experienceId},interviewId=${interviewId})}" method="post" th:object="${interviewForm}">
+<form th:action="@{/admin/experiences/{expId}/interview/{intId}(expId=${expId},intId=${intId})}" th:method="put" th:object="${interviewForm}">
 <fieldset class="form-group p-2 border border-dark">
 <legend>Interview</legend>
 <div class="form-group">
 <label for="question">質問</label>
-<input type="text" th:field="*{question}" class="form-control" placeholder="ESを書く上で意識したことは？など">
+<input type="text" th:field="*{question}" class="form-control" placeholder="ESを書く上で意識したことは？など" required>
+<div th:if="${#fields.hasErrors('question')}" class="alert alert-danger alert-dismissible fade show" role="alert">
+入力してください
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
 </div>
 <div class="form-group">
 <label for="answer">回答</label>
-<textarea th:field="*{answer}" class="form-control" placeholder="質問への回答"></textarea>
+<textarea th:field="*{answer}" class="form-control" placeholder="質問への回答" required></textarea>
+<div th:if="${#fields.hasErrors('answer')}" class="alert alert-danger alert-dismissible fade show" role="alert">
+入力してください
+<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+<span aria-hidden="true">&times;</span>
+</button>
+</div>
 </div>
 </fieldset>
-<button type="submit" name="post" value="post" class="btn btn-primary">完了</button>
+<button type="submit" class="btn btn-primary">完了</button>
 </form>
 </main>
 <footer th:replace="common/footer :: footer"></footer>
