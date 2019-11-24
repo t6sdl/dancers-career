@@ -32,8 +32,11 @@ legend {
 </div>
 </div>
 <div class="form-group">
-<label for="question">設問</label>
-<input type="text" th:field="*{question}" class="form-control" placeholder="挫折した経験は？など">
+<label for="question">
+設問
+<span class="badge badge-danger">必須</span>
+</label>
+<input type="text" th:field="*{question}" class="form-control" placeholder="挫折した経験は？など" required>
 <div th:if="${#fields.hasErrors('question')}" class="alert alert-danger alert-dismissible fade show" role="alert">
 入力してください
 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -42,8 +45,11 @@ legend {
 </div>
 </div>
 <div class="form-group">
-<label for="answer">回答</label>
-<textarea th:field="*{answer}" class="form-control" placeholder="設問に対する回答"></textarea>
+<label for="answer">
+回答
+<span class="badge badge-danger">必須</span>
+</label>
+<textarea th:field="*{answer}" class="form-control" placeholder="設問に対する回答" required></textarea>
 <div th:if="${#fields.hasErrors('answer')}" class="alert alert-danger alert-dismissible fade show" role="alert">
 入力してください
 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -52,8 +58,11 @@ legend {
 </div>
 </div>
 <div class="form-group">
-<label for="advice">添削</label>
-<textarea th:field="*{advice}" class="form-control" placeholder="回答に対する添削"></textarea>
+<label for="advice">
+添削
+<span class="badge badge-danger">必須</span>
+</label>
+<textarea th:field="*{advice}" class="form-control" placeholder="回答に対する添削" required></textarea>
 <div th:if="${#fields.hasErrors('advice')}" class="alert alert-danger alert-dismissible fade show" role="alert">
 入力してください
 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
