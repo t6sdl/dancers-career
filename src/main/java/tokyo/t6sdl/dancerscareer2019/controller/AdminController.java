@@ -391,22 +391,12 @@ public class AdminController {
 		return "admin/experiences/edit";
 	}
 	
-	@GetMapping(value="/experiences/{experienceId}", params="delete")
-	public String getDeleteExperiences(@PathVariable(name="experienceId") String experienceId, Model model) {
-		if (experienceId.equals("new")) {
-			return "redirect:/admin";
-		}
-		int id = Integer.parseInt(experienceId);
-		experienceService.delete(id);
-		return "redirect:/admin/experiences";
-	}
-	
-	@PostMapping(value="/experiences/{experienceId}", params="post")
-	public String postSubmitExperiences(@PathVariable(name="experienceId") String experienceId, @Validated ExperienceForm form, BindingResult result, Model model) {
-		model.addAttribute("experienceId", experienceId);
+	@PutMapping("/experiences/{expId}")
+	public String expsUpdate(@PathVariable("expId") Integer expId, @Validated ExperienceForm form, BindingResult result, Model model) {
 		form.setClub(this.cleanUp(form.getClub(), ""));
 		form.setOffer(this.cleanUp(form.getOffer(), ""));
 		if (result.hasErrors()) {
+			model.addAttribute("expId", expId);
 			model.addAttribute("positionList", Profile.POSITION_LIST);
 			model.addAttribute("hiddenUnivLoc", form.getUnivLoc());
 			model.addAttribute("hiddenUnivName", form.getUnivName());
@@ -416,14 +406,23 @@ public class AdminController {
 			model.addAttribute("hiddenGradName", form.getGradName());
 			model.addAttribute("hiddenGradSchool", form.getGradSchool());
 			model.addAttribute("hiddenGradDiv", form.getGradDiv());
-			return "admin/experiences/modify";
+			return "admin/experiences/edit";
 		} else {
-			int experience_id = Integer.parseInt(experienceId);
 			Experience experience = experienceService.convertExperienceFormIntoExperience(form);
-			experience.setExperience_id(experience_id);
+			experience.setExperience_id(expId);
 			experienceService.update(experience);
-			return "redirect:/admin/experiences/" + experienceId;
+			return "redirect:/admin/experiences/" + expId;
 		}
+	}
+	
+	@GetMapping(value="/experiences/{experienceId}", params="delete")
+	public String getDeleteExperiences(@PathVariable(name="experienceId") String experienceId, Model model) {
+		if (experienceId.equals("new")) {
+			return "redirect:/admin";
+		}
+		int id = Integer.parseInt(experienceId);
+		experienceService.delete(id);
+		return "redirect:/admin/experiences";
 	}
 	
 	@GetMapping("/experiences/{experienceId}/es/new")

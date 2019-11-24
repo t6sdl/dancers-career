@@ -22,7 +22,7 @@ legend {
 <main class="container-fluid">
 <h1>ES/体験記 修正</h1>
 <input type="hidden" id="contextPath" th:value="@{/}">
-<form th:action="@{/admin/experiences/{expId}(expId=${expId})}" method="post" th:object="${experienceForm}">
+<form th:action="@{/admin/experiences/{expId}(expId=${expId})}" th:method="put" th:object="${experienceForm}">
 <fieldset class="form-group p-2 border border-dark">
 <legend>提供者情報</legend>
 <div class="mb-4">
@@ -387,14 +387,14 @@ legend {
 </div>
 </div>
 </fieldset>
-<button type="submit" name="post" value="post" class="btn btn-primary">完了</button>
+<button type="submit" class="btn btn-primary">完了</button>
 </form>
 </main>
 <footer th:replace="common/footer :: footer"></footer>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script th:src="@{/js/setUniversity.js}"></script>
+<script th:src="@{/js/setUniversity.js?update=20191121}" src="../../../static/js/setUniversity.js?update=20191121"></script>
 <script th:src="@{/js/submit.js}"></script>
 <script th:src="@{/js/add.js?update=20191117}" src="../../../static/js/add.js"></script>
 <script>
