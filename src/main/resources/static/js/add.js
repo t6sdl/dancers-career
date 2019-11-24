@@ -3,7 +3,6 @@ $(function () {
 	$addOffer = $('#addOffer'),
 	$addEs = $('#addEs'),
 	$addInterview = $('#addInterview');
-	const experienceId = $('#experienceId').val();
 	$addClub.on('click', function () {
 		const $clubItem = $('.clubItem');
 		const clubInput = '\n<div class="clubItem col-sm-6 my-2">\n<input class="form-control" type="text" id="club' + $clubItem.length + '" name="club[' + $clubItem.length + ']" placeholder="大学 サークル（非公開は空欄）" value>\n</div>';

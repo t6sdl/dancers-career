@@ -2,6 +2,8 @@ package tokyo.t6sdl.dancerscareer2019.model.form;
 
 import java.util.Objects;
 
+import javax.validation.constraints.NotEmpty;
+
 import lombok.Data;
 
 @Data
@@ -9,8 +11,11 @@ public class EsForm {
 	private int esId;
 	private String corp;
 	private String result;
+	@NotEmpty
 	private String question;
+	@NotEmpty
 	private String answer;
+	@NotEmpty
 	private String advice;
 	
 	@Override

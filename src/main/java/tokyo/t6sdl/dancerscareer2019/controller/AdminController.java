@@ -15,15 +15,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import lombok.RequiredArgsConstructor;
-import tokyo.t6sdl.dancerscareer2019.httpresponse.NotFound404;
 import tokyo.t6sdl.dancerscareer2019.io.ExcelBuilder;
 import tokyo.t6sdl.dancerscareer2019.model.Es;
 import tokyo.t6sdl.dancerscareer2019.model.Experience;
@@ -33,7 +34,6 @@ import tokyo.t6sdl.dancerscareer2019.model.Student;
 import tokyo.t6sdl.dancerscareer2019.model.form.EsForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.ExperienceForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.InterviewForm;
-import tokyo.t6sdl.dancerscareer2019.model.form.SearchForm;
 import tokyo.t6sdl.dancerscareer2019.service.ExperienceService;
 import tokyo.t6sdl.dancerscareer2019.service.ProfileService;
 
@@ -44,466 +44,485 @@ public class AdminController {
 	private final ProfileService profileService;
 	private final ExperienceService experienceService;
 	
-	@RequestMapping()
-	public String getAdmin() {
+	@GetMapping()
+	public String index() {
 		return "admin/index";
 	}
 	
-	@RequestMapping(value="/search/students", params="all")
-	public String getSearchStudents(@RequestParam(name="sort") String sort, Model model) {
-		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute(new SearchForm(sort));
-		int sortId;
-		try {
-			sortId = Integer.parseInt(sort);
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
-		Map<String, Object> result = profileService.getProfiles(sortId);
+	@GetMapping("/users")
+	public String usersIndex(@RequestParam(name = "sort", defaultValue = "0") Integer sort, Model model) {
+		Map<String, Object> result = profileService.getProfiles(sort);
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("students", result.get("students"));
-		return "admin/students/search";
+		model.addAttribute("sort", sort);
+		model.addAttribute("positionList", Profile.POSITION_LIST);
+		return "admin/users/index";
 	}
 	
-	@RequestMapping(value="/search/students/download", params="all")
-	public ModelAndView getStudentsData(@RequestParam(name="sort") String sort) {
-		int sortId;
-		try {
-			sortId = Integer.parseInt(sort);
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
+	@GetMapping(value = "/users", params = "download")
+	public ModelAndView downloadUsersIndex(@RequestParam(name = "sort", defaultValue = "0") Integer sort) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<String> filter = Arrays.asList("なし");
+		List<String> filter = Arrays.asList("なし", "-");
 		@SuppressWarnings("unchecked")
-		List<Student> students = (List<Student>) profileService.getProfiles(sortId).get("students");
+		List<Student> students = (List<Student>) profileService.getProfiles(sort).get("students");
 		map.put("filter", filter);
 		map.put("students", students);
 		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
 		String today = now.format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm"));
-		ModelAndView mav = new ModelAndView(new ExcelBuilder(today + "_students_all" + ".xlsx"), map);
+		ModelAndView mav = new ModelAndView(new ExcelBuilder(today + "_students" + ".xlsx"), map);
 		return mav;
 	}
 	
-	@RequestMapping(value="/search/students", params="by-name")
-	public String getSearchStudentsByName(SearchForm form, Model model) {
-		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute(form);
-		int sortId;
-		try {
-			sortId = Integer.parseInt(form.getSort());
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
+	@GetMapping(value = "/users", params = {"kana-family-name", "kana-given-name"})
+	public String usersIndexFilteredByName(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("kana-family-name") String kanaFamilyName, @RequestParam("kana-given-name") String kanaGivenName, Model model) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		if (!(form.getKanaFirstName().isEmpty()) && !(form.getKanaLastName().isEmpty())) {
-			result = profileService.getProfilesByName(sortId, form.getKanaFirstName(), form.getKanaFirstName());
-		} else if (!(form.getKanaLastName().isEmpty())) {
-			result = profileService.getProfilesByLastName(sortId, form.getKanaLastName());
+		if (!(kanaFamilyName.isEmpty()) && !(kanaGivenName.isEmpty())) {
+			result = profileService.getProfilesByName(sort, kanaFamilyName, kanaGivenName);
+		} else if (!(kanaFamilyName.isEmpty())) {
+			result = profileService.getProfilesByLastName(sort, kanaFamilyName);
 		} else {
-			result = profileService.getProfiles(sortId);
+			return "redirect:/admin/users?sort=" + sort;
 		}
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("students", result.get("students"));
-		return "admin/students/search";
+		model.addAttribute("sort", sort);
+		model.addAttribute("kanaFamilyName", kanaFamilyName);
+		model.addAttribute("kanaGivenName", kanaGivenName);
+		model.addAttribute("positionList", Profile.POSITION_LIST);
+		return "admin/users/index";
 	}
 	
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/search/students/download", params="by-name")
-	public ModelAndView getStudentsDataByName(@RequestParam(name="sort") String sort, @RequestParam(name="kanaLastName") String kanaLastName, @RequestParam(name="kanaFirstName", required=false) String kanaFirstName) {
-		int sortId;
-		try {
-			sortId = Integer.parseInt(sort);
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
+	@GetMapping(value = "/users", params = {"kana-family-name", "kana-given-name", "download"})
+	public ModelAndView downloadUsersIndexFilteredByName(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("kana-family-name") String kanaFamilyName, @RequestParam("kana-given-name") String kanaGivenName) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<String> filter = Arrays.asList("氏名(カナ)", "セイ", kanaLastName, "メイ", kanaFirstName);
+		List<String> filter = Arrays.asList("氏名(カナ)", kanaFamilyName + "," + kanaGivenName);
 		List<Student> students = new ArrayList<Student>();
-		if (!(kanaFirstName.isEmpty()) && !(kanaLastName.isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByName(sortId, kanaLastName, kanaFirstName).get("students");
-		} else if (!(kanaLastName.isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByLastName(sortId, kanaLastName).get("students");
-		} else {
-			students = (List<Student>) profileService.getProfiles(sortId);
+		if (!(kanaFamilyName.isEmpty()) && !(kanaGivenName.isEmpty())) {
+			students = (List<Student>) profileService.getProfilesByName(sort, kanaFamilyName, kanaGivenName).get("students");
+		} else if (!(kanaFamilyName.isEmpty())) {
+			students = (List<Student>) profileService.getProfilesByLastName(sort, kanaFamilyName).get("students");
 		}
 		map.put("filter", filter);
 		map.put("students", students);
 		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
 		String today = now.format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm"));
-		ModelAndView mav = new ModelAndView(new ExcelBuilder(today + "_students_byname" + ".xlsx"), map);
+		ModelAndView mav = new ModelAndView(new ExcelBuilder(today + "_students_name" + ".xlsx"), map);
 		return mav;
 	}
 	
-	@RequestMapping(value="/search/students", params="by-university")
-	public String getSearchStudentsByUniveristy(SearchForm form, Model model) {
-		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute("hiddenUnivPref", form.getUnivPref());
-		model.addAttribute("hiddenUnivName", form.getUnivName());
-		model.addAttribute("hiddenFac", form.getFaculty());
-		model.addAttribute("hiddenDep", form.getDepartment());
-		model.addAttribute("hiddenGradSchoolPref", form.getGradSchoolPref());
-		model.addAttribute("hiddenGradSchoolName", form.getGradSchoolName());
-		model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
-		model.addAttribute("hiddenProgramIn", form.getProgramIn());
-		model.addAttribute(form);
-		int sortId;
-		try {
-			sortId = Integer.parseInt(form.getSort());
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
+	@GetMapping(value = "/users", params = {"univ-loc", "univ-type", "univ-name", "univ-fac", "univ-dep"})
+	public String usersIndexFilteredByUniv(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("univ-loc") String univLoc, @RequestParam("univ-name") String univName, @RequestParam("univ-fac") String univFac, @RequestParam("univ-dep") String univDep, Model model) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		if (!(form.getDepartment().isEmpty())) {
-			result = profileService.getProfilesByDepartment(sortId, form.getUnivPref(), form.getUnivName(), form.getFaculty(), form.getDepartment());
-		} else if (!(form.getFaculty().isEmpty())) {
-			result = profileService.getProfilesByFaculty(sortId, form.getUnivPref(), form.getUnivName(), form.getFaculty());
-		} else if (!(form.getUnivName().isEmpty())) {
-			result = profileService.getProfilesByUniversity(sortId, form.getUnivPref(), form.getUnivName());
-		} else if (!(form.getUnivPref().isEmpty())) {
-			result = profileService.getProfilesByPrefecture(sortId, form.getUnivPref());
+		if (!(univDep.isEmpty())) {
+			result = profileService.getProfilesByDepartment(sort, univLoc, univName, univFac, univDep);
+		} else if (!(univFac.isEmpty())) {
+			result = profileService.getProfilesByFaculty(sort, univLoc, univName, univFac);
+		} else if (!(univName.isEmpty())) {
+			result = profileService.getProfilesByUniversity(sort, univLoc, univName);
+		} else if (!(univLoc.isEmpty())) {
+			result = profileService.getProfilesByPrefecture(sort, univLoc);
 		} else {
-			result = profileService.getProfiles(sortId);
+			return "redirect:/admin/users?sort=" + sort;
 		}
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("students", result.get("students"));
-		return "admin/students/search";
+		model.addAttribute("sort", sort);
+		model.addAttribute("positionList", Profile.POSITION_LIST);
+		model.addAttribute("hiddenUnivLoc", univLoc);
+		model.addAttribute("hiddenUnivName", univName);
+		model.addAttribute("hiddenUnivFac", univFac);
+		model.addAttribute("hiddenUnivDep", univDep);
+		return "admin/users/index";
 	}
 	
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/search/students/download", params="by-university")
-	public ModelAndView getStudentsDataByUniveristy(@RequestParam(name="sort") String sort, @RequestParam(name="prefecture") String prefecture, @RequestParam(name="university", required=false) String university, @RequestParam(name="faculty", required=false) String faculty, @RequestParam(name="department", required=false) String department) {
-		int sortId;
-		try {
-			sortId = Integer.parseInt(sort);
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
+	@GetMapping(value = "/users", params = {"univ-loc", "univ-type", "univ-name", "univ-fac", "univ-dep", "download"})
+	public ModelAndView downloadUsersIndexFilteredByUniv(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("univ-loc") String univLoc, @RequestParam("univ-name") String univName, @RequestParam("univ-fac") String univFac, @RequestParam("univ-dep") String univDep) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<String> filter = Arrays.asList("大学", "大学所在地", prefecture, "大学名", university, "学部名", faculty, "学科名", department);
+		List<String> filter = Arrays.asList("大学", univLoc + "," + univName + "," + univFac + "," + univDep);
 		List<Student> students = new ArrayList<Student>();
-		if (!(department.isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByDepartment(sortId, prefecture, university, faculty, department).get("students");
-		} else if (!(faculty.isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByFaculty(sortId, prefecture, university, faculty).get("students");
-		} else if (!(university.isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByUniversity(sortId, prefecture, university).get("students");
-		} else if (!(prefecture.isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByPrefecture(sortId, prefecture).get("students");
-		} else {
-			students = (List<Student>) profileService.getProfiles(sortId);
+		if (!(univDep.isEmpty())) {
+			students = (List<Student>) profileService.getProfilesByDepartment(sort, univLoc, univName, univFac, univDep).get("students");
+		} else if (!(univFac.isEmpty())) {
+			students = (List<Student>) profileService.getProfilesByFaculty(sort, univLoc, univName, univFac).get("students");
+		} else if (!(univName.isEmpty())) {
+			students = (List<Student>) profileService.getProfilesByUniversity(sort, univLoc, univName).get("students");
+		} else if (!(univLoc.isEmpty())) {
+			students = (List<Student>) profileService.getProfilesByPrefecture(sort, univLoc).get("students");
 		}
 		map.put("filter", filter);
 		map.put("students", students);
 		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
 		String today = now.format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm"));
-		ModelAndView mav = new ModelAndView(new ExcelBuilder(today + "_students_byuniv" + ".xlsx"), map);
+		ModelAndView mav = new ModelAndView(new ExcelBuilder(today + "_students_univ" + ".xlsx"), map);
 		return mav;
 	}
 	
-	@RequestMapping(value="/search/students", params="and-search-by-position")
-	public String getAndSearchStudentsByPosition(SearchForm form, Model model) {
-		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute(form);
-		int sortId;
-		try {
-			sortId = Integer.parseInt(form.getSort());
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
+	@GetMapping(value = "/users", params = {"pos", "cond=and"})
+	public String usersIndexFilteredByPosAndPos(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("pos") List<String> positions, Model model) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		if (!(form.getPosition().isEmpty()) && !(form.getPosition().get(0).isEmpty())) {
-			result = profileService.getProfilesByPosition(sortId, form.getPosition(), true);
+		if (!(positions.isEmpty()) && !(positions.get(0).isEmpty())) {
+			result = profileService.getProfilesByPosition(sort, positions, true);
 		} else {
-			result = profileService.getProfiles(sortId);
+			return "redirect:/admin/users?sort=" + sort;
 		}
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("students", result.get("students"));
-		return "admin/students/search";
+		model.addAttribute("sort", sort);
+		model.addAttribute("positions", positions);
+		model.addAttribute("positionList", Profile.POSITION_LIST);
+		return "admin/users/index";
 	}
 	
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/search/students/download", params="and-search-by-position")
-	public ModelAndView getAndStudentsDataByPosition(@RequestParam(name="sort") String sort, @RequestParam(name="position") List<String> position) {
-		int sortId;
-		try {
-			sortId = Integer.parseInt(sort);
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
+	@GetMapping(value = "/users", params = {"pos", "cond=and", "download"})
+	public ModelAndView downloadUsersIndexFilteredByPosAndPos(@RequestParam(name="sort") Integer sort, @RequestParam(name="pos") List<String> positions) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<String> filter = new ArrayList<String>(Arrays.asList("役職(AND検索)"));
-		for (int i = 0; i < position.size(); i++) {
-			String num = String.valueOf(i + 1);
-			filter.add("役職 " + num);
-			filter.add(position.get(i));
-		}
+		List<String> filter = Arrays.asList("役職(AND)", String.join(",", positions));
 		List<Student> students = new ArrayList<Student>();
-		if (!(position.isEmpty()) && !(position.get(0).isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByPosition(sortId, position, true).get("students");
-		} else {
-			students = (List<Student>) profileService.getProfiles(sortId);
+		if (!(positions.isEmpty()) && !(positions.get(0).isEmpty())) {
+			students = (List<Student>) profileService.getProfilesByPosition(sort, positions, true).get("students");
 		}
 		map.put("filter", filter);
 		map.put("students", students);
 		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
 		String today = now.format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm"));
-		ModelAndView mav = new ModelAndView(new ExcelBuilder(today + "_students_bypos(and)" + ".xlsx"), map);
+		ModelAndView mav = new ModelAndView(new ExcelBuilder(today + "_students_pos_and" + ".xlsx"), map);
 		return mav;
 	}
 	
-	@RequestMapping(value="/search/students", params="or-search-by-position")
-	public String getOrSearchStudentsByPosition(SearchForm form, Model model) {
-		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute(form);
-		int sortId;
-		try {
-			sortId = Integer.parseInt(form.getSort());
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
+	@GetMapping(value = "/users", params = {"pos", "cond=or"})
+	public String usersIndexFilteredByPosOrPos(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("pos") List<String> positions, Model model) {
 		Map<String, Object> result = new HashMap<String, Object>();
-		if (!(form.getPosition().isEmpty()) && !(form.getPosition().get(0).isEmpty())) {
-			result = profileService.getProfilesByPosition(sortId, form.getPosition(), false);
+		if (!(positions.isEmpty()) && !(positions.get(0).isEmpty())) {
+			result = profileService.getProfilesByPosition(sort, positions, false);
 		} else {
-			result = profileService.getProfiles(sortId);
+			return "redirect:/admin/users?sort=" + sort;
 		}
 		model.addAttribute("count", result.get("count"));
 		model.addAttribute("students", result.get("students"));
-		return "admin/students/search";
+		model.addAttribute("sort", sort);
+		model.addAttribute("positions", positions);
+		model.addAttribute("positionList", Profile.POSITION_LIST);
+		return "admin/users/index";
 	}
 	
 	@SuppressWarnings("unchecked")
-	@RequestMapping(value="/search/students/download", params="or-search-by-position")
-	public ModelAndView getOrStudentsDataByPosition(@RequestParam(name="sort") String sort, @RequestParam(name="position") List<String> position) {
-		int sortId;
-		try {
-			sortId = Integer.parseInt(sort);
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
+	@GetMapping(value = "/users", params = {"pos", "cond=or", "download"})
+	public ModelAndView downloadUsersIndexFilteredByPosOrPos(@RequestParam(name="sort") Integer sort, @RequestParam(name="pos") List<String> positions) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<String> filter = new ArrayList<String>(Arrays.asList("役職(OR検索)"));
-		for (int i = 0; i < position.size(); i++) {
-			String num = String.valueOf(i + 1);
-			filter.add("役職 " + num);
-			filter.add(position.get(i));
-		}
+		List<String> filter = Arrays.asList("役職(OR)", String.join(",", positions));
 		List<Student> students = new ArrayList<Student>();
-		if (!(position.isEmpty()) && !(position.get(0).isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByPosition(sortId, position, true).get("students");
-		} else {
-			students = (List<Student>) profileService.getProfiles(sortId);
+		if (!(positions.isEmpty()) && !(positions.get(0).isEmpty())) {
+			students = (List<Student>) profileService.getProfilesByPosition(sort, positions, true).get("students");
 		}
 		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
 		map.put("filter", filter);
 		map.put("students", students);
 		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
 		String today = now.format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmm"));
-		ModelAndView mav = new ModelAndView(new ExcelBuilder(today + "_students_bypos(or)" + ".xlsx"), map);
+		ModelAndView mav = new ModelAndView(new ExcelBuilder(today + "_students_pos_or" + ".xlsx"), map);
 		return mav;
 	}
 	
-	@GetMapping(value="/experiences/{experienceId}")
-	public String getSubmitExperiences(@PathVariable(name="experienceId") String experienceId, Model model) {
-		model.addAttribute("experienceId", experienceId);
+	@GetMapping(value = "/experiences")
+	public String expsIndex(@RequestParam(name = "sort", defaultValue = "0") Integer sort, Model model) {
+		Map<String, Object> result = experienceService.getExperiences(sort);
+		model.addAttribute("count", result.get("count"));
+		model.addAttribute("experiences", result.get("experiences"));
+		model.addAttribute("sort", sort);
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		if (experienceId.equals("new")) {
-			ExperienceForm form = new ExperienceForm();
-			form.init();
-			model.addAttribute(form);
-			return "admin/experiences/submit";
+		return "admin/experiences/index";
+	}
+	
+	@GetMapping(value = "/experiences", params = {"kana-family-name", "kana-given-name"})
+	public String expsIndexFilteredByName(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("kana-family-name") String kanaFamilyName, @RequestParam("kana-given-name") String kanaGivenName, Model model) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		if (!(kanaFamilyName.isEmpty()) && !(kanaGivenName.isEmpty())) {
+			result = experienceService.getExperiencesByName(sort, kanaFamilyName, kanaGivenName);
+		} else if (!(kanaFamilyName.isEmpty())) {
+			result = experienceService.getExperiencesByLastName(sort, kanaFamilyName);
 		} else {
-			int id = Integer.parseInt(experienceId);
-			Experience experience = experienceService.getExperienceById(id, true, false);
-			model.addAttribute(experience);
-			return "admin/experiences/detail";
+			return "redirect:/admin/experiences?sort=" + sort;
 		}
-	}
-	
-	@GetMapping(value="/experiences/{experienceId}", params="delete")
-	public String getDeleteExperiences(@PathVariable(name="experienceId") String experienceId, Model model) {
-		if (experienceId.equals("new")) {
-			return "redirect:/admin";
-		}
-		int id = Integer.parseInt(experienceId);
-		experienceService.delete(id);
-		return "redirect:/admin/search/experiences?all&sort=0";
-	}
-	
-	@GetMapping(value="/experiences/{experienceId}", params="modify")
-	public String getModifyExperiences(@PathVariable(name="experienceId") String experienceId, Model model) {
-		if (experienceId.equals("new")) {
-			return "redirect:/admin";
-		}
+		model.addAttribute("count", result.get("count"));
+		model.addAttribute("experiences", result.get("experiences"));
+		model.addAttribute("sort", sort);
+		model.addAttribute("kanaFamilyName", kanaFamilyName);
+		model.addAttribute("kanaGivenName", kanaGivenName);
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		int id = Integer.parseInt(experienceId);
-		ExperienceForm form = experienceService.convertExperienceIntoExperienceForm(experienceService.getExperienceById(id, false, false));
-		model.addAttribute("hiddenUnivPref", form.getUnivPref());
-		model.addAttribute("hiddenUnivName", form.getUnivName());
-		model.addAttribute("hiddenFac", form.getFaculty());
-		model.addAttribute("hiddenDep", form.getDepartment());
-		model.addAttribute("hiddenGradSchoolPref", form.getGradSchoolPref());
-		model.addAttribute("hiddenGradSchoolName", form.getGradSchoolName());
-		model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
-		model.addAttribute("hiddenProgramIn", form.getProgramIn());
-		model.addAttribute(form);
-		return "admin/experiences/modify";
+		return "admin/experiences/index";
 	}
 	
-	@PostMapping(value="/experiences/{experienceId}", params="post")
-	public String postSubmitExperiences(@PathVariable(name="experienceId") String experienceId, @Validated ExperienceForm form, BindingResult result, Model model) {
-		model.addAttribute("experienceId", experienceId);
-		switch (experienceId) {
-			case "new":
-				form.setClub(this.cleanUp(form.getClub(), ""));
-				form.setOffer(this.cleanUp(form.getOffer(), ""));
-				form.setEs(this.cleanUp(form.getEs(), new EsForm()));
-				form.setInterview(this.cleanUp(form.getInterview(), new InterviewForm()));
-				if (result.hasErrors()) {
-					model.addAttribute("positionList", Profile.POSITION_LIST);
-					model.addAttribute("hiddenUnivPref", form.getUnivPref());
-					model.addAttribute("hiddenUnivName", form.getUnivName());
-					model.addAttribute("hiddenFac", form.getFaculty());
-					model.addAttribute("hiddenDep", form.getDepartment());
-					model.addAttribute("hiddenGradSchoolPref", form.getGradSchoolPref());
-					model.addAttribute("hiddenGradSchoolName", form.getGradSchoolName());
-					model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
-					model.addAttribute("hiddenProgramIn", form.getProgramIn());
-					return "admin/experiences/submit";
-				} else {
-					model.addAttribute(form);
-					return "admin/experiences/confirm";
-				}
-			default:
-				form.setClub(this.cleanUp(form.getClub(), ""));
-				form.setOffer(this.cleanUp(form.getOffer(), ""));
-				if (result.hasErrors()) {
-					model.addAttribute("positionList", Profile.POSITION_LIST);
-					model.addAttribute("hiddenUnivPref", form.getUnivPref());
-					model.addAttribute("hiddenUnivName", form.getUnivName());
-					model.addAttribute("hiddenFac", form.getFaculty());
-					model.addAttribute("hiddenDep", form.getDepartment());
-					model.addAttribute("hiddenGradSchoolPref", form.getGradSchoolPref());
-					model.addAttribute("hiddenGradSchoolName", form.getGradSchoolName());
-					model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
-					model.addAttribute("hiddenProgramIn", form.getProgramIn());
-					return "admin/experiences/modify";
-				} else {
-					int experience_id = Integer.parseInt(experienceId);
-					Experience experience = experienceService.convertExperienceFormIntoExperience(form);
-					experience.setExperience_id(experience_id);
-					experienceService.update(experience);
-					return "redirect:/admin/experiences/" + experienceId;
-				}
+	@GetMapping(value = "/experiences", params = {"univ-loc", "univ-type", "univ-name", "univ-fac", "univ-dep"})
+	public String expsIndexFilteredByUniv(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("univ-loc") String univLoc, @RequestParam("univ-name") String univName, @RequestParam("univ-fac") String univFac, @RequestParam("univ-dep") String univDep, Model model) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		if (!(univDep.isEmpty())) {
+			result = experienceService.getExperiencesByDepartment(sort, univLoc, univName, univFac, univDep);
+		} else if (!(univFac.isEmpty())) {
+			result = experienceService.getExperiencesByFaculty(sort, univLoc, univName, univFac);
+		} else if (!(univName.isEmpty())) {
+			result = experienceService.getExperiencesByUniversity(sort, univLoc, univName);
+		} else if (!(univLoc.isEmpty())) {
+			result = experienceService.getExperiencesByPrefecture(sort, univLoc);
+		} else {
+			return "redirect:/admin/experiences?sort=" + sort;
 		}
-	}
-	
-	@PostMapping(value="/experiences/new", params="modify")
-	public String postNotCompleteExperiences(@Validated ExperienceForm form, BindingResult result, Model model) {
-		model.addAttribute("experienceId", "new");
+		model.addAttribute("count", result.get("count"));
+		model.addAttribute("experiences", result.get("experiences"));
+		model.addAttribute("sort", sort);
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute("hiddenUnivPref", form.getUnivPref());
-		model.addAttribute("hiddenUnivName", form.getUnivName());
-		model.addAttribute("hiddenFac", form.getFaculty());
-		model.addAttribute("hiddenDep", form.getDepartment());
-		model.addAttribute("hiddenGradSchoolPref", form.getGradSchoolPref());
-		model.addAttribute("hiddenGradSchoolName", form.getGradSchoolName());
-		model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
-		model.addAttribute("hiddenProgramIn", form.getProgramIn());
-		model.addAttribute(form);
-		return "admin/experiences/submit";
+		model.addAttribute("hiddenUnivLoc", univLoc);
+		model.addAttribute("hiddenUnivName", univName);
+		model.addAttribute("hiddenUnivFac", univFac);
+		model.addAttribute("hiddenUnivDep", univDep);
+		return "admin/experiences/index";
 	}
 	
-	@PostMapping(value="/experiences/new", params="complete")
-	public String postCompleteExperiences(@Validated ExperienceForm form, BindingResult result, Model model) {
+	@GetMapping(value = "/experiences", params = {"pos", "cond=and"})
+	public String expsIndexFilteredByPosAndPos(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("pos") List<String> positions, Model model) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		if (!(positions.isEmpty()) && !(positions.get(0).isEmpty())) {
+			result = experienceService.getExperiencesByPosition(sort, positions, true);
+		} else {
+			return "redirect:/admin/experiences?sort=" + sort;
+		}
+		model.addAttribute("count", result.get("count"));
+		model.addAttribute("experiences", result.get("experiences"));
+		model.addAttribute("sort", sort);
+		model.addAttribute("positions", positions);
+		model.addAttribute("positionList", Profile.POSITION_LIST);
+		return "admin/experiences/index";
+	}
+	
+	@GetMapping(value = "/experiences", params = {"pos", "cond=or"})
+	public String expsIndexFilteredByPosOrPos(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("pos") List<String> positions, Model model) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		if (!(positions.isEmpty()) && !(positions.get(0).isEmpty())) {
+			result = experienceService.getExperiencesByPosition(sort, positions, false);
+		} else {
+			return "redirect:/admin/experiences?sort=" + sort;
+		}
+		model.addAttribute("count", result.get("count"));
+		model.addAttribute("experiences", result.get("experiences"));
+		model.addAttribute("sort", sort);
+		model.addAttribute("positions", positions);
+		model.addAttribute("positionList", Profile.POSITION_LIST);
+		return "admin/experiences/index";
+	}
+	
+	@PostMapping("/experiences")
+	public String expsCreate(@Validated ExperienceForm form, BindingResult result, Model model) {
 		Experience newExperience = experienceService.convertExperienceFormIntoExperience(form);
 		experienceService.register(newExperience);
-		return "admin/experiences/complete";
+		return "admin/experiences/create";
 	}
 	
-	@GetMapping("/experiences/{experienceId}/es/new")
-	public String getSubmitEs(@PathVariable(name="experienceId") String experienceId, Model model) {
-		model.addAttribute("experienceId", experienceId);
-		model.addAttribute("esId", "new");
+	@GetMapping("/experiences/new")
+	public String expsNew(Model model) {
+		ExperienceForm form = new ExperienceForm();
+		form.init();
+		model.addAttribute(form);
+		model.addAttribute("positionList", Profile.POSITION_LIST);
+		return "admin/experiences/new";
+	}
+	
+	@PostMapping("/experiences/new")
+	public String expsView(@Validated ExperienceForm form, BindingResult result, Model model) {
+		form.setClub(this.cleanUp(form.getClub(), ""));
+		form.setOffer(this.cleanUp(form.getOffer(), ""));
+		form.setEs(this.cleanUp(form.getEs(), new EsForm()));
+		form.setInterview(this.cleanUp(form.getInterview(), new InterviewForm()));
+		if (result.hasErrors()) {
+			model.addAttribute("positionList", Profile.POSITION_LIST);
+			model.addAttribute("hiddenUnivLoc", form.getUnivLoc());
+			model.addAttribute("hiddenUnivName", form.getUnivName());
+			model.addAttribute("hiddenUnivFac", form.getUnivFac());
+			model.addAttribute("hiddenUnivDep", form.getUnivDep());
+			model.addAttribute("hiddenGradLoc", form.getGradLoc());
+			model.addAttribute("hiddenGradName", form.getGradName());
+			model.addAttribute("hiddenGradSchool", form.getGradSchool());
+			model.addAttribute("hiddenGradDiv", form.getGradDiv());
+			return "admin/experiences/new";
+		} else {
+			model.addAttribute(form);
+			return "admin/experiences/view";
+		}
+	}
+	
+	@PostMapping(value = "/experiences/new", params = "edit")
+	public String expsNewEdit(@Validated ExperienceForm form, BindingResult result, Model model) {
+		model.addAttribute("experienceId", "new");
+		model.addAttribute("positionList", Profile.POSITION_LIST);
+		model.addAttribute("hiddenUnivLoc", form.getUnivLoc());
+		model.addAttribute("hiddenUnivName", form.getUnivName());
+		model.addAttribute("hiddenUnivFac", form.getUnivFac());
+		model.addAttribute("hiddenUnivDep", form.getUnivDep());
+		model.addAttribute("hiddenGradLoc", form.getGradLoc());
+		model.addAttribute("hiddenGradName", form.getGradName());
+		model.addAttribute("hiddenGradSchool", form.getGradSchool());
+		model.addAttribute("hiddenGradDiv", form.getGradDiv());
+		model.addAttribute(form);
+		return "admin/experiences/new";
+	}
+	
+	@GetMapping("/experiences/{expId}")
+	public String expsShow(@PathVariable("expId") Integer expId, Model model) {
+		Experience experience = experienceService.getExperienceById(expId, true, false);
+		model.addAttribute("experience", experience);
+		return "admin/experiences/show";
+	}
+	
+	@GetMapping("/experiences/{expId}/edit")
+	public String expsEdit(@PathVariable("expId") Integer expId, Model model) {
+		ExperienceForm form = experienceService.convertExperienceIntoExperienceForm(experienceService.getExperienceById(expId, false, false));
+		model.addAttribute("expId", expId);
+		model.addAttribute("hiddenUnivLoc", form.getUnivLoc());
+		model.addAttribute("hiddenUnivName", form.getUnivName());
+		model.addAttribute("hiddenUnivFac", form.getUnivFac());
+		model.addAttribute("hiddenUnivDep", form.getUnivDep());
+		model.addAttribute("hiddenGradLoc", form.getGradLoc());
+		model.addAttribute("hiddenGradName", form.getGradName());
+		model.addAttribute("hiddenGradSchool", form.getGradSchool());
+		model.addAttribute("hiddenGradDiv", form.getGradDiv());
+		model.addAttribute("positionList", Profile.POSITION_LIST);
+		model.addAttribute(form);
+		return "admin/experiences/edit";
+	}
+	
+	@PutMapping("/experiences/{expId}")
+	public String expsUpdate(@PathVariable("expId") Integer expId, @Validated ExperienceForm form, BindingResult result, Model model) {
+		form.setClub(this.cleanUp(form.getClub(), ""));
+		form.setOffer(this.cleanUp(form.getOffer(), ""));
+		if (result.hasErrors()) {
+			model.addAttribute("expId", expId);
+			model.addAttribute("positionList", Profile.POSITION_LIST);
+			model.addAttribute("hiddenUnivLoc", form.getUnivLoc());
+			model.addAttribute("hiddenUnivName", form.getUnivName());
+			model.addAttribute("hiddenUnivFac", form.getUnivFac());
+			model.addAttribute("hiddenUnivDep", form.getUnivDep());
+			model.addAttribute("hiddenGradLoc", form.getGradLoc());
+			model.addAttribute("hiddenGradName", form.getGradName());
+			model.addAttribute("hiddenGradSchool", form.getGradSchool());
+			model.addAttribute("hiddenGradDiv", form.getGradDiv());
+			return "admin/experiences/edit";
+		} else {
+			Experience experience = experienceService.convertExperienceFormIntoExperience(form);
+			experience.setExperience_id(expId);
+			experienceService.update(experience);
+			return "redirect:/admin/experiences/" + expId;
+		}
+	}
+	
+	@DeleteMapping("/experiences/{expId}")
+	public String expsDestroy(@PathVariable("expId") Integer expId, Model model) {
+		experienceService.delete(expId);
+		return "redirect:/admin/experiences";
+	}
+	
+	@GetMapping("/experiences/{expId}/es/new")
+	public String esNew(@PathVariable("expId") Integer expId, Model model) {
+		model.addAttribute("expId", expId);
 		model.addAttribute(new EsForm());
-		return "admin/experiences/modifyEs";
+		return "admin/experiences/newEs";
 	}
 	
-	@GetMapping(value="/experiences/{experienceId}/es/{esId}", params="modify")
-	public String getModifyEs(@PathVariable(name="experienceId") String experienceId, @PathVariable(name="esId") String esId, Model model) {
-		model.addAttribute("experienceId", experienceId);
+	@PostMapping("/experiences/{expId}/es")
+	public String esCreate(@PathVariable("expId") Integer expId, @Validated EsForm form, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("expId", expId);
+			model.addAttribute(form);
+			return "admin/experiences/newEs";
+		} else {
+			Es newEs = experienceService.convertEsFormIntoEs(form);
+			newEs.setExperience_id(expId);
+			experienceService.registerEs(newEs);
+			return "redirect:/admin/experiences/" + expId;
+		}
+	}
+	
+	@GetMapping("/experiences/{expId}/es/{esId}/edit")
+	public String esEdit(@PathVariable("expId") Integer expId, @PathVariable("esId") Integer esId, Model model) {
+		EsForm form = experienceService.convertEsIntoEsForm(experienceService.getEsById(expId, esId));
+		model.addAttribute("expId", expId);
 		model.addAttribute("esId", esId);
-		int experience_id = Integer.parseInt(experienceId);
-		int es_id = Integer.parseInt(esId);
-		EsForm form = experienceService.convertEsIntoEsForm(experienceService.getEsById(experience_id, es_id));
 		model.addAttribute(form);
-		return "admin/experiences/modifyEs";
+		return "admin/experiences/editEs";
 	}
-		
-	@PostMapping(value="/experiences/{experienceId}/es/{esId}", params="post")
-	public String postSubmitEs(@PathVariable(name="experienceId") String experienceId, @PathVariable(name="esId") String esId, EsForm form, BindingResult result, Model model) {
-		Es es = experienceService.convertEsFormIntoEs(form);
-		int experience_id = Integer.parseInt(experienceId);
-		es.setExperience_id(experience_id);
-		if (esId.equals("new")) {
-			experienceService.registerEs(es);
+	
+	@PutMapping("/experiences/{expId}/es/{esId}")
+	public String esUpdate(@PathVariable("expId") Integer expId, @PathVariable("esId") Integer esId, @Validated EsForm form, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("expId", expId);
+			model.addAttribute("esId", esId);
+			model.addAttribute(form);
+			return "admin/experiences/editEs";
 		} else {
-			int es_id = Integer.parseInt(esId);
-			es.setEs_id(es_id);
+			Es es = experienceService.convertEsFormIntoEs(form);
+			es.setExperience_id(expId);
+			es.setEs_id(esId);
 			experienceService.updateEs(es);
+			return "redirect:/admin/experiences/" + expId;
 		}
-		return "redirect:/admin/experiences/" + experienceId;
 	}
 	
-	@GetMapping(value="/experiences/{experienceId}/es/{esId}", params="delete")
-	public String getDeleteEs(@PathVariable(name="experienceId") String experienceId, @PathVariable(name="esId") String esId, Model model) {
-		int experience_id = Integer.parseInt(experienceId);
-		int es_id = Integer.parseInt(esId);
-		experienceService.deleteEs(experience_id, es_id);
-		return "redirect:/admin/experiences/" + experienceId;
+	@DeleteMapping("/experiences/{expId}/es/{esId}")
+	public String esDestroy(@PathVariable("expId") Integer expId, @PathVariable("esId") Integer esId, Model model) {
+		experienceService.deleteEs(expId, esId);
+		return "redirect:/admin/experiences/" + expId;
 	}
 	
-	@GetMapping("/experiences/{experienceId}/interview/new")
-	public String getSubmitInterview(@PathVariable(name="experienceId") String experienceId, Model model) {
-		model.addAttribute("experienceId", experienceId);
-		model.addAttribute("interviewId", "new");
+	@GetMapping("/experiences/{expId}/interview/new")
+	public String interviewNew(@PathVariable("expId") Integer expId, Model model) {
+		model.addAttribute("expId", expId);
 		model.addAttribute(new InterviewForm());
-		return "admin/experiences/modifyInterview";
+		return "admin/experiences/newInterview";
 	}
 	
-	@GetMapping(value="/experiences/{experienceId}/interview/{interviewId}", params="modify")
-	public String getModifyInterview(@PathVariable(name="experienceId") String experienceId, @PathVariable(name="interviewId") String interviewId, Model model) {
-		model.addAttribute("experienceId", experienceId);
-		model.addAttribute("interviewId", interviewId);
-		int experience_id = Integer.parseInt(experienceId);
-		int interview_id = Integer.parseInt(interviewId);
-		InterviewForm form = experienceService.convertInterviewIntoInterviewForm(experienceService.getInterviewById(experience_id, interview_id));
-		model.addAttribute(form);
-		return "admin/experiences/modifyInterview";
-	}
-		
-	@PostMapping(value="/experiences/{experienceId}/interview/{interviewId}", params="post")
-	public String postSubmitInterview(@PathVariable(name="experienceId") String experienceId, @PathVariable(name="interviewId") String interviewId, InterviewForm form, BindingResult result, Model model) {
-		Interview interview = experienceService.convertInterviewFormIntoInterview(form);
-		int experience_id = Integer.parseInt(experienceId);
-		interview.setExperience_id(experience_id);
-		if (interviewId.equals("new")) {
-			experienceService.registerInterview(interview);
+	@PostMapping("/experiences/{expId}/interview")
+	public String interviewCreate(@PathVariable("expId") Integer expId, @Validated InterviewForm form, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("expId", expId);
+			model.addAttribute(form);
+			return "admin/experiences/newInterview";
 		} else {
-			int interview_id = Integer.parseInt(interviewId);
-			interview.setInterview_id(interview_id);
-			experienceService.updateInterview(interview);
+			Interview newInterview = experienceService.convertInterviewFormIntoInterview(form);
+			newInterview.setExperience_id(expId);
+			experienceService.registerInterview(newInterview);
+			return "redirect:/admin/experiences/" + expId;
 		}
-		return "redirect:/admin/experiences/" + experienceId;
 	}
 	
-	@GetMapping(value="/experiences/{experienceId}/interview/{interviewId}", params="delete")
-	public String getDeleteInterview(@PathVariable(name="experienceId") String experienceId, @PathVariable(name="interviewId") String interviewId, Model model) {
-		int experience_id = Integer.parseInt(experienceId);
-		int interview_id = Integer.parseInt(interviewId);
-		experienceService.deleteInterview(experience_id, interview_id);
-		return "redirect:/admin/experiences/" + experienceId;
+	@GetMapping("/experiences/{expId}/interview/{intId}/edit")
+	public String interviewEdit(@PathVariable("expId") Integer expId, @PathVariable("intId") Integer intId, Model model) {
+		InterviewForm form = experienceService.convertInterviewIntoInterviewForm(experienceService.getInterviewById(expId, intId));
+		model.addAttribute("expId", expId);
+		model.addAttribute("intId", intId);
+		model.addAttribute(form);
+		return "admin/experiences/editInterview";
+	}
+	
+	@PutMapping("/experiences/{expId}/interview/{intId}")
+	public String interviewUpdate(@PathVariable("expId") Integer expId, @PathVariable("intId") Integer intId, @Validated InterviewForm form, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute("expId", expId);
+			model.addAttribute("intId", intId);
+			model.addAttribute(form);
+			return "admin/experiences/editInterview";
+		} else {
+			Interview interview = experienceService.convertInterviewFormIntoInterview(form);
+			interview.setExperience_id(expId);
+			interview.setInterview_id(intId);
+			experienceService.updateInterview(interview);
+			return "redirect:/admin/experiences/" + expId;
+		}
+	}
+	
+	@DeleteMapping("/experiences/{expId}/interview/{intId}")
+	public String interviewDestroy(@PathVariable("expId") Integer expId, @PathVariable("intId") Integer intId, Model model) {
+		experienceService.deleteInterview(expId, intId);
+		return "redirect:/admin/experiences/" + expId;
 	}
 	
 	private <T> List<T> cleanUp(List<T> list, T empty) {
@@ -520,124 +539,8 @@ public class AdminController {
 		return list;
 	}
 		
-	@RequestMapping(value="/search/experiences", params="all")
-	public String getSearchExperiences(@RequestParam(name="sort") String sort, Model model) {
-		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute(new SearchForm(sort));
-		int sortId;
-		try {
-			sortId = Integer.parseInt(sort);
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
-		Map<String, Object> result = experienceService.getExperiences(sortId);
-		model.addAttribute("count", result.get("count"));
-		model.addAttribute("experiences", result.get("experiences"));
-		return "admin/experiences/search";
-	}
-	
-	@RequestMapping(value="/search/experiences", params="by-name")
-	public String getSearchExperiencesByName(SearchForm form, Model model) {
-		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute(form);
-		int sortId;
-		try {
-			sortId = Integer.parseInt(form.getSort());
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
-		Map<String, Object> result = new HashMap<String, Object>();
-		if (!(form.getKanaLastName().isEmpty()) && !(form.getKanaFirstName().isEmpty())) {
-			result = experienceService.getExperiencesByName(sortId, form.getKanaLastName(), form.getKanaFirstName());
-		} else if (!(form.getKanaLastName().isEmpty())) {
-			result = experienceService.getExperiencesByLastName(sortId, form.getKanaLastName());
-		} else {
-			result = experienceService.getExperiences(sortId);
-		}
-		model.addAttribute("count", result.get("count"));
-		model.addAttribute("experiences", result.get("experiences"));
-		return "admin/experiences/search";
-	}
-	
-	@RequestMapping(value="/search/experiences", params="by-university")
-	public String getSearchExperiencesByUniveristy(SearchForm form, Model model) {
-		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute("hiddenUnivPref", form.getUnivPref());
-		model.addAttribute("hiddenUnivName", form.getUnivName());
-		model.addAttribute("hiddenFac", form.getFaculty());
-		model.addAttribute("hiddenDep", form.getDepartment());
-		model.addAttribute("hiddenGradSchoolPref", form.getGradSchoolPref());
-		model.addAttribute("hiddenGradSchoolName", form.getGradSchoolName());
-		model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
-		model.addAttribute("hiddenProgramIn", form.getProgramIn());
-		model.addAttribute(form);
-		int sortId;
-		try {
-			sortId = Integer.parseInt(form.getSort());
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
-		Map<String, Object> result = new HashMap<String, Object>();
-		if (!(form.getDepartment().isEmpty())) {
-			result = experienceService.getExperiencesByDepartment(sortId, form.getUnivPref(), form.getUnivName(), form.getFaculty(), form.getDepartment());
-		} else if (!(form.getFaculty().isEmpty())) {
-			result = experienceService.getExperiencesByFaculty(sortId, form.getUnivPref(), form.getUnivName(), form.getFaculty());
-		} else if (!(form.getUnivName().isEmpty())) {
-			result = experienceService.getExperiencesByUniversity(sortId, form.getUnivPref(), form.getUnivName());
-		} else if (!(form.getUnivPref().isEmpty())) {
-			result = experienceService.getExperiencesByPrefecture(sortId, form.getUnivPref());
-		} else {
-			result = experienceService.getExperiences(sortId);
-		}
-		model.addAttribute("count", result.get("count"));
-		model.addAttribute("experiences", result.get("experiences"));
-		return "admin/experiences/search";
-	}
-	
-	@RequestMapping(value="/search/experiences", params="and-search-by-position")
-	public String getAndSearchExperiencesByPosition(SearchForm form, Model model) {
-		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute(form);
-		int sortId;
-		try {
-			sortId = Integer.parseInt(form.getSort());
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
-		Map<String, Object> result = new HashMap<String, Object>();
-		if (!(form.getPosition().isEmpty()) && !(form.getPosition().get(0).isEmpty())) {
-			result = experienceService.getExperiencesByPosition(sortId, form.getPosition(), true);
-		} else {
-			result = experienceService.getExperiences(sortId);
-		}
-		model.addAttribute("count", result.get("count"));
-		model.addAttribute("experiences", result.get("experiences"));
-		return "admin/experiences/search";
-	}
-	
-	@RequestMapping(value="/search/experiences", params="or-search-by-position")
-	public String getOrSearchExperiencesByPosition(SearchForm form, Model model) {
-		model.addAttribute("positionList", Profile.POSITION_LIST);
-		model.addAttribute(form);
-		int sortId;
-		try {
-			sortId = Integer.parseInt(form.getSort());
-		} catch (NumberFormatException e) {
-			throw new NotFound404();
-		}
-		Map<String, Object> result = new HashMap<String, Object>();
-		if (!(form.getPosition().isEmpty()) && !(form.getPosition().get(0).isEmpty())) {
-			result = experienceService.getExperiencesByPosition(sortId, form.getPosition(), false);
-		} else {
-			result = experienceService.getExperiences(sortId);
-		}
-		model.addAttribute("count", result.get("count"));
-		model.addAttribute("experiences", result.get("experiences"));
-		return "admin/experiences/search";
-	}
-	
-	@RequestMapping(value="/mail", params="develop")
-	public String redirectToIndex() {
+	@GetMapping(value = "/mail", params = "develop")
+	public String mailIndex() {
 		return "redirect:/admin";
 	}
 }

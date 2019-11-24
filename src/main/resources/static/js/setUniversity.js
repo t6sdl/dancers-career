@@ -1,23 +1,25 @@
 $(function () {
 	const contextPath = $('#contextPath').val();
-	const $univPref = $('#univPref'),
-	$univCategory = $('#univCategory'),
+	const $univLoc = $('#univLoc'),
+	$univType = $('#univType'),
 	$univName = $('#univName'),
-	$faculty = $('#faculty'),
-	$department = $('#department'),
-	$gradSchoolPref = $('#gradSchoolPref'),
-	$gradSchoolCategory = $('#gradSchoolCategory'),
-	$gradSchoolName = $('#gradSchoolName'),
-	$gradSchoolOf = $('#gradSchoolOf'),
-	$programIn = $('#programIn'),
-	$hiddenUnivPref = $('#hiddenUnivPref'),
+	$univFac = $('#univFac'),
+	$univDep = $('#univDep'),
+	$gradLoc = $('#gradLoc'),
+	$gradType = $('#gradType'),
+	$gradName = $('#gradName'),
+	$gradSchool = $('#gradSchool'),
+	$gradDiv = $('#gradDiv'),
+	$hiddenUnivLoc = $('#hiddenUnivLoc'),
 	$hiddenUnivName = $('#hiddenUnivName'),
-	$hiddenFac = $('#hiddenFac'),
-	$hiddenDep = $('#hiddenDep')
-	$hiddenGradSchoolPref = $('#hiddenGradSchoolPref'),
-	$hiddenGradSchoolName = $('#hiddenGradSchoolName'),
-	$hiddenGradSchoolOf = $('#hiddenGradSchoolOf'),
-	$hiddenProgramIn = $('#hiddenProgramIn');
+	$hiddenUnivFac = $('#hiddenUnivFac'),
+	$hiddenUnivDep = $('#hiddenUnivDep')
+	$hiddenGradLoc = $('#hiddenGradLoc'),
+	$hiddenGradName = $('#hiddenGradName'),
+	$hiddenGradSchool = $('#hiddenGradSchool'),
+	$hiddenGradDiv = $('#hiddenGradDiv');
+	$hiddenSorts = $('input[name="sort"]');
+	$sort = $('select[name="sort"]');
 	let univJson;
 	let gradJson;
 	const prepJSON = function () {
@@ -30,57 +32,57 @@ $(function () {
 		});
 		$.ajaxSetup({async: true});
 	}
-	const setUnivCategory = function () {
-		$univCategory.children('[value=""]').prop('selected', true);
+	const setUnivType = function () {
+		$univType.children('[value=""]').prop('selected', true);
 		$univName.children('[value!=""]').remove();
-		$faculty.children('[value!=""]').remove();
-		$department.children('[value!=""]').remove();
+		$univFac.children('[value!=""]').remove();
+		$univDep.children('[value!=""]').remove();
 	}
 	const setUnivName = function () {
 		$univName.children('[value!=""]').remove();
-		$faculty.children('[value!=""]').remove();
-		$department.children('[value!=""]').remove();
-		if ($univCategory.val() === '') {
+		$univFac.children('[value!=""]').remove();
+		$univDep.children('[value!=""]').remove();
+		if ($univType.val() === '') {
 			return;
 		}
-		for (let univ in univJson[$univPref.val()][$univCategory.val()]) {
-			let options = '<option value="' + univ + '">' + univ + '</option>';
-			$univName.append(options);
+		for (let un in univJson[$univLoc.val()][$univType.val()]) {
+			let option = '<option value="' + un + '">' + un + '</option>';
+			$univName.append(option);
 		}
 	}
-	const setFaculty = function () {
-		$faculty.children('[value!=""]').remove();
-		$department.children('[value!=""]').remove();
+	const setUnivFac = function () {
+		$univFac.children('[value!=""]').remove();
+		$univDep.children('[value!=""]').remove();
 		if ($univName.val() === '') {
 			return;
 		}
-		for (let fac in univJson[$univPref.val()][$univCategory.val()][$univName.val()]) {
-			let options = '<option value="' + fac + '">' + fac + '</option>';
-			$faculty.append(options);
+		for (let uf in univJson[$univLoc.val()][$univType.val()][$univName.val()]) {
+			let option = '<option value="' + uf + '">' + uf + '</option>';
+			$univFac.append(option);
 		}
 	}
-	const setDepartment = function () {
-		$department.children('[value!=""]').remove();
-		if ($faculty.val() === '') {
+	const setUnivDep = function () {
+		$univDep.children('[value!=""]').remove();
+		if ($univFac.val() === '') {
 			return;
 		}
-		for (let i = 0; i < univJson[$univPref.val()][$univCategory.val()][$univName.val()][$faculty.val()].length; i++) {
-			let dep = univJson[$univPref.val()][$univCategory.val()][$univName.val()][$faculty.val()][i];
-			let options = '<option value="' + dep + '">' + dep + '</option>';
-			$department.append(options);
+		for (let i = 0; i < univJson[$univLoc.val()][$univType.val()][$univName.val()][$univFac.val()].length; i++) {
+			let ud = univJson[$univLoc.val()][$univType.val()][$univName.val()][$univFac.val()][i];
+			let option = '<option value="' + ud + '">' + ud + '</option>';
+			$univDep.append(option);
 		}
 	}
-	const initUnivPref = function () {
-		$univPref.children('[value="' + $hiddenUnivPref.val() + '"]').prop('selected', true);
+	const initUnivLoc = function () {
+		$univLoc.children('[value="' + $hiddenUnivLoc.val() + '"]').prop('selected', true);
 	}
 	const initUnivName = function () {
 		if ($hiddenUnivName.val() !== '') {
 			let found = false;
-			for (let cate in univJson[$univPref.val()]) {
-				for (let univ in univJson[$univPref.val()][cate]) {
-					if (univ === $hiddenUnivName.val()) {
-						$univCategory.val(cate);
-						$univCategory.children('[value="' + cate + '"]').prop('selected', true);
+			for (let ut in univJson[$univLoc.val()]) {
+				for (let un in univJson[$univLoc.val()][ut]) {
+					if (un === $hiddenUnivName.val()) {
+						$univType.val(ut);
+						$univType.children('[value="' + ut + '"]').prop('selected', true);
 						found = true;
 						break;
 					}
@@ -93,69 +95,69 @@ $(function () {
 		setUnivName();
 		$univName.children('[value="' + $hiddenUnivName.val() + '"]').prop('selected', true);
 	}
-	const initFaculty = function () {
-		setFaculty();
-		$faculty.children('[value="' + $hiddenFac.val() + '"]').prop('selected', true);
+	const initUnivFac = function () {
+		setUnivFac();
+		$univFac.children('[value="' + $hiddenUnivFac.val() + '"]').prop('selected', true);
 	}
-	const initDepartment = function () {
-		setDepartment();
-		$department.children('[value="' + $hiddenDep.val() + '"]').prop('selected', true);
+	const initUnivDep = function () {
+		setUnivDep();
+		$univDep.children('[value="' + $hiddenUnivDep.val() + '"]').prop('selected', true);
 	}
 	
-	const setGradSchoolCategory = function () {
-		$gradSchoolCategory.children('[value=""]').prop('selected', true);
-		$gradSchoolName.children('[value!=""]').remove();
-		$gradSchoolOf.children('[value!=""]').remove();
-		$programIn.children('[value!=""]').remove();
-		if ($gradSchoolPref.val() === '') {
+	const setGradType = function () {
+		$gradType.children('[value=""]').prop('selected', true);
+		$gradName.children('[value!=""]').remove();
+		$gradSchool.children('[value!=""]').remove();
+		$gradDiv.children('[value!=""]').remove();
+		if ($gradLoc.val() === '') {
 			return;
 		}
 	}
-	const setGradSchoolName = function () {
-		$gradSchoolName.children('[value!=""]').remove();
-		$gradSchoolOf.children('[value!=""]').remove();
-		$programIn.children('[value!=""]').remove();
-		if ($gradSchoolCategory.val() === '') {
+	const setGradName = function () {
+		$gradName.children('[value!=""]').remove();
+		$gradSchool.children('[value!=""]').remove();
+		$gradDiv.children('[value!=""]').remove();
+		if ($gradType.val() === '') {
 			return;
 		}
-		for (let grad in gradJson[$gradSchoolPref.val()][$gradSchoolCategory.val()]) {
-			let options = '<option value="' + grad + '">' + grad + '</option>';
-			$gradSchoolName.append(options);
+		for (let gn in gradJson[$gradLoc.val()][$gradType.val()]) {
+			let option = '<option value="' + gn + '">' + gn + '</option>';
+			$gradName.append(option);
 		}
 	}
-	const setGradSchoolOf = function () {
-		$gradSchoolOf.children('[value!=""]').remove();
-		$programIn.children('[value!=""]').remove();
-		if ($gradSchoolName.val() === '') {
+	const setGradSchool = function () {
+		$gradSchool.children('[value!=""]').remove();
+		$gradDiv.children('[value!=""]').remove();
+		if ($gradName.val() === '') {
 			return;
 		}
-		for (let grad in gradJson[$gradSchoolPref.val()][$gradSchoolCategory.val()][$gradSchoolName.val()]) {
-			let options = '<option value="' + grad + '">' + grad + '</option>';
-			$gradSchoolOf.append(options);
+		for (let gs in gradJson[$gradLoc.val()][$gradType.val()][$gradName.val()]) {
+			let option = '<option value="' + gs + '">' + gs + '</option>';
+			$gradSchool.append(option);
 		}
 	}
-	const setProgramIn = function () {
-		$programIn.children('[value!=""]').remove();
-		if ($gradSchoolOf.val() === '') {
+	const setGradDiv = function () {
+		$gradDiv.children('[value!=""]').remove();
+		if ($gradSchool.val() === '') {
 			return;
 		}
-		for (let i = 0; i < gradJson[$gradSchoolPref.val()][$gradSchoolCategory.val()][$gradSchoolName.val()][$gradSchoolOf.val()].length; i++) {
-			let grad = gradJson[$gradSchoolPref.val()][$gradSchoolCategory.val()][$gradSchoolName.val()][$gradSchoolOf.val()][i];
-			let options = '<option value="' + grad + '">' + grad + '</option>';
-			$programIn.append(options);
+		for (let i = 0; i < gradJson[$gradLoc.val()][$gradType.val()][$gradName.val()][$gradSchool.val()].length; i++) {
+			let gd = gradJson[$gradLoc.val()][$gradType.val()][$gradName.val()][$gradSchool.val()][i];
+			let option = '<option value="' + gd + '">' + gd + '</option>';
+			$gradDiv.append(option);
 		}
 	}
-	const initGradSchoolPref = function () {
-		$gradSchoolPref.children('[value="' + $hiddenGradSchoolPref.val() + '"]').prop('selected', true);
+	const initGradLoc = function () {
+		$gradLoc.children('[value="' + $hiddenGradLoc.val() + '"]').prop('selected', true);
 	}
-	const initGradSchoolName = function () {
-		if ($hiddenGradSchoolName.val() !== '') {
+	const initGradName = function () {
+		if ($hiddenGradName.val() !== '') {
 			let found = false;
-			for (let cate in gradJson[$gradSchoolPref.val()]) {
-				for (let grad in gradJson[$gradSchoolPref.val()][cate]) {
-					if (grad === $hiddenGradSchoolName.val()) {
-						$gradSchoolCategory.val(cate);
-						$gradSchoolCategory.children('[value="' + cate + '"]').prop('selected', true);
+			for (let gt in gradJson[$gradLoc.val()]) {
+				for (let gn in gradJson[$gradLoc.val()][gt]) {
+					if (gn === $hiddenGradName.val()) {
+						$gradType.val(gt);
+						$gradType.children('[value="' + gt + '"]').prop('selected', true);
 						found = true;
 						break;
 					}
@@ -165,57 +167,60 @@ $(function () {
 				}
 			}			
 		}
-		setGradSchoolName();
-		$gradSchoolName.children('[value="' + $hiddenGradSchoolName.val() + '"]').prop('selected', true);
+		setGradName();
+		$gradName.children('[value="' + $hiddenGradName.val() + '"]').prop('selected', true);
 	}
-	const initGradSchoolOf = function () {
-		setGradSchoolOf();
-		$gradSchoolOf.children('[value="' + $hiddenGradSchoolOf.val() + '"]').prop('selected', true);
+	const initGradSchool = function () {
+		setGradSchool();
+		$gradSchool.children('[value="' + $hiddenGradSchool.val() + '"]').prop('selected', true);
 	}
-	const initProgramIn = function () {
-		setProgramIn();
-		$programIn.children('[value="' + $hiddenProgramIn.val() + '"]').prop('selected', true);
+	const initGradDiv = function () {
+		setGradDiv();
+		$gradDiv.children('[value="' + $hiddenGradDiv.val() + '"]').prop('selected', true);
 	}
 
 	prepJSON();
-	initUnivPref();
+	initUnivLoc();
 	initUnivName();
-	initFaculty();
-	initDepartment();
-	initGradSchoolPref();
-	initGradSchoolName();
-	initGradSchoolOf();
-	initProgramIn();
-	$univPref.on('input', function (event) {
+	initUnivFac();
+	initUnivDep();
+	initGradLoc();
+	initGradName();
+	initGradSchool();
+	initGradDiv();
+	$univLoc.on('input', function (event) {
 		event.preventDefault();
-		setUnivCategory();
+		setUnivType();
 	});
-	$univCategory.on('input', function (event) {
+	$univType.on('input', function (event) {
 		event.preventDefault();
 		setUnivName();
 	});
 	$univName.on('input', function (event) {
 		event.preventDefault();
-		setFaculty();
+		setUnivFac();
 	});
-	$faculty.on('input', function (event) {
+	$univFac.on('input', function (event) {
 		event.preventDefault();
-		setDepartment();
+		setUnivDep();
 	});
-	$gradSchoolPref.on('input', function (event) {
+	$gradLoc.on('input', function (event) {
 		event.preventDefault();
-		setGradSchoolCategory();
+		setGradType();
 	});
-	$gradSchoolCategory.on('input', function (event) {
+	$gradType.on('input', function (event) {
 		event.preventDefault();
-		setGradSchoolName();
+		setGradName();
 	});
-	$gradSchoolName.on('input', function (event) {
+	$gradName.on('input', function (event) {
 		event.preventDefault();
-		setGradSchoolOf();
+		setGradSchool();
 	});
-	$gradSchoolOf.on('input', function (event) {
+	$gradSchool.on('input', function (event) {
 		event.preventDefault();
-		setProgramIn();
+		setGradDiv();
+	});
+	$sort.on('input', function (event) {
+		$hiddenSorts.val($sort.val());
 	});
 });
