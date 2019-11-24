@@ -288,7 +288,7 @@ article .d-flex {
 <div class="d-flex justify-content-between">
 <div th:text="|PV数 *{page_view} ｜ お気に入り登録者数 *{likes}|"></div>
 <div>
-<a class="btn btn-primary" th:href="@{/admin/experiences/{experienceId}(experienceId=*{experience_id})}">詳細を見る</a>
+<a class="btn btn-primary" th:href="@{/admin/experiences/{expId}(expId=*{experience_id})}">詳細を見る</a>
 <button type="button" class="btn btn-danger" data-toggle="modal" th:data-target="|#deleteExperience*{experience_id}|">削除する</button>
 <div class="modal fade" th:id="|deleteExperience*{experience_id}|" tabindex="-1" role="dialog" aria-labelledby="deleteExperienceLabel" aria-hidden="true">
 <div class="modal-dialog" role="document">
@@ -302,7 +302,9 @@ article .d-flex {
 <div class="modal-body">この操作は取り消せません。</div>
 <div class="modal-footer">
 <button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
-<a class="btn btn-danger" th:href="@{/admin/experiences/{experienceId}?delete(experienceId=*{experience_id})}">削除する</a>
+<form th:action="@{/admin/experiences/{expId}(expId=*{experience_id})}" th:method="delete" class="d-inline-block">
+<button type="submit" class="btn btn-danger">削除する</button>
+</form>
 </div>
 </div>
 </div>

@@ -415,13 +415,9 @@ public class AdminController {
 		}
 	}
 	
-	@GetMapping(value="/experiences/{experienceId}", params="delete")
-	public String getDeleteExperiences(@PathVariable(name="experienceId") String experienceId, Model model) {
-		if (experienceId.equals("new")) {
-			return "redirect:/admin";
-		}
-		int id = Integer.parseInt(experienceId);
-		experienceService.delete(id);
+	@DeleteMapping("/experiences/{expId}")
+	public String expsDestroy(@PathVariable("expId") Integer expId, Model model) {
+		experienceService.delete(expId);
 		return "redirect:/admin/experiences";
 	}
 	
