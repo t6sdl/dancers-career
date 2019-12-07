@@ -59,7 +59,7 @@ public class ExperiencesController {
 		List<String> likes = profileService.getLikesByEmail(securityService.findLoggedInEmail());
 		if (!Objects.equals(experiences, null) && experiences.size() > 0) {
 			experiences.forEach(exp -> {
-				exp.set_liked(likes.contains(String.valueOf(exp.getExperience_id())));
+				exp.setLiked(likes.contains(String.valueOf(exp.getId())));
 			});
 		}
 		model.addAttribute("count", result.get("count"));
@@ -96,7 +96,7 @@ public class ExperiencesController {
 		List<String> likes = profileService.getLikesByEmail(securityService.findLoggedInEmail());
 		if (!Objects.equals(experiences, null) && experiences.size() > 0) {
 			experiences.forEach(exp -> {
-				exp.set_liked(likes.contains(String.valueOf(exp.getExperience_id())));
+				exp.setLiked(likes.contains(String.valueOf(exp.getId())));
 			});
 		}
 		model.addAttribute("count", result.get("count"));
@@ -150,8 +150,8 @@ public class ExperiencesController {
 			model.addAttribute("header", "for-stranger");
 			model.addAttribute("isStranger", true);
 			experience = experienceService.getALittleExperienceById(id);
-			experience.set_liked(isLiked);
-			model.addAttribute("title", experience.getUniv_name() + experience.getFaculty() + experience.getDepartment());
+			experience.setLiked(isLiked);
+			model.addAttribute("title", experience.getUnivName() + experience.getUnivFac() + experience.getUnivDep());
 			model.addAttribute("description", (experience.getEs().size() == 0 ? "" : experience.getEs().get(0).getQuestion().get(0)) + (experience.getEs().size() == 0 ? "" : experience.getEs().get(0).getAnswer().get(0)) + experience.getInterview().get(0).getQuestion() + experience.getInterview().get(0).getAnswer());
 			model.addAttribute("experience", experience);
 			return "experiences/aLittleArticle";
@@ -163,16 +163,16 @@ public class ExperiencesController {
 			model.addAttribute("header", "for-user");
 			model.addAttribute("isStranger", false);
 			experience = experienceService.getALittleExperienceById(id);
-			experience.set_liked(isLiked);
-			model.addAttribute("title", experience.getUniv_name() + experience.getFaculty() + experience.getDepartment());
+			experience.setLiked(isLiked);
+			model.addAttribute("title", experience.getUnivName() + experience.getUnivFac() + experience.getUnivDep());
 			model.addAttribute("description", (experience.getEs().size() == 0 ? "" : experience.getEs().get(0).getQuestion().get(0)) + (experience.getEs().size() == 0 ? "" : experience.getEs().get(0).getAnswer().get(0)) + experience.getInterview().get(0).getQuestion() + experience.getInterview().get(0).getAnswer());
 			model.addAttribute("experience", experience);
 			return "experiences/aLittleArticle";
 		} else if (!(account.isValid_email()) || !(perfect)) {
 			model.addAttribute("header", "for-user");
 			experience = experienceService.getExperienceById(id, true, false);
-			experience.set_liked(isLiked);
-			model.addAttribute("title", experience.getUniv_name() + experience.getFaculty() + experience.getDepartment());
+			experience.setLiked(isLiked);
+			model.addAttribute("title", experience.getUnivName() + experience.getUnivFac() + experience.getUnivDep());
 			model.addAttribute("otherEs", experience.getEs().size() - 1);
 			model.addAttribute("validEmail", account.isValid_email());
 			model.addAttribute("experience", experience);
@@ -181,7 +181,7 @@ public class ExperiencesController {
 			model.addAttribute("header", "for-user");
 		}
 		experience = experienceService.getExperienceById(id, true, pvCount);
-		experience.set_liked(isLiked);
+		experience.setLiked(isLiked);
 		List<Es> es = new ArrayList<Es>();
 		Iterator<Es> iterator = experience.getEs().iterator();
 		String corp = null;
@@ -206,7 +206,7 @@ public class ExperiencesController {
 			iterator.remove();
 		}
 		experience.setEs(es);
-		model.addAttribute("title", experience.getUniv_name() + experience.getFaculty() + experience.getDepartment());
+		model.addAttribute("title", experience.getUnivName() + experience.getUnivFac() + experience.getUnivDep());
 		model.addAttribute("experience", experience);
 		return "experiences/fullArticle";
 	}

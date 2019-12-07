@@ -20,27 +20,27 @@
         <div class="exp-info">
           <div style="display:flex; justify-content:space-between">
          	<div><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></div>
-            <div class="likes"><span th:text="*{likes}"></span> <span th:if="*{_liked}"><i class="fas fa-heart"></i></span><span th:unless="*{_liked}"><i class="far fa-heart"></i></span></div>
+            <div class="likes"><span th:text="*{likes}"></span> <span th:if="*{liked}"><i class="fas fa-heart"></i></span><span th:unless="*{liked}"><i class="far fa-heart"></i></span></div>
           </div>
           <h2>
-            <span th:text="*{univ_name} == '' ? '非公開' : *{univ_name}"></span>
+            <span th:text="*{univName} == '' ? '非公開' : *{univName}"></span>
             <span style="display:inline-block;">
-              <span th:text="*{faculty}"></span>
-              <span th:text="*{department}"></span>
+              <span th:text="*{univFac}"></span>
+              <span th:text="*{univDep}"></span>
             </span>
           </h2>
           <div>
-            <p th:if="*{last_name != '' && first_name != ''}" th:text="|*{last_name} *{first_name} さん|"></p>
-            <p><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'"></span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></p>
+            <p th:if="*{familyName != '' && givenName != ''}" th:text="|*{familyName} *{givenName} さん|"></p>
+            <p><span th:text="*{graduatedIn} == '' ? '非公開' : *{graduatedIn} + ' 年卒'"></span>｜<span th:text="*{degree} == '' ? '非公開' : *{degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></p>
           </div>
           <hr>
           <div class="table">
             <div><strong>サークル</strong></div>
-            <div><span class="divide-slash" th:each="cl : *{club}" th:text="|${cl == '' ? '非公開' : cl} |"></span></div>
+            <div><span class="divide-slash" th:each="clb : *{club}" th:text="|${clb == '' ? '非公開' : clb} |"></span></div>
           </div>
           <div class="table">
             <div><strong>内定先</strong></div>
-            <div><span class="divide-slash" th:each="off : *{offer}" th:text="|${off == '' ? '非公開' : off} |"></span></div>
+            <div><span class="divide-slash" th:each="ofr : *{offer}" th:text="|${ofr == '' ? '非公開' : ofr} |"></span></div>
           </div>
         </div>
         <hr>

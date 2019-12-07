@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -179,7 +180,7 @@ public class AdminController {
 	@GetMapping(value = "/users", params = {"pos", "cond=and", "download"})
 	public ModelAndView downloadUsersIndexFilteredByPosAndPos(@RequestParam(name="sort") Integer sort, @RequestParam(name="pos") List<String> positions) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<String> filter = Arrays.asList("役職(AND)", String.join(",", positions));
+		List<String> filter = Arrays.asList("役職(AND)", positions.stream().collect(Collectors.joining(",")));
 		List<Student> students = new ArrayList<Student>();
 		if (!(positions.isEmpty()) && !(positions.get(0).isEmpty())) {
 			students = (List<Student>) profileService.getProfilesByPosition(sort, positions, true).get("students");
@@ -212,7 +213,7 @@ public class AdminController {
 	@GetMapping(value = "/users", params = {"pos", "cond=or", "download"})
 	public ModelAndView downloadUsersIndexFilteredByPosOrPos(@RequestParam(name="sort") Integer sort, @RequestParam(name="pos") List<String> positions) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<String> filter = Arrays.asList("役職(OR)", String.join(",", positions));
+		List<String> filter = Arrays.asList("役職(OR)", positions.stream().collect(Collectors.joining(",")));
 		List<Student> students = new ArrayList<Student>();
 		if (!(positions.isEmpty()) && !(positions.get(0).isEmpty())) {
 			students = (List<Student>) profileService.getProfilesByPosition(sort, positions, true).get("students");
@@ -409,7 +410,7 @@ public class AdminController {
 			return "admin/experiences/edit";
 		} else {
 			Experience experience = experienceService.convertExperienceFormIntoExperience(form);
-			experience.setExperience_id(expId);
+			experience.setId(expId);
 			experienceService.update(experience);
 			return "redirect:/admin/experiences/" + expId;
 		}

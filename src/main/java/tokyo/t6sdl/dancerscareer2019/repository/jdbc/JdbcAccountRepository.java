@@ -9,19 +9,18 @@ import java.util.List;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import lombok.RequiredArgsConstructor;
 import tokyo.t6sdl.dancerscareer2019.model.Account;
 import tokyo.t6sdl.dancerscareer2019.repository.AccountRepository;
 
+@RequiredArgsConstructor
 @Repository
 public class JdbcAccountRepository implements AccountRepository {
 	private final JdbcTemplate jdbcTemplate;
 	private final String QUERIED_VALUE = "email, password, authority, valid_email, updated_at, created_at, last_login, email_token, password_token, new_es_mail";
-	
-	public JdbcAccountRepository (JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
-	}
 
 	@Override
 	public List<Account> find() {

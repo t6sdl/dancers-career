@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -66,8 +67,8 @@ public class ExcelBuilder extends AbstractXlsxView {
 				likes = "";
 			} else {
 				birth = student.getDate_of_birth().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
-				positions = String.join(",", student.getPosition());
-				likes = String.join(",", student.getLikes());
+				positions = student.getPosition().stream().collect(Collectors.joining(","));
+				likes = student.getLikes().stream().collect(Collectors.joining(","));
 			}
 			List<String> studentData = Arrays.asList(student.getEmail(), validEmail, lastLogin, student.getLast_name(), student.getFirst_name(), student.getKana_last_name(), student.getKana_first_name(), birth, student.getSex(), student.getPhone_number(), student.getGraduation(), student.getAcademic_degree(), student.getMajor(), student.getUniv_pref(), student.getUniv_name(), student.getFaculty(), student.getDepartment(), student.getGrad_school_pref(), student.getGrad_school_name(), student.getGrad_school_of(), student.getProgram_in(), student.getClub(), positions, likes);
 			for (int j = 0; j < studentData.size(); j++) {

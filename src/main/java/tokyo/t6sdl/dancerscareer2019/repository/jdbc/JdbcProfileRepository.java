@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import lombok.RequiredArgsConstructor;
@@ -27,8 +28,8 @@ import tokyo.t6sdl.dancerscareer2019.repository.ProfileRepository;
 @Repository
 public class JdbcProfileRepository implements ProfileRepository {
 	private final JdbcTemplate jdbcTemplate;
-	private final String QUERIED_VALUE = "accounts.email, valid_email, last_login, last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, univ_pref, univ_name, faculty, department, grad_school_pref, grad_school_name, grad_school_of, program_in, graduation, academic_degree, club, position, likes";
-	private final List<String> SORT_LIST = Arrays.asList("last_login DESC", "kana_last_name ASC, kana_first_name ASC", "univ_pref ASC, univ_name ASC, faculty ASC, department ASC");
+	private final String QUERIED_VALUE = "accounts.email, valid_email, last_login, family_name, given_name, kana_family_name, kana_given_name, date_of_birth, sex, phone, major, univ_loc, univ_name, univ_fac, univ_dep, grad_loc, grad_name, grad_school, grad_div, graduated_in, degree, club, position, likes";
+	private final List<String> SORT_LIST = Arrays.asList("last_login DESC", "kana_family_name ASC, kana_given_name ASC", "univ_loc ASC, univ_name ASC, univ_fac ASC, univ_dep ASC");
 	
 	private List<String> stringToList(String str) {
 		return new ArrayList<String>(Arrays.asList(str.split(",")));
@@ -39,14 +40,14 @@ public class JdbcProfileRepository implements ProfileRepository {
 	}
 	
 	private String listToString(List<String> list, String prefix, String suffix, String separator) {
-		return String.join(separator, list.stream().map(e -> prefix + e + suffix).collect(Collectors.toList()));
+		return list.stream().map(e -> prefix + e + suffix).collect(Collectors.joining(separator));
 	}
 	
 	@Override
 	public Profile findOneByEmail(String email) {
 		 try {
 				return jdbcTemplate.queryForObject(
-						"SELECT email, last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, univ_pref, univ_name, faculty, department, grad_school_pref, grad_school_name, grad_school_of, program_in, graduation, academic_degree, club, position, likes FROM profiles WHERE email = ?", (resultSet, i) -> {
+						"SELECT * FROM profiles WHERE email = ?", (resultSet, i) -> {
 							Profile profile = new Profile();
 							this.adjustDataToProfile(profile, resultSet);
 							return profile;

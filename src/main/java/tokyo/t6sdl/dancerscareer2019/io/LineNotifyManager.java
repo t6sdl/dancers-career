@@ -132,8 +132,8 @@ public class LineNotifyManager {
 				for (String pos : experience.getPosition()) {
 					draft.append("[[" + pos + "]] ");
 				}
-				draft.append(experience.getUniv_name() + " ☆★\n");
-				draft.append(Mail.URI_EXPERIENCES + "/" + experience.getExperience_id() + "\n\n");
+				draft.append(experience.getUnivName() + " ☆★\n");
+				draft.append(Mail.URI_EXPERIENCES + "/" + experience.getId() + "\n\n");
 			}
 			break;
 		case Mail.SUB_SURVEY:
