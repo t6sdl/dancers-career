@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 public class InterviewForm {
-	private int interviewId;
+	private int id;
 	@NotEmpty
 	private String question;
 	@NotEmpty

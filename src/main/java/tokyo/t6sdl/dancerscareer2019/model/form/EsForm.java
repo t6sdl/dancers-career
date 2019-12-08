@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 public class EsForm {
-	private int esId;
+	private int id;
 	private String corp;
 	private String result;
 	@NotEmpty

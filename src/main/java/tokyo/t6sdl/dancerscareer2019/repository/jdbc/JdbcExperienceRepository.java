@@ -437,7 +437,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	@Override
 	public void insertEs(Es newEs) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("expId", newEs.getExperience_id());
+		params.put("expId", newEs.getExpId());
 		Integer id = jdbcTemplate.queryForObject("SELECT MAX(id) FROM es WHERE exp_id = :expId", params, Integer.class);
 		if (Objects.equals(id, null)) id = 0;
 		params.put("id", id + 1);
@@ -460,8 +460,8 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	@Override
 	public void updateEs(Es es) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("expId", es.getExperience_id());
-		params.put("id", es.getEs_id());
+		params.put("expId", es.getExpId());
+		params.put("id", es.getId());
 		params.put("corp", es.getCorp());
 		params.put("result", es.getResult());
 		params.put("question", es.getQuestion());
@@ -473,10 +473,10 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	@Override
 	public void insertInterview(Interview newItv) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("expId", newItv.getExperience_id());
+		params.put("expId", newItv.getExpId());
 		Integer id = jdbcTemplate.queryForObject("SELECT MAX(id) FROM interview WHERE exp_id = :expId", params, Integer.class);
 		if (Objects.equals(id, null)) id = 0;
-		params.put("id", newItv.getInterview_id());
+		params.put("id", newItv.getId());
 		params.put("question", newItv.getQuestion());
 		params.put("answer", newItv.getAnswer());
 		jdbcTemplate.update("INSERT INTO interview VALUES (:expId, :id, :question, :answer)", params);
@@ -493,8 +493,8 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	@Override
 	public void updateInterview(Interview itv) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("expId", itv.getExperience_id());
-		params.put("id", itv.getInterview_id());
+		params.put("expId", itv.getExpId());
+		params.put("id", itv.getId());
 		params.put("question", itv.getQuestion());
 		params.put("answer", itv.getAnswer());
 		jdbcTemplate.update("UPDATE interview SET question = :question, answer = :answer WHERE exp_id = :expId AND id = :id", params);
@@ -527,8 +527,8 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	}
 	
 	private Es adjustToEs(Es es, ResultSet resultSet) throws SQLException {
-		es.setExperience_id(resultSet.getInt("exp_id"));
-		es.setEs_id(resultSet.getInt("id"));
+		es.setExpId(resultSet.getInt("exp_id"));
+		es.setId(resultSet.getInt("id"));
 		es.setCorp(resultSet.getString("corp"));
 		es.setResult(resultSet.getString("result"));
 		es.getQuestion().add(resultSet.getString("question"));
@@ -538,8 +538,8 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	}
 	
 	private Interview adjustToItv(Interview itv, ResultSet resultSet) throws SQLException {
-		itv.setExperience_id(resultSet.getInt("exp_id"));
-		itv.setInterview_id(resultSet.getInt("id"));
+		itv.setExpId(resultSet.getInt("exp_id"));
+		itv.setId(resultSet.getInt("id"));
 		itv.setQuestion(resultSet.getString("question"));
 		itv.setAnswer(resultSet.getString("answer"));
 		return itv;

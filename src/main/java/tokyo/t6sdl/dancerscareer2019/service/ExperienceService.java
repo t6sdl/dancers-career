@@ -21,8 +21,8 @@ import tokyo.t6sdl.dancerscareer2019.repository.ExperienceRepository;
 public class ExperienceService {
 	private final ExperienceRepository experienceRepository;
 	
-	public Experience getExperienceById(int experienceId, boolean all, boolean pvCount) {
-		return experienceRepository.findOneById(experienceId, all, pvCount);
+	public Experience getExperienceById(int expId, boolean all, boolean pvCount) {
+		return experienceRepository.findOneById(expId, all, pvCount);
 	}
 	
 	public Experience getALittleExperienceById(int experienceId) {
@@ -65,36 +65,36 @@ public class ExperienceService {
 		return experienceRepository.findByCreatedAt();
 	}
 	
-	public Es getEsById(int experienceId, int esId) {
-		return experienceRepository.findEsById(experienceId, esId);
+	public Es getEsById(int expId, int esId) {
+		return experienceRepository.findEsById(expId, esId);
 	}
 	
-	public Interview getInterviewById(int experienceId, int interviewId) {
-		return experienceRepository.findInterviewById(experienceId, interviewId);
+	public Interview getInterviewById(int expId, int itvId) {
+		return experienceRepository.findInterviewById(expId, itvId);
 	}
 	
 	public void register(Experience newExperience) {
 		experienceRepository.insert(newExperience);
 	}
 	
-	public void delete(int experienceId) {
-		experienceRepository.delete(experienceId);
+	public void delete(int expId) {
+		experienceRepository.delete(expId);
 	}
 	
 	public void update(Experience experience) {
 		experienceRepository.update(experience);
 	}
 	
-	public void updateLikes(int experience_id, boolean increment) {
-		experienceRepository.updateLikes(experience_id, increment);
+	public void updateLikes(int expId, boolean increment) {
+		experienceRepository.updateLikes(expId, increment);
 	}
 	
 	public void registerEs(Es newEs) {
 		experienceRepository.insertEs(newEs);
 	}
 	
-	public void deleteEs(int experienceId, int esId) {
-		experienceRepository.deleteEs(experienceId, esId);
+	public void deleteEs(int expId, int esId) {
+		experienceRepository.deleteEs(expId, esId);
 	}
 	
 	public void updateEs(Es es) {
@@ -105,8 +105,8 @@ public class ExperienceService {
 		experienceRepository.insertInterview(newInterview);
 	}
 	
-	public void deleteInterview(int experienceId, int interviewId) {
-		experienceRepository.deleteInterview(experienceId, interviewId);
+	public void deleteInterview(int expId, int itvId) {
+		experienceRepository.deleteInterview(expId, itvId);
 	}
 	
 	public void updateInterview(Interview interview) {
@@ -159,7 +159,7 @@ public class ExperienceService {
 	
 	public Es convertEsFormIntoEs(EsForm form) {
 		Es es = new Es();
-		es.setEs_id(form.getEsId());
+		es.setId(form.getId());
 		es.setCorp(form.getCorp());
 		es.setResult(form.getResult());
 		es.getQuestion().add(form.getQuestion());
@@ -170,7 +170,7 @@ public class ExperienceService {
 	
 	public Interview convertInterviewFormIntoInterview(InterviewForm form) {
 		Interview interview = new Interview();
-		interview.setInterview_id(form.getInterviewId());
+		interview.setId(form.getId());
 		interview.setQuestion(form.getQuestion());
 		interview.setAnswer(form.getAnswer());
 		return interview;
@@ -234,7 +234,7 @@ public class ExperienceService {
 			return new EsForm();
 		}
 		EsForm form = new EsForm();
-		form.setEsId(es.getEs_id());
+		form.setId(es.getId());
 		form.setCorp(es.getCorp());
 		form.setResult(es.getResult());
 		form.setQuestion(es.getQuestion().get(0));
@@ -248,7 +248,7 @@ public class ExperienceService {
 			return new InterviewForm();
 		}
 		InterviewForm form = new InterviewForm();
-		form.setInterviewId(interview.getInterview_id());
+		form.setId(interview.getId());
 		form.setQuestion(interview.getQuestion());
 		form.setAnswer(interview.getAnswer());
 		return form;

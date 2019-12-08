@@ -193,8 +193,8 @@ public class ExperiencesController {
 				es.get(es.size() - 1).getAdvice().add(each.getAdvice().get(0));
 			} else {
 				Es e = new Es();
-				e.setExperience_id(each.getExperience_id());
-				e.setEs_id(each.getEs_id());
+				e.setExpId(each.getExpId());
+				e.setId(each.getId());
 				e.setCorp(each.getCorp());
 				e.setResult(each.getResult());
 				e.getQuestion().add(each.getQuestion().get(0));

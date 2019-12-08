@@ -19,16 +19,16 @@ public interface ExperienceRepository {
 	Map<String, Object> findByDepartment(int sort, String univLoc, String univName, String univFac, String univDep);
 	Map<String, Object> findByPosition(int sort, List<String> position, boolean andSearch);
 	Map<String, Object> findByCreatedAt();
-	Es findEsById(int exp_id, int id);
-	Interview findInterviewById(int exp_id, int id);
+	Es findEsById(int expId, int id);
+	Interview findInterviewById(int expId, int id);
 	void insert(Experience newExperience);
 	void delete(int id);
 	void update(Experience experience);
 	void updateLikes(int id, boolean increment);
 	void insertEs(Es newEs);
-	void deleteEs(int exp_id, int id);
+	void deleteEs(int expId, int id);
 	void updateEs(Es es);
 	void insertInterview(Interview newInterview);
-	void deleteInterview(int exp_id, int id);
+	void deleteInterview(int expId, int id);
 	void updateInterview(Interview interview);
 }

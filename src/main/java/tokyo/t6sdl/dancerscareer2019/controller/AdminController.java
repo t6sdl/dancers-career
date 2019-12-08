@@ -437,7 +437,7 @@ public class AdminController {
 			return "admin/experiences/newEs";
 		} else {
 			Es newEs = experienceService.convertEsFormIntoEs(form);
-			newEs.setExperience_id(expId);
+			newEs.setExpId(expId);
 			experienceService.registerEs(newEs);
 			return "redirect:/admin/experiences/" + expId;
 		}
@@ -461,8 +461,8 @@ public class AdminController {
 			return "admin/experiences/editEs";
 		} else {
 			Es es = experienceService.convertEsFormIntoEs(form);
-			es.setExperience_id(expId);
-			es.setEs_id(esId);
+			es.setExpId(expId);
+			es.setId(esId);
 			experienceService.updateEs(es);
 			return "redirect:/admin/experiences/" + expId;
 		}
@@ -489,40 +489,40 @@ public class AdminController {
 			return "admin/experiences/newInterview";
 		} else {
 			Interview newInterview = experienceService.convertInterviewFormIntoInterview(form);
-			newInterview.setExperience_id(expId);
+			newInterview.setExpId(expId);
 			experienceService.registerInterview(newInterview);
 			return "redirect:/admin/experiences/" + expId;
 		}
 	}
 	
-	@GetMapping("/experiences/{expId}/interview/{intId}/edit")
-	public String interviewEdit(@PathVariable("expId") Integer expId, @PathVariable("intId") Integer intId, Model model) {
-		InterviewForm form = experienceService.convertInterviewIntoInterviewForm(experienceService.getInterviewById(expId, intId));
+	@GetMapping("/experiences/{expId}/interview/{itvId}/edit")
+	public String interviewEdit(@PathVariable("expId") Integer expId, @PathVariable("itvId") Integer itvId, Model model) {
+		InterviewForm form = experienceService.convertInterviewIntoInterviewForm(experienceService.getInterviewById(expId, itvId));
 		model.addAttribute("expId", expId);
-		model.addAttribute("intId", intId);
+		model.addAttribute("itvId", itvId);
 		model.addAttribute(form);
 		return "admin/experiences/editInterview";
 	}
 	
-	@PutMapping("/experiences/{expId}/interview/{intId}")
-	public String interviewUpdate(@PathVariable("expId") Integer expId, @PathVariable("intId") Integer intId, @Validated InterviewForm form, BindingResult result, Model model) {
+	@PutMapping("/experiences/{expId}/interview/{itvId}")
+	public String interviewUpdate(@PathVariable("expId") Integer expId, @PathVariable("itvId") Integer itvId, @Validated InterviewForm form, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			model.addAttribute("expId", expId);
-			model.addAttribute("intId", intId);
+			model.addAttribute("itvId", itvId);
 			model.addAttribute(form);
 			return "admin/experiences/editInterview";
 		} else {
 			Interview interview = experienceService.convertInterviewFormIntoInterview(form);
-			interview.setExperience_id(expId);
-			interview.setInterview_id(intId);
+			interview.setExpId(expId);
+			interview.setId(itvId);
 			experienceService.updateInterview(interview);
 			return "redirect:/admin/experiences/" + expId;
 		}
 	}
 	
-	@DeleteMapping("/experiences/{expId}/interview/{intId}")
-	public String interviewDestroy(@PathVariable("expId") Integer expId, @PathVariable("intId") Integer intId, Model model) {
-		experienceService.deleteInterview(expId, intId);
+	@DeleteMapping("/experiences/{expId}/interview/{itvId}")
+	public String interviewDestroy(@PathVariable("expId") Integer expId, @PathVariable("itvId") Integer itvId, Model model) {
+		experienceService.deleteInterview(expId, itvId);
 		return "redirect:/admin/experiences/" + expId;
 	}
 	
