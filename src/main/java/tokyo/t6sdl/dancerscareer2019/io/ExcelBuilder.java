@@ -56,21 +56,21 @@ public class ExcelBuilder extends AbstractXlsxView {
 		int i = 1;
 		for (Student student : students) {
 			studentsRow = studentsSheet.createRow(i++);
-			String validEmail = student.isValid_email() ? "済" : "未";
-			String lastLogin = student.getLast_login().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
+			String validEmail = student.isValidEmail() ? "済" : "未";
+			String lastLogin = student.getLastLogin().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
 			String birth;
 			String positions;
 			String likes;
-			if (Objects.equals(student.getDate_of_birth(), null)) {
+			if (Objects.equals(student.getBirth(), null)) {
 				birth = "";
 				positions = "";
 				likes = "";
 			} else {
-				birth = student.getDate_of_birth().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+				birth = student.getBirth().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 				positions = student.getPosition().stream().collect(Collectors.joining(","));
 				likes = student.getLikes().stream().collect(Collectors.joining(","));
 			}
-			List<String> studentData = Arrays.asList(student.getEmail(), validEmail, lastLogin, student.getLast_name(), student.getFirst_name(), student.getKana_last_name(), student.getKana_first_name(), birth, student.getSex(), student.getPhone_number(), student.getGraduation(), student.getAcademic_degree(), student.getMajor(), student.getUniv_pref(), student.getUniv_name(), student.getFaculty(), student.getDepartment(), student.getGrad_school_pref(), student.getGrad_school_name(), student.getGrad_school_of(), student.getProgram_in(), student.getClub(), positions, likes);
+			List<String> studentData = Arrays.asList(student.getEmail(), validEmail, lastLogin, student.getFamilyName(), student.getGivenName(), student.getKanaFamilyName(), student.getKanaGivenName(), birth, student.getSex(), student.getPhone(), student.getGraduatedIn(), student.getDegree(), student.getMajor(), student.getUnivLoc(), student.getUnivName(), student.getUnivFac(), student.getUnivDep(), student.getGradLoc(), student.getGradName(), student.getGradSchool(), student.getGradDiv(), student.getClub(), positions, likes);
 			for (int j = 0; j < studentData.size(); j++) {
 				studentsRow.createCell(j).setCellValue(studentData.get(j));
 			}

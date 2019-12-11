@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -92,11 +91,11 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	@Override
 	public Map<String, Object> findByName(int sort, String kanaFamilyName, String kanaGivenName) {
 		try {
-			List<String> target = Arrays.asList("kana_family_name = :kanaFN", "kana_given_name = :kanaGN");
+			List<String> target = Arrays.asList("kana_family_name = :kFN", "kana_given_name = :kGN");
 			List<String> order = this.SORT_LIST.get(sort);
 			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("kanaFN", kanaFamilyName);
-			params.put("kanaGN", kanaGivenName);
+			params.put("kFN", kanaFamilyName);
+			params.put("kGN", kanaGivenName);
 			return this.findExperiences(target, order, params);
 		} catch (IndexOutOfBoundsException e) {
 			throw new IllegalArgumentException("Sort should be less than " + this.SORT_LIST.size());
@@ -104,12 +103,12 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	}
 
 	@Override
-	public Map<String, Object> findByLastName(int sort, String kanaFamilyName) {
+	public Map<String, Object> findByFamilyName(int sort, String kanaFamilyName) {
 		try {
-			List<String> target = Arrays.asList("kana_family_name = :kanaFN");
+			List<String> target = Arrays.asList("kana_family_name = :kFN");
 			List<String> order = this.SORT_LIST.get(sort);
 			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("kanaFN", kanaFamilyName);
+			params.put("kFN", kanaFamilyName);
 			return this.findExperiences(target, order, params);
 		} catch (IndexOutOfBoundsException e) {
 			throw new IllegalArgumentException("Sort should be less than " + this.SORT_LIST.size());
@@ -117,12 +116,12 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	}
 
 	@Override
-	public Map<String, Object> findByPrefecture(int sort, String univLoc) {
+	public Map<String, Object> findByUnivLoc(int sort, String univLoc) {
 		try {
-			List<String> target = Arrays.asList("univ_loc = :univLoc");
+			List<String> target = Arrays.asList("univ_loc = :uL");
 			List<String> order = this.SORT_LIST.get(sort);
 			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("univLoc", univLoc);
+			params.put("uL", univLoc);
 			return this.findExperiences(target, order, params);
 		} catch (IndexOutOfBoundsException e) {
 			throw new IllegalArgumentException("Sort should be less than " + this.SORT_LIST.size());
@@ -130,13 +129,13 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	}
 
 	@Override
-	public Map<String, Object> findByUniversity(int sort, String univLoc, String univName) {
+	public Map<String, Object> findByUnivName(int sort, String univLoc, String univName) {
 		try {
-			List<String> target = Arrays.asList("univ_loc = :univLoc", "univ_name = :univName");
+			List<String> target = Arrays.asList("univ_loc = :uL", "univ_name = :uN");
 			List<String> order = this.SORT_LIST.get(sort);
 			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("univLoc", univLoc);
-			params.put("univName", univName);
+			params.put("uL", univLoc);
+			params.put("uN", univName);
 			return this.findExperiences(target, order, params);
 		} catch (IndexOutOfBoundsException e) {
 			throw new IllegalArgumentException("Sort should be less than " + this.SORT_LIST.size());
@@ -144,14 +143,14 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	}
 
 	@Override
-	public Map<String, Object> findByFaculty(int sort, String univLoc, String univName, String univFac) {
+	public Map<String, Object> findByUnivFac(int sort, String univLoc, String univName, String univFac) {
 		try {
-			List<String> target = Arrays.asList("univ_loc = :univLoc", "univ_name = :univName", "univ_fac = :univFac");
+			List<String> target = Arrays.asList("univ_loc = :uL", "univ_name = :uN", "univ_fac = :uF");
 			List<String> order = this.SORT_LIST.get(sort);
 			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("univLoc", univLoc);
-			params.put("univName", univName);
-			params.put("univFac", univFac);
+			params.put("uL", univLoc);
+			params.put("uN", univName);
+			params.put("uF", univFac);
 			return this.findExperiences(target, order, params);
 		} catch (IndexOutOfBoundsException e) {
 			throw new IllegalArgumentException("Sort should be less than " + this.SORT_LIST.size());
@@ -159,15 +158,15 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	}
 
 	@Override
-	public Map<String, Object> findByDepartment(int sort, String univLoc, String univName, String univFac, String univDep) {
+	public Map<String, Object> findByUnivDep(int sort, String univLoc, String univName, String univFac, String univDep) {
 		try {
-			List<String> target = Arrays.asList("univ_loc = :univLoc", "univ_name = :univName", "univ_fac = :univFac", "univ_dep = :univDep");
+			List<String> target = Arrays.asList("univ_loc = :uL", "univ_name = :uN", "univ_fac = :uF", "univ_dep = :uD");
 			List<String> order = this.SORT_LIST.get(sort);
 			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("univLoc", univLoc);
-			params.put("univName", univName);
-			params.put("univFac", univFac);
-			params.put("univDep", univDep);
+			params.put("uL", univLoc);
+			params.put("uN", univName);
+			params.put("uF", univFac);
+			params.put("uD", univDep);
 			return this.findExperiences(target, order, params);
 		} catch (IndexOutOfBoundsException e) {
 			throw new IllegalArgumentException("Sort should be less than " + this.SORT_LIST.size());
@@ -177,22 +176,18 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	@Override
 	public Map<String, Object> findByPosition(int sort, List<String> position, boolean andSearch) {
 		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("positions", position);
+		params.put("pos", position);
 		List<Integer> ids;
 		if (andSearch) {
-			String sql = "SELECT exp_id FROM senior_positions WHERE position IN :positions GROUP BY exp_id HAVING exp_id = :size ORDER BY exp_id DESC";
+			String sql = "SELECT exp_id FROM senior_positions WHERE position IN (:pos) GROUP BY exp_id HAVING COUNT(exp_id) = :size ORDER BY exp_id DESC";
 			params.put("size", position.size());
-			ids = jdbcTemplate.query(sql, params, (resultSet, i) -> {
-					return resultSet.getInt("exp_id");
-				});
+			ids = jdbcTemplate.queryForList(sql, params, Integer.class);
 		} else {
-			String sql = "SELECT exp_id FROM senior_positions WHERE position IN :positions GROUP BY exp_id ORDER BY exp_id DESC";
-			ids = jdbcTemplate.query(sql, params, (resultSet, i) -> {
-					return resultSet.getInt("exp_id");
-				});
+			String sql = "SELECT exp_id FROM senior_positions WHERE position IN (:pos) GROUP BY exp_id ORDER BY exp_id DESC";
+			ids = jdbcTemplate.queryForList(sql, params, Integer.class);
 		}
 		try {
-			List<String> target = Arrays.asList("id IN :ids");
+			List<String> target = Arrays.asList(!ids.isEmpty() ? "id IN (:ids)" : "id = NULL");
 			List<String> order = this.SORT_LIST.get(sort);
 			params.clear();
 			params.put("ids", ids);
@@ -241,15 +236,16 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void insert(Experience newExp) {
-		String sql = "INSERT INTO experiences VALUES (NULL, 0, 0, :fN, :gN, :kFN, :kGN, :sex, :mjr, :uL, :uN, :uF, :uD, :gL, :gN, :gS, :gD, :gI, :deg, :pos, :clb, :ofr)";
+		String sql = "INSERT INTO experiences VALUES (NULL, 0, 0, :fN, :giN, :kFN, :kGN, :sex, :mjr, :uL, :uN, :uF, :uD, :gL, :grN, :gS, :gD, :gI, :deg, :pos, :clb, :ofr, CURRENT_TIMESTAMP)";
 		String pos = newExp.getPosition().stream().collect(Collectors.joining(","));
 		String clb = newExp.getClub().stream().collect(Collectors.joining(","));
 		String ofr = newExp.getOffer().stream().collect(Collectors.joining(","));
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("fN", newExp.getFamilyName());
-		params.put("gN", newExp.getGivenName());
+		params.put("giN", newExp.getGivenName());
 		params.put("kFN", newExp.getKanaFamilyName());
 		params.put("kGN", newExp.getKanaGivenName());
 		params.put("sex", newExp.getSex());
@@ -259,7 +255,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		params.put("uF", newExp.getUnivFac());
 		params.put("uD", newExp.getUnivDep());
 		params.put("gL", newExp.getGradLoc());
-		params.put("gN", newExp.getGradName());
+		params.put("grN", newExp.getGradName());
 		params.put("gS", newExp.getGradSchool());
 		params.put("gD", newExp.getGradDiv());
 		params.put("gI", newExp.getGraduatedIn());
@@ -268,74 +264,49 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		params.put("clb", clb);
 		params.put("ofr", ofr);
 		jdbcTemplate.update(sql, params);
-		Integer id = jdbcTemplate.getJdbcTemplate().queryForObject("SELECT LAST_INSERT_ID() FROM experiences", Integer.class);
+		Integer id = jdbcTemplate.getJdbcTemplate().queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
 		if (!newExp.getPosition().contains("")) {
-			List<SenPosParam> senPosParams = newExp.getPosition().stream().map(e -> new SenPosParam(id, e)).collect(Collectors.toList());
-			params.clear();
-			params.put("senPosParams", senPosParams);
-			jdbcTemplate.update("INSERT INTO senior_positions VALUES :senPosParams", params);
+			List<Map<String, Object>> paramMaps = new ArrayList<Map<String, Object>>();
+			for (String p : newExp.getPosition()) {
+				Map<String, Object> paramMap = new HashMap<String, Object>();
+				paramMap.put("position", p);
+				paramMap.put("expId", id);
+				paramMaps.add(paramMap);
+			}
+			jdbcTemplate.batchUpdate("INSERT INTO senior_positions VALUES (:position, :expId)", paramMaps.toArray(new Map[paramMaps.size()]));
 		}
 		if (!newExp.getEs().get(0).toString().isEmpty()) {
-			List<Es> es = newExp.getEs();
-			List<EsParam> esParams = IntStream.rangeClosed(1, es.size()).mapToObj(i -> new EsParam(id, i, es.get(i).getCorp(), es.get(i).getResult(), es.get(i).getQuestion().get(0), es.get(i).getAnswer().get(0), es.get(i).getAdvice().get(0))).collect(Collectors.toList());
-			params.clear();
-			params.put("esParams", esParams);
-			jdbcTemplate.update("INSERT INTO es VALUES :esParams", params);
+			List<Map<String, Object>> paramMaps = new ArrayList<Map<String, Object>>();
+			int i = 0;
+			for (Es es : newExp.getEs()) {
+				i++;
+				Map<String, Object> paramMap = new HashMap<String, Object>();
+				paramMap.put("expId", id);
+				paramMap.put("id", i);
+				paramMap.put("corp", es.getCorp());
+				paramMap.put("result", es.getResult());
+				paramMap.put("question", es.getQuestion());
+				paramMap.put("answer", es.getAnswer());
+				paramMap.put("advice", es.getAdvice());
+				paramMaps.add(paramMap);
+			}
+			jdbcTemplate.batchUpdate("INSERT INTO es VALUES (:expId, :id, :corp, :result, :question, :answer, :advice)", paramMaps.toArray(new Map[paramMaps.size()]));
 		}
 		if (!(newExp.getInterview().get(0).toString().isEmpty())) {
-			List<Interview> itv = newExp.getInterview();
-			List<ItvParam> itvParams = IntStream.rangeClosed(1, itv.size()).mapToObj(i -> new ItvParam(id, i, itv.get(i).getQuestion(), itv.get(i).getAnswer())).collect(Collectors.toList());
-			params.clear();
-			params.put("itvParams", itvParams);
-			jdbcTemplate.update("INSERT INTO interview VALUES :itvParams", params);
+			List<Map<String, Object>> paramMaps = new ArrayList<Map<String, Object>>();
+			int i = 0;
+			for (Interview itv : newExp.getInterview()) {
+				i++;
+				Map<String, Object> paramMap = new HashMap<String, Object>();
+				paramMap.put("expId", id);
+				paramMap.put("id", i);
+				paramMap.put("question", itv.getQuestion());
+				paramMap.put("answer", itv.getAnswer());
+				paramMaps.add(paramMap);
+			}
+			jdbcTemplate.batchUpdate("INSERT INTO interview VALUES (:expId, :id, :question, :answer)", paramMaps.toArray(new Map[paramMaps.size()]));
 		}
-		params.clear();
-		params.put("name", "experiences");
-		jdbcTemplate.update("UPDATE counts SET count = count + 1 WHERE name = :name", params);
-	}
-	
-	private class SenPosParam {
-		protected int exp_id;
-		protected String position;
-		
-		public SenPosParam(int expId, String position) {
-			this.exp_id = expId;
-			this.position = position;
-		}
-	}
-	
-	private class EsParam {
-		protected int exp_id;
-		protected int id;
-		protected String corp;
-		protected String result;
-		protected String question;
-		protected String answer;
-		protected String advice;
-		
-		public EsParam(int expId, int id, String corp, String result, String question, String answer, String advice) {
-			this.exp_id = expId;
-			this.id = id;
-			this.corp = corp;
-			this.result = result;
-			this.question = question;
-			this.answer = answer;
-			this.advice = advice;
-		}
-	}
-	
-	private class ItvParam {
-		protected int exp_id;
-		protected int id;
-		protected String question;
-		protected String answer;
-		
-		public ItvParam(int expId, int id, String question, String answer) {
-			this.exp_id = expId;
-			this.id = id;
-			this.question = question;
-			this.answer = answer;
-		}
+		jdbcTemplate.getJdbcTemplate().update("UPDATE counts SET count = count + 1 WHERE name = 'experiences'");
 	}
 
 	@Override
@@ -351,17 +322,15 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		jdbcTemplate.update("UPDATE counts SET count = CASE WHEN count = 0 THEN 0 ELSE count - 1 END WHERE name = :name", params);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void update(Experience exp) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("id", exp.getId());
 		List<String> oldPos = jdbcTemplate.queryForList("SELECT position FROM senior_positions WHERE exp_id = :id", params, String.class);
 		List<String> newPos = exp.getPosition();
-		String pos = newPos.stream().collect(Collectors.joining(","));
-		String clb = exp.getClub().stream().collect(Collectors.joining(","));
-		String ofr = exp.getOffer().stream().collect(Collectors.joining(","));
 		params.put("fN", exp.getFamilyName());
-		params.put("gN", exp.getGivenName());
+		params.put("giN", exp.getGivenName());
 		params.put("kFN", exp.getKanaFamilyName());
 		params.put("kGN", exp.getKanaGivenName());
 		params.put("sex", exp.getSex());
@@ -371,17 +340,17 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		params.put("uF", exp.getUnivFac());
 		params.put("uD", exp.getUnivDep());
 		params.put("gL", exp.getGradLoc());
-		params.put("gN", exp.getGradName());
+		params.put("grN", exp.getGradName());
 		params.put("gS", exp.getGradSchool());
 		params.put("gD", exp.getGradDiv());
 		params.put("gI", exp.getGraduatedIn());
 		params.put("deg", exp.getDegree());
-		params.put("pos", pos);
-		params.put("clb", clb);
-		params.put("ofr", ofr);
+		params.put("pos", newPos.stream().collect(Collectors.joining(",")));
+		params.put("clb", exp.getClub().stream().collect(Collectors.joining(",")));
+		params.put("ofr", exp.getOffer().stream().collect(Collectors.joining(",")));
 		String sql = "UPDATE experiences SET "
 				+ "family_name = :fN, "
-				+ "given_name = :gN, "
+				+ "given_name = :giN, "
 				+ "kana_family_name = :kFN, "
 				+ "kana_given_name = :kGN, "
 				+ "sex = :sex, "
@@ -391,7 +360,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 				+ "univ_fac = :uF, "
 				+ "univ_dep = :uD, "
 				+ "grad_loc = :gL, "
-				+ "grad_name = :gN, "
+				+ "grad_name = :grN, "
 				+ "grad_school = :gS, "
 				+ "grad_div = :gD, "
 				+ "graduated_in = :gI, "
@@ -409,13 +378,19 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		newPos.removeAll(duplication);
 		if (!oldPos.isEmpty()) {
 			params.clear();
+			params.put("id", exp.getId());
 			params.put("oldPos", oldPos);
-			jdbcTemplate.update("DELETE FROM senior_positions WHERE position IN :oldPos AND exp_id = :id", params);
+			jdbcTemplate.update("DELETE FROM senior_positions WHERE position IN (:oldPos) AND exp_id = :id", params);
 		}
 		if (!newPos.isEmpty()) {
-			params.clear();
-			params.put("newPos", newPos.stream().map(e -> new SenPosParam(exp.getId(), e)).collect(Collectors.toList()));
-			jdbcTemplate.update("INSERT INTO senior_positions VALUES :newPos", params);
+			List<Map<String, Object>> paramMaps = new ArrayList<Map<String, Object>>();
+			for (String p : newPos) {
+				Map<String, Object> paramMap = new HashMap<String, Object>();
+				paramMap.put("position", p);
+				paramMap.put("expId", (Integer) exp.getId());
+				paramMaps.add(paramMap);
+			}
+			jdbcTemplate.batchUpdate("INSERT INTO senior_positions VALUES (:position, :expId)", paramMaps.toArray(new Map[paramMaps.size()]));
 		}
 
 	}
@@ -476,7 +451,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 		params.put("expId", newItv.getExpId());
 		Integer id = jdbcTemplate.queryForObject("SELECT MAX(id) FROM interview WHERE exp_id = :expId", params, Integer.class);
 		if (Objects.equals(id, null)) id = 0;
-		params.put("id", newItv.getId());
+		params.put("id", id + 1);
 		params.put("question", newItv.getQuestion());
 		params.put("answer", newItv.getAnswer());
 		jdbcTemplate.update("INSERT INTO interview VALUES (:expId, :id, :question, :answer)", params);
@@ -546,17 +521,16 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	}
 	
 	private Map<String, Object> findExperiences(List<String> target, List<String> order, Map<String, Object> params) {
-		List<String> elements = new LinkedList<String>(Arrays.asList("SELECT COUNT(id) FROM experiences"));
-		if (!Objects.equals(target, null) || !target.isEmpty()) elements.addAll(Arrays.asList("WHERE", target.stream().collect(Collectors.joining(" AND "))));
+		List<String> elements = new LinkedList<String>(Arrays.asList("SELECT", "COUNT(id)", "FROM experiences"));
+		if (!Objects.equals(target, null) && !target.isEmpty()) elements.addAll(Arrays.asList("WHERE", target.stream().collect(Collectors.joining(" AND "))));
 		String sql = elements.stream().collect(Collectors.joining(" "));
 		Integer count = jdbcTemplate.queryForObject(sql, params, Integer.class);
-		elements.set(0, "SELECT * FROM experiences");
-		if (!Objects.equals(order, null) || !order.isEmpty()) elements.addAll(Arrays.asList("ORDER BY", order.stream().collect(Collectors.joining(", "))));
+		elements.set(1, "*");
+		if (!Objects.equals(order, null) && !order.isEmpty()) elements.addAll(Arrays.asList("ORDER BY", order.stream().collect(Collectors.joining(", "))));
 		sql = elements.stream().collect(Collectors.joining(" "));
 		List<Experience> experiences = jdbcTemplate.query(sql, params, (resultSet, i) -> {
 				Experience experience = new Experience();
-				this.adjustToExp(experience, resultSet);
-				return experience;
+				return this.adjustToExp(experience, resultSet);
 			});
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("count", count);

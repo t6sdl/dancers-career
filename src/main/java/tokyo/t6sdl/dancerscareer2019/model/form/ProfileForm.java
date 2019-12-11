@@ -11,15 +11,15 @@ import lombok.Data;
 @Data
 public class ProfileForm {
 	@NotEmpty
-	private String lastName;
+	private String familyName;
 	@NotEmpty
-	private String firstName;
-	@NotEmpty
-	@Pattern(message="カタカナで入力してください", regexp="^[\u30A1-\u30F6ー]+$")
-	private String kanaLastName;
+	private String givenName;
 	@NotEmpty
 	@Pattern(message="カタカナで入力してください", regexp="^[\u30A1-\u30F6ー]+$")
-	private String kanaFirstName;
+	private String kanaFamilyName;
+	@NotEmpty
+	@Pattern(message="カタカナで入力してください", regexp="^[\u30A1-\u30F6ー]+$")
+	private String kanaGivenName;
 	@NotEmpty
 	@Pattern(regexp="^[0-9]+$")
 	private String birthYear;
@@ -34,28 +34,28 @@ public class ProfileForm {
 	@NotEmpty
 	@Size(min=10)
 	@Pattern(regexp="^[0-9]+$")
-	private String phoneNumber;
+	private String phone;
 	@NotEmpty
 	private String major;
 	@NotEmpty
 	@Pattern(regexp="^(?!default).*$")
-	private String univPref;
+	private String univLoc;
 	@Pattern(regexp="^(?!default).*$")
-	private String univCategory;
+	private String univType;
 	@NotEmpty
 	@Pattern(regexp="^(?!default).*$")
 	private String univName;
 	@NotEmpty
 	@Pattern(regexp="^(?!default).*$")
-	private String faculty;
+	private String univFac;
 	@NotEmpty
 	@Pattern(regexp="^(?!default).*$")
-	private String department;
-	private String gradSchoolPref;
-	private String gradSchoolCategory;
-	private String gradSchoolName;
-	private String gradSchoolOf;
-	private String programIn;
+	private String univDep;
+	private String gradLoc;
+	private String gradType;
+	private String gradName;
+	private String gradSchool;
+	private String gradDiv;
 	@NotEmpty
 	@Pattern(regexp="^[0-9]+$")
 	private String graduationYear;
@@ -63,7 +63,7 @@ public class ProfileForm {
 	@Pattern(regexp="^[0-9]+$")
 	private String graduationMonth;
 	@NotEmpty
-	private String academicDegree;
+	private String degree;
 	@NotEmpty
 	private String club;
 	@NotEmpty

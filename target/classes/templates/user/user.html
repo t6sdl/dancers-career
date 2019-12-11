@@ -16,7 +16,7 @@
     <h1 class="title">マイページ</h1>
     <section class="container">
       <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
-        <p th:text="|こんにちは ${lastName == null ? '名無しさん' : lastName + 'さん'}|"></p>
+        <p th:text="|こんにちは ${familyName == null ? '名無しさん' : familyName + 'さん'}|"></p>
       </div>
     </section>
     <nav th:replace="user/common/tab :: tab"></nav>

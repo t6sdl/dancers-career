@@ -80,7 +80,7 @@ public class AdminController {
 		if (!(kanaFamilyName.isEmpty()) && !(kanaGivenName.isEmpty())) {
 			result = profileService.getProfilesByName(sort, kanaFamilyName, kanaGivenName);
 		} else if (!(kanaFamilyName.isEmpty())) {
-			result = profileService.getProfilesByLastName(sort, kanaFamilyName);
+			result = profileService.getProfilesByFamilyName(sort, kanaFamilyName);
 		} else {
 			return "redirect:/admin/users?sort=" + sort;
 		}
@@ -102,7 +102,7 @@ public class AdminController {
 		if (!(kanaFamilyName.isEmpty()) && !(kanaGivenName.isEmpty())) {
 			students = (List<Student>) profileService.getProfilesByName(sort, kanaFamilyName, kanaGivenName).get("students");
 		} else if (!(kanaFamilyName.isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByLastName(sort, kanaFamilyName).get("students");
+			students = (List<Student>) profileService.getProfilesByFamilyName(sort, kanaFamilyName).get("students");
 		}
 		map.put("filter", filter);
 		map.put("students", students);
@@ -116,13 +116,13 @@ public class AdminController {
 	public String usersIndexFilteredByUniv(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("univ-loc") String univLoc, @RequestParam("univ-name") String univName, @RequestParam("univ-fac") String univFac, @RequestParam("univ-dep") String univDep, Model model) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		if (!(univDep.isEmpty())) {
-			result = profileService.getProfilesByDepartment(sort, univLoc, univName, univFac, univDep);
+			result = profileService.getProfilesByUnivDep(sort, univLoc, univName, univFac, univDep);
 		} else if (!(univFac.isEmpty())) {
-			result = profileService.getProfilesByFaculty(sort, univLoc, univName, univFac);
+			result = profileService.getProfilesByUnivFac(sort, univLoc, univName, univFac);
 		} else if (!(univName.isEmpty())) {
-			result = profileService.getProfilesByUniversity(sort, univLoc, univName);
+			result = profileService.getProfilesByUnivName(sort, univLoc, univName);
 		} else if (!(univLoc.isEmpty())) {
-			result = profileService.getProfilesByPrefecture(sort, univLoc);
+			result = profileService.getProfilesByUnivLoc(sort, univLoc);
 		} else {
 			return "redirect:/admin/users?sort=" + sort;
 		}
@@ -144,13 +144,13 @@ public class AdminController {
 		List<String> filter = Arrays.asList("大学", univLoc + "," + univName + "," + univFac + "," + univDep);
 		List<Student> students = new ArrayList<Student>();
 		if (!(univDep.isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByDepartment(sort, univLoc, univName, univFac, univDep).get("students");
+			students = (List<Student>) profileService.getProfilesByUnivDep(sort, univLoc, univName, univFac, univDep).get("students");
 		} else if (!(univFac.isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByFaculty(sort, univLoc, univName, univFac).get("students");
+			students = (List<Student>) profileService.getProfilesByUnivFac(sort, univLoc, univName, univFac).get("students");
 		} else if (!(univName.isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByUniversity(sort, univLoc, univName).get("students");
+			students = (List<Student>) profileService.getProfilesByUnivName(sort, univLoc, univName).get("students");
 		} else if (!(univLoc.isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByPrefecture(sort, univLoc).get("students");
+			students = (List<Student>) profileService.getProfilesByUnivLoc(sort, univLoc).get("students");
 		}
 		map.put("filter", filter);
 		map.put("students", students);
@@ -218,7 +218,7 @@ public class AdminController {
 		if (!(positions.isEmpty()) && !(positions.get(0).isEmpty())) {
 			students = (List<Student>) profileService.getProfilesByPosition(sort, positions, true).get("students");
 		}
-		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
+		students.sort(Comparator.comparing(Student::getLastLogin, Comparator.reverseOrder()));
 		map.put("filter", filter);
 		map.put("students", students);
 		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
@@ -243,7 +243,7 @@ public class AdminController {
 		if (!(kanaFamilyName.isEmpty()) && !(kanaGivenName.isEmpty())) {
 			result = experienceService.getExperiencesByName(sort, kanaFamilyName, kanaGivenName);
 		} else if (!(kanaFamilyName.isEmpty())) {
-			result = experienceService.getExperiencesByLastName(sort, kanaFamilyName);
+			result = experienceService.getExperiencesByFamilyName(sort, kanaFamilyName);
 		} else {
 			return "redirect:/admin/experiences?sort=" + sort;
 		}
@@ -260,13 +260,13 @@ public class AdminController {
 	public String expsIndexFilteredByUniv(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("univ-loc") String univLoc, @RequestParam("univ-name") String univName, @RequestParam("univ-fac") String univFac, @RequestParam("univ-dep") String univDep, Model model) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		if (!(univDep.isEmpty())) {
-			result = experienceService.getExperiencesByDepartment(sort, univLoc, univName, univFac, univDep);
+			result = experienceService.getExperiencesByUnivDep(sort, univLoc, univName, univFac, univDep);
 		} else if (!(univFac.isEmpty())) {
-			result = experienceService.getExperiencesByFaculty(sort, univLoc, univName, univFac);
+			result = experienceService.getExperiencesByUnivFac(sort, univLoc, univName, univFac);
 		} else if (!(univName.isEmpty())) {
-			result = experienceService.getExperiencesByUniversity(sort, univLoc, univName);
+			result = experienceService.getExperiencesByUnivName(sort, univLoc, univName);
 		} else if (!(univLoc.isEmpty())) {
-			result = experienceService.getExperiencesByPrefecture(sort, univLoc);
+			result = experienceService.getExperiencesByUnivLoc(sort, univLoc);
 		} else {
 			return "redirect:/admin/experiences?sort=" + sort;
 		}

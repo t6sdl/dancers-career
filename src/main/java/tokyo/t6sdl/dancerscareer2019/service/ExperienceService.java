@@ -25,36 +25,36 @@ public class ExperienceService {
 		return experienceRepository.findOneById(expId, all, pvCount);
 	}
 	
-	public Experience getALittleExperienceById(int experienceId) {
-		return experienceRepository.findALittleOneById(experienceId);
+	public Experience getALittleExperienceById(int expId) {
+		return experienceRepository.findALittleOneById(expId);
 	}
 	
 	public Map<String, Object> getExperiences(int sort) {
 		return experienceRepository.find(sort);
 	}
 	
-	public Map<String, Object> getExperiencesByName(int sort, String kanaLastName, String kanaFirstName) {
-		return experienceRepository.findByName(sort, kanaLastName, kanaFirstName);
+	public Map<String, Object> getExperiencesByName(int sort, String kanaFamilyName, String kanaGivenName) {
+		return experienceRepository.findByName(sort, kanaFamilyName, kanaGivenName);
 	}
 	
-	public Map<String, Object> getExperiencesByLastName(int sort, String kanaLastName) {
-		return experienceRepository.findByLastName(sort, kanaLastName);
+	public Map<String, Object> getExperiencesByFamilyName(int sort, String kanaFamilyName) {
+		return experienceRepository.findByFamilyName(sort, kanaFamilyName);
 	}
 	
-	public Map<String, Object> getExperiencesByPrefecture(int sort, String prefecture) {
-		return experienceRepository.findByPrefecture(sort, prefecture);
+	public Map<String, Object> getExperiencesByUnivLoc(int sort, String univLoc) {
+		return experienceRepository.findByUnivLoc(sort, univLoc);
 	}
 	
-	public Map<String, Object> getExperiencesByUniversity(int sort, String prefecture, String university) {
-		return experienceRepository.findByUniversity(sort, prefecture, university);
+	public Map<String, Object> getExperiencesByUnivName(int sort, String univLoc, String univName) {
+		return experienceRepository.findByUnivName(sort, univLoc, univName);
 	}
 	
-	public Map<String, Object> getExperiencesByFaculty(int sort, String prefecture, String university, String faculty) {
-		return experienceRepository.findByFaculty(sort, prefecture, university, faculty);
+	public Map<String, Object> getExperiencesByUnivFac(int sort, String univLoc, String univName, String univFac) {
+		return experienceRepository.findByUnivFac(sort, univLoc, univName, univFac);
 	}
 	
-	public Map<String, Object> getExperiencesByDepartment(int sort, String prefecture, String university, String faculty, String department) {
-		return experienceRepository.findByDepartment(sort, prefecture, university, faculty, department);
+	public Map<String, Object> getExperiencesByUnivDep(int sort, String univLoc, String univName, String univFac, String univDep) {
+		return experienceRepository.findByUnivDep(sort, univLoc, univName, univFac, univDep);
 	}
 	
 	public Map<String, Object> getExperiencesByPosition(int sort, List<String> position, boolean andSearch) {

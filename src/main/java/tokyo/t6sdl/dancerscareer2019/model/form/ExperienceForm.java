@@ -35,7 +35,9 @@ public class ExperienceForm {
 	private List<String> position;
 	private List<String> club;
 	private List<String> offer;
+//	FIXME: EsFormのvalidation
 	private List<EsForm> es;
+//	FIXME: InterviewFormのvalidation
 	private List<InterviewForm> interview;
 	
 	public void init() {
