@@ -28,7 +28,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 	private final List<List<String>> SORT_LIST = Arrays.asList(Arrays.asList("id DESC"), Arrays.asList("kana_family_name ASC", "kana_given_name ASC"), Arrays.asList("univ_loc ASC", "univ_name ASC", "univ_fac ASC", "univ_dep ASC"));
 
 	@Override
-	public Experience findOneById(int id, boolean all, boolean pv_count) {
+	public Experience findOneById(int id, boolean all, boolean pvCount) {
 		try {
 			Map<String, Object> params = new HashMap<String, Object>();
 			params.put("id", id);
@@ -46,7 +46,7 @@ public class JdbcExperienceRepository implements ExperienceRepository {
 					return this.adjustToItv(itv, itvSet);
 				}));
 			}
-			if (pv_count) {
+			if (pvCount) {
 				jdbcTemplate.update("UPDATE experiences SET page_view = page_view + 1 WHERE id = :id", params);
 			}
 			return exp;
