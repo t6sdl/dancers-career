@@ -3,7 +3,7 @@ package tokyo.t6sdl.dancerscareer2019.repository.jdbc;
 import java.util.Arrays;
 import java.util.List;
 
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import tokyo.t6sdl.dancerscareer2019.repository.MetaRepository;
 @RequiredArgsConstructor
 @Repository
 public class JdbcMetaRepository implements MetaRepository {
-	private final JdbcTemplate jdbcTemplate;
+	private final NamedParameterJdbcTemplate jdbcTemplate;
 
 	@Override
 	public List<String> tables() {
