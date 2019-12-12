@@ -28,7 +28,7 @@ legend {
 <main class="container-fluid">
 <h1>ES/体験記 検索</h1>
 <article th:object="${experience}">
-<div th:text="|PV数 *{page_view} ｜ お気に入り登録者数 *{likes}|"></div>
+<div th:text="|PV数 *{pageView} ｜ お気に入り登録者数 *{likes}|"></div>
 <fieldset class="form-group p-2 border border-dark">
 <legend>提供者情報</legend>
 <div class="mb-4">
@@ -36,19 +36,19 @@ legend {
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">氏名</div>
 <div class="col-sm-5">
-<span class="form-control disabled" th:text="*{last_name} == '' ? '非公開' : *{last_name}"></span>
+<span class="form-control disabled" th:text="*{familyName} == '' ? '非公開' : *{familyName}"></span>
 </div>
 <div class="col-sm-5">
-<span class="form-control disabled" th:text="*{first_name} == '' ? '非公開' : *{first_name}"></span>
+<span class="form-control disabled" th:text="*{givenName} == '' ? '非公開' : *{givenName}"></span>
 </div>
 </div>
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">シメイ</div>
 <div class="col-sm-5">
-<span class="form-control disabled" th:text="*{kana_last_name} == '' ? '非公開' : *{kana_last_name}"></span>
+<span class="form-control disabled" th:text="*{kanaFamilyName} == '' ? '非公開' : *{kanaFamilyName}"></span>
 </div>
 <div class="col-sm-5">
-<span class="form-control disabled" th:text="*{kana_first_name} == '' ? '非公開' : *{kana_first_name}"></span>
+<span class="form-control disabled" th:text="*{kanaGivenName} == '' ? '非公開' : *{kanaGivenName}"></span>
 </div>
 </div>
 <div class="form-group form-row">
@@ -63,14 +63,14 @@ legend {
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">卒業年度</div>
 <div class="col-sm-10">
-<span class="form-control disabled d-inline-block w-auto" th:text="*{graduation} == '' ? '非公開' : *{graduation}"></span>
+<span class="form-control disabled d-inline-block w-auto" th:text="*{graduatedIn} == '' ? '非公開' : *{graduatedIn}"></span>
 <span>年度</span>
 </div>
 </div>
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">最終学歴</div>
 <div class="col-sm-10">
-<button class="btn btn-sm btn-info" th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}" disabled></button>
+<button class="btn btn-sm btn-info" th:text="*{degree} == '' ? '非公開' : *{degree}" disabled></button>
 </div>
 </div>
 <div class="form-group form-row">
@@ -85,52 +85,52 @@ legend {
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">都道府県</div>
 <div class="col-sm-10">
-<span class="form-control disabled" th:text="*{univ_pref} == '' ? '非公開' : *{univ_pref}"></span>
+<span class="form-control disabled" th:text="*{univLoc} == '' ? '非公開' : *{univLoc}"></span>
 </div>
 </div>
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">大学</div>
 <div class="col-sm-10">
-<span class="form-control disabled" th:text="*{univ_name} == '' ? '非公開' : *{univ_name}"></span>
+<span class="form-control disabled" th:text="*{univName} == '' ? '非公開' : *{univName}"></span>
 </div>
 </div>
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">学部</div>
 <div class="col-sm-10">
-<span class="form-control disabled" th:text="*{faculty} == '' ? '非公開' : *{faculty}"></span>
+<span class="form-control disabled" th:text="*{univFac} == '' ? '非公開' : *{univFac}"></span>
 </div>
 </div>
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">学科</div>
 <div class="col-sm-10">
-<span class="form-control disabled" th:text="*{department} == '' ? '非公開' : *{department}"></span>
+<span class="form-control disabled" th:text="*{univDep} == '' ? '非公開' : *{univDep}"></span>
 </div>
 </div>
 </div>
-<div th:classappend="*{grad_school_pref.isEmpty()} ? 'd-none' : ''" class="mb-4">
+<div th:classappend="*{gradLoc.isEmpty()} ? 'd-none' : ''" class="mb-4">
 <h2>大学院</h2>
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">都道府県</div>
 <div class="col-sm-10">
-<span class="form-control disabled" th:text="*{grad_school_pref} == '' ? '' : *{grad_school_pref}"></span>
+<span class="form-control disabled" th:text="*{gradLoc} == '' ? '' : *{gradLoc}"></span>
 </div>
 </div>
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">大学院</div>
 <div class="col-sm-10">
-<span class="form-control disabled" th:text="*{grad_school_name} == '' ? '' : *{grad_school_name}"></span>
+<span class="form-control disabled" th:text="*{gradName} == '' ? '' : *{gradName}"></span>
 </div>
 </div>
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">研究科等</div>
 <div class="col-sm-10">
-<span class="form-control disabled" th:text="*{grad_school_of} == '' ? '' : *{grad_school_of}"></span>
+<span class="form-control disabled" th:text="*{gradSchool} == '' ? '' : *{gradSchool}"></span>
 </div>
 </div>
 <div class="form-group form-row">
 <div class="col-sm-2 col-form-label">専攻等</div>
 <div class="col-sm-10">
-<span class="form-control disabled" th:text="*{program_in} == '' ? '' : *{program_in}"></span>
+<span class="form-control disabled" th:text="*{gradDiv} == '' ? '' : *{gradDiv}"></span>
 </div>
 </div>
 </div>
@@ -160,7 +160,7 @@ legend {
 </div>
 </div>
 <hr>
-<a class="btn btn-primary" th:href="@{/admin/experiences/{expId}/edit(expId=*{experience_id})}">修正</a>
+<a class="btn btn-primary" th:href="@{/admin/experiences/{expId}/edit(expId=*{id})}">修正</a>
 </fieldset>
 <fieldset class="form-group p-2 border border-dark">
 <legend>ES</legend>
@@ -201,9 +201,9 @@ legend {
 </th:block>
 </span>
 </div>
-<a class="btn btn-primary" th:href="@{/admin/experiences/{expId}/es/{esId}/edit(expId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}">修正</a>
-<button type="button" class="btn btn-danger" data-toggle="modal" th:data-target="|#deleteEs*{es[__${loop.index}__].es_id}|">削除</button>
-<div class="modal fade" th:id="|deleteEs*{es[__${loop.index}__].es_id}|" tabindex="-1" role="dialog" aria-labelledby="deleteEsLabel" aria-hidden="true">
+<a class="btn btn-primary" th:href="@{/admin/experiences/{expId}/es/{esId}/edit(expId=*{id},esId=*{es[__${loop.index}__].id})}">修正</a>
+<button type="button" class="btn btn-danger" data-toggle="modal" th:data-target="|#deleteEs*{es[__${loop.index}__].id}|">削除</button>
+<div class="modal fade" th:id="|deleteEs*{es[__${loop.index}__].id}|" tabindex="-1" role="dialog" aria-labelledby="deleteEsLabel" aria-hidden="true">
 <div class="modal-dialog" role="document">
 <div class="modal-content">
 <div class="modal-header">
@@ -215,7 +215,7 @@ legend {
 <div class="modal-body">この操作は取り消せません。</div>
 <div class="modal-footer">
 <button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
-<form th:action="@{/admin/experiences/{expId}/es/{esId}(expId=*{experience_id},esId=*{es[__${loop.index}__].es_id})}" th:method="delete" class="d-inline-block">
+<form th:action="@{/admin/experiences/{expId}/es/{esId}(expId=*{id},esId=*{es[__${loop.index}__].id})}" th:method="delete" class="d-inline-block">
 <button type="submit" class="btn btn-danger">削除</button>
 </form>
 </div>
@@ -224,7 +224,7 @@ legend {
 </div>
 <hr>
 </div>
-<a class="btn btn-success" th:href="@{/admin/experiences/{expId}/es/new(expId=*{experience_id})}">追加</a>
+<a class="btn btn-success" th:href="@{/admin/experiences/{expId}/es/new(expId=*{id})}">追加</a>
 </fieldset>
 <fieldset class="form-group p-2 border border-dark">
 <legend>Interview</legend>
@@ -244,9 +244,9 @@ legend {
 </th:block>
 </span>
 </div>
-<a class="btn btn-primary" th:href="@{/admin/experiences/{expId}/interview/{intId}/edit(expId=*{experience_id},intId=*{interview[__${loop.index}__].interview_id})}">修正</a>
-<button type="button" class="btn btn-danger" data-toggle="modal" th:data-target="|#deleteInterview*{interview[__${loop.index}__].interview_id}|">削除</button>
-<div class="modal fade" th:id="|deleteInterview*{interview[__${loop.index}__].interview_id}|" tabindex="-1" role="dialog" aria-labelledby="deleteInterviewLabel" aria-hidden="true">
+<a class="btn btn-primary" th:href="@{/admin/experiences/{expId}/interview/{itvId}/edit(expId=*{id},itvId=*{interview[__${loop.index}__].id})}">修正</a>
+<button type="button" class="btn btn-danger" data-toggle="modal" th:data-target="|#deleteInterview*{interview[__${loop.index}__].id}|">削除</button>
+<div class="modal fade" th:id="|deleteInterview*{interview[__${loop.index}__].id}|" tabindex="-1" role="dialog" aria-labelledby="deleteInterviewLabel" aria-hidden="true">
 <div class="modal-dialog" role="document">
 <div class="modal-content">
 <div class="modal-header">
@@ -258,7 +258,7 @@ legend {
 <div class="modal-body">この操作は取り消せません。</div>
 <div class="modal-footer">
 <button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
-<form th:action="@{/admin/experiences/{expId}/interview/{intId}(expId=*{experience_id},intId=*{interview[__${loop.index}__].interview_id})}" th:method="delete" class="d-inline-block">
+<form th:action="@{/admin/experiences/{expId}/interview/{itvId}(expId=*{id},itvId=*{interview[__${loop.index}__].id})}" th:method="delete" class="d-inline-block">
 <button type="submit" class="btn btn-danger">削除</button>
 </form>
 </div>
@@ -267,7 +267,7 @@ legend {
 </div>
 <hr>
 </div>
-<a class="btn btn-success" th:href="@{/admin/experiences/{expId}/interview/new(expId=*{experience_id})}">追加</a>
+<a class="btn btn-success" th:href="@{/admin/experiences/{expId}/interview/new(expId=*{id})}">追加</a>
 </fieldset>
 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteExperience">このES/体験記を削除</button>
 <div class="modal fade" id="deleteExperience" tabindex="-1" role="dialog" aria-labelledby="deleteExperienceLabel" aria-hidden="true">
@@ -282,7 +282,7 @@ legend {
 <div class="modal-body">この操作は取り消せません。</div>
 <div class="modal-footer">
 <button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
-<form th:action="@{/admin/experiences/{expId}(expId=*{experience_id})}" th:method="delete" class="d-inline-block">
+<form th:action="@{/admin/experiences/{expId}(expId=*{id})}" th:method="delete" class="d-inline-block">
 <button type="submit" class="btn btn-danger">削除</button>
 </form>
 </div>

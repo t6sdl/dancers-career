@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class Interview {
-	private int experience_id;
-	private int interview_id;
+	private int expId;
+	private int id;
 	private String question;
 	private String answer;
 	

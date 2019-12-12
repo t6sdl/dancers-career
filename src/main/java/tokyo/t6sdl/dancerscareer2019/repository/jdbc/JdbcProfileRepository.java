@@ -9,13 +9,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import lombok.RequiredArgsConstructor;
@@ -26,31 +27,19 @@ import tokyo.t6sdl.dancerscareer2019.repository.ProfileRepository;
 @RequiredArgsConstructor
 @Repository
 public class JdbcProfileRepository implements ProfileRepository {
-	private final JdbcTemplate jdbcTemplate;
-	private final String QUERIED_VALUE = "accounts.email, valid_email, last_login, last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, univ_pref, univ_name, faculty, department, grad_school_pref, grad_school_name, grad_school_of, program_in, graduation, academic_degree, club, position, likes";
-	private final List<String> SORT_LIST = Arrays.asList("last_login DESC", "kana_last_name ASC, kana_first_name ASC", "univ_pref ASC, univ_name ASC, faculty ASC, department ASC");
-	
-	private List<String> stringToList(String str) {
-		return new ArrayList<String>(Arrays.asList(str.split(",")));
-	}
-	
-	private String listToString(List<String> list) {
-		return list.stream().collect(Collectors.joining(","));
-	}
-	
-	private String listToString(List<String> list, String prefix, String suffix, String separator) {
-		return String.join(separator, list.stream().map(e -> prefix + e + suffix).collect(Collectors.toList()));
-	}
+	private final NamedParameterJdbcTemplate jdbcTemplate;
+	private final List<String> COLUMNS = new ArrayList<String>(Arrays.asList("accounts.email", "valid_email", "last_login", "family_name", "given_name", "kana_family_name", "kana_given_name", "date_of_birth", "sex", "phone", "major", "univ_loc", "univ_name", "univ_fac", "univ_dep", "grad_loc", "grad_name", "grad_school", "grad_div", "graduated_in", "degree", "club", "position", "likes"));
+	private final List<List<String>> SORT_LIST = Arrays.asList(Arrays.asList("last_login DESC"), Arrays.asList("kana_family_name ASC", "kana_given_name ASC"), Arrays.asList("univ_loc ASC", "univ_name ASC", "univ_fac ASC", "univ_dep ASC"));
 	
 	@Override
 	public Profile findOneByEmail(String email) {
 		 try {
-				return jdbcTemplate.queryForObject(
-						"SELECT email, last_name, first_name, kana_last_name, kana_first_name, date_of_birth, sex, phone_number, major, univ_pref, univ_name, faculty, department, grad_school_pref, grad_school_name, grad_school_of, program_in, graduation, academic_degree, club, position, likes FROM profiles WHERE email = ?", (resultSet, i) -> {
-							Profile profile = new Profile();
-							this.adjustDataToProfile(profile, resultSet);
-							return profile;
-						}, email);
+			 Map<String, Object> params = new HashMap<String, Object>();
+			 params.put("email", email);
+			 return jdbcTemplate.queryForObject("SELECT * FROM profiles WHERE email = :email", params, (resultSet, i) -> {
+					Profile profile = new Profile();
+					return this.adjustToProf(profile, resultSet);
+				});
 		 } catch (EmptyResultDataAccessException e) {
 			 return null;
 		 }
@@ -58,162 +47,142 @@ public class JdbcProfileRepository implements ProfileRepository {
 
 	@Override
 	public Map<String, Object> find(int sort) {
-		Integer count = jdbcTemplate.queryForObject("SELECT count FROM counts WHERE name = 'accounts'", Integer.class);
-		List<String> emails = new ArrayList<String>();
-		List<Student> students = jdbcTemplate.query(
-				this.selectStudentIn("WHERE authority = 'ROLE_USER'", sort), (resultSet, i) -> {
+		try {
+			Integer count = jdbcTemplate.getJdbcTemplate().queryForObject("SELECT COUNT(email) FROM accounts WHERE authority = 'ROLE_USER'", Integer.class);
+			List<String> order = this.SORT_LIST.get(sort);
+			String sql = "SELECT " + this.COLUMNS.stream().collect(Collectors.joining(", ")) + " "
+					+ "FROM accounts LEFT OUTER JOIN profiles "
+					+ "ON accounts.email = profiles.email "
+					+ "WHERE authority = 'ROLE_USER' "
+					+ "ORDER BY " + order.stream().collect(Collectors.joining(", "));
+			List<Student> students = jdbcTemplate.query(sql, (resultSet, i) -> {
 					Student student = new Student();
-					this.adjustDataToStudent(student, resultSet);
-					emails.add(student.getEmail());
-					return student;
+					return this.adjustToStu(student, resultSet);
 				});
-		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("count", count);
-		result.put("emails", emails);
-		result.put("students", students);
-		return result;
+			Map<String, Object> result = new HashMap<String, Object>();
+			result.put("count", count);
+			result.put("students", students);
+			return result;
+		} catch (IndexOutOfBoundsException e) {
+			throw new IllegalArgumentException("Sort should be less than " + this.SORT_LIST.size());
+		}
 	}
 	
 	@Override
-	public Map<String, Object> findByName(int sort, String kanaLastName, String kanaFirstName) {
-		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM profiles WHERE kana_last_name = ? AND kana_first_name = ?", Integer.class, kanaLastName, kanaFirstName);
-		List<String> emails = new ArrayList<String>();
-		List<Student> students = jdbcTemplate.query(
-				this.selectStudentIn("WHERE kana_last_name = ? AND kana_first_name = ?", sort), (resultSet, i) -> {
-					Student student = new Student();
-					this.adjustDataToStudent(student, resultSet);
-					emails.add(student.getEmail());
-					return student;
-				}, kanaLastName, kanaFirstName);
-		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("count", count);
-		result.put("emails", emails);
-		result.put("students", students);
-		return result;
+	public Map<String, Object> findByName(int sort, String kanaFamilyName, String kanaGivenName) {
+		try {
+			List<String> target = Arrays.asList("kana_family_name = :kFN", "kana_given_name = :kGN");
+			List<String> order = this.SORT_LIST.get(sort);
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("kFN", kanaFamilyName);
+			params.put("kGN", kanaGivenName);
+			return this.findStudents(target, order, params);
+		} catch (IndexOutOfBoundsException e) {
+			throw new IllegalArgumentException("Sort should be less than " + this.SORT_LIST.size());
+		}
 	}
 
 	@Override
-	public Map<String, Object> findByLastName(int sort, String kanaLastName) {
-		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM profiles WHERE kana_last_name = ?", Integer.class, kanaLastName);
-		List<String> emails = new ArrayList<String>();
-		List<Student> students = jdbcTemplate.query(
-				this.selectStudentIn("WHERE kana_last_name = ?", sort), (resultSet, i) -> {
-					Student student = new Student();
-					this.adjustDataToStudent(student, resultSet);
-					emails.add(student.getEmail());
-					return student;
-				}, kanaLastName);
-		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("count", count);
-		result.put("emails", emails);
-		result.put("students", students);
-		return result;
+	public Map<String, Object> findByFamilyName(int sort, String kanaFamilyName) {
+		try {
+			List<String> target = Arrays.asList("kana_family_name = :kFN");
+			List<String> order = this.SORT_LIST.get(sort);
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("kFN", kanaFamilyName);
+			return this.findStudents(target, order, params);
+		} catch (IndexOutOfBoundsException e) {
+			throw new IllegalArgumentException("Sort should be less than " + this.SORT_LIST.size());
+		}
 	}
 
 	@Override
-	public Map<String, Object> findByPrefecture(int sort, String univPref) {
-		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM profiles WHERE univ_pref = ?", Integer.class, univPref);
-		List<String> emails = new ArrayList<String>();
-		List<Student> students = jdbcTemplate.query(
-				this.selectStudentIn("WHERE univ_pref = ?", sort), (resultSet, i) -> {
-					Student student = new Student();
-					this.adjustDataToStudent(student, resultSet);
-					emails.add(student.getEmail());
-					return student;
-				}, univPref);
-		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("count", count);
-		result.put("emails", emails);
-		result.put("students", students);
-		return result;
+	public Map<String, Object> findByUnivLoc(int sort, String univLoc) {
+		try {
+			List<String> target = Arrays.asList("univ_loc = :uL");
+			List<String> order = this.SORT_LIST.get(sort);
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("uL", univLoc);
+			return this.findStudents(target, order, params);
+		} catch (IndexOutOfBoundsException e) {
+			throw new IllegalArgumentException("Sort should be less than " + this.SORT_LIST.size());
+		}
 	}
 
 	@Override
-	public Map<String, Object> findByUniversity(int sort, String univPref, String univName) {
-		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM profiles WHERE univ_pref = ? AND univ_name = ?", Integer.class, univPref, univName);
-		List<String> emails = new ArrayList<String>();
-		List<Student> students = jdbcTemplate.query(
-				this.selectStudentIn("WHERE univ_pref = ? AND univ_name = ?", sort), (resultSet, i) -> {
-					Student student = new Student();
-					this.adjustDataToStudent(student, resultSet);
-					emails.add(student.getEmail());
-					return student;
-				}, univPref, univName);
-		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("count", count);
-		result.put("emails", emails);
-		result.put("students", students);
-		return result;
+	public Map<String, Object> findByUnivName(int sort, String univLoc, String univName) {
+		try {
+			List<String> target = Arrays.asList("univ_loc = :uL", "univ_name = :uN");
+			List<String> order = this.SORT_LIST.get(sort);
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("uL", univLoc);
+			params.put("uN", univName);
+			return this.findStudents(target, order, params);
+		} catch (IndexOutOfBoundsException e) {
+			throw new IllegalArgumentException("Sort should be less than " + this.SORT_LIST.size());
+		}
 	}
 
 	@Override
-	public Map<String, Object> findByFaculty(int sort, String univPref, String univName, String faculty) {
-		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM profiles WHERE univ_pref = ? AND univ_name = ? AND faculty = ?", Integer.class, univPref, univName, faculty);
-		List<String> emails = new ArrayList<String>();
-		List<Student> students = jdbcTemplate.query(
-				this.selectStudentIn("WHERE univ_pref = ? AND univ_name = ? AND faculty = ?", sort), (resultSet, i) -> {
-					Student student = new Student();
-					this.adjustDataToStudent(student, resultSet);
-					emails.add(student.getEmail());
-					return student;
-				}, univPref, univName, faculty);
-		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("count", count);
-		result.put("emails", emails);
-		result.put("students", students);
-		return result;
+	public Map<String, Object> findByUnivFac(int sort, String univLoc, String univName, String univFac) {
+		try {
+			List<String> target = Arrays.asList("univ_loc = :uL", "univ_name = :uN", "univ_fac = :uF");
+			List<String> order = this.SORT_LIST.get(sort);
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("uL", univLoc);
+			params.put("uN", univName);
+			params.put("uF", univFac);
+			return this.findStudents(target, order, params);
+		} catch (IndexOutOfBoundsException e) {
+			throw new IllegalArgumentException("Sort should be less than " + this.SORT_LIST.size());
+		}
 	}
 
 	@Override
-	public Map<String, Object> findByDepartment(int sort, String univPref, String univName, String faculty, String department) {
-		Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM profiles WHERE univ_pref = ? AND univ_name = ? AND faculty = ? AND department = ?", Integer.class, univPref, univName, faculty, department);
-		List<String> emails = new ArrayList<String>();
-		List<Student> students = jdbcTemplate.query(
-				this.selectStudentIn("WHERE univ_pref = ? AND univ_name = ? AND faculty = ? AND department = ?", sort), (resultSet, i) -> {
-					Student student = new Student();
-					this.adjustDataToStudent(student, resultSet);
-					emails.add(student.getEmail());
-					return student;
-				}, univPref, univName, faculty, department);
-		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("count", count);
-		result.put("emails", emails);
-		result.put("students", students);
-		return result;
+	public Map<String, Object> findByUnivDep(int sort, String univLoc, String univName, String univFac, String univDep) {
+		try {
+			List<String> target = Arrays.asList("univ_loc = :uL", "univ_name = :uN", "univ_fac = :uF", "univ_dep = :uD");
+			List<String> order = this.SORT_LIST.get(sort);
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("uL", univLoc);
+			params.put("uN", univName);
+			params.put("uF", univFac);
+			params.put("uD", univDep);
+			return this.findStudents(target, order, params);
+		} catch (IndexOutOfBoundsException e) {
+			throw new IllegalArgumentException("Sort should be less than " + this.SORT_LIST.size());
+		}
 	}
 
 	@Override
 	public Map<String, Object> findByPosition(int sort, List<String> position, boolean andSearch) {
-		Map<String, Object> result = new HashMap<String, Object>();
-		result.put("count", 0);
-		result.put("emails", null);
-		result.put("students", null);
-		if (position.contains("")) return result;
-		String posStr = this.listToString(position, "'", "'", ", ");
-		List<String> emails = new ArrayList<String>();
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("pos", position);
+		List<String> emails;
 		if (andSearch) {
-			emails.addAll(jdbcTemplate.query(
-					"SELECT email FROM positions WHERE position IN (" + posStr + ") GROUP BY email HAVING COUNT(email) = ? ORDER BY email DESC", (resultSet, i) -> {
-						return resultSet.getString("email");
-					}, position.size()));
+			String sql = "SELECT email FROM positions WHERE position IN (:pos) GROUP BY email HAVING COUNT(email) = :size ORDER BY email DESC";
+			params.put("size", position.size());
+			emails = jdbcTemplate.queryForList(sql, params, String.class);
 		} else {
-			emails.addAll(jdbcTemplate.query(
-					"SELECT email FROM positions WHERE position IN (" + posStr + ") GROUP BY email ORDER BY email DESC", (resultSet, i) -> {
-						return resultSet.getString("email");
-					}));
+			String sql = "SELECT email FROM positions WHERE position IN (:pos) GROUP BY email ORDER BY email DESC";
+			emails = jdbcTemplate.queryForList(sql, params, String.class);
 		}
-		if (Objects.equals(emails, null) || emails.isEmpty()) return result;
-		List<Student> students = this.findByEmail(sort, emails);
-		result.replace("count", emails.size());
-		result.replace("emails", emails);
-		result.replace("students", students);
-		return result;
+		try {
+			List<String> target = Arrays.asList(!emails.isEmpty() ? "profiles.email IN (:emails)" : "profiles.email = NULL");
+			List<String> order = this.SORT_LIST.get(sort);
+			params.clear();
+			params.put("emails", emails);
+			return this.findStudents(target, order, params);
+		} catch (IndexOutOfBoundsException e) {
+			throw new IllegalArgumentException("Sort should be less than " + this.SORT_LIST.size());
+		}
 	}
 	
 	@Override
-	public String findLastNameByEmail(String email) {
+	public String findFamilyNameByEmail(String email) {
 		try {
-			return jdbcTemplate.queryForObject("SELECT last_name FROM profiles WHERE email = ?", String.class, email);
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("email", email);
+			return jdbcTemplate.queryForObject("SELECT family_name FROM profiles WHERE email = :email", params, String.class);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -222,141 +191,224 @@ public class JdbcProfileRepository implements ProfileRepository {
 	@Override
 	public List<String> findLikesByEmail(String email) {
 		try {
-			String likes = jdbcTemplate.queryForObject("SELECT likes FROM profiles WHERE email = ?", String.class, email);
-			return this.stringToList(likes);
+			Map<String, Object> params = new HashMap<String, Object>();
+			params.put("email", email);
+			String likes = jdbcTemplate.queryForObject("SELECT likes FROM profiles WHERE email = :email", params, String.class);
+			return new ArrayList<String>(Arrays.asList(likes.split(",")));
 		} catch (EmptyResultDataAccessException e) {
 			return new ArrayList<String>(Arrays.asList(""));
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void insert(Profile newProfile) {
-		Date date_of_birth = Date.from(newProfile.getDate_of_birth().atStartOfDay(ZoneId.systemDefault()).toInstant());
-		jdbcTemplate.update(
-				"INSERT INTO profiles VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-				newProfile.getEmail(), newProfile.getLast_name(), newProfile.getFirst_name(), newProfile.getKana_last_name(), newProfile.getKana_first_name(),
-				date_of_birth, newProfile.getSex(), newProfile.getPhone_number(), newProfile.getMajor(), newProfile.getUniv_pref(), newProfile.getUniv_name(),
-				newProfile.getFaculty(), newProfile.getDepartment(), newProfile.getGrad_school_pref(), newProfile.getGrad_school_name(), newProfile.getGrad_school_of(),
-				newProfile.getProgram_in(), newProfile.getGraduation(), newProfile.getAcademic_degree(), newProfile.getClub(), this.listToString(newProfile.getPosition()), "");
-		if (!(newProfile.getPosition().contains(""))) {
-			String insertPos = this.listToString(newProfile.getPosition(), "('", "', '" + newProfile.getEmail() + "')", ", ");
-			jdbcTemplate.update("INSERT INTO positions VALUES " + insertPos);
+	public void insert(Profile newProf) {
+		String sql = "INSERT INTO profiles VALUES (:email, :fN, :giN, :kFN, :kGN, :bth, :sex, :ph, :mjr, :uL, :uN, :uF, :uD, :gL, :grN, :gS, :gD, :gI, :deg, :clb, :pos, '')";
+		Date birth = Date.from(newProf.getBirth().atStartOfDay(ZoneId.systemDefault()).toInstant());
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("email", newProf.getEmail());
+		params.put("fN", newProf.getFamilyName());
+		params.put("giN", newProf.getGivenName());
+		params.put("kFN", newProf.getKanaFamilyName());
+		params.put("kGN", newProf.getKanaGivenName());
+		params.put("bth", birth);
+		params.put("sex", newProf.getSex());
+		params.put("ph", newProf.getPhone());
+		params.put("mjr", newProf.getMajor());
+		params.put("uL", newProf.getUnivLoc());
+		params.put("uN", newProf.getUnivName());
+		params.put("uF", newProf.getUnivFac());
+		params.put("uD", newProf.getUnivDep());
+		params.put("gL", newProf.getGradLoc());
+		params.put("grN", newProf.getGradName());
+		params.put("gS", newProf.getGradSchool());
+		params.put("gD", newProf.getGradDiv());
+		params.put("gI", newProf.getGraduatedIn());
+		params.put("deg", newProf.getDegree());
+		params.put("clb", newProf.getClub());
+		params.put("pos", newProf.getPosition().stream().collect(Collectors.joining(",")));
+		jdbcTemplate.update(sql, params);
+		if (!newProf.getPosition().contains("")) {
+			List<Map<String, Object>> paramMaps = new ArrayList<Map<String, Object>>();
+			for (String p : newProf.getPosition()) {
+				Map<String, Object> paramMap = new HashMap<String, Object>();
+				paramMap.put("position", p);
+				paramMap.put("email", newProf.getEmail());
+				paramMaps.add(paramMap);
+			}
+			jdbcTemplate.batchUpdate("INSERT INTO positions VALUES (:position, :email)", paramMaps.toArray(new Map[paramMaps.size()]));
 		}
-		jdbcTemplate.update("UPDATE counts SET count = count + 1 WHERE name = 'profiles'");
+		jdbcTemplate.getJdbcTemplate().update("UPDATE counts SET count = count + 1 WHERE name = 'profiles'");
 	}
-
+	
 	@Override
 	public void delete(String email) {
-		jdbcTemplate.update("DELETE FROM positions WHERE email = ?", email);
-		jdbcTemplate.update("DELETE FROM profiles WHERE email = ?", email);
-		jdbcTemplate.update("UPDATE counts SET count = CASE WHEN count = 0 THEN 0 ELSE count - 1 END WHERE name = 'profiles'");
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("email", email);
+		jdbcTemplate.update("DELETE FROM positions WHERE email = :email", params);
+		jdbcTemplate.update("DELETE FROM profiles WHERE email = :email", params);
+		jdbcTemplate.getJdbcTemplate().update("UPDATE counts SET count = CASE WHEN count = 0 THEN 0 ELSE count - 1 END WHERE name = 'profiles'");
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public void updateAny(Profile profile) {
-		List<String> oldPos = this.stringToList(jdbcTemplate.queryForObject("SELECT position FROM profiles WHERE email = ?", String.class, profile.getEmail()));
-		List<String> newPos = profile.getPosition();
-		Date date_of_birth = Date.from(profile.getDate_of_birth().atStartOfDay(ZoneId.systemDefault()).toInstant());
-		jdbcTemplate.update(
-				"UPDATE profiles SET last_name = ?, first_name = ?, kana_last_name = ?, kana_first_name = ?, date_of_birth = ?, sex = ?, phone_number = ?, major = ?, univ_pref = ?, univ_name = ?, "
-				+ "faculty = ?, department = ?, grad_school_pref = ?, grad_school_name = ?, grad_school_of = ?, program_in = ?, graduation = ?, academic_degree = ?, club = ?, position = ? WHERE email = ?",
-				profile.getLast_name(), profile.getFirst_name(), profile.getKana_last_name(), profile.getKana_first_name(), date_of_birth, profile.getSex(), profile.getPhone_number(),
-				profile.getMajor(), profile.getUniv_pref(), profile.getUniv_name(), profile.getFaculty(), profile.getDepartment(), profile.getGrad_school_pref(), profile.getGrad_school_name(),
-				profile.getGrad_school_of(), profile.getProgram_in(), profile.getGraduation(), profile.getAcademic_degree(), profile.getClub(), this.listToString(newPos), profile.getEmail());
+	public void update(Profile prof) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("email", prof.getEmail());
+		List<String> oldPos = jdbcTemplate.queryForList("SELECT position FROM positions WHERE email = :email", params, String.class);
+		List<String> newPos = prof.getPosition();
+		Date birth = Date.from(prof.getBirth().atStartOfDay(ZoneId.systemDefault()).toInstant());
+		params.put("fN", prof.getFamilyName());
+		params.put("giN", prof.getGivenName());
+		params.put("kFN", prof.getKanaFamilyName());
+		params.put("kGN", prof.getKanaGivenName());
+		params.put("bth", birth);
+		params.put("sex", prof.getSex());
+		params.put("ph", prof.getPhone());
+		params.put("mjr", prof.getMajor());
+		params.put("uL", prof.getUnivLoc());
+		params.put("uN", prof.getUnivName());
+		params.put("uF", prof.getUnivFac());
+		params.put("uD", prof.getUnivDep());
+		params.put("gL", prof.getGradLoc());
+		params.put("grN", prof.getGradName());
+		params.put("gS", prof.getGradSchool());
+		params.put("gD", prof.getGradDiv());
+		params.put("gI", prof.getGraduatedIn());
+		params.put("deg", prof.getDegree());
+		params.put("clb", prof.getClub());
+		params.put("pos", newPos.stream().collect(Collectors.joining(",")));
+		String sql = "UPDATE profiles SET "
+				+ "family_name = :fN, "
+				+ "given_name = :giN, "
+				+ "kana_family_name = :kFN, "
+				+ "kana_given_name = :kGN, "
+				+ "date_of_birth = :bth, "
+				+ "sex = :sex, "
+				+ "phone = :ph, "
+				+ "major = :mjr, "
+				+ "univ_loc = :uL, "
+				+ "univ_name = :uN, "
+				+ "univ_fac = :uF, "
+				+ "univ_dep = :uD, "
+				+ "grad_loc = :gL, "
+				+ "grad_name = :grN, "
+				+ "grad_school = :gS, "
+				+ "grad_div = :gD, "
+				+ "graduated_in = :gI, "
+				+ "degree = :deg, "
+				+ "club = :clb, "
+				+ "position = :pos "
+				+ "WHERE email = :email";
+		jdbcTemplate.update(sql, params);
 		List<String> duplication = new ArrayList<String>();
 		oldPos.forEach(pos -> {
 			if (newPos.contains(pos)) duplication.add(pos);
 		});
 		oldPos.removeAll(duplication);
 		newPos.removeAll(duplication);
-		if (!(oldPos.isEmpty())) {
-			String deletePos = this.listToString(oldPos, "'", "'", ", ");
-			jdbcTemplate.update("DELETE FROM positions WHERE position IN (" + deletePos + ") AND email = ?", profile.getEmail());
+		if (!oldPos.isEmpty()) {
+			params.clear();
+			params.put("email", prof.getEmail());
+			params.put("oldPos", oldPos);
+			jdbcTemplate.update("DELETE FROM positions WHERE position IN (:oldPos) AND email = :email", params);
 		}
 		if (!(newPos.isEmpty())) {
-			String insertPos = this.listToString(newPos, "('", "', '" + profile.getEmail() + "')", ", ");
-			jdbcTemplate.update("INSERT INTO positions VALUES " + insertPos);
+			List<Map<String, Object>> paramMaps = new ArrayList<Map<String, Object>>();
+			for (String p : newPos) {
+				Map<String, Object> paramMap = new HashMap<String, Object>();
+				paramMap.put("position", p);
+				paramMap.put("email", prof.getEmail());
+				paramMaps.add(paramMap);
+			}
+			jdbcTemplate.batchUpdate("INSERT INTO positions VALUES (:position, :email)", paramMaps.toArray(new Map[paramMaps.size()]));
 		}
 	}
 	
 	@Override
 	public void updateLikes(String email, List<String> likes) {
-		jdbcTemplate.update("UPDATE profiles SET likes = ? WHERE email = ?", this.listToString(likes), email);
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("email", email);
+		params.put("likes", likes.stream().collect(Collectors.joining(",")));
+		jdbcTemplate.update("UPDATE profiles SET likes = :likes WHERE email = :email", params);
 	}
 	
-	protected List<Student> findByEmail(int sort, List<String> emails) {
-		if (Objects.equals(emails, null) || emails.isEmpty()) {
-			return null;
-		}
-		 String emailsStr = this.listToString(emails, "'", "'", ", ");
-		return jdbcTemplate.query(
-				this.selectStudentIn("WHERE accounts.email IN (" + emailsStr + ")", sort), (resultSet, i) -> {
-					Student student = new Student();
-					this.adjustDataToStudent(student, resultSet);
-					return student;
-				});
-	}
-	
-	private void adjustDataToProfile(Profile profile, ResultSet resultSet) throws SQLException {
+	private Profile adjustToProf(Profile profile, ResultSet resultSet) throws SQLException {
 		profile.setEmail(resultSet.getString("email"));
-		profile.setLast_name(resultSet.getString("last_name"));
-		profile.setFirst_name(resultSet.getString("first_name"));
-		profile.setKana_last_name(resultSet.getString("kana_last_name"));
-		profile.setKana_first_name(resultSet.getString("kana_first_name"));
-		Date dateOfBirth = resultSet.getTimestamp("date_of_birth");
-		profile.setDate_of_birth(LocalDate.ofInstant(dateOfBirth.toInstant(), ZoneId.systemDefault()));
+		profile.setFamilyName(resultSet.getString("family_name"));
+		profile.setGivenName(resultSet.getString("given_name"));
+		profile.setKanaFamilyName(resultSet.getString("kana_family_name"));
+		profile.setKanaGivenName(resultSet.getString("kana_given_name"));
+		Date birth = resultSet.getTimestamp("date_of_birth");
+		profile.setBirth(LocalDate.ofInstant(birth.toInstant(), ZoneId.systemDefault()));
 		profile.setSex(resultSet.getString("sex"));
-		profile.setPhone_number(resultSet.getString("phone_number"));
+		profile.setPhone(resultSet.getString("phone"));
 		profile.setMajor(resultSet.getString("major"));
-		profile.setUniv_pref(resultSet.getString("univ_pref"));
-		profile.setUniv_name(resultSet.getString("univ_name"));
-		profile.setFaculty(resultSet.getString("faculty"));
-		profile.setDepartment(resultSet.getString("department"));
-		profile.setGrad_school_pref(resultSet.getString("grad_school_pref"));
-		profile.setGrad_school_name(resultSet.getString("grad_school_name"));
-		profile.setGrad_school_of(resultSet.getString("grad_school_of"));
-		profile.setProgram_in(resultSet.getString("program_in"));
-		profile.setGraduation(resultSet.getString("graduation"));
-		profile.setAcademic_degree(resultSet.getString("academic_degree"));
+		profile.setUnivLoc(resultSet.getString("univ_loc"));
+		profile.setUnivName(resultSet.getString("univ_name"));
+		profile.setUnivFac(resultSet.getString("univ_fac"));
+		profile.setUnivDep(resultSet.getString("univ_dep"));
+		profile.setGradLoc(resultSet.getString("grad_loc"));
+		profile.setGradName(resultSet.getString("grad_name"));
+		profile.setGradSchool(resultSet.getString("grad_school"));
+		profile.setGradDiv(resultSet.getString("grad_div"));
+		profile.setGraduatedIn(resultSet.getString("graduated_in"));
+		profile.setDegree(resultSet.getString("degree"));
 		profile.setClub(resultSet.getString("club"));
-		profile.setLikes(this.stringToList(resultSet.getString("likes")));
-		profile.setPosition(this.stringToList(resultSet.getString("position")));
+		profile.setLikes(new ArrayList<String>(Arrays.asList(resultSet.getString("likes").split(","))));
+		profile.setPosition(new ArrayList<String>(Arrays.asList(resultSet.getString("position").split(","))));
+		return profile;
 	}
 	
-	private void adjustDataToStudent(Student student, ResultSet resultSet) throws SQLException {
+	private Student adjustToStu(Student student, ResultSet resultSet) throws SQLException {
 		student.setEmail(resultSet.getString("email"));
-		student.setValid_email(resultSet.getBoolean("valid_email"));
+		student.setValidEmail(resultSet.getBoolean("valid_email"));
 		Date lastLogin = resultSet.getTimestamp("last_login");
-		student.setLast_login(LocalDateTime.ofInstant(lastLogin.toInstant(), ZoneId.of("Asia/Tokyo")));
-		if (!(Objects.equals(resultSet.getString("last_name"), null))) {
-			student.setLast_name(resultSet.getString("last_name"));
-			student.setFirst_name(resultSet.getString("first_name"));
-			student.setKana_last_name(resultSet.getString("kana_last_name"));
-			student.setKana_first_name(resultSet.getString("kana_first_name"));
-			Date dateOfBirth = resultSet.getTimestamp("date_of_birth");
-			student.setDate_of_birth(LocalDate.ofInstant(dateOfBirth.toInstant(), ZoneId.systemDefault()));
+		student.setLastLogin(LocalDateTime.ofInstant(lastLogin.toInstant(), ZoneId.of("Asia/Tokyo")));
+		if (!(Objects.equals(resultSet.getString("family_name"), null))) {
+			student.setFamilyName(resultSet.getString("family_name"));
+			student.setGivenName(resultSet.getString("given_name"));
+			student.setKanaFamilyName(resultSet.getString("kana_family_name"));
+			student.setKanaGivenName(resultSet.getString("kana_given_name"));
+			Date birth = resultSet.getTimestamp("date_of_birth");
+			student.setBirth(LocalDate.ofInstant(birth.toInstant(), ZoneId.systemDefault()));
 			student.setSex(resultSet.getString("sex"));
-			student.setPhone_number(resultSet.getString("phone_number"));
+			student.setPhone(resultSet.getString("phone"));
 			student.setMajor(resultSet.getString("major"));
-			student.setUniv_pref(resultSet.getString("univ_pref"));
-			student.setUniv_name(resultSet.getString("univ_name"));
-			student.setFaculty(resultSet.getString("faculty"));
-			student.setDepartment(resultSet.getString("department"));
-			student.setGrad_school_pref(resultSet.getString("grad_school_pref"));
-			student.setGrad_school_name(resultSet.getString("grad_school_name"));
-			student.setGrad_school_of(resultSet.getString("grad_school_of"));
-			student.setProgram_in(resultSet.getString("program_in"));
-			student.setGraduation(resultSet.getString("graduation"));
-			student.setAcademic_degree(resultSet.getString("academic_degree"));
+			student.setUnivLoc(resultSet.getString("univ_loc"));
+			student.setUnivName(resultSet.getString("univ_name"));
+			student.setUnivFac(resultSet.getString("univ_fac"));
+			student.setUnivDep(resultSet.getString("univ_dep"));
+			student.setGradLoc(resultSet.getString("grad_loc"));
+			student.setGradName(resultSet.getString("grad_name"));
+			student.setGradSchool(resultSet.getString("grad_school"));
+			student.setGradDiv(resultSet.getString("grad_div"));
+			student.setGraduatedIn(resultSet.getString("graduated_in"));
+			student.setDegree(resultSet.getString("degree"));
 			student.setClub(resultSet.getString("club"));
-			student.setLikes(this.stringToList(resultSet.getString("likes")));
-			student.setPosition(this.stringToList(resultSet.getString("position")));
+			student.setLikes(new ArrayList<String>(Arrays.asList(resultSet.getString("likes").split(","))));
+			student.setPosition(new ArrayList<String>(Arrays.asList(resultSet.getString("position").split(","))));
 			student.convertForDisplay();
 		}
+		return student;
 	}
 	
-	private String selectStudentIn(String condition, int sort) {
-		if (sort > 2) sort = 0;
-		return "SELECT " + this.QUERIED_VALUE + " FROM accounts LEFT OUTER JOIN profiles ON accounts.email = profiles.email " + condition + " GROUP BY " + this.QUERIED_VALUE + " ORDER BY " + this.SORT_LIST.get(sort);
+	private Map<String, Object> findStudents(List<String> target, List<String> order, Map<String, Object> params) {
+		List<String> elements = new LinkedList<String>(Arrays.asList("SELECT", "COUNT(email)", "FROM profiles"));
+		if (!Objects.equals(target, null) && !target.isEmpty()) elements.addAll(Arrays.asList("WHERE", target.stream().collect(Collectors.joining(" AND "))));
+		String sql = elements.stream().collect(Collectors.joining(" "));
+		Integer count = jdbcTemplate.queryForObject(sql, params, Integer.class);
+		elements.set(1, this.COLUMNS.stream().collect(Collectors.joining(", ")));
+		elements.set(2, "FROM profiles INNER JOIN accounts ON profiles.email = accounts.email");
+		if (!Objects.equals(order, null) && !order.isEmpty()) elements.addAll(Arrays.asList("ORDER BY", order.stream().collect(Collectors.joining(", "))));
+		sql = elements.stream().collect(Collectors.joining(" "));
+		List<Student> students = jdbcTemplate.query(sql, params, (resultSet, i) -> {
+			Student student = new Student();
+			return adjustToStu(student, resultSet);
+		});
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("count", count);
+		result.put("students", students);
+		return result;
 	}
 }

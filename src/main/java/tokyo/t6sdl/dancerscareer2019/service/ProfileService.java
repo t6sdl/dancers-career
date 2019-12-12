@@ -32,7 +32,7 @@ public class ProfileService {
 	public void update(Profile profile, String loggedInEmail) {
 		profile.setEmail(loggedInEmail);
 		profile.convertForData();
-		profileRepository.updateAny(profile);
+		profileRepository.update(profile);
 	}
 	
 	public void updateLikes(String email, List<String> likes) {
@@ -47,36 +47,36 @@ public class ProfileService {
 		return profileRepository.find(sort);
 	}
 	
-	public Map<String, Object> getProfilesByName(int sort, String kanaLastName, String kanaFirstName) {
-		return profileRepository.findByName(sort, kanaLastName, kanaFirstName);
+	public Map<String, Object> getProfilesByName(int sort, String kanaFamilyName, String kanaGivenName) {
+		return profileRepository.findByName(sort, kanaFamilyName, kanaGivenName);
 	}
 	
-	public Map<String, Object> getProfilesByLastName(int sort, String kanaLastName) {
-		return profileRepository.findByLastName(sort, kanaLastName);
+	public Map<String, Object> getProfilesByFamilyName(int sort, String kanaFamilyName) {
+		return profileRepository.findByFamilyName(sort, kanaFamilyName);
 	}
 	
-	public Map<String, Object> getProfilesByPrefecture(int sort, String prefecture) {
-		return profileRepository.findByPrefecture(sort, prefecture);
+	public Map<String, Object> getProfilesByUnivLoc(int sort, String univLoc) {
+		return profileRepository.findByUnivLoc(sort, univLoc);
 	}
 	
-	public Map<String, Object> getProfilesByUniversity(int sort, String prefecture, String university) {
-		return profileRepository.findByUniversity(sort, prefecture, university);
+	public Map<String, Object> getProfilesByUnivName(int sort, String univLoc, String univName) {
+		return profileRepository.findByUnivName(sort, univLoc, univName);
 	}
 	
-	public Map<String, Object> getProfilesByFaculty(int sort, String prefecture, String university, String faculty) {
-		return profileRepository.findByFaculty(sort, prefecture, university, faculty);
+	public Map<String, Object> getProfilesByUnivFac(int sort, String univLoc, String univName, String univFac) {
+		return profileRepository.findByUnivFac(sort, univLoc, univName, univFac);
 	}
 	
-	public Map<String, Object> getProfilesByDepartment(int sort, String prefecture, String university, String faculty, String department) {
-		return profileRepository.findByDepartment(sort, prefecture, university, faculty, department);
+	public Map<String, Object> getProfilesByUnivDep(int sort, String univLoc, String univName, String univFac, String univDep) {
+		return profileRepository.findByUnivDep(sort, univLoc, univName, univFac, univDep);
 	}
 	
 	public Map<String, Object> getProfilesByPosition(int sort, List<String> position, boolean andSearch) {
 		return profileRepository.findByPosition(sort, position, andSearch);
 	}
 	
-	public String getLastNameByEmail(String email) {
-		return profileRepository.findLastNameByEmail(email);
+	public String getFamilyNameByEmail(String email) {
+		return profileRepository.findFamilyNameByEmail(email);
 	}
 	
 	public List<String> getLikesByEmail(String email) {
@@ -89,25 +89,25 @@ public class ProfileService {
 			String gm = form.getGraduationMonth();
 			form.setGraduationMonth("0" + gm);
 		}
-		String graduation = form.getGraduationYear() + "/" + form.getGraduationMonth();
-		profile.setLast_name(form.getLastName());
-		profile.setFirst_name(form.getFirstName());
-		profile.setKana_last_name(form.getKanaLastName());
-		profile.setKana_first_name(form.getKanaFirstName());
-		profile.setDate_of_birth(LocalDate.of(Integer.parseInt(form.getBirthYear()), Integer.parseInt(form.getBirthMonth()), Integer.parseInt(form.getBirthDay())));
+		String graduatedIn = form.getGraduationYear() + "/" + form.getGraduationMonth();
+		profile.setFamilyName(form.getFamilyName());
+		profile.setGivenName(form.getGivenName());
+		profile.setKanaFamilyName(form.getKanaFamilyName());
+		profile.setKanaGivenName(form.getKanaGivenName());
+		profile.setBirth(LocalDate.of(Integer.parseInt(form.getBirthYear()), Integer.parseInt(form.getBirthMonth()), Integer.parseInt(form.getBirthDay())));
 		profile.setSex(form.getSex());
-		profile.setPhone_number(form.getPhoneNumber());
+		profile.setPhone(form.getPhone());
 		profile.setMajor(form.getMajor());
-		profile.setUniv_pref(form.getUnivPref());
-		profile.setUniv_name(form.getUnivName());
-		profile.setFaculty(form.getFaculty());
-		profile.setDepartment(form.getDepartment());
-		profile.setGrad_school_pref(form.getGradSchoolPref());
-		profile.setGrad_school_name(form.getGradSchoolName());
-		profile.setGrad_school_of(form.getGradSchoolOf());
-		profile.setProgram_in(form.getProgramIn());
-		profile.setGraduation(graduation);
-		profile.setAcademic_degree(form.getAcademicDegree());
+		profile.setUnivLoc(form.getUnivLoc());
+		profile.setUnivName(form.getUnivName());
+		profile.setUnivFac(form.getUnivFac());
+		profile.setUnivDep(form.getUnivDep());
+		profile.setGradLoc(form.getGradLoc());
+		profile.setGradName(form.getGradName());
+		profile.setGradSchool(form.getGradSchool());
+		profile.setGradDiv(form.getGradDiv());
+		profile.setGraduatedIn(graduatedIn);
+		profile.setDegree(form.getDegree());
 		profile.setClub(form.getClub());
 		profile.setPosition(form.getPosition());
 		return profile;
@@ -117,36 +117,36 @@ public class ProfileService {
 		if (Objects.equals(profile, null)) {
 			ProfileForm form = new ProfileForm();
 			form.setUnivName("");
-			form.setFaculty("");
-			form.setDepartment("");
+			form.setUnivFac("");
+			form.setUnivDep("");
 			return form;
 		}
 		ProfileForm form = new ProfileForm();
-		String[] split = profile.getGraduation().split("/");
+		String[] split = profile.getGraduatedIn().split("/");
 		if (split[1].charAt(0) == '0') {
 			split[1] = String.valueOf(split[1].charAt(1));
 		}
-		form.setLastName(profile.getLast_name());
-		form.setFirstName(profile.getFirst_name());
-		form.setKanaLastName(profile.getKana_last_name());
-		form.setKanaFirstName(profile.getKana_first_name());
-		form.setBirthYear(String.valueOf(profile.getDate_of_birth().getYear()));
-		form.setBirthMonth(String.valueOf(profile.getDate_of_birth().getMonthValue()));
-		form.setBirthDay(String.valueOf(profile.getDate_of_birth().getDayOfMonth()));
+		form.setFamilyName(profile.getFamilyName());
+		form.setGivenName(profile.getGivenName());
+		form.setKanaFamilyName(profile.getKanaFamilyName());
+		form.setKanaGivenName(profile.getKanaGivenName());
+		form.setBirthYear(String.valueOf(profile.getBirth().getYear()));
+		form.setBirthMonth(String.valueOf(profile.getBirth().getMonthValue()));
+		form.setBirthDay(String.valueOf(profile.getBirth().getDayOfMonth()));
 		form.setSex(profile.getSex());
-		form.setPhoneNumber(profile.getPhone_number());
+		form.setPhone(profile.getPhone());
 		form.setMajor(profile.getMajor());
-		form.setUnivPref(profile.getUniv_pref());
-		form.setUnivName(profile.getUniv_name());
-		form.setFaculty(profile.getFaculty());
-		form.setDepartment(profile.getDepartment());
-		form.setGradSchoolPref(profile.getGrad_school_pref());
-		form.setGradSchoolName(profile.getGrad_school_name());
-		form.setGradSchoolOf(profile.getGrad_school_of());
-		form.setProgramIn(profile.getProgram_in());
+		form.setUnivLoc(profile.getUnivLoc());
+		form.setUnivName(profile.getUnivName());
+		form.setUnivFac(profile.getUnivFac());
+		form.setUnivDep(profile.getUnivDep());
+		form.setGradLoc(profile.getGradLoc());
+		form.setGradName(profile.getGradName());
+		form.setGradSchool(profile.getGradSchool());
+		form.setGradDiv(profile.getGradDiv());
 		form.setGraduationYear(split[0]);
 		form.setGraduationMonth(split[1]);
-		form.setAcademicDegree(profile.getAcademic_degree());
+		form.setDegree(profile.getDegree());
 		form.setClub(profile.getClub());
 		form.setPosition(profile.getPosition());
 		return form;
@@ -158,24 +158,24 @@ public class ProfileService {
 		}
 		Student student = new Student();
 		student.setEmail(profile.getEmail());
-		student.setLast_name(profile.getLast_name());
-		student.setFirst_name(profile.getFirst_name());
-		student.setKana_last_name(profile.getKana_last_name());
-		student.setKana_first_name(profile.getKana_first_name());
-		student.setDate_of_birth(profile.getDate_of_birth());
+		student.setFamilyName(profile.getFamilyName());
+		student.setGivenName(profile.getGivenName());
+		student.setKanaFamilyName(profile.getKanaFamilyName());
+		student.setKanaGivenName(profile.getKanaGivenName());
+		student.setBirth(profile.getBirth());
 		student.setSex(profile.getSex());
-		student.setPhone_number(profile.getPhone_number());
+		student.setPhone(profile.getPhone());
 		student.setMajor(profile.getMajor());
-		student.setUniv_pref(profile.getUniv_pref());
-		student.setUniv_name(profile.getUniv_name());
-		student.setFaculty(profile.getFaculty());
-		student.setDepartment(profile.getDepartment());
-		student.setGrad_school_pref(profile.getGrad_school_pref());
-		student.setGrad_school_name(profile.getGrad_school_name());
-		student.setGrad_school_of(profile.getGrad_school_of());
-		student.setProgram_in(profile.getProgram_in());
-		student.setGraduation(profile.getGraduation());
-		student.setAcademic_degree(profile.getAcademic_degree());
+		student.setUnivLoc(profile.getUnivLoc());
+		student.setUnivName(profile.getUnivName());
+		student.setUnivFac(profile.getUnivFac());
+		student.setUnivDep(profile.getUnivDep());
+		student.setGradLoc(profile.getGradLoc());
+		student.setGradName(profile.getGradName());
+		student.setGradSchool(profile.getGradSchool());
+		student.setGradDiv(profile.getGradDiv());
+		student.setGraduatedIn(profile.getGraduatedIn());
+		student.setDegree(profile.getDegree());
 		student.setClub(profile.getClub());
 		student.setPosition(profile.getPosition());
 		student.setLikes(profile.getLikes());

@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -79,7 +80,7 @@ public class AdminController {
 		if (!(kanaFamilyName.isEmpty()) && !(kanaGivenName.isEmpty())) {
 			result = profileService.getProfilesByName(sort, kanaFamilyName, kanaGivenName);
 		} else if (!(kanaFamilyName.isEmpty())) {
-			result = profileService.getProfilesByLastName(sort, kanaFamilyName);
+			result = profileService.getProfilesByFamilyName(sort, kanaFamilyName);
 		} else {
 			return "redirect:/admin/users?sort=" + sort;
 		}
@@ -101,7 +102,7 @@ public class AdminController {
 		if (!(kanaFamilyName.isEmpty()) && !(kanaGivenName.isEmpty())) {
 			students = (List<Student>) profileService.getProfilesByName(sort, kanaFamilyName, kanaGivenName).get("students");
 		} else if (!(kanaFamilyName.isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByLastName(sort, kanaFamilyName).get("students");
+			students = (List<Student>) profileService.getProfilesByFamilyName(sort, kanaFamilyName).get("students");
 		}
 		map.put("filter", filter);
 		map.put("students", students);
@@ -115,13 +116,13 @@ public class AdminController {
 	public String usersIndexFilteredByUniv(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("univ-loc") String univLoc, @RequestParam("univ-name") String univName, @RequestParam("univ-fac") String univFac, @RequestParam("univ-dep") String univDep, Model model) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		if (!(univDep.isEmpty())) {
-			result = profileService.getProfilesByDepartment(sort, univLoc, univName, univFac, univDep);
+			result = profileService.getProfilesByUnivDep(sort, univLoc, univName, univFac, univDep);
 		} else if (!(univFac.isEmpty())) {
-			result = profileService.getProfilesByFaculty(sort, univLoc, univName, univFac);
+			result = profileService.getProfilesByUnivFac(sort, univLoc, univName, univFac);
 		} else if (!(univName.isEmpty())) {
-			result = profileService.getProfilesByUniversity(sort, univLoc, univName);
+			result = profileService.getProfilesByUnivName(sort, univLoc, univName);
 		} else if (!(univLoc.isEmpty())) {
-			result = profileService.getProfilesByPrefecture(sort, univLoc);
+			result = profileService.getProfilesByUnivLoc(sort, univLoc);
 		} else {
 			return "redirect:/admin/users?sort=" + sort;
 		}
@@ -143,13 +144,13 @@ public class AdminController {
 		List<String> filter = Arrays.asList("大学", univLoc + "," + univName + "," + univFac + "," + univDep);
 		List<Student> students = new ArrayList<Student>();
 		if (!(univDep.isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByDepartment(sort, univLoc, univName, univFac, univDep).get("students");
+			students = (List<Student>) profileService.getProfilesByUnivDep(sort, univLoc, univName, univFac, univDep).get("students");
 		} else if (!(univFac.isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByFaculty(sort, univLoc, univName, univFac).get("students");
+			students = (List<Student>) profileService.getProfilesByUnivFac(sort, univLoc, univName, univFac).get("students");
 		} else if (!(univName.isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByUniversity(sort, univLoc, univName).get("students");
+			students = (List<Student>) profileService.getProfilesByUnivName(sort, univLoc, univName).get("students");
 		} else if (!(univLoc.isEmpty())) {
-			students = (List<Student>) profileService.getProfilesByPrefecture(sort, univLoc).get("students");
+			students = (List<Student>) profileService.getProfilesByUnivLoc(sort, univLoc).get("students");
 		}
 		map.put("filter", filter);
 		map.put("students", students);
@@ -179,7 +180,7 @@ public class AdminController {
 	@GetMapping(value = "/users", params = {"pos", "cond=and", "download"})
 	public ModelAndView downloadUsersIndexFilteredByPosAndPos(@RequestParam(name="sort") Integer sort, @RequestParam(name="pos") List<String> positions) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<String> filter = Arrays.asList("役職(AND)", String.join(",", positions));
+		List<String> filter = Arrays.asList("役職(AND)", positions.stream().collect(Collectors.joining(",")));
 		List<Student> students = new ArrayList<Student>();
 		if (!(positions.isEmpty()) && !(positions.get(0).isEmpty())) {
 			students = (List<Student>) profileService.getProfilesByPosition(sort, positions, true).get("students");
@@ -212,12 +213,12 @@ public class AdminController {
 	@GetMapping(value = "/users", params = {"pos", "cond=or", "download"})
 	public ModelAndView downloadUsersIndexFilteredByPosOrPos(@RequestParam(name="sort") Integer sort, @RequestParam(name="pos") List<String> positions) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<String> filter = Arrays.asList("役職(OR)", String.join(",", positions));
+		List<String> filter = Arrays.asList("役職(OR)", positions.stream().collect(Collectors.joining(",")));
 		List<Student> students = new ArrayList<Student>();
 		if (!(positions.isEmpty()) && !(positions.get(0).isEmpty())) {
 			students = (List<Student>) profileService.getProfilesByPosition(sort, positions, true).get("students");
 		}
-		students.sort(Comparator.comparing(Student::getLast_login, Comparator.reverseOrder()));
+		students.sort(Comparator.comparing(Student::getLastLogin, Comparator.reverseOrder()));
 		map.put("filter", filter);
 		map.put("students", students);
 		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
@@ -242,7 +243,7 @@ public class AdminController {
 		if (!(kanaFamilyName.isEmpty()) && !(kanaGivenName.isEmpty())) {
 			result = experienceService.getExperiencesByName(sort, kanaFamilyName, kanaGivenName);
 		} else if (!(kanaFamilyName.isEmpty())) {
-			result = experienceService.getExperiencesByLastName(sort, kanaFamilyName);
+			result = experienceService.getExperiencesByFamilyName(sort, kanaFamilyName);
 		} else {
 			return "redirect:/admin/experiences?sort=" + sort;
 		}
@@ -259,13 +260,13 @@ public class AdminController {
 	public String expsIndexFilteredByUniv(@RequestParam(name = "sort", defaultValue = "0") Integer sort, @RequestParam("univ-loc") String univLoc, @RequestParam("univ-name") String univName, @RequestParam("univ-fac") String univFac, @RequestParam("univ-dep") String univDep, Model model) {
 		Map<String, Object> result = new HashMap<String, Object>();
 		if (!(univDep.isEmpty())) {
-			result = experienceService.getExperiencesByDepartment(sort, univLoc, univName, univFac, univDep);
+			result = experienceService.getExperiencesByUnivDep(sort, univLoc, univName, univFac, univDep);
 		} else if (!(univFac.isEmpty())) {
-			result = experienceService.getExperiencesByFaculty(sort, univLoc, univName, univFac);
+			result = experienceService.getExperiencesByUnivFac(sort, univLoc, univName, univFac);
 		} else if (!(univName.isEmpty())) {
-			result = experienceService.getExperiencesByUniversity(sort, univLoc, univName);
+			result = experienceService.getExperiencesByUnivName(sort, univLoc, univName);
 		} else if (!(univLoc.isEmpty())) {
-			result = experienceService.getExperiencesByPrefecture(sort, univLoc);
+			result = experienceService.getExperiencesByUnivLoc(sort, univLoc);
 		} else {
 			return "redirect:/admin/experiences?sort=" + sort;
 		}
@@ -409,7 +410,7 @@ public class AdminController {
 			return "admin/experiences/edit";
 		} else {
 			Experience experience = experienceService.convertExperienceFormIntoExperience(form);
-			experience.setExperience_id(expId);
+			experience.setId(expId);
 			experienceService.update(experience);
 			return "redirect:/admin/experiences/" + expId;
 		}
@@ -436,7 +437,7 @@ public class AdminController {
 			return "admin/experiences/newEs";
 		} else {
 			Es newEs = experienceService.convertEsFormIntoEs(form);
-			newEs.setExperience_id(expId);
+			newEs.setExpId(expId);
 			experienceService.registerEs(newEs);
 			return "redirect:/admin/experiences/" + expId;
 		}
@@ -460,8 +461,8 @@ public class AdminController {
 			return "admin/experiences/editEs";
 		} else {
 			Es es = experienceService.convertEsFormIntoEs(form);
-			es.setExperience_id(expId);
-			es.setEs_id(esId);
+			es.setExpId(expId);
+			es.setId(esId);
 			experienceService.updateEs(es);
 			return "redirect:/admin/experiences/" + expId;
 		}
@@ -488,40 +489,40 @@ public class AdminController {
 			return "admin/experiences/newInterview";
 		} else {
 			Interview newInterview = experienceService.convertInterviewFormIntoInterview(form);
-			newInterview.setExperience_id(expId);
+			newInterview.setExpId(expId);
 			experienceService.registerInterview(newInterview);
 			return "redirect:/admin/experiences/" + expId;
 		}
 	}
 	
-	@GetMapping("/experiences/{expId}/interview/{intId}/edit")
-	public String interviewEdit(@PathVariable("expId") Integer expId, @PathVariable("intId") Integer intId, Model model) {
-		InterviewForm form = experienceService.convertInterviewIntoInterviewForm(experienceService.getInterviewById(expId, intId));
+	@GetMapping("/experiences/{expId}/interview/{itvId}/edit")
+	public String interviewEdit(@PathVariable("expId") Integer expId, @PathVariable("itvId") Integer itvId, Model model) {
+		InterviewForm form = experienceService.convertInterviewIntoInterviewForm(experienceService.getInterviewById(expId, itvId));
 		model.addAttribute("expId", expId);
-		model.addAttribute("intId", intId);
+		model.addAttribute("itvId", itvId);
 		model.addAttribute(form);
 		return "admin/experiences/editInterview";
 	}
 	
-	@PutMapping("/experiences/{expId}/interview/{intId}")
-	public String interviewUpdate(@PathVariable("expId") Integer expId, @PathVariable("intId") Integer intId, @Validated InterviewForm form, BindingResult result, Model model) {
+	@PutMapping("/experiences/{expId}/interview/{itvId}")
+	public String interviewUpdate(@PathVariable("expId") Integer expId, @PathVariable("itvId") Integer itvId, @Validated InterviewForm form, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			model.addAttribute("expId", expId);
-			model.addAttribute("intId", intId);
+			model.addAttribute("itvId", itvId);
 			model.addAttribute(form);
 			return "admin/experiences/editInterview";
 		} else {
 			Interview interview = experienceService.convertInterviewFormIntoInterview(form);
-			interview.setExperience_id(expId);
-			interview.setInterview_id(intId);
+			interview.setExpId(expId);
+			interview.setId(itvId);
 			experienceService.updateInterview(interview);
 			return "redirect:/admin/experiences/" + expId;
 		}
 	}
 	
-	@DeleteMapping("/experiences/{expId}/interview/{intId}")
-	public String interviewDestroy(@PathVariable("expId") Integer expId, @PathVariable("intId") Integer intId, Model model) {
-		experienceService.deleteInterview(expId, intId);
+	@DeleteMapping("/experiences/{expId}/interview/{itvId}")
+	public String interviewDestroy(@PathVariable("expId") Integer expId, @PathVariable("itvId") Integer itvId, Model model) {
+		experienceService.deleteInterview(expId, itvId);
 		return "redirect:/admin/experiences/" + expId;
 	}
 	

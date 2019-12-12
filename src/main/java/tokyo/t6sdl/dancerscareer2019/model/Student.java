@@ -10,42 +10,42 @@ import lombok.Data;
 @Data
 public class Student {
 	private String email;
-	private boolean valid_email;
-	private String last_login_for_display;
-	private LocalDateTime last_login;
-	private String last_name;
-	private String first_name;
-	private String kana_last_name;
-	private String kana_first_name;
-	private String date_of_birth_for_display;
-	private LocalDate date_of_birth;
+	private boolean validEmail;
+	private String lastLoginForDisplay;
+	private LocalDateTime lastLogin;
+	private String familyName;
+	private String givenName;
+	private String kanaFamilyName;
+	private String kanaGivenName;
+	private String birthForDisplay;
+	private LocalDate birth;
 	private String sex;
-	private String phone_number;
+	private String phone;
 	private String major;
-	private String univ_pref;
-	private String univ_name;
-	private String faculty;
-	private String department;
-	private String grad_school_pref;
-	private String grad_school_name;
-	private String grad_school_of;
-	private String program_in;
-	private String graduation;
-	private String academic_degree;
+	private String univLoc;
+	private String univName;
+	private String univFac;
+	private String univDep;
+	private String gradLoc;
+	private String gradName;
+	private String gradSchool;
+	private String gradDiv;
+	private String graduatedIn;
+	private String degree;
 	private String club;
 	private List<String> position;
 	private List<String> likes;
 	
 	public void convertForDisplay() {
-		String last_login = this.getLast_login().format(DateTimeFormatter.ofPattern("yyyy/M/d H:m"));
-		String date_of_birth = this.getDate_of_birth().format(DateTimeFormatter.ofPattern("yyyy年M月d日"));
-		StringBuilder graduation = new StringBuilder();
-		String[] split = this.getGraduation().split("/");
+		String lastLogin = this.getLastLogin().format(DateTimeFormatter.ofPattern("yyyy/M/d H:m"));
+		String birth = this.getBirth().format(DateTimeFormatter.ofPattern("yyyy年M月d日"));
+		StringBuilder graduatedIn = new StringBuilder();
+		String[] split = this.getGraduatedIn().split("/");
 		if (split[1].charAt(0) == '0') {
 			split[1] = String.valueOf(split[1].charAt(1));
 		}
-		this.setGraduation(graduation.append(split[0]).append("年").append(split[1]).append("月").toString());
-		this.setLast_login_for_display(last_login);
-		this.setDate_of_birth_for_display(date_of_birth);
+		this.setGraduatedIn(graduatedIn.append(split[0]).append("年").append(split[1]).append("月").toString());
+		this.setLastLoginForDisplay(lastLogin);
+		this.setBirthForDisplay(birth);
 	}
 }

@@ -56,7 +56,9 @@
         <tbody>
           <tr>
             <th>LINE連携</th>
-            <td rowspan="2"><a class="button" th:href="${isConnected} ? @{/line-notify/revoke} : @{/line-notify/apply?from=mypage}" th:text="${isConnected ? '解除する' : '連携する'}"></a></td>
+            <td rowspan="2">
+              <a class="button" th:href="${isConnected} ? @{/line-notify/revoke} : @{/line-notify/apply?from=mypage}" th:text="${isConnected ? '解除する' : '連携する'}"></a>
+            </td>
           </tr>
           <tr>
             <td th:text="${isConnected ? '連携済' : '未連携'}"></td>

@@ -279,13 +279,13 @@ legend {
 <hr>
 <div class="text-center my-3">検索結果： <span th:text="${count}"></span> 件</div>
 <section th:if="${count > 0}">
-<article th:each="student : ${students}">
+<article th:each="student : ${students}" th:object="${student}">
 <table class="table table-sm table-secondary table-bordered mw-100 small">
 <thead class="thead-dark">
 <tr>
 <th colspan="2">
-<span th:text="|${student.last_name} ${student.first_name}|"></span>（<span th:text="|${student.kana_last_name} ${student.kana_first_name}|"></span>）
-最終ログイン：<span th:text="${student.last_login_for_display}"></span>
+<span th:text="|*{familyName} *{givenName}|"></span>（<span th:text="|*{kanaFamilyName} *{kanaGivenName}|"></span>）
+最終ログイン：<span th:text="*{lastLoginForDisplay}"></span>
 </th>
 </tr>
 </thead>
@@ -293,55 +293,55 @@ legend {
 <tr>
 <th>メール</th>
 <td>
-<span th:text="${student.email}"></span>
-<span th:if="${student.valid_email}" class="badge badge-success">認証済</span>
-<span th:unless="${student.valid_email}" class="badge badge-warning">未認証</span>
+<span th:text="*{email}"></span>
+<span th:if="*{validEmail}" class="badge badge-success">認証済</span>
+<span th:unless="*{validEmail}" class="badge badge-warning">未認証</span>
 </td>
 </tr>
 <tr>
 <th>生年月日</th>
-<td th:text="${student.date_of_birth_for_display}"></td>
+<td th:text="*{birthForDisplay}"></td>
 </tr>
 <tr>
 <th>性別</th>
-<td th:text="${student.sex}"></td>
+<td th:text="*{sex}"></td>
 </tr>
 <tr>
 <th>電話番号</th>
-<td th:text="${student.phone_number}"></td>
+<td th:text="*{phone}"></td>
 </tr>
 <tr>
 <th>卒業年度</th>
-<td th:text="|${student.graduation} 卒業|"></td>
+<td th:text="|*{graduatedIn} 卒業|"></td>
 </tr>
 <tr>
 <th>最終学歴</th>
-<td th:text="${student.academic_degree}"></td>
+<td th:text="*{degree}"></td>
 </tr>
 <tr>
 <th>文理</th>
-<td th:text="${student.major}"></td>
+<td th:text="*{major}"></td>
 </tr>
 <tr>
 <th>大学</th>
-<td th:text="|${student.univ_name} ${student.faculty} ${student.department}|"></td>
+<td th:text="|*{univName} *{univFac} *{univDep}|"></td>
 </tr>
 <tr>
 <th>大学院</th>
-<td th:text="|${student.grad_school_name} ${student.grad_school_of} ${student.program_in}|"></td>
+<td th:text="|*{gradName} *{gradSchool} *{gradDiv}|"></td>
 </tr>
 <tr>
 <th>サークル</th>
-<td th:text="${student.club}"></td>
+<td th:text="*{club}"></td>
 </tr>
 <tr>
 <th>役職</th>
-<td><span th:each="pos : ${student.position}" th:text="|${pos} |"></span></td>
+<td><span th:each="pos : *{position}" th:text="|${pos} |"></span></td>
 </tr>
 <tr>
 <th>お気に入り</th>
 <td>
-<a class="badge badge-info mr-1" th:href="@{/admin/experiences/{like}(like=${like})}" th:each="like : ${student.likes}" th:text="${like}"></a>
+<a class="badge badge-info mr-1" th:href="@{/admin/experiences/{like}(like=${like})}" th:each="like : *{likes}" th:text="${like}"></a>
 </td>
 </tr>
 </tbody>
@@ -361,7 +361,7 @@ legend {
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script th:src="@{/js/setUniversity.js?update=20191121}" src="../../../static/js/setUniversity.js?update=20191121"></script>
+<script th:src="@{/js/set-university.js?update=20191121}" src="../../../static/js/set-university.js?update=20191121"></script>
 <script th:src="@{/js/submit.js}" src="../../../static/js/submit.js"></script>
 <script>
 $(function() {

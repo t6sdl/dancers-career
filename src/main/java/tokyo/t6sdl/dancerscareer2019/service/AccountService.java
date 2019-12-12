@@ -92,7 +92,7 @@ public class AccountService implements UserDetailsService {
 		if (!(account instanceof Account)) {
 			return false;
 		}
-		if (!(account.isValid_email())) {
+		if (!(account.isValidEmail())) {
 			accountRepository.updateValidEmail(account.getEmail(), true);
 		}
 		return true;
@@ -103,7 +103,7 @@ public class AccountService implements UserDetailsService {
 		if (!(account instanceof Account)) {
 			return false;
 		}
-		LocalDateTime expiration = account.getUpdated_at().plusMinutes(30);
+		LocalDateTime expiration = account.getUpdatedAt().plusMinutes(30);
 		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
 		if (now.isAfter(expiration)) {
 			return false;

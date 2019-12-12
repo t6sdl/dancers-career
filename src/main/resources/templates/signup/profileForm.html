@@ -30,18 +30,19 @@
         <div class="form-item">
           <p>氏名</p>
           <div>
-            <input type="text" th:field="*{lastName}" th:errorclass="error" required placeholder="姓">
-            <input type="text" th:field="*{firstName}" th:errorclass="error" required placeholder="名">
-            <p th:if="${#fields.hasErrors('lastName') || #fields.hasErrors('firstName')}" class="hazard"><i class="fas fa-exclamation-circle"></i>入力してください</p>
+            <input type="text" th:field="*{familyName}" th:errorclass="error" required placeholder="姓">
+            <input type="text" th:field="*{givenName}" th:errorclass="error" required placeholder="名">
+            <p th:if="${#fields.hasErrors('familyName') || #fields.hasErrors('givenName')}" class="hazard"><i class="fas fa-exclamation-circle"></i>入力してください</p>
           </div>
         </div>
         <div class="form-item">
           <p>氏名（カナ）</p>
           <div>
-            <input type="text" th:field="*{kanaLastName}" th:errorclass="error" required placeholder="セイ">
-            <input type="text" th:field="*{kanaFirstName}" th:errorclass="error" required placeholder="メイ">
-            <p th:if="${#fields.hasErrors('kanaLastName') || #fields.hasErrors('kanaFirstName')}" class="hazard"><i
-                class="fas fa-exclamation-circle"></i>カタカナで入力してください</p>
+            <input type="text" th:field="*{kanaFamilyName}" th:errorclass="error" required placeholder="セイ">
+            <input type="text" th:field="*{kanaGivenName}" th:errorclass="error" required placeholder="メイ">
+            <p th:if="${#fields.hasErrors('kanaFamilyName') || #fields.hasErrors('kanaGivenName')}" class="hazard">
+              <i class="fas fa-exclamation-circle"></i>カタカナで入力してください
+            </p>
           </div>
         </div>
         <div class="form-item">
@@ -118,8 +119,9 @@
               </select>
               <label for="birthDay">日</label>
             </div>
-            <p th:if="${#fields.hasErrors('birthYear') || #fields.hasErrors('birthMonth') || #fields.hasErrors('birthDay')}"
-              class="hazard"><i class="fas fa-exclamation-circle"></i>必須項目です</p>
+            <p th:if="${#fields.hasErrors('birthYear') || #fields.hasErrors('birthMonth') || #fields.hasErrors('birthDay')}" class="hazard">
+              <i class="fas fa-exclamation-circle"></i>必須項目です
+            </p>
           </div>
         </div>
         <div class="form-item">
@@ -135,8 +137,8 @@
         <div class="form-item">
           <p>電話番号（ハイフン不要）</p>
           <div>
-            <input type="tel" th:field="*{phoneNumber}" th:errorclass="error" required placeholder="電話番号（ハイフン不要）">
-            <p th:if="${#fields.hasErrors('phoneNumber')}" class="hazard"><i class="fas fa-exclamation-circle"></i>ハイフンなしの電話番号を入力してください</p>
+            <input type="tel" th:field="*{phone}" th:errorclass="error" required placeholder="電話番号（ハイフン不要）">
+            <p th:if="${#fields.hasErrors('phone')}" class="hazard"><i class="fas fa-exclamation-circle"></i>ハイフンなしの電話番号を入力してください</p>
           </div>
         </div>
         <div class="form-item">
@@ -183,13 +185,13 @@
         <div class="form-item">
           <p>最終学歴</p>
           <div>
-            <input type="radio" th:field="*{academicDegree}" value="学部卒" required>
-            <label th:for="${#ids.prev('academicDegree')}">学部卒</label>
-            <input type="radio" th:field="*{academicDegree}" value="修士卒">
-            <label th:for="${#ids.prev('academicDegree')}">修士卒</label>
-            <input type="radio" th:field="*{academicDegree}" value="博士卒">
-            <label th:for="${#ids.prev('academicDegree')}">博士卒</label>
-            <p th:if="${#fields.hasErrors('academicDegree')}" class="hazard"><i class="fas fa-exclamation-circle"></i>必須項目です</p>
+            <input type="radio" th:field="*{degree}" value="学部卒" required>
+            <label th:for="${#ids.prev('degree')}">学部卒</label>
+            <input type="radio" th:field="*{degree}" value="修士卒">
+            <label th:for="${#ids.prev('degree')}">修士卒</label>
+            <input type="radio" th:field="*{degree}" value="博士卒">
+            <label th:for="${#ids.prev('degree')}">博士卒</label>
+            <p th:if="${#fields.hasErrors('degree')}" class="hazard"><i class="fas fa-exclamation-circle"></i>必須項目です</p>
           </div>
         </div>
         <div class="form-item">
@@ -208,9 +210,9 @@
           <div>
             <table>
               <tr>
-                <td class="label"><label for="univPref">大学所在地</label></td>
+                <td class="label"><label for="univLoc">大学所在地</label></td>
                 <td class="pulldown">
-                  <select th:field="*{univPref}" required>
+                  <select th:field="*{univLoc}" required>
                     <option value="default">選択してください</option>
                     <option value="北海道">北海道</option>
                     <option value="青森県">青森県</option>
@@ -263,9 +265,9 @@
                 </td>
               </tr>
               <tr>
-                <td class="label"><label for="univCategory">大学種別</label></td>
+                <td class="label"><label for="univType">大学種別</label></td>
                 <td class="pulldown">
-                  <select th:field="*{univCategory}" required>
+                  <select th:field="*{univType}" required>
                     <option value="default">選択してください</option>
                     <option value="国立">国立</option>
                     <option value="公立">公立</option>
@@ -283,38 +285,38 @@
                 </td>
               </tr>
               <tr>
-                <td class="label"><label for="faculty">学部</label></td>
+                <td class="label"><label for="univFac">学部</label></td>
                 <td class="pulldown">
-                  <select th:field="*{faculty}" required>
+                  <select th:field="*{univFac}" required>
                     <option value="default">選択してください</option>
                   </select>
                 </td>
               </tr>
               <tr>
-                <td class="label"><label for="department">学科</label></td>
+                <td class="label"><label for="univDep">学科</label></td>
                 <td class="pulldown">
-                  <select th:field="*{department}" required>
+                  <select th:field="*{univDep}" required>
                     <option value="default">選択してください</option>
                   </select>
                 </td>
               </tr>
             </table>
-            <input type="hidden" id="hiddenUnivCategory" th:value="${hiddenUnivCategory == null ? 'default' : hiddenUnivCategory}">
-            <input type="hidden" id="hiddenUnivName" th:value="${hiddenUnivName == null ? 'default' : hiddenUnivName}">
-            <input type="hidden" id="hiddenFac" th:value="${hiddenFac == null ? 'default' : hiddenFac}">
-            <input type="hidden" id="hiddenDep" th:value="${hiddenDep == null ? 'default' : hiddenDep}">
-            <p th:if="${#fields.hasErrors('department')}" class="hazard"><i class="fas fa-exclamation-circle"></i>必須項目です</p>
+            <input type="hidden" id="hiddenUnivType" th:value="${hiddenUnivType}">
+            <input type="hidden" id="hiddenUnivName" th:value="${hiddenUnivName}">
+            <input type="hidden" id="hiddenUnivFac" th:value="${hiddenUnivFac}">
+            <input type="hidden" id="hiddenUnivDep" th:value="${hiddenUnivDep}">
+            <p th:if="${#fields.hasErrors('univDep')}" class="hazard"><i class="fas fa-exclamation-circle"></i>必須項目です</p>
           </div>
         </div>
-        <div class="form-item" id="gradSchool">
+        <div class="form-item" id="grad">
           <p>大学院・研究科・専攻</p>
           <span style="font-size: .8em;">現在、全ての大学院に対応できておりません。ご自身の研究科や専攻が見つからない場合は<a th:href="@{/about/contact}">こちら</a>よりお知らせください。</span>
           <div>
             <table>
               <tr>
-                <td class="label"><label for="gradSchoolPref">大学院所在地</label></td>
+                <td class="label"><label for="gradLoc">大学院所在地</label></td>
                 <td class="pulldown">
-                  <select th:field="*{gradSchoolPref}">
+                  <select th:field="*{gradLoc}">
                     <option value="">選択してください</option>
                     <option value="北海道">北海道</option>
                     <option value="青森県">青森県</option>
@@ -367,9 +369,9 @@
                 </td>
               </tr>
               <tr>
-                <td class="label"><label for="gradSchoolCategory">大学院種別</label></td>
+                <td class="label"><label for="gradType">大学院種別</label></td>
                 <td class="pulldown">
-                  <select th:field="*{gradSchoolCategory}">
+                  <select th:field="*{gradType}">
                     <option value="">選択してください</option>
                     <option value="国立">国立</option>
                     <option value="公立">公立</option>
@@ -378,34 +380,34 @@
                 </td>
               </tr>
               <tr>
-                <td class="label"><label for="gradSchoolName">大学院</label></td>
+                <td class="label"><label for="gradName">大学院</label></td>
                 <td class="pulldown">
-                  <select th:field="*{gradSchoolName}">
+                  <select th:field="*{gradName}">
                     <option value="">選択してください</option>
                   </select>
                 </td>
               </tr>
               <tr>
-                <td class="label"><label for="gradSchoolOf">研究科等</label></td>
+                <td class="label"><label for="gradSchool">研究科等</label></td>
                 <td class="pulldown">
-                  <select th:field="*{gradSchoolOf}">
+                  <select th:field="*{gradSchool}">
                     <option value="">選択してください</option>
                   </select>
                 </td>
               </tr>
               <tr>
-                <td class="label"><label for="programIn">専攻等</label></td>
+                <td class="label"><label for="gradDiv">専攻等</label></td>
                 <td class="pulldown">
-                  <select th:field="*{programIn}">
+                  <select th:field="*{gradDiv}">
                     <option value="">選択してください</option>
                   </select>
                 </td>
               </tr>
             </table>
-            <input type="hidden" id="hiddenGradSchoolCategory" th:value="${hiddenGradSchoolCategory == null ? '' : hiddenGradSchoolCategory}">
-            <input type="hidden" id="hiddenGradSchoolName" th:value="${hiddenGradSchoolName == null ? '' : hiddenGradSchoolName}">
-            <input type="hidden" id="hiddenGradSchoolOf" th:value="${hiddenGradSchoolOf == null ? '' : hiddenGradSchoolOf}">
-            <input type="hidden" id="hiddenProgramIn" th:value="${hiddenProgramIn == null ? '' : hiddenProgramIn}">
+            <input type="hidden" id="hiddenGradType" th:value="${hiddenGradType}">
+            <input type="hidden" id="hiddenGradName" th:value="${hiddenGradName}">
+            <input type="hidden" id="hiddenGradSchool" th:value="${hiddenGradSchool}">
+            <input type="hidden" id="hiddenGradDiv" th:value="${hiddenGradDiv}">
           </div>
         </div>
         <div class="form-item">
@@ -440,7 +442,7 @@
     </div>
   </main>
   <footer th:replace="common/footer :: footer"></footer>
-  <script th:src="@{/js/setUniversityAndBirth.js}"></script>
+  <script th:src="@{/js/set-university-and-birth.js?update=20191211}"></script>
   <script th:src="@{/js/submit.js}"></script>
 </body>
 
