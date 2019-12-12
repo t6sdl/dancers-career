@@ -159,7 +159,7 @@ public class ExperiencesController {
 		boolean perfect = profileService.isCompleteProfile(profileService.getProfileByEmail(account.getEmail()));
 		if (account.isAdmin()) {
 			model.addAttribute("header", "for-admin");
-		} else if (!(account.isValid_email()) && !(perfect)) {
+		} else if (!(account.isValidEmail()) && !(perfect)) {
 			model.addAttribute("header", "for-user");
 			model.addAttribute("isStranger", false);
 			experience = experienceService.getALittleExperienceById(id);
@@ -168,13 +168,13 @@ public class ExperiencesController {
 			model.addAttribute("description", (experience.getEs().size() == 0 ? "" : experience.getEs().get(0).getQuestion().get(0)) + (experience.getEs().size() == 0 ? "" : experience.getEs().get(0).getAnswer().get(0)) + experience.getInterview().get(0).getQuestion() + experience.getInterview().get(0).getAnswer());
 			model.addAttribute("experience", experience);
 			return "experiences/aLittleArticle";
-		} else if (!(account.isValid_email()) || !(perfect)) {
+		} else if (!(account.isValidEmail()) || !(perfect)) {
 			model.addAttribute("header", "for-user");
 			experience = experienceService.getExperienceById(id, true, false);
 			experience.setLiked(isLiked);
 			model.addAttribute("title", experience.getUnivName() + experience.getUnivFac() + experience.getUnivDep());
 			model.addAttribute("otherEs", experience.getEs().size() - 1);
-			model.addAttribute("validEmail", account.isValid_email());
+			model.addAttribute("validEmail", account.isValidEmail());
 			model.addAttribute("experience", experience);
 			return "experiences/halfOfArticle";
 		} else {

@@ -66,7 +66,7 @@ public class UserPageController {
 			Collections.reverse(experiences);
 		}
 		model.addAttribute("familyName", Objects.equals(profile, null) ? null : profile.getFamilyName());
-		model.addAttribute("validEmail", account.isValid_email());
+		model.addAttribute("validEmail", account.isValidEmail());
 		model.addAttribute("perfect", profileService.isCompleteProfile(profile));
 		model.addAttribute("likes", likes.size());
 		model.addAttribute("experiences", experiences);
@@ -93,7 +93,7 @@ public class UserPageController {
 			model.addAttribute("isConnected", false);
 		}
 		model.addAttribute("email", account.getEmail());
-		model.addAttribute("validEmail", account.isValid_email());
+		model.addAttribute("validEmail", account.isValidEmail());
 		return "user/account/account";
 	}
 	
@@ -176,7 +176,7 @@ public class UserPageController {
 			return "redirect:/admin";
 		} else {
 			MailMagazineForm form = new MailMagazineForm();
-			form.setNewEs(account.isNew_es_mail());
+			form.setNewEs(account.needsEsUpdateNotification());
 			model.addAttribute(form);
 			return "user/account/mailSetting";
 		}

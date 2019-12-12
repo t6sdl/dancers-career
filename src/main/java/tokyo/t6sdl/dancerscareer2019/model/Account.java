@@ -17,19 +17,23 @@ public class Account implements UserDetails {
 	private String email;
 	private String password;
 	private String authority;
-	private boolean valid_email;
-	private LocalDateTime last_login;
-	private LocalDateTime updated_at;
-	private LocalDateTime created_at;
-	private String email_token;
-	private String password_token;
-	private String line_access_token;
-	private boolean new_es_mail;
+	private boolean validEmail;
+	private LocalDateTime lastLogin;
+	private LocalDateTime updatedAt;
+	private LocalDateTime createdAt;
+	private String emailToken;
+	private String passwordToken;
+	private String lineAccessToken;
+	private boolean esUpdateNotification;
 	
 	public boolean isAdmin() {
 		return this.getAuthority().equals("ROLE_ADMIN");
 	}
 	
+	public boolean needsEsUpdateNotification() {
+		return this.esUpdateNotification;
+	}
+		
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> authorities = new ArrayList<>();
