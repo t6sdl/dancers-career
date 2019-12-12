@@ -279,18 +279,18 @@ article .d-flex {
 <section th:if="${count > 0}">
 <article class="p-2 border border-dark my-2 bg-white" th:each="experience : ${experiences}" th:object="${experience}">
 <div><span class="badge badge-info mr-2" th:each="pos : *{position}" th:text="${pos}"></span></div>
-<h2 class="my-2 text-center" th:text="*{univ_name}"></h2>
+<h2 class="my-2 text-center" th:text="*{univName}"></h2>
 <div class="d-flex justify-content-between">
-<div class="mr-4">内定先：<span th:each="off : *{offer}" th:text="${off} == '' ? '非公開' : ${off} + ' '"></span></div>
-<div><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'"></span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></div>
+<div class="mr-4">内定先：<span th:each="ofr : *{offer}" th:text="${ofr} == '' ? '非公開' : ${ofr} + ' '"></span></div>
+<div><span th:text="*{graduatedIn} == '' ? '非公開' : *{graduatedIn} + ' 年卒'"></span>｜<span th:text="*{degree} == '' ? '非公開' : *{degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></div>
 </div>
 <hr class="my-1">
 <div class="d-flex justify-content-between">
-<div th:text="|PV数 *{page_view} ｜ お気に入り登録者数 *{likes}|"></div>
+<div th:text="|PV数 *{pageView} ｜ お気に入り登録者数 *{likes}|"></div>
 <div>
-<a class="btn btn-primary" th:href="@{/admin/experiences/{expId}(expId=*{experience_id})}">詳細を見る</a>
-<button type="button" class="btn btn-danger" data-toggle="modal" th:data-target="|#deleteExperience*{experience_id}|">削除する</button>
-<div class="modal fade" th:id="|deleteExperience*{experience_id}|" tabindex="-1" role="dialog" aria-labelledby="deleteExperienceLabel" aria-hidden="true">
+<a class="btn btn-primary" th:href="@{/admin/experiences/{expId}(expId=*{id})}">詳細を見る</a>
+<button type="button" class="btn btn-danger" data-toggle="modal" th:data-target="|#deleteExperience*{id}|">削除する</button>
+<div class="modal fade" th:id="|deleteExperience*{id}|" tabindex="-1" role="dialog" aria-labelledby="deleteExperienceLabel" aria-hidden="true">
 <div class="modal-dialog" role="document">
 <div class="modal-content">
 <div class="modal-header">
@@ -302,7 +302,7 @@ article .d-flex {
 <div class="modal-body">この操作は取り消せません。</div>
 <div class="modal-footer">
 <button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
-<form th:action="@{/admin/experiences/{expId}(expId=*{experience_id})}" th:method="delete" class="d-inline-block">
+<form th:action="@{/admin/experiences/{expId}(expId=*{id})}" th:method="delete" class="d-inline-block">
 <button type="submit" class="btn btn-danger">削除する</button>
 </form>
 </div>
@@ -323,7 +323,7 @@ article .d-flex {
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<script th:src="@{/js/setUniversity.js?update=20191121}" src="../../../static/js/setUniversity.js?update=20191121"></script>
+<script th:src="@{/js/set-university.js?update=20191121}" src="../../../static/js/set-university.js?update=20191121"></script>
 <script th:src="@{/js/submit.js}" src="../../../static/js/submit.js"></script>
 <script>
 $(function() {

@@ -17,7 +17,7 @@
     <h1 class="title">お気に入りES一覧</h1>
     <section class="container">
       <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
-        <p th:text="|こんにちは ${lastName == null ? '名無しさん' : lastName + 'さん'}|"></p>
+        <p th:text="|こんにちは ${familyName == null ? '名無しさん' : familyName + 'さん'}|"></p>
         <p>お気に入りに登録されたES/体験記：<span th:text="${likes}"></span>件</p>
       </div>
       <div th:if="${!(validEmail) && !(perfect)}" style="display:flex; flex-direction:column; align-items:center; text-align:center;">
@@ -36,18 +36,18 @@
         <a th:href="@{/help/get-email}"><i class="far fa-question-circle"></i>メールが届かない</a>
       </div>
       <article th:each="experience : ${experiences}" th:object="${experience}">
-        <a class="exp-container" th:href="@{/experiences/{experienceId}(experienceId=*{experience_id})}">
+        <a class="exp-container" th:href="@{/experiences/{expId}(expId=*{id})}">
           <div class="exp-info">
           	<div style="display:flex; justify-content:space-between">
          	  <div><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></div>
               <div class="likes"><span th:text="*{likes}"></span> <span><i class="fas fa-heart"></i></span></div>
          	</div>
-            <h2 th:text="*{univ_name}"></h2>
-            <div><span th:text="*{graduation} == '' ? '非公開' : *{graduation} + ' 年卒'"></span>｜<span th:text="*{academic_degree} == '' ? '非公開' : *{academic_degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></div>
+            <h2 th:text="*{univName}"></h2>
+            <div><span th:text="*{graduatedIn} == '' ? '非公開' : *{graduatedIn} + ' 年卒'"></span>｜<span th:text="*{degree} == '' ? '非公開' : *{degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></div>
             <hr>
             <div class="table">
               <div><strong>内定先</strong></div>
-              <div><span class="divide-slash" th:each="off : *{offer}" th:text="${off} == '' ? '非公開' : ${off}"></span></div>
+              <div><span class="divide-slash" th:each="ofr : *{offer}" th:text="${ofr} == '' ? '非公開' : ${ofr}"></span></div>
             </div>
           </div>
         </a>

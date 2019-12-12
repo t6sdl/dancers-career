@@ -47,8 +47,8 @@ public class UserPageController {
 	
 	@RequestMapping()
 	public String getMypage(Model model) {
-		String lastName = profileService.getLastNameByEmail(securityService.findLoggedInEmail());
-		model.addAttribute("lastName", lastName);
+		String familyName = profileService.getFamilyNameByEmail(securityService.findLoggedInEmail());
+		model.addAttribute("familyName", familyName);
 		return "user/user";
 	}
 		
@@ -65,8 +65,8 @@ public class UserPageController {
 			});
 			Collections.reverse(experiences);
 		}
-		model.addAttribute("lastName", Objects.equals(profile, null) ? null : profile.getLast_name());
-		model.addAttribute("validEmail", account.isValid_email());
+		model.addAttribute("familyName", Objects.equals(profile, null) ? null : profile.getFamilyName());
+		model.addAttribute("validEmail", account.isValidEmail());
 		model.addAttribute("perfect", profileService.isCompleteProfile(profile));
 		model.addAttribute("likes", likes.size());
 		model.addAttribute("experiences", experiences);
@@ -93,7 +93,7 @@ public class UserPageController {
 			model.addAttribute("isConnected", false);
 		}
 		model.addAttribute("email", account.getEmail());
-		model.addAttribute("validEmail", account.isValid_email());
+		model.addAttribute("validEmail", account.isValidEmail());
 		return "user/account/account";
 	}
 	
@@ -176,7 +176,7 @@ public class UserPageController {
 			return "redirect:/admin";
 		} else {
 			MailMagazineForm form = new MailMagazineForm();
-			form.setNewEs(account.isNew_es_mail());
+			form.setNewEs(account.needsEsUpdateNotification());
 			model.addAttribute(form);
 			return "user/account/mailSetting";
 		}
@@ -213,11 +213,11 @@ public class UserPageController {
 		}
 		model.addAttribute(form);
 		model.addAttribute("hiddenUnivName", form.getUnivName());
-		model.addAttribute("hiddenFac", form.getFaculty());
-		model.addAttribute("hiddenDep", form.getDepartment());
-		model.addAttribute("hiddenGradSchoolName", form.getGradSchoolName());
-		model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
-		model.addAttribute("hiddenProgramIn", form.getProgramIn());
+		model.addAttribute("hiddenUnivFac", form.getUnivFac());
+		model.addAttribute("hiddenUnivDep", form.getUnivDep());
+		model.addAttribute("hiddenGradName", form.getGradName());
+		model.addAttribute("hiddenGradSchool", form.getGradSchool());
+		model.addAttribute("hiddenGradDiv", form.getGradDiv());
 		return "user/profile/changeProfile";
 	}
 	
@@ -225,11 +225,11 @@ public class UserPageController {
 	public String postChangeProfile(@Validated ProfileForm form, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			model.addAttribute("hiddenUnivName", form.getUnivName());
-			model.addAttribute("hiddenFac", form.getFaculty());
-			model.addAttribute("hiddenDep", form.getDepartment());
-			model.addAttribute("hiddenGradSchoolName", form.getGradSchoolName());
-			model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
-			model.addAttribute("hiddenProgramIn", form.getProgramIn());
+			model.addAttribute("hiddenUnivFac", form.getUnivFac());
+			model.addAttribute("hiddenUnivDep", form.getUnivDep());
+			model.addAttribute("hiddenGradName", form.getGradName());
+			model.addAttribute("hiddenGradSchool", form.getGradSchool());
+			model.addAttribute("hiddenGradDiv", form.getGradDiv());
 			model.addAttribute("positionList", Profile.POSITION_LIST);
 			return "user/profile/changeProfile";
 		} else {

@@ -104,8 +104,8 @@ public class EmailSender {
 			for (Account account : mail.getAccounts()) {
 				helper.setTo(account.getEmail());
 				mailSender.send(message);
-				if (!(Objects.equals(account.getLine_access_token(), null)) && !(account.getLine_access_token().isEmpty())) {
-					lineNotify.notifyMessage(account.getLine_access_token(), lineText);
+				if (!(Objects.equals(account.getLineAccessToken(), null)) && !(account.getLineAccessToken().isEmpty())) {
+					lineNotify.notifyMessage(account.getLineAccessToken(), lineText);
 				}
 			}
 		} catch (MessagingException e) {
@@ -127,8 +127,8 @@ public class EmailSender {
 			for (Account account : mail.getAccounts()) {
 				helper.setTo(account.getEmail());
 				mailSender.send(message);
-				if (!(Objects.equals(account.getLine_access_token(), null)) && !(account.getLine_access_token().isEmpty())) {
-					lineNotify.notifyMessage(account.getLine_access_token(), mail.getContent());
+				if (!(Objects.equals(account.getLineAccessToken(), null)) && !(account.getLineAccessToken().isEmpty())) {
+					lineNotify.notifyMessage(account.getLineAccessToken(), mail.getContent());
 				}
 			}
 		} catch (MessagingException e) {

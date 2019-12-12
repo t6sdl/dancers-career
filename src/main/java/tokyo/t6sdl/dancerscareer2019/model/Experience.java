@@ -6,29 +6,29 @@ import lombok.Data;
 
 @Data
 public class Experience {
-	private int experience_id;
-	private int page_view;
+	private int id;
+	private int pageView;
 	private int likes;
-	private String last_name;
-	private String first_name;
-	private String kana_last_name;
-	private String kana_first_name;
+	private String familyName;
+	private String givenName;
+	private String kanaFamilyName;
+	private String kanaGivenName;
 	private String sex;
 	private String major;
-	private String univ_pref;
-	private String univ_name;
-	private String faculty;
-	private String department;
-	private String grad_school_pref;
-	private String grad_school_name;
-	private String grad_school_of;
-	private String program_in;
-	private String graduation;
-	private String academic_degree;
+	private String univLoc;
+	private String univName;
+	private String univFac;
+	private String univDep;
+	private String gradLoc;
+	private String gradName;
+	private String gradSchool;
+	private String gradDiv;
+	private String graduatedIn;
+	private String degree;
 	private List<String> position;
 	private List<String> club;
 	private List<String> offer;
 	private List<Es> es;
 	private List<Interview> interview;
-	private boolean is_liked;
+	private boolean isLiked;
 }

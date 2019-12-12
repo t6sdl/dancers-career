@@ -21,40 +21,40 @@ import tokyo.t6sdl.dancerscareer2019.repository.ExperienceRepository;
 public class ExperienceService {
 	private final ExperienceRepository experienceRepository;
 	
-	public Experience getExperienceById(int experienceId, boolean all, boolean pvCount) {
-		return experienceRepository.findOneById(experienceId, all, pvCount);
+	public Experience getExperienceById(int expId, boolean all, boolean pvCount) {
+		return experienceRepository.findOneById(expId, all, pvCount);
 	}
 	
-	public Experience getALittleExperienceById(int experienceId) {
-		return experienceRepository.findALittleOneById(experienceId);
+	public Experience getALittleExperienceById(int expId) {
+		return experienceRepository.findALittleOneById(expId);
 	}
 	
 	public Map<String, Object> getExperiences(int sort) {
 		return experienceRepository.find(sort);
 	}
 	
-	public Map<String, Object> getExperiencesByName(int sort, String kanaLastName, String kanaFirstName) {
-		return experienceRepository.findByName(sort, kanaLastName, kanaFirstName);
+	public Map<String, Object> getExperiencesByName(int sort, String kanaFamilyName, String kanaGivenName) {
+		return experienceRepository.findByName(sort, kanaFamilyName, kanaGivenName);
 	}
 	
-	public Map<String, Object> getExperiencesByLastName(int sort, String kanaLastName) {
-		return experienceRepository.findByLastName(sort, kanaLastName);
+	public Map<String, Object> getExperiencesByFamilyName(int sort, String kanaFamilyName) {
+		return experienceRepository.findByFamilyName(sort, kanaFamilyName);
 	}
 	
-	public Map<String, Object> getExperiencesByPrefecture(int sort, String prefecture) {
-		return experienceRepository.findByPrefecture(sort, prefecture);
+	public Map<String, Object> getExperiencesByUnivLoc(int sort, String univLoc) {
+		return experienceRepository.findByUnivLoc(sort, univLoc);
 	}
 	
-	public Map<String, Object> getExperiencesByUniversity(int sort, String prefecture, String university) {
-		return experienceRepository.findByUniversity(sort, prefecture, university);
+	public Map<String, Object> getExperiencesByUnivName(int sort, String univLoc, String univName) {
+		return experienceRepository.findByUnivName(sort, univLoc, univName);
 	}
 	
-	public Map<String, Object> getExperiencesByFaculty(int sort, String prefecture, String university, String faculty) {
-		return experienceRepository.findByFaculty(sort, prefecture, university, faculty);
+	public Map<String, Object> getExperiencesByUnivFac(int sort, String univLoc, String univName, String univFac) {
+		return experienceRepository.findByUnivFac(sort, univLoc, univName, univFac);
 	}
 	
-	public Map<String, Object> getExperiencesByDepartment(int sort, String prefecture, String university, String faculty, String department) {
-		return experienceRepository.findByDepartment(sort, prefecture, university, faculty, department);
+	public Map<String, Object> getExperiencesByUnivDep(int sort, String univLoc, String univName, String univFac, String univDep) {
+		return experienceRepository.findByUnivDep(sort, univLoc, univName, univFac, univDep);
 	}
 	
 	public Map<String, Object> getExperiencesByPosition(int sort, List<String> position, boolean andSearch) {
@@ -65,36 +65,36 @@ public class ExperienceService {
 		return experienceRepository.findByCreatedAt();
 	}
 	
-	public Es getEsById(int experienceId, int esId) {
-		return experienceRepository.findEsById(experienceId, esId);
+	public Es getEsById(int expId, int esId) {
+		return experienceRepository.findEsById(expId, esId);
 	}
 	
-	public Interview getInterviewById(int experienceId, int interviewId) {
-		return experienceRepository.findInterviewById(experienceId, interviewId);
+	public Interview getInterviewById(int expId, int itvId) {
+		return experienceRepository.findInterviewById(expId, itvId);
 	}
 	
 	public void register(Experience newExperience) {
 		experienceRepository.insert(newExperience);
 	}
 	
-	public void delete(int experienceId) {
-		experienceRepository.delete(experienceId);
+	public void delete(int expId) {
+		experienceRepository.delete(expId);
 	}
 	
 	public void update(Experience experience) {
 		experienceRepository.update(experience);
 	}
 	
-	public void updateLikes(int experience_id, boolean increment) {
-		experienceRepository.updateLikes(experience_id, increment);
+	public void updateLikes(int expId, boolean increment) {
+		experienceRepository.updateLikes(expId, increment);
 	}
 	
 	public void registerEs(Es newEs) {
 		experienceRepository.insertEs(newEs);
 	}
 	
-	public void deleteEs(int experienceId, int esId) {
-		experienceRepository.deleteEs(experienceId, esId);
+	public void deleteEs(int expId, int esId) {
+		experienceRepository.deleteEs(expId, esId);
 	}
 	
 	public void updateEs(Es es) {
@@ -105,8 +105,8 @@ public class ExperienceService {
 		experienceRepository.insertInterview(newInterview);
 	}
 	
-	public void deleteInterview(int experienceId, int interviewId) {
-		experienceRepository.deleteInterview(experienceId, interviewId);
+	public void deleteInterview(int expId, int itvId) {
+		experienceRepository.deleteInterview(expId, itvId);
 	}
 	
 	public void updateInterview(Interview interview) {
@@ -115,22 +115,22 @@ public class ExperienceService {
 	
 	public Experience convertExperienceFormIntoExperience(ExperienceForm form) {
 		Experience experience = new Experience();
-		experience.setLast_name(form.getFamilyName());
-		experience.setFirst_name(form.getGivenName());
-		experience.setKana_last_name(form.getKanaFamilyName());
-		experience.setKana_first_name(form.getKanaGivenName());
+		experience.setFamilyName(form.getFamilyName());
+		experience.setGivenName(form.getGivenName());
+		experience.setKanaFamilyName(form.getKanaFamilyName());
+		experience.setKanaGivenName(form.getKanaGivenName());
 		experience.setSex(form.getSex());
 		experience.setMajor(form.getMajor());
-		experience.setUniv_pref(form.getUnivLoc());
-		experience.setUniv_name(form.getUnivName());
-		experience.setFaculty(form.getUnivFac());
-		experience.setDepartment(form.getUnivDep());
-		experience.setGrad_school_pref(form.getGradLoc());
-		experience.setGrad_school_name(form.getGradName());
-		experience.setGrad_school_of(form.getGradSchool());
-		experience.setProgram_in(form.getGradDiv());
-		experience.setGraduation(form.getGraduatedIn());
-		experience.setAcademic_degree(form.getDegree());
+		experience.setUnivLoc(form.getUnivLoc());
+		experience.setUnivName(form.getUnivName());
+		experience.setUnivFac(form.getUnivFac());
+		experience.setUnivDep(form.getUnivDep());
+		experience.setGradLoc(form.getGradLoc());
+		experience.setGradName(form.getGradName());
+		experience.setGradSchool(form.getGradSchool());
+		experience.setGradDiv(form.getGradDiv());
+		experience.setGraduatedIn(form.getGraduatedIn());
+		experience.setDegree(form.getDegree());
 		experience.setPosition(form.getPosition());
 		experience.setClub(form.getClub());
 		experience.setOffer(form.getOffer());
@@ -159,7 +159,7 @@ public class ExperienceService {
 	
 	public Es convertEsFormIntoEs(EsForm form) {
 		Es es = new Es();
-		es.setEs_id(form.getEsId());
+		es.setId(form.getId());
 		es.setCorp(form.getCorp());
 		es.setResult(form.getResult());
 		es.getQuestion().add(form.getQuestion());
@@ -170,7 +170,7 @@ public class ExperienceService {
 	
 	public Interview convertInterviewFormIntoInterview(InterviewForm form) {
 		Interview interview = new Interview();
-		interview.setInterview_id(form.getInterviewId());
+		interview.setId(form.getId());
 		interview.setQuestion(form.getQuestion());
 		interview.setAnswer(form.getAnswer());
 		return interview;
@@ -181,22 +181,22 @@ public class ExperienceService {
 			return new ExperienceForm();
 		}
 		ExperienceForm form = new ExperienceForm();
-		form.setFamilyName(experience.getLast_name());
-		form.setGivenName(experience.getFirst_name());
-		form.setKanaFamilyName(experience.getKana_last_name());
-		form.setKanaGivenName(experience.getKana_first_name());
+		form.setFamilyName(experience.getFamilyName());
+		form.setGivenName(experience.getGivenName());
+		form.setKanaFamilyName(experience.getKanaFamilyName());
+		form.setKanaGivenName(experience.getKanaGivenName());
 		form.setSex(experience.getSex());
 		form.setMajor(experience.getMajor());
-		form.setUnivLoc(experience.getUniv_pref());
-		form.setUnivName(experience.getUniv_name());
-		form.setUnivFac(experience.getFaculty());
-		form.setUnivDep(experience.getDepartment());
-		form.setGradLoc(experience.getGrad_school_pref());
-		form.setGradName(experience.getGrad_school_name());
-		form.setGradSchool(experience.getGrad_school_of());
-		form.setGradDiv(experience.getProgram_in());
-		form.setGraduatedIn(experience.getGraduation());
-		form.setDegree(experience.getAcademic_degree());
+		form.setUnivLoc(experience.getUnivLoc());
+		form.setUnivName(experience.getUnivName());
+		form.setUnivFac(experience.getUnivFac());
+		form.setUnivDep(experience.getUnivDep());
+		form.setGradLoc(experience.getGradLoc());
+		form.setGradName(experience.getGradName());
+		form.setGradSchool(experience.getGradSchool());
+		form.setGradDiv(experience.getGradDiv());
+		form.setGraduatedIn(experience.getGraduatedIn());
+		form.setDegree(experience.getDegree());
 		form.setPosition(experience.getPosition());
 		form.setClub(experience.getClub());
 		form.setOffer(experience.getOffer());
@@ -234,7 +234,7 @@ public class ExperienceService {
 			return new EsForm();
 		}
 		EsForm form = new EsForm();
-		form.setEsId(es.getEs_id());
+		form.setId(es.getId());
 		form.setCorp(es.getCorp());
 		form.setResult(es.getResult());
 		form.setQuestion(es.getQuestion().get(0));
@@ -248,7 +248,7 @@ public class ExperienceService {
 			return new InterviewForm();
 		}
 		InterviewForm form = new InterviewForm();
-		form.setInterviewId(interview.getInterview_id());
+		form.setId(interview.getId());
 		form.setQuestion(interview.getQuestion());
 		form.setAnswer(interview.getAnswer());
 		return form;

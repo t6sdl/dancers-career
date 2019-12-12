@@ -7,8 +7,8 @@ import lombok.Data;
 
 @Data
 public class Es {
-	private int experience_id;
-	private int es_id;
+	private int expId;
+	private int id;
 	private String corp;
 	private String result;
 	private List<String> question = new ArrayList<String>();

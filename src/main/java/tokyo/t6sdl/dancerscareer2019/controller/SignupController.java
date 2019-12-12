@@ -71,14 +71,14 @@ public class SignupController {
 	@PostMapping("/profile")
 	public String postSignupProfile(@Validated ProfileForm form, BindingResult result, Model model) {
 		if (result.hasErrors()) {
-			model.addAttribute("hiddenUnivCategory", form.getUnivCategory());
+			model.addAttribute("hiddenUnivType", form.getUnivType());
 			model.addAttribute("hiddenUnivName", form.getUnivName());
-			model.addAttribute("hiddenFac", form.getFaculty());
-			model.addAttribute("hiddenDep", form.getDepartment());
-			model.addAttribute("hiddenGradSchoolCategory", form.getGradSchoolCategory());
-			model.addAttribute("hiddenGradSchoolName", form.getGradSchoolName());
-			model.addAttribute("hiddenGradSchoolOf", form.getGradSchoolOf());
-			model.addAttribute("hiddenProgramIn", form.getProgramIn());
+			model.addAttribute("hiddenUnivFac", form.getUnivFac());
+			model.addAttribute("hiddenUnivDep", form.getUnivDep());
+			model.addAttribute("hiddenGradType", form.getGradType());
+			model.addAttribute("hiddenGradName", form.getGradName());
+			model.addAttribute("hiddenGradSchool", form.getGradSchool());
+			model.addAttribute("hiddenGradDiv", form.getGradDiv());
 			model.addAttribute("positionList", Profile.POSITION_LIST);
 			return "signup/profileForm";
 		}

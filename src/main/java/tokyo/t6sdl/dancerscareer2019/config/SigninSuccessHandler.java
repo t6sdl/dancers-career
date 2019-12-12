@@ -30,9 +30,9 @@ public class SigninSuccessHandler implements AuthenticationSuccessHandler {
 			response.sendError(403);
 		}
 		accountService.changeLastLogin(((Account) account).getEmail());
-		LocalDateTime updatedAt = ((Account) account).getUpdated_at();
+		LocalDateTime updatedAt = ((Account) account).getUpdatedAt();
 		LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
-		if (now.isAfter(updatedAt.plusMinutes(30)) && (!(Objects.equals(((Account) account).getEmail_token(), null)) || !(Objects.equals(((Account) account).getPassword_token(), null)))) {
+		if (now.isAfter(updatedAt.plusMinutes(30)) && (!(Objects.equals(((Account) account).getEmailToken(), null)) || !(Objects.equals(((Account) account).getPasswordToken(), null)))) {
 			accountService.refreshToken(((Account) account).getEmail());
 		}
 		if (((Account) account).isAdmin()) {

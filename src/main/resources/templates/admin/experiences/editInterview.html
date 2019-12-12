@@ -18,7 +18,7 @@ legend {
 <header th:replace="common/header :: for-admin"></header>
 <main class="container-fluid">
 <h1>ES/体験記 修正</h1>
-<form th:action="@{/admin/experiences/{expId}/interview/{intId}(expId=${expId},intId=${intId})}" th:method="put" th:object="${interviewForm}">
+<form th:action="@{/admin/experiences/{expId}/interview/{itvId}(expId=${expId},itvId=${itvId})}" th:method="put" th:object="${interviewForm}">
 <fieldset class="form-group p-2 border border-dark">
 <legend>Interview</legend>
 <div class="form-group">

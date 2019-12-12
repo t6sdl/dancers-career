@@ -108,18 +108,18 @@ public class LineNotifyManager {
 		case Mail.SUB_WELCOME_TO_US:
 			draft.append("ダンサーズキャリアにご登録いただきありがとうございます！\n");
 			draft.append("今後はダンサーズキャリアからのメールが届くと、LINEへもメッセージが届きます！\n\n");
-			if (!(account.isValid_email())) {
+			if (!(account.isValidEmail())) {
 				draft.append("↓下記のURLからメールアドレスの確認をお済ませください。\n");
-				draft.append(Mail.URI_VERIFY_EMAIL + account.getEmail_token() + "\n\n");
+				draft.append(Mail.URI_VERIFY_EMAIL + account.getEmailToken() + "\n\n");
 			}
 			break;
 		case Mail.SUB_VERIFY_EMAIL:
 			draft.append("↓下記のURLからメールアドレスの確認をお済ませください。\n\n");
-			draft.append(Mail.URI_VERIFY_EMAIL + account.getEmail_token() + "\n\n");
+			draft.append(Mail.URI_VERIFY_EMAIL + account.getEmailToken() + "\n\n");
 			break;
 		case Mail.SUB_RESET_PWD:
 			draft.append("↓下記のURLからパスワードの再設定ができます。\nURLの有効期限は30分です。\n\n");
-			draft.append(Mail.URI_RESET_PWD + account.getPassword_token() + "\n\n");
+			draft.append(Mail.URI_RESET_PWD + account.getPasswordToken() + "\n\n");
 			break;
 		case Mail.SUB_REPLY_TO_CONTACT:
 			draft.append("お問い合わせいただきありがとうございます。\nお返事に数日程度かかる場合もございます。ご了承ください。\n\n");
@@ -132,8 +132,8 @@ public class LineNotifyManager {
 				for (String pos : experience.getPosition()) {
 					draft.append("[[" + pos + "]] ");
 				}
-				draft.append(experience.getUniv_name() + " ☆★\n");
-				draft.append(Mail.URI_EXPERIENCES + "/" + experience.getExperience_id() + "\n\n");
+				draft.append(experience.getUnivName() + " ☆★\n");
+				draft.append(Mail.URI_EXPERIENCES + "/" + experience.getId() + "\n\n");
 			}
 			break;
 		case Mail.SUB_SURVEY:
