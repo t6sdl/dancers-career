@@ -29,7 +29,7 @@ import tokyo.t6sdl.dancerscareer2019.repository.ProfileRepository;
 public class JdbcProfileRepository implements ProfileRepository {
 	private final NamedParameterJdbcTemplate jdbcTemplate;
 	private final List<String> COLUMNS = new ArrayList<String>(Arrays.asList("accounts.email", "valid_email", "last_login", "family_name", "given_name", "kana_family_name", "kana_given_name", "date_of_birth", "sex", "phone", "major", "univ_loc", "univ_name", "univ_fac", "univ_dep", "grad_loc", "grad_name", "grad_school", "grad_div", "graduated_in", "degree", "club", "position", "likes"));
-	private final List<List<String>> SORT_LIST = Arrays.asList(Arrays.asList("last_login DESC"), Arrays.asList("kana_family_name ASC", "kana_given_name ASC"), Arrays.asList("univ_loc ASC", "univ_name ASC", "univ_fac ASC", "univ_dep ASC"));
+	private final List<List<String>> SORT_LIST = Arrays.asList(Arrays.asList("last_login DESC"), Arrays.asList("kana_family_name ASC", "kana_given_name ASC", "last_login DESC"), Arrays.asList("univ_loc ASC", "univ_name ASC", "univ_fac ASC", "univ_dep ASC", "last_login DESC"));
 	
 	@Override
 	public Profile findOneByEmail(String email) {
