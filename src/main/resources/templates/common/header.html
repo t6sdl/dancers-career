@@ -21,7 +21,7 @@
         <div class="header-logo">
           <h1>
             <a th:href="@{/}">
-              <img alt="ダンサーのための就活サイト" th:src="@{/img/logo.png}" src="../../static/img/logo.png">
+              <img alt="ダンサーのための就活サイト" th:src="@{/img/common/logo.png}" src="../../static/img/common/logo.png">
             </a>
           </h1>
         </div>
@@ -38,7 +38,7 @@
         <nav>
           <ul>
             <li>
-              <a th:href="@{/topics}">News/Topics</a>
+              <a th:href="@{/topics}" class="nav-link">News/Topics</a>
             </li>
             <li>
               <a class="nav-link">Products</a>
@@ -58,10 +58,10 @@
               </ul>
             </li>
             <li>
-              <a th:href="@{/about/contact}">Contact</a>
+              <a th:href="@{/about/contact}" class="nav-link">Contact</a>
             </li>
             <li>
-              <a th:href="@{/user}">My Page</a>
+              <a th:href="@{/user}" class="nav-link">My Page</a>
             </li>
           </ul>
         </nav>
@@ -77,7 +77,7 @@
   <!-- End Google Tag Manager (noscript) -->
   <header id="for-admin" style="line-height:1.5;" class="sticky-top">
     <nav class="navbar navbar-expand-lg navbar-light bg-light align-items-lg-center align-items-stretch">
-      <h1 id="logo"><a th:href="@{/admin}" class="navbar-brand h-100 d-flex align-items-center"><img alt="ダンサーのための就活サイト" th:src="@{/img/logo.png}" src="../../static/img/logo.png"></a></h1>
+      <h1 id="logo"><a th:href="@{/admin}" class="navbar-brand h-100 d-flex align-items-center"><img alt="ダンサーのための就活サイト" th:src="@{/img/common/logo.png}" src="../../static/img/common/logo.png"></a></h1>
       <div class="d-lg-none ml-auto mr-3 mr-lg-0">
         <a class="btn btn-sm btn-success" style="line-height:1;" th:href="@{/logout}">
           <div class="lead"><i class="fas fa-sign-out-alt"></i></div>
@@ -136,14 +136,14 @@
         <div class="header-logo">
           <h1>
             <a th:href="@{/}">
-              <img alt="ダンサーのための就活サイト" th:src="@{/img/logo.png}" src="../../static/img/logo.png">
+              <img alt="ダンサーのための就活サイト" th:src="@{/img/common/logo.png}" src="../../static/img/common/logo.png">
             </a>
           </h1>
         </div>
         <div class="certification">
           <div class="links">
-            <a th:href="@{/signin}" class="login">Login</a>
-            <a th:href="@{/signup}" class="new">Create New Account</a>
+            <a th:href="@{/signin}">Login</a>
+            <a th:href="@{/signup}">Create New Account</a>
           </div>
           <div class="icon"><i class="far fa-user"></i></div>
         </div>
