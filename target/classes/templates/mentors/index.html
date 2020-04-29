@@ -18,63 +18,26 @@
 	<meta name="twitter:site" content="@T6SDL">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20190206}" href="../../static/css/main.css">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/mentors.css?update=20190206}" href="../../static/css/mentors.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-	<style>
-		main {
-			counter-reset: sections;
-		}
-		section {
-			padding: 3em 0 3em 1.5em;
-		}
-		section > h3 {
-			position: relative;
-		}
-		section > h3:before {
-			counter-increment: sections;
-			content: counter(sections)".";
-			position: absolute;
-			left: -1.5em;
-			font-size: 1.2em;
-		}
-		ol.bracketed {
-			list-style: none;
-			counter-reset: bracketed;
-		}
-		ol.bracketed li {
-			position: relative;
-		}
-		ol.bracketed li:before {
-			counter-increment: bracketed;
-			content: counter(bracketed)" )";
-			position: absolute;
-			left: -1.5em;
-			font-size: 1.2em;
-		}
-	</style>
 </head>
 <body>
 	<header th:replace="common/header :: ${header}"></header>
 	<main>
 		<div class="container">
-			<h1 class="title">Career Consultation<span class="subtitle">キャリア面談</span></h1>
+			<h1 class="title">Career Support System<span class="subtitle">メンター制度</span></h1>
 			<div>
+				<h2 style="padding-left: 1rem; border-left: .2rem solid #333;">メンター制度</h2>
+				<p style="padding-left: 1.2rem;">ダンサーの就活はダンサーが1番わかってくれるはず。<br>ダンサー内定者に1:1で就活相談ができる"メンター制度"を利用しよう！</p>
 				<div>
-					<div>
-						<div>
-							<h2 style="padding-left: 1rem; border-left: .2rem solid #333;">メンター制度</h2>
-							<p style="padding-left: 1.2rem;">ダンサーの就活はダンサーが1番わかってくれるはず。<br>ダンサー内定者に1:1で就活相談ができる"メンター制度"を利用しよう！</p>
-						</div>
-					</div>
-					<div>
-						Page Contents
-						<div>
-							<div><img></div>
-							<div><img></div>
-							<div><img></div>
-						</div>
+					<h3>Page Contents</h3>
+					<div class="index">
+						<div><img alt="index1" th:src="@{/img/mentors/index1.png}" src="../../static/img/mentors/index1.png"></div>
+						<div><img alt="index2" th:src="@{/img/mentors/index2.png}" src="../../static/img/mentors/index2.png"></div>
+						<div><img alt="index3" th:src="@{/img/mentors/index3.png}" src="../../static/img/mentors/index3.png"></div>
 					</div>
 				</div>
-				<section>
+				<section id="what">
 					<h3>メンター制度って何？</h3>
 					<p>ひと言でいうと「就活START〜内定GETまでの全ての活動を付きっきりでサポートする制度」です！</p>
 					<ul>
@@ -83,17 +46,17 @@
 						<li>ES添削、模擬面接の練習付き合ってください！</li>
 					</ul>
 					<p>など、どんなことでも1:1で丁寧に対応させていただきます。</p>
-					<div style="margin-right: -1.5em; margin-left: -3em;"><img alt="flow" th:src="@{/img/consultation/flow.png}" src="../../static/img/consultation/flow.png"></div>
+					<div style="margin-right: -1.5em; margin-left: -3em;"><img alt="flow" th:src="@{/img/mentors/flow.png}" src="../../static/img/mentors/flow.png"></div>
 				</section>
-				<section>
+				<section id="why">
 					<h3>メンター制度を使うメリットは？</h3>
 					<p>さて、実際にメンター制度を利用する上でのメリットは主に2つ！！</p>
-					<ol class="bracketed">
+					<ol class="ol--bracketed">
 						<li>ダンスの話をどう伝えれば内定が出るのか理解できる！</li>
 						<li>ダンスの経験に共感してくれる先輩が親身に相談に乗ってくれる！</li>
 					</ol>
 					<p>では各メリットを詳しく見ていきましょう！</p>
-					<ol class="bracketed">
+					<ol class="ol--bracketed desc">
 						<li>
 							ダンスの話をどう伝えれば内定が出るのか理解できる！
 							<p>
@@ -116,14 +79,61 @@
 						</li>
 					</ol>
 				</section>
-				<section>
+				<section id="how">
 					<h3>自分に合うメンターを探そう！</h3>
 					<p>
 						メンター選びはとても重要です。自分と志向性が異なる人との面談の場合、お互いに伝わりにくくなり面談の質にも影響します。
 						<br>その反面、自分の志向性と合う人との面談だと、話の伝わりやすさや信頼度が格段に上がります。
 					</p>
-					<p>それでは、現時点での自分の仕事への志向性からメンターを選んでみましょう！！</p>
+					<p><strong>それでは、現時点での自分の仕事への志向性からメンターを選んでみましょう！！</strong></p>
 					<p>4つのグループから選択し、クリックするとメンター紹介ページに移ります！</p>
+					<div class="map">
+						<div class="map__graph">
+							<div class="graph__quadrants">
+								<div class="quadrant quadrant--topleft">
+									<a class="mentor mentor3" th:href="@{/mentors/3}">
+										<div class="mentor__img"><img alt="mentor3" th:src="@{/img/mentors/mentor3-thumbnail.jpg}" src="../../static/img/mentors/mentor3-thumbnail.jpg"></div>
+									</a>
+									<a class="mentor mentor4" th:href="@{/mentors/4}">
+										<div class="mentor__img"><img alt="mentor4" th:src="@{/img/mentors/mentor4-thumbnail.jpg}" src="../../static/img/mentors/mentor4-thumbnail.jpg"></div>
+									</a>
+								</div>
+								<div class="quadrant quadrant--topright">
+									<a class="mentor mentor1" th:href="@{/mentors/1}">
+										<div class="mentor__img"><img alt="mentor1" th:src="@{/img/mentors/mentor1-thumbnail.jpg}" src="../../static/img/mentors/mentor1-thumbnail.jpg"></div>
+									</a>
+									<a class="mentor mentor2" th:href="@{/mentors/2}">
+										<div class="mentor__img"><img alt="mentor2" th:src="@{/img/mentors/mentor2-thumbnail.jpg}" src="../../static/img/mentors/mentor2-thumbnail.jpg"></div>
+									</a>
+								</div>
+								<div class="quadrant quadrant--bottomleft">
+									<a class="mentor mentor5" th:href="@{/mentors/5}">
+										<div class="mentor__img"><img alt="mentor5" th:src="@{/img/mentors/mentor5-thumbnail.jpg}" src="../../static/img/mentors/mentor5-thumbnail.jpg"></div>
+									</a>
+									<a class="mentor mentor6" th:href="@{/mentors/6}">
+										<div class="mentor__img"><img alt="mentor6" th:src="@{/img/mentors/mentor6-thumbnail.jpg}" src="../../static/img/mentors/mentor6-thumbnail.jpg"></div>
+									</a>
+								</div>
+								<div class="quadrant quadrant--bottomright">
+									<a class="mentor mentor7" th:href="@{/mentors/7}">
+										<div class="mentor__img"><img alt="mentor7" th:src="@{/img/mentors/mentor7-thumbnail.jpg}" src="../../static/img/mentors/mentor7-thumbnail.jpg"></div>
+									</a>
+									<a class="mentor mentor8" th:href="@{/mentors/8}">
+										<div class="mentor__img"><img alt="mentor8" th:src="@{/img/mentors/mentor8-thumbnail.jpg}" src="../../static/img/mentors/mentor8-thumbnail.jpg"></div>
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="map__legend">
+							<h3>Select your type</h3>
+							<ol class="ol--types">
+								<li>大企業バリバリタイプ</li>
+								<li>ベンチャー上昇志向タイプ</li>
+								<li>ゆったり人生楽しみたいタイプ</li>
+								<li>丁寧に教えてもらいながら<br>仕事を楽しみたいタイプ</li>
+							</ol>
+						</div>
+					</div>
 				</section>
 			</div>
 		</div>

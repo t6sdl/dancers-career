@@ -169,17 +169,4 @@ public class GeneralController {
 		}
 		return "topics/20190206";		
 	}
-	
-	@RequestMapping("/consultation")
-	public String getConsultation(Model model) {
-		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
-		if (Objects.equals(account, null)) {
-			model.addAttribute("header", "for-stranger");
-		} else if (account.isAdmin()) {
-			model.addAttribute("header", "for-admin");
-		} else {
-			model.addAttribute("header", "for-user");
-		}
-		return "consultation/index";		
-	}
 }

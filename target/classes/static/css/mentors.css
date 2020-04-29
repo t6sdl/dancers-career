@@ -1,0 +1,298 @@
+@font-face('utf-8'){}
+
+/* ----- common ----- */
+main {
+	counter-reset: sections;
+}
+
+section {
+	padding: 3em 0 3em 1.5em;
+	position: relative;
+}
+
+section > h3 {
+	position: relative;
+}
+
+section > h3::before {
+	counter-increment: sections;
+	content: counter(sections)".";
+	position: absolute;
+	left: -1.5em;
+	font-size: 1.2em;
+}
+
+section::before {
+	position: absolute;
+	top: 5rem;
+	right: 0;
+	font-size: 5vw;
+	font-weight: bold;
+	color: #ffffff;
+	z-index: -999;		
+}
+
+#what {
+	content: 'About the Career Support';
+}
+
+#why {
+	content: 'Benefits of the Career Support'
+}
+
+#how {
+	content: 'Let\'s find out!'
+}
+
+.ol--bracketed {
+	list-style: none;
+	counter-reset: bracketed;
+}
+
+.ol--bracketed li {
+	position: relative;
+	padding: .3em 0;
+}
+
+.ol--bracketed li::before {
+	counter-increment: bracketed;
+	content: counter(bracketed)' )';
+	position: absolute;
+	left: -1.5em;
+	font-size: 1.2em;
+}
+
+.ol--types {
+	list-style: none;
+	counter-reset: types;
+	padding-left: 5em;
+}
+
+.ol--types li {
+	position: relative;
+	padding: .3em 0;
+}
+
+.ol--types li::after {
+	content: '...';
+	position: absolute;
+	top: .3em;
+	left: -1.2em;
+	line-height: 1.5;
+}
+
+.ol--types li::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: -5em;
+	width: 3em;
+	height: 1.8em;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: bottom;
+}
+
+.ol--types li:nth-child(1)::before {
+	background-image: url('http://localhost:8080/img/mentors/type1.png');
+}
+
+.ol--types li:nth-child(2)::before {
+	background-image: url('http://localhost:8080/img/mentors/type2.png');
+}
+
+.ol--types li:nth-child(3)::before {
+	background-image: url('http://localhost:8080/img/mentors/type3.png');
+}
+
+.ol--types li:nth-child(4)::before {
+	background-image: url('http://localhost:8080/img/mentors/type4.png');
+}
+
+
+/* ----- map ----- */
+.index {
+	display: flex;
+	justify-content: space-around;
+}
+
+.index > div {
+	width: 30%;
+}
+
+.map {
+	display: flex;
+	justify-content: space-between;
+	flex-wrap: wrap;
+}
+
+.map__graph, .map__legend {
+	margin: 0 auto;
+	width: 100%;
+}
+
+.map__graph {
+	padding: 9% 5% 20% 24%;
+}
+
+.map__graph {
+	line-height: 0;
+	background-image: url('http://localhost:8080/img/mentors/axis.png');
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.graph__quadrants {
+	display: flex;
+	flex-wrap: wrap;
+	background-image: url('http://localhost:8080/img/mentors/graph.jpg');
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.quadrant {
+	position: relative;
+	padding-top: 50%;
+	width: 50%;
+	opacity: 0;
+	background-repeat: no-repeat;
+	background-size: contain;
+	transition: .2s;
+	z-index: 98;
+}
+
+.quadrant:hover {
+	transform: scale(1.5);
+	opacity: 1;
+	z-index: 99;
+}
+
+.quadrant.quadrant--topleft {
+	transform-origin: top left;
+	background-image: url('http://localhost:8080/img/mentors/graph-type2.png');
+}
+
+.quadrant.quadrant--topright {
+	transform-origin: top right;
+	background-image: url('http://localhost:8080/img/mentors/graph-type1.png');
+}
+
+.quadrant.quadrant--bottomleft {
+	transform-origin: bottom left;
+	background-image: url('http://localhost:8080/img/mentors/graph-type3.png');
+}
+
+.quadrant.quadrant--bottomright {
+	transform-origin: bottom right;
+	background-image: url('http://localhost:8080/img/mentors/graph-type4.png');
+}
+
+.mentor {
+	display: block;
+	position: absolute;
+	width: 36%;
+	background-image: url('http://localhost:8080/img/mentors/pin.png');
+	background-repeat: no-repeat;
+	background-size: contain;
+	transform: scaleY(0);
+	transform-origin: bottom center;
+	transition: .1s ease-in-out;
+}
+
+.quadrant:hover .mentor {
+	transform: scaleY(1);
+}
+
+.mentor.mentor1 {
+	bottom: 25%;
+	left: 5%;
+}
+
+.mentor.mentor2 {
+	top: 10%;
+	right: 5%;
+}
+
+.mentor.mentor3 {
+	top: 5%;
+	right: 10%;
+}
+
+.mentor.mentor4 {
+	bottom: 35%;
+	left: 5%;
+}
+
+.mentor.mentor5 {
+	bottom: 5%;
+	left: 5%;
+}
+
+.mentor.mentor6 {
+	top: 25%;
+	right: 5%;
+}
+
+.mentor.mentor7 {
+	bottom: 30%;
+	left: 10%;
+}
+
+.mentor.mentor8 {
+	bottom: 10%;
+	right: 5%;
+}
+
+.quadrant:hover .mentor:hover {
+	transform: scale(1.5);
+	z-index: 100;
+}
+
+.mentor__img {
+	margin: 14% auto 48%;
+	width: 72%;
+	border: 1px solid #000000;
+	border-radius: 50%;
+	overflow: hidden;
+	transform-origin: bottom center;
+	transition: .1s ease-in-out;
+}
+
+.mentor:hover .mentor__img {
+	transform: scale(2.4) translateY(-2px);
+}
+
+/* ----- in case that width > 800px ----- */
+@media (min-width: 800px) {
+	.map__graph, .map__legend {
+		width: 45%;
+	}
+
+	.map__graph {
+		padding: 3% 1.5% 9% 10.5%;
+	}
+
+	.map__legend {
+		padding: 2% 0;
+	}
+
+	.quadrant.quadrant--topleft {
+		transform-origin: bottom right;
+	}
+	
+	.quadrant.quadrant--topright {
+		transform-origin: bottom left;
+	}
+	
+	.quadrant.quadrant--bottomleft {
+		transform-origin: top right;
+	}
+	
+	.quadrant.quadrant--bottomright {
+		transform-origin: top left;
+	}
+}
+
+/* ----- in case that width > 480px ----- */
+@media (min-width: 480px) {
+}
