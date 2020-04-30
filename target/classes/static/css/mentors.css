@@ -105,19 +105,19 @@ section::before {
 }
 
 .ol--types li:nth-child(1)::before {
-	background-image: url('http://localhost:8080/img/mentors/type1.png');
+	background-image: url('https://dancers-career-2019-stg.herokuapp.com/img/mentors/type1.png');
 }
 
 .ol--types li:nth-child(2)::before {
-	background-image: url('http://localhost:8080/img/mentors/type2.png');
+	background-image: url('https://dancers-career-2019-stg.herokuapp.com/img/mentors/type2.png');
 }
 
 .ol--types li:nth-child(3)::before {
-	background-image: url('http://localhost:8080/img/mentors/type3.png');
+	background-image: url('https://dancers-career-2019-stg.herokuapp.com/img/mentors/type3.png');
 }
 
 .ol--types li:nth-child(4)::before {
-	background-image: url('http://localhost:8080/img/mentors/type4.png');
+	background-image: url('https://dancers-career-2019-stg.herokuapp.com/img/mentors/type4.png');
 }
 
 
@@ -148,7 +148,7 @@ section::before {
 
 .map__graph {
 	line-height: 0;
-	background-image: url('http://localhost:8080/img/mentors/axis.png');
+	background-image: url('https://dancers-career-2019-stg.herokuapp.com/img/mentors/axis.png');
 	background-repeat: no-repeat;
 	background-size: contain;
 }
@@ -156,7 +156,7 @@ section::before {
 .graph__quadrants {
 	display: flex;
 	flex-wrap: wrap;
-	background-image: url('http://localhost:8080/img/mentors/graph.jpg');
+	background-image: url('https://dancers-career-2019-stg.herokuapp.com/img/mentors/graph.jpg');
 	background-repeat: no-repeat;
 	background-size: contain;
 }
@@ -180,29 +180,29 @@ section::before {
 
 .quadrant.quadrant--topleft {
 	transform-origin: top left;
-	background-image: url('http://localhost:8080/img/mentors/graph-type2.png');
+	background-image: url('https://dancers-career-2019-stg.herokuapp.com/img/mentors/graph-type2.png');
 }
 
 .quadrant.quadrant--topright {
 	transform-origin: top right;
-	background-image: url('http://localhost:8080/img/mentors/graph-type1.png');
+	background-image: url('https://dancers-career-2019-stg.herokuapp.com/img/mentors/graph-type1.png');
 }
 
 .quadrant.quadrant--bottomleft {
 	transform-origin: bottom left;
-	background-image: url('http://localhost:8080/img/mentors/graph-type3.png');
+	background-image: url('https://dancers-career-2019-stg.herokuapp.com/img/mentors/graph-type3.png');
 }
 
 .quadrant.quadrant--bottomright {
 	transform-origin: bottom right;
-	background-image: url('http://localhost:8080/img/mentors/graph-type4.png');
+	background-image: url('https://dancers-career-2019-stg.herokuapp.com/img/mentors/graph-type4.png');
 }
 
 .mentor {
 	display: block;
 	position: absolute;
 	width: 36%;
-	background-image: url('http://localhost:8080/img/mentors/pin.png');
+	background-image: url('https://dancers-career-2019-stg.herokuapp.com/img/mentors/pin.png');
 	background-repeat: no-repeat;
 	background-size: contain;
 	transform: scaleY(0);
