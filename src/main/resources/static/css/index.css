@@ -10,10 +10,6 @@ section {
   padding: 3em 0;
 }
 
-br.show-m {
-  display: none;
-}
-
 /* ----- top ----- */
 #top .concept {
   margin: 18vh auto 1em;
@@ -215,14 +211,6 @@ br.show-m {
 
 /* ----- in case that width > 480px ----- */
 @media (min-width: 480px) {
-  br.hide-m {
-    display: none;
-  }
-  
-  br.show-m {
-    display: block;
-  }
-  
   #top .description {
     font-size: 1em;
   }
@@ -230,10 +218,6 @@ br.show-m {
 
 /* ----- in case that width > 800px ----- */
 @media (min-width: 800px) {
-  br.hide-l {
-    display: none;
-  }
-  
   #top .concept {
     font-size: 4vw;
   }

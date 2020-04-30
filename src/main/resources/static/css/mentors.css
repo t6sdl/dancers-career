@@ -44,6 +44,17 @@ section::before {
 	content: 'Let\'s find out!'
 }
 
+.headline {
+	margin-top: 0;
+	padding-left: 1rem;
+	border-left: .2rem solid #333;
+}
+
+.subheadline {
+	padding-left: 1rem;
+	font-size: .7em;
+}
+
 .ol--bracketed {
 	list-style: none;
 	counter-reset: bracketed;
@@ -262,6 +273,105 @@ section::before {
 	transform: scale(2.4) translateY(-2px);
 }
 
+/* ----- profile ----- */
+.profile {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.profile__img, .profile__text {
+	width: 100%;
+}
+
+.ul--none {
+	padding: 1em 0 1em 7.5em;
+	list-style: none;
+}
+
+.ul--none li {
+	position: relative;
+}
+
+.ul--none li::before {
+	position: absolute;
+	left: -7.5em;
+}
+
+.ul--none li::after {
+	content: '...';
+	position: absolute;
+	top: 0;
+	left: -1.5em;
+}
+
+.li--company::before {
+	content: '\30FB\5185\5B9A\5148';
+}
+
+.li--university::before {
+	content: '\30FB\51FA\8EAB\5927\5B66';
+}
+
+.li--club::before {
+	content: '\30FB\30B5\30FC\30AF\30EB';
+}
+
+.navs {
+	margin-top: 3em;
+}
+
+.navs__back {
+	position: relative;
+	display: block;
+	margin-top: 1em;
+	width: 4em;
+	line-height: 3em;
+	text-align: center;
+	border-radius: 1.5em;
+	background: #ffffff;
+	transition: .2s;
+}
+
+.navs__back:hover {
+	box-shadow: 0 2px 4px #808080;
+}
+
+.navs__appointment {
+	position: relative;
+	display: block;
+	margin: 0 auto;
+	width: 14em;
+	line-height: 3em;
+	text-align: center;
+	border: 1px dashed #333;
+	border-radius: 1.5em;
+	overflow: hidden;
+	transition: .2s;
+}
+
+.navs__appointment::before {
+	content: '';
+	display: block;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 14em;
+	height: 0;
+	background: #ffffff;
+	z-index: -1;
+	transition: .2s ease-out;
+}
+
+.navs__appointment:hover {
+	border-color: transparent;
+}
+
+.navs__appointment:hover::before {
+	height: 3em;
+}
+
 /* ----- in case that width > 800px ----- */
 @media (min-width: 800px) {
 	.map__graph, .map__legend {
@@ -291,8 +401,24 @@ section::before {
 	.quadrant.quadrant--bottomright {
 		transform-origin: top left;
 	}
+
+	.profile__img {
+		width: 40%;
+	}
+
+	.profile__text {
+		width: 56%;
+	}
 }
 
 /* ----- in case that width > 480px ----- */
 @media (min-width: 480px) {
+	.navs {
+		margin-bottom: -3em;
+	}
+
+	.navs__back {
+		top: -3em;
+		margin-top: 0;
+	}
 }
