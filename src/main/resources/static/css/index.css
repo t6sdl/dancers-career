@@ -21,74 +21,70 @@ section {
   font-size: .9em;
 }
 
-/* ----- flow ----- */
-#flow h2 {
+/* ----- procedure ----- */
+#procedure h2 {
   margin: 0;
   padding: .5em 0;
   background: #ffffff;
   text-align: center;
 }
 
-#flow .spots {
+#procedure .spots {
   margin: 1em 0;
 }
 
-#flow .spots > span {
+#procedure .spots > span {
   display: block;
   margin: .4rem auto;
   background: #ffffff;
   border-radius: 50%;
 }
 
-#flow .spots > span.spot-s {
+#procedure .spots > span.spot-s {
   width: .6rem;
   height: .6rem;
 }
 
-#flow .spots > span.spot-m {
+#procedure .spots > span.spot-m {
   width: .8rem;
   height: .8rem;
 }
 
-#flow .spots > span.spot-l {
+#procedure .spots > span.spot-l {
   width: 1rem;
   height: 1rem;
 }
 
-#flow .steps {
+#procedure .steps {
   margin: 3em 0;
 }
 
-#flow .step {
+#procedure .step {
   margin: 3em 0;
 }
 
-#flow .step .index {
+#procedure .step .index {
   font-size: 1.5rem;
   font-weight: bold;
 }
 
-#flow .step .index > span {
+#procedure .step .index__marker {
   display: inline-block;
   margin-right: .4em;
-  width: 1.4em;
-  height: 1.4em;
-  line-height: 1.4em;
-  color: #f5f5f5;
-  background: #333;
-  border-radius: 50%;
-  text-align: center;
+  width: 1.6em;
+  height: 1.6em;
+  vertical-align: text-bottom;
 }
 
-#flow .step .content {
-  padding-left: 2.5rem;
+#procedure .step .content {
+  padding-left: 3rem;
 }
 
-#flow .step .content > p > span {
+#procedure .step .content > p > span {
   font-size: .8em;
 }
 
-#flow .step .img {
+#procedure .step .img {
   padding: 0 2.5rem;
 }
 
@@ -222,26 +218,26 @@ section {
     font-size: 4vw;
   }
     
-  #flow .step {
+  #procedure .step {
     display: flex;
     justify-content: space-around;
     align-items: center;
   }
   
-  #flow .step:nth-child(even) {
+  #procedure .step:nth-child(even) {
     flex-direction: row-reverse;
   }
   
-  #flow .step > * {
+  #procedure .step > * {
    width: 46%;
     max-width: 26em;
   }
   
-  #flow .step .txt {
+  #procedure .step .txt {
     padding: 1em 0;
   }
   
-  #flow .step .img {
+  #procedure .step .img {
     padding: 0;
   }
   

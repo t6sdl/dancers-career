@@ -30,7 +30,7 @@
 				<p class="description">ダンサーズキャリアは、ダンサーの先輩たちが実際に就職活動で使った<br class="show-m">エントリーシート・面接体験記を公開するサービスです。</p>
 			</div>
 		</section>
-		<section id="flow">
+		<section id="procedure">
 			<div class="container">
 				<h2>面接に向けて準備しよう</h2>
 				<div class="spots">
@@ -41,38 +41,38 @@
 				<div class="steps">
 					<div class="step">
 						<div class="txt">
-							<div class="index"><span>1</span>SEARCH</div>
+							<div class="index"><img class="index__marker" alt="step1" th:src="@{/img/index/step1-marker.png}" src="../../static/img/index/step1-marker.png">SEARCH</div>
 							<div class="content"><p>ダンサーズキャリアで<br>自分の興味のあるES/体験記を探す</p></div>
 						</div>
 						<div class="img">
-							<img alt="SPEAK" th:src="@{/img/ogp.jpg}" src="../../static/img/ogp.jpg">
+							<img alt="SPEAK" th:src="@{/img/index/step1.png}" src="../../static/img/index/step1.png">
 						</div>
 					</div>
 					<div class="step">
 						<div class="txt">
-							<div class="index"><span>2</span>ANALYSE</div>
+							<div class="index"><img class="index__marker" alt="step2" th:src="@{/img/index/step2-marker.png}" src="../../static/img/index/step2-marker.png">ANALYSE</div>
 							<div class="content"><p>見つけたESを参考にして<br>自分の経験を言葉にする<br><span>（ESには現役人事の方からのアドバイスも載っています）</span></p></div>
 						</div>
 						<div class="img">
-							<img alt="SPEAK" th:src="@{/img/ogp.jpg}" src="../../static/img/ogp.jpg">
+							<img alt="SPEAK" th:src="@{/img/index/step2.png}" src="../../static/img/index/step2.png">
 						</div>
 					</div>
 					<div class="step">
 						<div class="txt">
-							<div class="index"><span>3</span>WRITE</div>
+							<div class="index"><img class="index__marker" alt="step3" th:src="@{/img/index/step3-marker.png}" src="../../static/img/index/step3-marker.png">WRITE</div>
 							<div class="content"><p>ダンスを知らない人事への<br>伝わりやすさを意識してESを書く</p></div>
 						</div>
 						<div class="img">
-							<img alt="SPEAK" th:src="@{/img/ogp.jpg}" src="../../static/img/ogp.jpg">
+							<img alt="SPEAK" th:src="@{/img/index/step3.png}" src="../../static/img/index/step3.png">
 						</div>
 					</div>
 					<div class="step">
 						<div class="txt">
-							<div class="index"><span>4</span>SPEAK</div>
+							<div class="index"><img class="index__marker" alt="step4" th:src="@{/img/index/step4-marker.png}" src="../../static/img/index/step4-marker.png">SPEAK</div>
 							<div class="content"><p>体験記を参考にしながら<br>面接で話す練習をする</p></div>
 						</div>
 						<div class="img">
-							<img alt="SPEAK" th:src="@{/img/ogp.jpg}" src="../../static/img/ogp.jpg">
+							<img alt="SPEAK" th:src="@{/img/index/step4.png}" src="../../static/img/index/step4.png">
 						</div>
 					</div>
 				</div>
@@ -109,15 +109,15 @@
 	<footer th:replace="common/footer :: footer"></footer>
 	<script>
 		$(function() {
-			const $flow = $('#flow'),
+			const $procedure = $('#procedure'),
 			$motive = $('#motive'),
 			$search = $('#search');
 			const magnifier = () => {
 				let scroll = $(window).scrollTop(),
-				flowOffset = $flow.offset().top,
+				procOffset = $procedure.offset().top,
 				motiveOffset = $motive.offset().top,
 				windowHeight = $(window).height();
-				if (flowOffset - scroll <= windowHeight / 2 && motiveOffset - scroll >= windowHeight / 2) {
+				if (procOffset - scroll <= windowHeight / 2 && motiveOffset - scroll >= windowHeight / 2) {
 					$search.fadeIn(200);
 				} else {
 					$search.fadeOut(200);
