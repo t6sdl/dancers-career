@@ -70,8 +70,8 @@
             </div>
           </div>
         </div>
-        <h3>Interview</h3>
-        <div class="qanda-container">
+        <h3 th:unless="*{#lists.isEmpty(interview)}">Interview</h3>
+        <div th:unless="*{#lists.isEmpty(interview)}" class="qanda-container">
           <div th:each="interviewItem, loop : *{interview}" class="qanda">
             <p class="ques"><span th:text="*{interview[__${loop.index}__].question} == '' ? '非公開' : *{interview[__${loop.index}__].question}"></span></p>
             <hr>
