@@ -131,6 +131,10 @@ section {
   right: 7.7%;
   width: 2rem;
   height: 2rem;
+  filter: drop-shadow(0 2px 2px #808080);
+  background-image: url('https://dancers-career-2019-stg.herokuapp.com/img/index/magnifier.png');
+  background-repeat: no-repeat;
+  background-size: contain;
   transition: ease-out .2s;
   animation: 4s linear 0s infinite normal search;
 }
@@ -139,22 +143,6 @@ section {
   width: 260px;
   height: 260px;
   animation: none;
-}
-
-#search i {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  font-size: 2rem;
-  color: #ffffff;
-  text-shadow: 0 2px 2px #696969;
-  transition: ease-out .2s;
-}
-
-#search:hover i {
-  font-size: 260px;
 }
 
 #search a {
@@ -176,7 +164,7 @@ section {
 
 #search:hover a {
   top: 68px;
-  left: 38px;
+  left: 40px;
   opacity: 1;
   transform: scale(1);
 }
@@ -185,6 +173,10 @@ section {
   display: block;
   font-size: .8rem;
   font-weight: normal;
+}
+
+#search:hover a:hover {
+	transform: scale(1.2);
 }
 
 @keyframes search {
