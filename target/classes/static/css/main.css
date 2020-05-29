@@ -1,6 +1,10 @@
 @font-face('utf-8'){}
 
 /* ----- general ----- */
+* {
+	box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -12,7 +16,7 @@ body {
 }
 
 main {
-  margin: 8em auto 5%;
+  margin: 7em auto 3em;
   width: 90%;
   max-width: 1800px;
 }
@@ -25,6 +29,11 @@ table {
 a {
   color: #333;
   text-decoration: none;
+}
+
+button {
+	outline: none;
+	border: none;
 }
 
 h1.title {
@@ -53,10 +62,6 @@ img {
   width: 100%;
 }
 
-div, article, section {
-  box-sizing: border-box;
-}
-
 .container {
   margin: 0 auto;
   width: 94%;
@@ -73,53 +78,74 @@ div, article, section {
 }
 
 .button {
-  position: relative;
-  display: inline-block;
-  padding: 0 2em;
-  min-width: auto;
-  line-height: 2.6;
-  background: #89c3eb;
-  border-radius: 3px;
-  color: #ffffff;
-  text-align: center;
-  font-size: .9em;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1em;
+  line-height: 3;
+  font-size: 1em;
+  font-weight: bold;
   cursor: pointer;
-  transition: box-shadow .2s ease-out;
 }
 
-.button.attract {
-  padding: 0 3em;
-  background: #ff9719;
-  font-size: 1.2em;
+.button__text {
+	display: block;
 }
 
-.button:hover {
+.button__icon {
+	display: block;
+	line-height: 2;
+	font-size: 1.5em;
+	transition: .2s;
+}
+
+.button:hover .button__icon {
+	transform: translateX(.3em);
+}
+
+.button--primary {
   background: #426579;
   color: #ffffff;
+  border: 3px solid #426579;
+  transition: .2s;
 }
 
-.button.attract:hover {
-  background: #ff9719;
-  color: #ffffff;
-  box-shadow: 0 2px 4px #666666;
+.button--primary:hover {
+  background: #808080;
+  border-color: #808080;
 }
 
-.button::before {
-  content: '\f0da';
-  font-family: 'Font Awesome 5 Free';
-  font-weight: bold;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 1em;
+.button--secondary {
+	background: #ffffff;
+	color: #333;
+	border: 3px solid #d3d3d3;
+	transition: .2s;
 }
 
-.button.search::before {
-  content: '\f002';
+.button--secondary:hover {
+	background: #d3d3d3;
 }
 
-.button.calendar::before {
-  content: '\f274';
+.button--danger {
+	background: #808080;
+	color: #ffffff;
+	border: 3px solid #808080;
+	transition: .2s;
+}
+
+.button--danger:hover {
+	background: #dc143c;
+	border-color: #dc143c;
+}
+
+.button--accent {
+	background: #4169e1;
+	color: #ffffff;
+	border: 3px solid #4169e1;
+	transition: .2s;
+}
+
+.button--accent:hover {
+	background: #0000cd;
 }
 
 .show-m {
@@ -145,11 +171,6 @@ div, article, section {
 }
 
 @media (min-width: 480px) {
-  .button {
-    padding: 0 3em;
-    min-width: 100px;
-  }
-
   .hide-m {
     display: none;
   }

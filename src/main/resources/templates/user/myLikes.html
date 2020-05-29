@@ -14,45 +14,47 @@
 <body>
   <header th:replace="common/header :: for-user"></header>
   <main>
-    <h1 class="title">お気に入りES一覧</h1>
-    <section class="container">
-      <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
-        <p th:text="|こんにちは ${familyName == null ? '名無しさん' : familyName + 'さん'}|"></p>
-        <p>お気に入りに登録されたES/体験記：<span th:text="${likes}"></span>件</p>
-      </div>
-      <div th:if="${!(validEmail) && !(perfect)}" style="display:flex; flex-direction:column; align-items:center; text-align:center;">
-        <p><strong>お気に入りは「メールアドレスの確認」と「プロフィールの登録」が完了するとご利用になれます。</strong></p>
-        <a class="button" th:href="@{/signup/profile?revisit}">プロフィールを登録する</a>
-        <p>メールアドレスの確認は「ダンサーズキャリア（dancerscareer_support@t6sdl.tokyo）」から届くメールの「メールアドレスの確認」ボタンを押すことで完了します。</p>
-        <a th:href="@{/help/get-email}"><i class="far fa-question-circle"></i>メールが届かない</a>
-      </div>
-      <div th:if="${validEmail && !(perfect)}" style="display:flex; flex-direction:column; align-items:center; text-align:center;">
-        <p><strong>お気に入りの利用には「プロフィールの登録」が必要です。</strong></p>
-        <a class="button" th:href="@{/signup/profile?revisit}">プロフィールを登録する</a>
-      </div>
-      <div th:if="${!(validEmail) && perfect}" style="display:flex; flex-direction:column; align-items:center; text-align:center;">
-        <p><strong>お気に入りの利用には「メールアドレスの確認」が必要です。</strong></p>
-        <p>メールアドレスの確認は「ダンサーズキャリア（dancerscareer_support@t6sdl.tokyo）」から届くメールの「メールアドレスの確認」ボタンを押すことで完了します。</p>
-        <a th:href="@{/help/get-email}"><i class="far fa-question-circle"></i>メールが届かない</a>
-      </div>
-      <article th:each="experience : ${experiences}" th:object="${experience}">
-        <a class="exp-container" th:href="@{/experiences/{expId}(expId=*{id})}">
-          <div class="exp-info">
-          	<div style="display:flex; justify-content:space-between">
-         	  <div><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></div>
-              <div class="likes"><span th:text="*{likes}"></span> <span><i class="fas fa-heart"></i></span></div>
-         	</div>
-            <h2 th:text="*{univName}"></h2>
-            <div><span th:text="*{graduatedIn} == '' ? '非公開' : *{graduatedIn} + ' 年卒'"></span>｜<span th:text="*{degree} == '' ? '非公開' : *{degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></div>
-            <hr>
-            <div class="table">
-              <div><strong>内定先</strong></div>
-              <div><span class="divide-slash" th:each="ofr : *{offer}" th:text="${ofr} == '' ? '非公開' : ${ofr}"></span></div>
-            </div>
-          </div>
-        </a>
-      </article>
-    </section>
+    <div class="container">
+	    <h1 class="title">お気に入りES一覧</h1>
+	    <section>
+	      <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
+	        <p th:text="|こんにちは ${familyName == null ? '名無しさん' : familyName + 'さん'}|"></p>
+	        <p>お気に入りに登録されたES/体験記：<span th:text="${likes}"></span>件</p>
+	      </div>
+	      <div th:if="${!(validEmail) && !(perfect)}" style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+	        <p><strong>お気に入りは「メールアドレスの確認」と「プロフィールの登録」が完了するとご利用になれます。</strong></p>
+	        <a class="button" th:href="@{/signup/profile?revisit}">プロフィールを登録する</a>
+	        <p>メールアドレスの確認は「ダンサーズキャリア（dancerscareer_support@t6sdl.tokyo）」から届くメールの「メールアドレスの確認」ボタンを押すことで完了します。</p>
+	        <a th:href="@{/help/get-email}"><i class="far fa-question-circle"></i>メールが届かない</a>
+	      </div>
+	      <div th:if="${validEmail && !(perfect)}" style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+	        <p><strong>お気に入りの利用には「プロフィールの登録」が必要です。</strong></p>
+	        <a class="button" th:href="@{/signup/profile?revisit}">プロフィールを登録する</a>
+	      </div>
+	      <div th:if="${!(validEmail) && perfect}" style="display:flex; flex-direction:column; align-items:center; text-align:center;">
+	        <p><strong>お気に入りの利用には「メールアドレスの確認」が必要です。</strong></p>
+	        <p>メールアドレスの確認は「ダンサーズキャリア（dancerscareer_support@t6sdl.tokyo）」から届くメールの「メールアドレスの確認」ボタンを押すことで完了します。</p>
+	        <a th:href="@{/help/get-email}"><i class="far fa-question-circle"></i>メールが届かない</a>
+	      </div>
+	      <article th:each="experience : ${experiences}" th:object="${experience}">
+	        <a class="exp-container" th:href="@{/experiences/{expId}(expId=*{id})}">
+	          <div class="exp-info">
+	          	<div style="display:flex; justify-content:space-between">
+	         	  <div><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></div>
+	              <div class="likes"><span th:text="*{likes}"></span> <span><i class="fas fa-heart"></i></span></div>
+	         	</div>
+	            <h2 th:text="*{univName}"></h2>
+	            <div><span th:text="*{graduatedIn} == '' ? '非公開' : *{graduatedIn} + ' 年卒'"></span>｜<span th:text="*{degree} == '' ? '非公開' : *{degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></div>
+	            <hr>
+	            <div class="table">
+	              <div><strong>内定先</strong></div>
+	              <div><span class="divide-slash" th:each="ofr : *{offer}" th:text="${ofr} == '' ? '非公開' : ${ofr}"></span></div>
+	            </div>
+	          </div>
+	        </a>
+	      </article>
+	    </section>
+    </div>
     <nav th:replace="user/common/tab :: tab"></nav>
   </main>
   <footer th:replace="common/footer :: footer"></footer>

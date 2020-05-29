@@ -7,31 +7,20 @@
   <th:block th:replace="common/favicons :: favicons"></th:block>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20190206}" href="../../static/css/main.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/error.css?update=20190206}" href="../../static/css/error.css">
   <link rel="stylesheet" type="text/css" th:href="@{/css/user.css?update=20190206}" href="../../static/css/user.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../static/js/openclose.js"></script>
-  <style type="text/css">
-  main {
-    color: #777777;
-    text-align: center;
-  }
-  .fa-exclamation-triangle {
-    display: block;
-    margin: 0 auto;
-    font-size: 15em;
-  }
-  </style>
 </head>
 <body>
   <header th:replace="common/header :: for-user"></header>
   <main>
-    <article>
-      <div>
-      <i class="fas fa-exclamation-triangle"></i>
+    <div class="container">
+      <h1><i class="fas fa-exclamation-triangle"></i></h1>
+      <h1>Sorry...</h1>
       <h2>エラーが発生しました</h2>
-      <p>マイページトップから再度お試しください</p>
+      <p>申し訳ございません<br>マイページトップから再度お試しください</p>
     </div>
-    </article>
     <nav th:replace="user/common/tab :: tab"></nav>
   </main>
   <footer th:replace="common/footer :: footer"></footer>

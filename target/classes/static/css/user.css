@@ -4,6 +4,8 @@ nav.container ul {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0;
+  margin: 3em 0;
 }
 
 .sidebutton {
@@ -70,12 +72,16 @@ nav.container ul {
   }
 
   .sidebutton {
-    width: 28%;
+    width: 32%;
     margin: 0;
   }
 }
 
 @media (min-width: 800px) {
+	.sidebutton {
+	  width: 28%;
+	}
+
   .sidebutton a::before {
     content: '';
     position: absolute;

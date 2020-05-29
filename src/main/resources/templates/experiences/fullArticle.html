@@ -14,65 +14,71 @@
 <body>
   <header th:replace="common/header :: ${header}"></header>
   <main>
-    <h1 class="title">ES/体験記</h1>
-    <article class="container" th:object="${experience}">
-      <div class="exp-container">
-        <div class="exp-info">
-          <div style="display:flex; justify-content:space-between">
-         	<div><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></div>
-            <div class="likes"><span th:text="*{likes}"></span> <span th:if="*{liked}"><i class="fas fa-heart"></i></span><span th:unless="*{liked}"><i class="far fa-heart"></i></span></div>
-          </div>
-          <h2>
-            <span th:text="*{univName} == '' ? '非公開' : *{univName}"></span>
-            <span style="display:inline-block;">
-              <span th:text="*{univFac}"></span>
-              <span th:text="*{univDep}"></span>
-            </span>
-          </h2>
-          <div>
-            <p th:if="*{familyName != '' && givenName != ''}" th:text="|*{familyName} *{givenName} さん|"></p>
-            <p><span th:text="*{graduatedIn} == '' ? '非公開' : *{graduatedIn} + ' 年卒'"></span>｜<span th:text="*{degree} == '' ? '非公開' : *{degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></p>
-          </div>
-          <hr>
-          <div class="table">
-            <div><strong>サークル</strong></div>
-            <div><span class="divide-slash" th:each="clb : *{club}" th:text="|${clb == '' ? '非公開' : clb} |"></span></div>
-          </div>
-          <div class="table">
-            <div><strong>内定先</strong></div>
-            <div><span class="divide-slash" th:each="ofr : *{offer}" th:text="|${ofr == '' ? '非公開' : ofr} |"></span></div>
-          </div>
-        </div>
-        <hr>
-        <h3 th:unless="*{#lists.isEmpty(es)}">ES</h3>
-        <div th:each="esItem, loop : *{es}">
-          <div class="es-info">
-            <p>提出先企業：<span th:text="*{es[__${loop.index}__].corp} == '' ? '非公開' : *{es[__${loop.index}__].corp}"></span></p>
-            <p>選考結果：<span th:text="*{es[__${loop.index}__].result} == '' ? '非公開' : *{es[__${loop.index}__].result}"></span></p>        
-          </div>
-          <div class="qanda-container">
-            <div th:each="content, subloop : *{es[__${loop.index}__].question}" class="qanda">
-              <p class="ques"><span th:text="*{es[__${loop.index}__].question[__${subloop.index}__]} == '' ? '非公開' : *{es[__${loop.index}__].question[__${subloop.index}__]}"></span></p>
-              <hr>
-              <p class="ans"><span th:each="str, stat : *{es[__${loop.index}__].answer[__${subloop.index}__].split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
-              <p class="adv"><i class="far fa-comment-dots"></i> 現役人事からのコメント<br><span th:each="str, stat : *{es[__${loop.index}__].advice[__${subloop.index}__].split('\n', -1)}"><th:block th:text="${str == '' ? 'なし' : str}"></th:block><br th:if="${!stat.last}"></span></p>
-            </div>
-          </div>
-        </div>
-        <h3 th:unless="*{#lists.isEmpty(interview)}">Interview</h3>
-        <div th:unless="*{#lists.isEmpty(interview)}" class="qanda-container">
-          <div th:each="interviewItem, loop : *{interview}" class="qanda">
-            <p class="ques"><span th:text="*{interview[__${loop.index}__].question} == '' ? '非公開' : *{interview[__${loop.index}__].question}"></span></p>
-            <hr class="cutl">
-            <p class="ans"><span th:each="str, stat : *{interview[__${loop.index}__].answer.split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
-          </div>
-        </div>
-      </div>
-      <div>
-        <p th:unless="*{liked}"><i class="fas fa-circle fa-fw"></i>お気に入りに登録されていません <a class="button" th:href="@{/experiences/{expId}?like(expId=*{id})}">登録</a></p>
-        <p th:if="*{liked}"><i class="fas fa-check-circle fa-fw"></i>お気に入りに登録されています <a class="button" th:href="@{/experiences/{expId}?dislike(expId=*{id})}">削除</a></p>
-      </div>
-    </article>
+    <div class="container">
+	    <h1 class="title">ES/体験記</h1>
+	    <article th:object="${experience}">
+	      <div class="exp-container">
+	        <div class="exp-info">
+	          <div style="display:flex; justify-content:space-between">
+	         	<div><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></div>
+	            <div class="likes"><span th:text="*{likes}"></span> <span th:if="*{liked}"><i class="fas fa-heart"></i></span><span th:unless="*{liked}"><i class="far fa-heart"></i></span></div>
+	          </div>
+	          <h2>
+	            <span th:text="*{univName} == '' ? '非公開' : *{univName}"></span>
+	            <span style="display:inline-block;">
+	              <span th:text="*{univFac}"></span>
+	              <span th:text="*{univDep}"></span>
+	            </span>
+	          </h2>
+	          <div>
+	            <p th:if="*{familyName != '' && givenName != ''}" th:text="|*{familyName} *{givenName} さん|"></p>
+	            <p><span th:text="*{graduatedIn} == '' ? '非公開' : *{graduatedIn} + ' 年卒'"></span>｜<span th:text="*{degree} == '' ? '非公開' : *{degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></p>
+	          </div>
+	          <hr>
+	          <div class="table">
+	            <div><strong>サークル</strong></div>
+	            <div><span class="divide-slash" th:each="clb : *{club}" th:text="|${clb == '' ? '非公開' : clb} |"></span></div>
+	          </div>
+	          <div class="table">
+	            <div><strong>内定先</strong></div>
+	            <div><span class="divide-slash" th:each="ofr : *{offer}" th:text="|${ofr == '' ? '非公開' : ofr} |"></span></div>
+	          </div>
+	        </div>
+	        <hr>
+	        <h3 th:unless="*{#lists.isEmpty(es)}">ES</h3>
+	        <div th:each="esItem, loop : *{es}">
+	          <div class="es-info">
+	            <p>提出先企業：<span th:text="*{es[__${loop.index}__].corp} == '' ? '非公開' : *{es[__${loop.index}__].corp}"></span></p>
+	            <p>選考結果：<span th:text="*{es[__${loop.index}__].result} == '' ? '非公開' : *{es[__${loop.index}__].result}"></span></p>        
+	          </div>
+	          <div class="qanda-container">
+	            <div th:each="content, subloop : *{es[__${loop.index}__].question}" class="qanda">
+	              <p class="ques"><span th:text="*{es[__${loop.index}__].question[__${subloop.index}__]} == '' ? '非公開' : *{es[__${loop.index}__].question[__${subloop.index}__]}"></span></p>
+	              <hr>
+	              <p class="ans"><span th:each="str, stat : *{es[__${loop.index}__].answer[__${subloop.index}__].split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
+	              <p class="adv"><i class="far fa-comment-dots"></i> 現役人事からのコメント<br><span th:each="str, stat : *{es[__${loop.index}__].advice[__${subloop.index}__].split('\n', -1)}"><th:block th:text="${str == '' ? 'なし' : str}"></th:block><br th:if="${!stat.last}"></span></p>
+	            </div>
+	          </div>
+	        </div>
+	        <h3 th:unless="*{#lists.isEmpty(interview)}">Interview</h3>
+	        <div th:unless="*{#lists.isEmpty(interview)}" class="qanda-container">
+	          <div th:each="interviewItem, loop : *{interview}" class="qanda">
+	            <p class="ques"><span th:text="*{interview[__${loop.index}__].question} == '' ? '非公開' : *{interview[__${loop.index}__].question}"></span></p>
+	            <hr class="cutl">
+	            <p class="ans"><span th:each="str, stat : *{interview[__${loop.index}__].answer.split('\n', -1)}"><th:block th:text="${str == '' ? '非公開' : str}"></th:block><br th:if="${!stat.last}"></span></p>
+	          </div>
+	        </div>
+	      </div>
+	      <div>
+	        <a th:unless="*{liked}" class="button button--accent" th:href="@{/experiences/{expId}?like(expId=*{id})}">
+	          <span class="button__text">お気に入りに登録</span><i class="button__icon fas fa-arrow-right"></i>
+	        </a>
+	        <a th:if="*{liked}" class="button button--secondary" th:href="@{/experiences/{expId}?dislike(expId=*{id})}">
+	          <span class="button__text">お気に入りから削除</span><i class="button__icon fas fa-arrow-right"></i>
+	        </a>
+	      </div>
+	    </article>
+    </div>
   </main>
   <footer th:replace="common/footer :: footer"></footer>
   <script>

@@ -19,43 +19,53 @@
   section h2 {
     border-bottom: 1px dashed #333333;
   }
+	.inner-link {
+	  display: inline-block;
+	  color: #808080;
+	}
+	.inner-link:hover {
+	  color: #333;
+	  text-decoration: underline;
+	}
   </style>
 </head>
 <body>
   <header th:replace="common/header :: for-user"></header>
   <main>
-    <article>
-      <h1>メールが届かない</h1>
-      <p>以下の3つの可能性があります。</p>
-      <ul>
-        <li><i class="fas fa-circle fa-fw"></i>異なるフォルダや迷惑メールフォルダに振り分けられている </li>
-        <li><i class="fas fa-circle fa-fw"></i>ご自身のメールフィルタリング設定によりブロックされている</li>
-        <li><i class="fas fa-circle fa-fw"></i>ご登録されたメールアドレスに誤りがある</li>
-      </ul>
-      <section>
-        <h2>異なるフォルダや迷惑メールフォルダに振り分けられている</h2>
-        <p>ご登録されたメールアドレスのフォルダをご確認ください。</p>
-      </section>
-      <section>
-        <h2>ご自身のメールフィルタリング設定によりブロックされている</h2>
-        <ul><li><i class="fas fa-circle fa-fw"></i>携帯電話キャリアのメールアドレスをご登録されている方</li></ul>
-        <p>ドメイン指定受信などの設定をされている方は、「t6sdl.tokyo」ドメインからの受信が許可されているか、もしくは拒否されていないかご確認ください。
-          <br>設定方法につきましては、お手数ですが各携帯会社にお問い合わせください。</p>
-        <ul><li><i class="fas fa-circle fa-fw"></i>携帯電話キャリア以外のメールアドレスをご登録されている方</li></ul>
-        <p>メールソフト、フリーメールサービス、インターネットプロバイダのフィルタリング設定を確認してください。
-          <br>設定方法につきましては、お手数ですが各サービス提供会社にお問い合わせください。</p>
-      </section>
-      <section>
-        <h2>ご登録されたメールアドレスに誤りがある</h2>
-        <p><a th:href="@{/user/account}">こちら</a>からご確認ください</p>
-      </section>
-      <section>
-        <h2>上記全てご確認いただいた方</h2>
-        <p>下ボタンからアドレス確認メールを再送信できます。</p>
-        <a class="button" th:href="@{/signup/reverify-email}">再送信</a>
-        <p>10分以上経ってもメールが届かない場合は、<a th:href="@{/about/contact}">こちら</a>からお問い合わせください。</p>
-      </section>
-    </article>
+    <div class="container">
+	    <article>
+	      <h1>メールが届かない</h1>
+	      <p>以下の3つの可能性があります。</p>
+	      <ul>
+	        <li>異なるフォルダや迷惑メールフォルダに振り分けられている </li>
+	        <li>ご自身のメールフィルタリング設定によりブロックされている</li>
+	        <li>ご登録されたメールアドレスに誤りがある</li>
+	      </ul>
+	      <section>
+	        <h2>異なるフォルダや迷惑メールフォルダに振り分けられている</h2>
+	        <p>ご登録されたメールアドレスのフォルダをご確認ください。</p>
+	      </section>
+	      <section>
+	        <h2>ご自身のメールフィルタリング設定によりブロックされている</h2>
+	        <h3>携帯電話キャリアのメールアドレスをご登録されている方</h3>
+	        <p>ドメイン指定受信などの設定をされている方は、「t6sdl.tokyo」ドメインからの受信が許可されているか、もしくは拒否されていないかご確認ください。<br>設定方法につきましては、お手数ですが各携帯会社にお問い合わせください。</p>
+	        <h3>携帯電話キャリア以外のメールアドレスをご登録されている方</h3>
+	        <p>メールソフト、フリーメールサービス、インターネットプロバイダのフィルタリング設定を確認してください。<br>設定方法につきましては、お手数ですが各サービス提供会社にお問い合わせください。</p>
+	      </section>
+	      <section>
+	        <h2>ご登録されたメールアドレスに誤りがある</h2>
+	        <p><a class="inner-link" th:href="@{/user/account}">こちら</a>からご確認ください</p>
+	      </section>
+	      <section>
+	        <h2>上記全てご確認いただいた方</h2>
+	        <p>下ボタンからアドレス確認メールを再送信できます。</p>
+	        <a class="button button--primary" th:href="@{/signup/reverify-email}">
+	          <span class="button__text">再送信</span><i class="button__icon fas fa-arrow-right"></i>
+	        </a>
+	        <p>10分以上経ってもメールが届かない場合は、<a class="inner-link" th:href="@{/about/contact}">こちら</a>からお問い合わせください。</p>
+	      </section>
+	    </article>
+    </div>
   </main>
   <footer th:replace="common/footer :: footer"></footer>
 </body>

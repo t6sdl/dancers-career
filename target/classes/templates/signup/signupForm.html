@@ -8,49 +8,52 @@
   <th:block th:replace="common/favicons :: favicons"></th:block>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20190206}" href="../../static/css/main.css">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/window.css?update=20181110-2}" href="../../static/css/window.css">
   <link rel="stylesheet" type="text/css" th:href="@{/css/form.css?update=20190206}" href="../../static/css/form.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../static/js/openclose.js"></script>
 </head>
-<body class="formbg5">
+<body>
   <header th:replace="common/header :: for-stranger"></header>
   <main>
-  <div id="formdef">
-    <h1>アカウント作成</h1>
+  <div class="container window--sm">
+    <h1>新規会員登録</h1>
     <form th:action="@{/signup}" method="post" th:object="${signupForm}">
-
-      <p th:if="${param.error}" class="hazard"><i class="fas fa-exclamation-circle"></i>アカウントの作成に失敗しました<br>もう一度お試しください</p>
-      <div>
-        <label for="newEmail"></label>
-        <input type="email" th:field="*{newEmail}" th:errorclass="error" required placeholder="メールアドレス">
-        <p th:if="${#fields.hasErrors('newEmail')}" th:errors="*{newEmail}"></p>
+      <p th:if="${param.error}" class="hazard"><i class="fas fa-exclamation-circle"></i>アカウントの作成に失敗しました。もう一度お試しください。</p>
+      <div class="form-item">
+        <label class="form-item__label" for="newEmail">メールアドレス</label>
+        <input class="form-item__input input--short-text" type="email" th:field="*{newEmail}" th:errorclass="invalid" required placeholder="メールアドレス">
+        <p th:if="${#fields.hasErrors('newEmail')}" th:errors="*{newEmail}" class="invalid"></p>
+      </div>
+      <div class="form-item">
+        <label class="form-item__label" for="newPassword">パスワード</label>
+        <input class="form-item__input input--short-text" type="password" th:field="*{newPassword}" th:errorclass="invalid" required placeholder="パスワード">
+        <p th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}" class="invalid"></p>
+      </div>
+      <div class="form-item">
+        <label class="form-item__label" for="confirmPassword">パスワード(確認)</label>
+        <input class="form-item__input input--short-text" type="password" th:field="*{confirmPassword}" th:classappend="${#fields.hasErrors('samePassword') ? 'invalid' : ''}" required placeholder="パスワード(確認)">
+        <p th:if="${#fields.hasErrors('samePassword')}" th:errors="*{samePassword}" class="invalid"></p>
       </div>
       <div>
-        <label for="newPassword"></label>
-        <input type="password" th:field="*{newPassword}" th:errorclass="error" required placeholder="パスワード">
-        <p th:if="${#fields.hasErrors('newPassword')}" th:errors="*{newPassword}"></p>
+        <p class="note">パスワードは半角英数記号8文字以上で入力してください</p>
       </div>
       <div>
-        <label for="confirm"></label>
-        <input type="password" th:field="*{confirm}" th:errorclass="error" required placeholder="パスワード(確認)">
-        <p th:if="${#fields.hasGlobalErrors()}" th:errors="*{global}"></p>
+        <p>アカウントを作成すると、<a th:href="@{/about/terms-of-use}" class="outer-link" target="_blank">利用規約</a>に同意したことになります。
+        <br>プロフィールの登録とご指定のメールアドレスに送られたメールからメールアドレスの確認を行い、会員登録を完了させてください。</p>
       </div>
-      <div class="caption">
-        <p>パスワードの条件</p>
-        <ul>
-          <li>8文字以上</li>
-          <li>半角英数字、記号（!.?+$%#&amp;*=@）をそれぞれ最低1文字ずつ含む</li>
-        </ul>
-      </div>
-      <div>
-        <p>アカウントを作成すると、ダンサーズキャリアの<a th:href="@{/about/terms-of-use}" target="_blank">利用規約</a>に同意したことになります。
-        <br>また、ご指定のメールアドレスに送られたメールからメールアドレスの確認を行い、登録を完了させてください。</p>
-        <button type="submit" class="button">プロフィール登録に進む</button>
+      <div class="form-item">
+        <button type="submit" class="button button--primary form-item__submit">
+          <span class="button__text">プロフィール登録に進む</span><i class="button__icon fas fa-arrow-right"></i>
+        </button>
       </div>
     </form>
+    <hr>
+    <h2>アカウントをお持ちですか？</h2>
     <div>
-      <p><a th:href="@{/signin}">アカウントをお持ちの方はこちら</a></p>
+      <p>
+        <a th:href="@{/signin}" class="button button--secondary">
+          <span class="button__text">ログイン</span><i class="button__icon fas fa-arrow-right"></i>
+        </a>
+      </p>
     </div>
   </div>
   </main>

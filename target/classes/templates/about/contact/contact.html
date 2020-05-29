@@ -8,27 +8,28 @@
   <th:block th:replace="common/favicons :: favicons"></th:block>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20190206}" href="../../../static/css/main.css">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/window.css?update=20181110-2}" href="../../../static/css/window.css">
   <link rel="stylesheet" type="text/css" th:href="@{/css/form.css?update=20190206}" href="../../../static/css/form.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../../static/js/openclose.js"></script>
 </head>
-<body class="formbg2">
+<body>
   <header th:replace="common/header :: ${header}"></header>
   <main>
-    <div id="formdefw">
+    <div class="container window--lg">
     <h1>お問い合わせ</h1>
     <form th:action="@{/about/contact}" method="post" th:object="${contactForm}">
-      <div>
-        <label for="from">ご自身のメールアドレス</label><br>
-        <input type="email" th:field="*{from}" required th:readonly="${isLoggedIn}">
+      <div class="form-item">
+        <label class="form-item__label" for="from">ご自身のメールアドレス</label>
+        <input class="form-item__input input--short-text" type="email" th:field="*{from}" placeholder="メールアドレス" th:readonly="${isLoggedIn}" required>
       </div>
-      <div>
-        <label for="content">お問い合わせ内容</label><br>
-        <textarea th:field="*{content}" cols="100" rows="10" required></textarea>
+      <div class="form-item">
+        <label class="form-item__label" for="content">お問い合わせ内容</label>
+        <textarea class="form-item__textarea" th:field="*{content}" cols="100" rows="10" required></textarea>
       </div>
-      <div>
-        <button type="submit" class="button">送信する</button>
+      <div class="form-item">
+        <button type="submit" class="button button--primary form-item__submit">
+          <span class="submit__text">送信する</span><i class="button__icon fas fa-arrow-right"></i>
+        </button>
       </div>
     </form>
     </div>

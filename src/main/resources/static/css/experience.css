@@ -88,15 +88,25 @@
   font-size: .9em;
 }
 
-.secret a {
-  display: block;
+.secret .button {
   margin: .5em 0;
+  width: 100%;
 }
 
 .likes {
   min-width: 4em;
   text-align: right;
   font-size: 18px;
+}
+
+.inner-link {
+  display: inline-block;
+  color: #808080;
+}
+
+.inner-link:hover {
+  color: #333;
+  text-decoration: underline;
 }
 
 @media (min-width: 600px) {
@@ -115,5 +125,8 @@
   }
   a.exp-container:hover {
     opacity: .7;
+  }
+  .secret .button {
+    width: 50%;
   }
 }
