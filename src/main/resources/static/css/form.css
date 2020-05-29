@@ -149,6 +149,7 @@ input:disabled, select:disabled, textarea:disabled {
 }
 
 .form-item__button > input[type="radio"], .form-item__button > input[type="checkbox"], .form-item__checkbox > input[type="checkbox"] {
+	display: none;
 	margin: 0;
   width: 0;
   height: 0;

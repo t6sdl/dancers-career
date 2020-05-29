@@ -18,7 +18,7 @@
 	<meta name="twitter:site" content="@T6SDL">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20190206}" href="../../static/css/main.css">
-	<link rel="stylesheet" type="text/css" th:href="@{/css/mentors.css?update=20190206}" href="../../static/css/mentors.css">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/mentors.css?update=20190409}" href="../../static/css/mentors.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -90,7 +90,7 @@
 					<div class="map">
 						<div class="map__graph">
 							<div class="graph__quadrants">
-								<div class="quadrant quadrant--topleft">
+								<div class="quadrant quadrant--topleft" id="quadrant1">
 									<a class="mentor mentor3" th:href="@{/mentors/3}">
 										<div class="mentor__img"><img alt="mentor3" th:src="@{/img/mentors/mentor3-thumbnail.jpg}" src="../../static/img/mentors/mentor3-thumbnail.jpg"></div>
 									</a>
@@ -98,7 +98,7 @@
 										<div class="mentor__img"><img alt="mentor4" th:src="@{/img/mentors/mentor4-thumbnail.jpg}" src="../../static/img/mentors/mentor4-thumbnail.jpg"></div>
 									</a>
 								</div>
-								<div class="quadrant quadrant--topright">
+								<div class="quadrant quadrant--topright" id="quadrant2">
 									<a class="mentor mentor1" th:href="@{/mentors/1}">
 										<div class="mentor__img"><img alt="mentor1" th:src="@{/img/mentors/mentor1-thumbnail.jpg}" src="../../static/img/mentors/mentor1-thumbnail.jpg"></div>
 									</a>
@@ -106,7 +106,7 @@
 										<div class="mentor__img"><img alt="mentor2" th:src="@{/img/mentors/mentor2-thumbnail.jpg}" src="../../static/img/mentors/mentor2-thumbnail.jpg"></div>
 									</a>
 								</div>
-								<div class="quadrant quadrant--bottomleft">
+								<div class="quadrant quadrant--bottomleft" id="quadrant3">
 									<a class="mentor mentor5" th:href="@{/mentors/5}">
 										<div class="mentor__img"><img alt="mentor5" th:src="@{/img/mentors/mentor5-thumbnail.jpg}" src="../../static/img/mentors/mentor5-thumbnail.jpg"></div>
 									</a>
@@ -114,7 +114,7 @@
 										<div class="mentor__img"><img alt="mentor6" th:src="@{/img/mentors/mentor6-thumbnail.jpg}" src="../../static/img/mentors/mentor6-thumbnail.jpg"></div>
 									</a>
 								</div>
-								<div class="quadrant quadrant--bottomright">
+								<div class="quadrant quadrant--bottomright" id="quadrant4">
 									<a class="mentor mentor7" th:href="@{/mentors/7}">
 										<div class="mentor__img"><img alt="mentor7" th:src="@{/img/mentors/mentor7-thumbnail.jpg}" src="../../static/img/mentors/mentor7-thumbnail.jpg"></div>
 									</a>
@@ -139,5 +139,81 @@
 		</div>
 	</main>
 	<footer th:replace="common/footer :: footer"></footer>
+  <div class="mentors--mobile" id="mask1">
+    <a class="mentor--mobile" th:href="@{/mentors/3}">
+      <div class="mentor__img--mobile"><img alt="mentor3" th:src="@{/img/mentors/mentor3-thumbnail.jpg}" src="../../static/img/mentors/mentor3-thumbnail.jpg"></div>
+    </a>
+    <a class="mentor--mobile" th:href="@{/mentors/4}">
+      <div class="mentor__img--mobile"><img alt="mentor4" th:src="@{/img/mentors/mentor4-thumbnail.jpg}" src="../../static/img/mentors/mentor4-thumbnail.jpg"></div>
+    </a>
+  </div>
+  <div class="mentors--mobile" id="mask2">
+    <a class="mentor--mobile" th:href="@{/mentors/1}">
+      <div class="mentor__img--mobile"><img alt="mentor1" th:src="@{/img/mentors/mentor1-thumbnail.jpg}" src="../../static/img/mentors/mentor1-thumbnail.jpg"></div>
+    </a>
+    <a class="mentor--mobile" th:href="@{/mentors/2}">
+      <div class="mentor__img--mobile"><img alt="mentor2" th:src="@{/img/mentors/mentor2-thumbnail.jpg}" src="../../static/img/mentors/mentor2-thumbnail.jpg"></div>
+    </a>
+  </div>
+  <div class="mentors--mobile" id="mask3">
+    <a class="mentor--mobile" th:href="@{/mentors/5}">
+      <div class="mentor__img--mobile"><img alt="mentor5" th:src="@{/img/mentors/mentor5-thumbnail.jpg}" src="../../static/img/mentors/mentor5-thumbnail.jpg"></div>
+    </a>
+    <a class="mentor--mobile" th:href="@{/mentors/6}">
+      <div class="mentor__img--mobile"><img alt="mentor6" th:src="@{/img/mentors/mentor6-thumbnail.jpg}" src="../../static/img/mentors/mentor6-thumbnail.jpg"></div>
+    </a>
+  </div>
+  <div class="mentors--mobile" id="mask4">
+    <a class="mentor--mobile" th:href="@{/mentors/7}">
+      <div class="mentor__img--mobile"><img alt="mentor7" th:src="@{/img/mentors/mentor7-thumbnail.jpg}" src="../../static/img/mentors/mentor7-thumbnail.jpg"></div>
+    </a>
+    <a class="mentor--mobile" th:href="@{/mentors/8}">
+      <div class="mentor__img--mobile"><img alt="mentor8" th:src="@{/img/mentors/mentor8-thumbnail.jpg}" src="../../static/img/mentors/mentor8-thumbnail.jpg"></div>
+    </a>
+  </div>
+	<script type="text/javascript">
+	$(() => {
+		const $quad1 = $('#quadrant1'),
+		$quad2 = $('#quadrant2'),
+		$quad3 = $('#quadrant3'),
+		$quad4 = $('#quadrant4'),
+		$mask1 = $('#mask1'),
+		$mask2 = $('#mask2'),
+		$mask3 = $('#mask3'),
+		$mask4 = $('#mask4');
+	  $quad1.on('click', () => {
+	    if ($(window).width() < 800) {
+	      $mask1.addClass('active');
+	    }
+	  });
+	  $mask1.on('click', () => {
+	    $mask1.removeClass('active');
+	  });
+	  $quad2.on('click', () => {
+	    if ($(window).width() < 800) {
+	      $mask2.addClass('active');
+	    }
+	  });
+	  $mask2.on('click', () => {
+	    $mask2.removeClass('active');
+	  });
+	  $quad3.on('click', () => {
+	    if ($(window).width() < 800) {
+	      $mask3.addClass('active');
+	    }
+	  });
+	  $mask3.on('click', () => {
+	    $mask3.removeClass('active');
+	  });
+	  $quad4.on('click', () => {
+		  if ($(window).width() < 800) {
+			  $mask4.addClass('active');
+			}
+		});
+	  $mask4.on('click', () => {
+		  $mask4.removeClass('active');
+		});
+	});
+	</script>
 </body>
 </html>
