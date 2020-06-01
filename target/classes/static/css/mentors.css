@@ -120,8 +120,6 @@ section::before {
 	background-image: url('https://dancers-career-2019-stg.herokuapp.com/img/mentors/type4.png');
 }
 
-
-/* ----- map ----- */
 .index {
 	display: flex;
 	justify-content: space-around;
@@ -131,6 +129,8 @@ section::before {
 	width: 30%;
 }
 
+
+/* ----- map ----- */
 .map {
 	display: flex;
 	justify-content: space-between;
@@ -144,9 +144,6 @@ section::before {
 
 .map__graph {
 	padding: 9% 5% 20% 24%;
-}
-
-.map__graph {
 	line-height: 0;
 	background-image: url('https://dancers-career-2019-stg.herokuapp.com/img/mentors/axis.png');
 	background-repeat: no-repeat;

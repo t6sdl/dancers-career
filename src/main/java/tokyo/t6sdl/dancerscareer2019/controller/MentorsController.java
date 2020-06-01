@@ -38,20 +38,20 @@ public class MentorsController {
 		return "mentors/index";		
 	}
 	
-	@RequestMapping("/{mentorId}")
-	public String show(@PathVariable("mentorId") Integer mentorId, Model model) {
-		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
-		if (Objects.equals(account, null)) {
-			model.addAttribute("header", "for-stranger");
-		} else if (account.isAdmin()) {
-			model.addAttribute("header", "for-admin");
-		} else {
-			model.addAttribute("header", "for-user");
-		}
-		model.addAttribute("mentorId", mentorId);
-		setMentor(mentorId, model);
-		return "mentors/show";
-	}
+//	@RequestMapping("/{mentorId}")
+//	public String show(@PathVariable("mentorId") Integer mentorId, Model model) {
+//		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
+//		if (Objects.equals(account, null)) {
+//			model.addAttribute("header", "for-stranger");
+//		} else if (account.isAdmin()) {
+//			model.addAttribute("header", "for-admin");
+//		} else {
+//			model.addAttribute("header", "for-user");
+//		}
+//		model.addAttribute("mentorId", mentorId);
+//		setMentor(mentorId, model);
+//		return "mentors/show";
+//	}
 	
 	private void setMentor(int mentorId, Model model) {
 		Map<String, String> mentorInfo = MENTORS.get(mentorId - 1);
