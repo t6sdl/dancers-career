@@ -25,6 +25,7 @@ import com.vladsch.flexmark.ext.emoji.EmojiExtension;
 import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughExtension;
 import com.vladsch.flexmark.ext.ins.InsExtension;
 import com.vladsch.flexmark.ext.tables.TablesExtension;
+import com.vladsch.flexmark.ext.toc.TocExtension;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.util.ast.Node;
@@ -43,6 +44,7 @@ public class NewsController {
 	private final SecurityService securityService;
 	private final AccountService accountService;
 	private final List<Map<String, Object>> newsList = generateNewsList();
+	private final Map<Integer, Map<String, Object>> newsMap = generateNewsMap();
 
 	@RequestMapping()
 	public String index(Model model) {
@@ -76,7 +78,8 @@ public class NewsController {
 						EmojiExtension.create(),
 						InsExtension.create(),
 						StrikethroughExtension.create(),
-						TablesExtension.create()
+						TablesExtension.create(),
+						TocExtension.create()
 				));
 		options.set(HtmlRenderer.SOFT_BREAK, "<br />\n");
 		Parser parser = Parser.builder(options).build();
@@ -92,16 +95,25 @@ public class NewsController {
 		Node document = parser.parse(lines.stream().collect(Collectors.joining("\n")));
 		String html = renderer.render(document);
 		model.addAttribute("md", html);
-		model.addAttribute("title", "ダンサー向け就活セミナーが開催されます！");
-		model.addAttribute("updated_at", LocalDate.of(2019, 2, 13));
+		model.addAttribute("id", newsId);
+		model.addAttribute("title", newsMap.get(newsId).get("title"));
+		model.addAttribute("updated_at", newsMap.get(newsId).get("updated_at"));
 		return "news/show";
 	}
 	
 	private List<Map<String, Object>> generateNewsList() {
 		List<Map<String, Object>> newsList = new ArrayList<Map<String, Object>>();
-		List<Integer> ids = Arrays.asList(1, 11);
-		List<String> titles = Arrays.asList("ダンサー向け就活セミナーが開催されます！", "第1回「人事がナットクするダンスの伝え方セミナー」レポート");
-		List<LocalDate> datetimes = Arrays.asList(LocalDate.of(2018, 12, 6), LocalDate.of(2019, 2, 6));
+		List<Integer> ids = Arrays.asList(1, 11, 21, 31, 41, 51, 61);
+		List<String> titles = Arrays.asList(
+				"ダンサー向け就活セミナーが開催されます！",
+				"第1回「人事がナットクするダンスの伝え方セミナー」レポート",
+				"【19卒ダンキャリ利用者インタビュー第1弾】〜就活ダルいと言っていた僕が今、仕事を楽しんでいる理由〜",
+				"【19卒ダンキャリ利用者インタビュー第2弾】〜化粧品メーカーはただの憧れでしかなかった〜",
+				"【19卒ダンキャリ利用者インタビュー第3弾】〜何にもわからない状態からベストマッチな会社へ〜",
+				"「ダンスの良さを伝えたら大手メーカーの面接落ちた」日本最大規模のダンスサークル代表とジャンルリーダーが語る偽りのない就活談〜前編〜",
+				"「就活を終えた今だから思うダンサー人材の売り込み方」日本最大規模のダンスサークル代表とジャンルリーダーが語る偽りのない就活談〜後編〜"
+			);
+		List<LocalDate> datetimes = Arrays.asList(LocalDate.of(2018, 12, 6), LocalDate.of(2019, 2, 6), LocalDate.of(2019, 12, 18), LocalDate.of(2019, 12, 18), LocalDate.of(2019, 12, 18), LocalDate.of(2019, 12, 18), LocalDate.of(2019, 12, 18));
 		for (int i = 0; i < ids.size(); i++) {
 			Map<String, Object> news = new HashMap<String, Object>();
 			news.put("id", ids.get(i));
@@ -109,11 +121,19 @@ public class NewsController {
 			news.put("updated_at", datetimes.get(i));
 			newsList.add(news);
 		}
+		Map<Integer, Map<String, Object>> newsMap = new HashMap<Integer, Map<String, Object>>();
+		newsList.forEach((n) -> { newsMap.put((Integer) n.get("id"), n); });
 		return newsList.stream().sorted((n1, n2) -> {
 			LocalDate updated_at1 = (LocalDate) n1.get("updated_at");
 			LocalDate updated_at2 = (LocalDate) n2.get("updated_at");
 			int ret = updated_at2.compareTo(updated_at1);
 			return ret == 0 ? -1 : ret;
 		}).collect(Collectors.toList());
+	}
+	
+	private Map<Integer, Map<String, Object>> generateNewsMap() {
+		Map<Integer, Map<String, Object>> newsMap = new HashMap<Integer, Map<String, Object>>();
+		newsList.forEach((n) -> { newsMap.put((Integer) n.get("id"), n); });
+		return newsMap;
 	}
 }
