@@ -19,13 +19,3 @@ h1 > i {
 	max-width: 480px;
 	width: 100%;
 }
-
-.inner-link {
-  display: inline-block;
-  color: #808080;
-}
-
-.inner-link:hover {
-  color: #333;
-  text-decoration: underline;
-}

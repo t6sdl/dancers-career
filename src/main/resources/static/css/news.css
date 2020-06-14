@@ -131,43 +131,6 @@
 	border-bottom: 3px solid #426579;
 }
 
-.markdown a:not(.button) {
-	color: blue;
-	word-break: break-all;
-}
-
-.markdown a.link--block {
-	position: relative;
-	display: inline-block;
-	margin: .3em auto;
-}
-
-.markdown a.link--blank::before {
-	content: '\f35d';
-	font-family: 'Font Awesome 5 Free';
-	font-weight: bold;
-	display: inline-block;
-	width: 1.5em;
-}
-
-.markdown a.link--block::after {
-	content: '';
-	position: absolute;
-	bottom: -.3em;
-	left: 0;
-	right: 0;
-	display: block;
-	margin: 0 auto;
-	width: 0;
-	height: 2px;
-	background: blue;
-	transition: .2s ease-out;
-}
-
-.markdown a.link--block:hover::after {
-	width: 100%;
-}
-
 .markdown blockquote {
 	margin-left: 0;
 	margin-right: 0;

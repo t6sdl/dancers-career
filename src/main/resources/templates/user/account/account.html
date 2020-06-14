@@ -24,7 +24,7 @@
 		    <div class="form-2-items">
 		      <div class="form-item form-item--wide">
 		        <p style="word-break:break-all;">[[${email}]]<br><span th:unless="${validEmail}" class="hazard"><i class="fas fa-exclamation-circle"></i>メールアドレス未確認</span><span th:if="${validEmail}" class="safety"><i class="fas fa-check-circle"></i>メールアドレス確認済</span></p>
-		        <p th:unless="${validEmail}" class="note">メールアドレスの確認はダンサーズキャリアから届くメールの「メールアドレスの確認」ボタンを押すことで完了します<br><a class="inner-link" th:href="@{/help/get-email}"><i class="far fa-question-circle"></i>メールが届かない</a></p>
+		        <p th:unless="${validEmail}" class="note">メールアドレスの確認はダンサーズキャリアから届くメールの「メールアドレスの確認」ボタンを押すことで完了します<br><a class="internal-link" th:href="@{/help/get-email}"><i class="far fa-question-circle"></i>メールが届かない</a></p>
 		      </div>
 		      <div class="form-item form-item--narrow">
 	          <a class="button button--primary" th:href="@{/user/account/change/email}">

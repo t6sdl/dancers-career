@@ -37,12 +37,11 @@ button {
 }
 
 h1.title {
-  margin: 1em 0;
+  margin: 1em 1em 1em 0;
 }
 
 h1.title > .subtitle {
   display: inline-block;
-  margin-left: 2em;
   font-size: .6em;
 }
 
@@ -146,6 +145,22 @@ img {
 
 .button--accent:hover {
 	background: #0000cd;
+}
+
+.internal-link, .external-link {
+  color: #4169e1;
+  border-bottom: 1px solid transparent;
+}
+
+.internal-link:hover, .external-link:hover {
+  color: #808080;
+  border-color: #808080;
+}
+
+.external-link::before {
+  content: '\f35d  ';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: bold;
 }
 
 .show-m {

@@ -80,8 +80,19 @@ section {
   padding-left: 3rem;
 }
 
-#procedure .step .content > p > span {
-  font-size: .8em;
+#procedure .step .content .remark {
+  display: inline;
+	font-size: .8em;
+  color: #4169e1;
+  border-bottom: 1px solid;
+}
+
+#procedure .step .content .remark:hover {
+	color: #808080;
+}
+
+#procedure .step .content .remark::after {
+	content: ' >';
 }
 
 #procedure .step .img {
@@ -132,7 +143,7 @@ section {
   width: 2rem;
   height: 2rem;
   filter: drop-shadow(0 2px 2px #808080);
-  background-image: url('https://dancers-career-2019-stg.herokuapp.com/img/index/magnifier.png');
+  background-image: url('/img/index/magnifier.png');
   background-repeat: no-repeat;
   background-size: contain;
   transition: ease-out .2s;

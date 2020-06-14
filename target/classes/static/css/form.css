@@ -181,22 +181,6 @@ p.invalid {
 	color: #ff0000;
 }
 
-.inner-link, .outer-link {
-	display: inline-block;
-	color: #808080;
-}
-
-.inner-link:hover, .outer-link:hover {
-	color: #333;
-	text-decoration: underline;
-}
-
-.outer-link::before {
-	content: '\f35d';
-	font-family: 'Font Awesome 5 Free';
-	font-weight: bold;
-}
-
 .exp-index {
 	display: grid;
 	grid-template-columns: 1fr;

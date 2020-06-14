@@ -20,7 +20,7 @@
 			<div class="articles">
 				<article th:each="news : ${newsList}">
 					<a th:href="@{/news/__${news.get('id')}__}">
-						<div class="article__img" th:object="${#httpServletRequest}" th:style="'background-image: url(' + *{scheme} + '://' + *{serverName} + ':' + *{serverPort} + '/img/news/' + ${news.get('id')} + '/card.jpg)'"></div>
+						<div class="article__img" th:style="'background-image: url(/img/news/' + ${news.get('id')} + '/card.jpg)'"></div>
 						<div class="article__body">
 							<h2 class="article__title" th:text="${news.get('title')}"></h2>
 							<div class="article__footer">

@@ -99,16 +99,6 @@
   font-size: 18px;
 }
 
-.inner-link {
-  display: inline-block;
-  color: #808080;
-}
-
-.inner-link:hover {
-  color: #333;
-  text-decoration: underline;
-}
-
 @media (min-width: 600px) {
   .exp-info .table {
     display: flex;
