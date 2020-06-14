@@ -119,19 +119,36 @@ section {
 }
 
 #motive .concept {
-  writing-mode: vertical-rl;
-  -ms-writing-mode: tb-rl;
-}
-
-#motive h2 {
   margin-left: 0;
   font-size: 1.8em;
   word-break: keep-all;
+  writing-mode: vertical-rl;
+  -ms-writing-mode: tb-rl;
 }
 
 #motive p {
   margin: 1.5em 0;
   font-size: .9em;
+}
+
+/* ----- clients ----- */
+#clients .logos {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin: 0 auto;
+	width: 100%;
+	max-width: 1000px;
+}
+
+#clients .logo {
+	margin: 1em;
+	width: 6em;
+}
+
+#clients .pretentious {
+	font-size: .8em;
+	text-align: center;
 }
 
 /* ----- search ----- */
