@@ -37,11 +37,12 @@ button {
 }
 
 h1.title {
-  margin: 1em 1em 1em 0;
+  margin: 1em 0;
 }
 
 h1.title > .subtitle {
   display: inline-block;
+  margin-left: 1em;
   font-size: .6em;
 }
 
@@ -294,7 +295,7 @@ header .lower .nav-link + ul {
   position: absolute;
   top: 1em;
   left: 100vw;
-  padding: .25em 0;
+  padding: 0;
   width: max-content;
   transition: left 0s ease .4s;
 }
@@ -310,20 +311,29 @@ header .lower .nav-link + ul:hover {
 
 header .lower .nav-link + ul .nav-sublink {
   display: block;
-  padding: .25em 1em;
+  padding: .3em 2em;
   opacity: 0;
-  transform: translateX(-1em);
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 1) 2em, rgba(255, 255, 255, 1) calc(100% - 2em), transparent);
+  transform: translateX(-2em);
   transition: .4s;
+}
+
+header .lower .nav-link + ul li:first-of-type .nav-sublink {
+  padding-top: .6em;
+}
+
+header .lower .nav-link + ul li:last-of-type .nav-sublink {
+  padding-bottom: .6em;
 }
 
 header .lower .nav-link:hover + ul .nav-sublink {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateX(-1em);
 }
 
 header .lower .nav-link + ul:hover .nav-sublink {
   opacity: 1;
-  transform: translateX(0);
+  transform: translateX(-1em);
 }
 
 header .lower .nav-link + ul .nav-sublink > span {
