@@ -313,7 +313,7 @@ header .lower .nav-link + ul .nav-sublink {
   display: block;
   padding: .3em 2em;
   opacity: 0;
-  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 1) 2em, rgba(255, 255, 255, 1) calc(100% - 2em), transparent);
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 2em, rgba(255, 255, 255, 1) calc(100% - 2em), rgba(255, 255, 255, 0));
   transform: translateX(-2em);
   transition: .4s;
 }
