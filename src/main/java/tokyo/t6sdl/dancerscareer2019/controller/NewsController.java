@@ -103,17 +103,16 @@ public class NewsController {
 	
 	private List<Map<String, Object>> generateNewsList() {
 		List<Map<String, Object>> newsList = new ArrayList<Map<String, Object>>();
-		List<Integer> ids = Arrays.asList(1, 11, 21, 31, 41, 51, 61);
+		List<Integer> ids = Arrays.asList(1, 21, 31, 41, 51, 61);
 		List<String> titles = Arrays.asList(
 				"ダンサー向け就活セミナーが開催されます！",
-				"第1回「人事がナットクするダンスの伝え方セミナー」レポート",
 				"【19卒ダンキャリ利用者インタビュー第1弾】〜就活ダルいと言っていた僕が今、仕事を楽しんでいる理由〜",
 				"【19卒ダンキャリ利用者インタビュー第2弾】〜化粧品メーカーはただの憧れでしかなかった〜",
 				"【19卒ダンキャリ利用者インタビュー第3弾】〜何にもわからない状態からベストマッチな会社へ〜",
 				"「ダンスの良さを伝えたら大手メーカーの面接落ちた」日本最大規模のダンスサークル代表とジャンルリーダーが語る偽りのない就活談〜前編〜",
 				"「就活を終えた今だから思うダンサー人材の売込み方」日本最大規模のダンスサークル代表とジャンルリーダーが語る偽りのない就活談〜後編〜"
 			);
-		List<LocalDate> datetimes = Arrays.asList(LocalDate.of(2018, 12, 6), LocalDate.of(2019, 2, 6), LocalDate.of(2019, 12, 18), LocalDate.of(2019, 12, 18), LocalDate.of(2019, 12, 18), LocalDate.of(2019, 12, 18), LocalDate.of(2019, 12, 18));
+		List<LocalDate> datetimes = Arrays.asList(LocalDate.of(2018, 12, 6), LocalDate.of(2019, 12, 18), LocalDate.of(2019, 12, 18), LocalDate.of(2019, 12, 18), LocalDate.of(2019, 12, 18), LocalDate.of(2019, 12, 18));
 		for (int i = 0; i < ids.size(); i++) {
 			Map<String, Object> news = new HashMap<String, Object>();
 			news.put("id", ids.get(i));
