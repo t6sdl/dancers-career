@@ -29,7 +29,7 @@
 			<article class="news">
 				<div>
 					<div class="header">
-						<time th:datetime="${updated_at}" th:object="${updated_at}">[[*{year}]]年[[*{monthValue}]]月[[*{dayOfMonth}]]日</time><br>
+						<time th:datetime="${updatedAt}" th:object="${updatedAt}">[[*{year}]]年[[*{monthValue}]]月[[*{dayOfMonth}]]日</time><br>
 						<h1 th:text="${title}"></h1>
 						<ul class="share">
 							<li class="share__button facebook"><a th:href="'http://www.facebook.com/share.php?u=' + @{__${#httpServletRequest.requestURL}__}" rel="nofollow" target="_blank"><i class="fab fa-facebook-f"></i> シェア</a></li>

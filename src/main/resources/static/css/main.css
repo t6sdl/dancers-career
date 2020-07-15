@@ -80,8 +80,8 @@ img {
 .button {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 0 1em;
-  line-height: 3;
   font-size: 1em;
   font-weight: bold;
   cursor: pointer;
@@ -89,10 +89,12 @@ img {
 
 .button__text {
 	display: block;
+	margin: .5em 0;
 }
 
 .button__icon {
 	display: block;
+	margin-left: .5em;
 	line-height: 2;
 	font-size: 1.5em;
 	transition: .2s;

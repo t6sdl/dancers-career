@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.vladsch.flexmark.ext.attributes.AttributesExtension;
 import com.vladsch.flexmark.ext.autolink.AutolinkExtension;
 import com.vladsch.flexmark.ext.emoji.EmojiExtension;
+import com.vladsch.flexmark.ext.footnotes.FootnoteExtension;
 import com.vladsch.flexmark.ext.gfm.strikethrough.StrikethroughExtension;
 import com.vladsch.flexmark.ext.ins.InsExtension;
 import com.vladsch.flexmark.ext.tables.TablesExtension;
@@ -76,6 +77,7 @@ public class NewsController {
 						AttributesExtension.create(),
 						AutolinkExtension.create(),
 						EmojiExtension.create(),
+						FootnoteExtension.create(),
 						InsExtension.create(),
 						StrikethroughExtension.create(),
 						TablesExtension.create(),
@@ -97,35 +99,46 @@ public class NewsController {
 		model.addAttribute("md", html);
 		model.addAttribute("id", newsId);
 		model.addAttribute("title", newsMap.get(newsId).get("title"));
-		model.addAttribute("updated_at", newsMap.get(newsId).get("updated_at"));
+		model.addAttribute("updatedAt", newsMap.get(newsId).get("updatedAt"));
 		return "news/show";
 	}
 	
 	private List<Map<String, Object>> generateNewsList() {
 		List<Map<String, Object>> newsList = new ArrayList<Map<String, Object>>();
-		List<Integer> ids = Arrays.asList(1, 21, 31, 41, 51, 61);
-		List<String> titles = Arrays.asList(
+		List<Integer> ids = Arrays.asList(1, 21, 31, 41, 51, 61, 71);
+		List<String> shortTitles = Arrays.asList(
 				"ダンサー向け就活セミナーが開催されます！",
 				"【19卒ダンキャリ利用者インタビュー第1弾】〜就活ダルいと言っていた僕が今、仕事を楽しんでいる理由〜",
 				"【19卒ダンキャリ利用者インタビュー第2弾】〜化粧品メーカーはただの憧れでしかなかった〜",
 				"【19卒ダンキャリ利用者インタビュー第3弾】〜何にもわからない状態からベストマッチな会社へ〜",
 				"「ダンスの良さを伝えたら大手メーカーの面接落ちた」日本最大規模のダンスサークル代表とジャンルリーダーが語る偽りのない就活談〜前編〜",
-				"「就活を終えた今だから思うダンサー人材の売込み方」日本最大規模のダンスサークル代表とジャンルリーダーが語る偽りのない就活談〜後編〜"
+				"「就活を終えた今だから思うダンサー人材の売込み方」日本最大規模のダンスサークル代表とジャンルリーダーが語る偽りのない就活談〜後編〜",
+				"ダンスの経験で超難関企業リクルートに内定！IT新規事業、外資就活ドットコムの経営まで手がけるビジネスマンは元ダンサーだった！"
 			);
-		List<LocalDate> datetimes = Arrays.asList(LocalDate.of(2018, 12, 6), LocalDate.of(2019, 12, 18), LocalDate.of(2019, 12, 18), LocalDate.of(2019, 12, 18), LocalDate.of(2019, 12, 18), LocalDate.of(2019, 12, 18));
+		List<String> titles = Arrays.asList(
+				"ダンサー向け就活セミナーが開催されます！",
+				"【19卒ダンキャリ利用者インタビュー第1弾】〜就活ダルいと言っていた僕が今、仕事を楽しんでいる理由〜",
+				"【19卒ダンキャリ利用者インタビュー第2弾】〜化粧品メーカーはただの憧れでしかなかった〜 「好きを仕事にすることは違う」に気づけた本質的な就活の思考法。",
+				"【19卒ダンキャリ利用者インタビュー第3弾】〜何にもわからない状態からベストマッチな会社へ〜",
+				"「ダンスの良さを伝えたら大手メーカーの面接落ちた」日本最大規模のダンスサークル代表とジャンルリーダーが語る偽りのない就活談〜前編〜",
+				"「就活を終えた今だから思うダンサー人材の売込み方」日本最大規模のダンスサークル代表とジャンルリーダーが語る偽りのない就活談〜後編〜",
+				"ダンスの経験で超難関企業リクルートに内定！飲食店・美容室向けIT新規事業、外資就活ドットコムの経営まで手がけるビジネスマンは元ダンサーだった！"
+			);
+		List<LocalDate> dates = Arrays.asList(LocalDate.of(2018, 12, 6), LocalDate.of(2019, 12, 18), LocalDate.of(2019, 12, 18), LocalDate.of(2019, 12, 18), LocalDate.of(2019, 12, 18), LocalDate.of(2019, 12, 18), LocalDate.of(2019, 12, 18));
 		for (int i = 0; i < ids.size(); i++) {
 			Map<String, Object> news = new HashMap<String, Object>();
 			news.put("id", ids.get(i));
 			news.put("title", titles.get(i));
-			news.put("updated_at", datetimes.get(i));
+			news.put("shortTitle", shortTitles.get(i));
+			news.put("updatedAt", dates.get(i));
 			newsList.add(news);
 		}
 		Map<Integer, Map<String, Object>> newsMap = new HashMap<Integer, Map<String, Object>>();
 		newsList.forEach((n) -> { newsMap.put((Integer) n.get("id"), n); });
 		return newsList.stream().sorted((n1, n2) -> {
-			LocalDate updated_at1 = (LocalDate) n1.get("updated_at");
-			LocalDate updated_at2 = (LocalDate) n2.get("updated_at");
-			int ret = updated_at2.compareTo(updated_at1);
+			LocalDate updatedAt1 = (LocalDate) n1.get("updatedAt");
+			LocalDate updatedAt2 = (LocalDate) n2.get("updatedAt");
+			int ret = updatedAt2.compareTo(updatedAt1);
 			return ret == 0 ? -1 : ret;
 		}).collect(Collectors.toList());
 	}

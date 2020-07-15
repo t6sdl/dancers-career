@@ -22,9 +22,9 @@
 					<a th:href="@{/news/__${news.get('id')}__}">
 						<div class="article__img" th:style="'background-image: url(/img/news/' + ${news.get('id')} + '/card.jpg)'"></div>
 						<div class="article__body">
-							<h2 class="article__title" th:text="${news.get('title')}"></h2>
+							<h2 class="article__title" th:text="${news.get('shortTitle')}"></h2>
 							<div class="article__footer">
-								<div class="article__datetime" th:object="${news.get('updated_at')}">[[*{year}]]年[[*{monthValue}]]月[[*{dayOfMonth}]]日</div>
+								<div class="article__datetime" th:object="${news.get('updatedAt')}">[[*{year}]]年[[*{monthValue}]]月[[*{dayOfMonth}]]日</div>
 								<div class="article__direction"><i class="fas fa-arrow-right"></i></div>
 							</div>
 						</div>
