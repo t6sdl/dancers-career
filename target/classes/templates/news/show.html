@@ -40,6 +40,36 @@
 					<div class="markdown" th:utext="${md}"></div>
 				</div>
 			</article>
+			<div class="ads">
+			  <h2>ダンサーズキャリアではダンサーの就活を応援しています</h2>
+			  <hr>
+			  <div class="ads__links">
+			    <div class="ads__link">
+			      <div class="ads__description">
+			        <h3>ES/体験記</h3>
+			        <hr style="width:1.8em;margin-top:.2em;margin-bottom:.5em;border-width:1.5px;border-color:#426579;">
+			        <p>ダンサーの先輩たちのESを公開しています</p>
+			      </div>
+			      <div>
+			        <a class="button button--accent" th:href="@{/experiences?all&sort=0}">
+			          <span class="button__text">ESを見てみる</span><i class="button__icon fas fa-arrow-right"></i>
+			        </a>
+			      </div>
+			    </div>
+			    <div class="ads__link">
+			      <div class="ads__description">
+			        <h3>メンター制度</h3>
+              <hr style="width:1.8em;margin-top:.2em;margin-bottom:.5em;border-width:1.5px;border-color:#426579;">
+			        <p>ダンサーの内定者たちがメンターとなって就活相談に乗ります</p>
+			      </div>
+            <div>
+              <a class="button button--accent" th:href="@{/mentors}">
+                <span class="button__text">就活相談をしてみる</span><i class="button__icon fas fa-arrow-right"></i>
+              </a>
+            </div>
+			    </div>
+			  </div>
+			</div>
 		</div>
 	</main>
 	<footer th:replace="common/footer :: footer"></footer>
