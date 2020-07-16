@@ -19,8 +19,9 @@
 	      <div class="exp-container">
 	        <div class="exp-info">
 	          <div style="display:flex; justify-content:space-between">
-	         	<div><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></div>
-	            <div class="likes"><span th:text="*{likes}"></span> <span th:if="*{liked}"><i class="fas fa-heart"></i></span><span th:unless="*{liked}"><i class="far fa-heart"></i></span></div>
+	         	  <div><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></div>
+              <div th:unless="*{liked}" class="disliked"><span th:text="*{likes}"></span> <a th:href="@{/experiences/{expId}?like(expId=*{id})}"><i class="far fa-star"></i></a></div>
+              <div th:if="*{liked}" class="liked"><span th:text="*{likes}"></span> <a th:href="@{/experiences/{expId}?dislike(expId=*{id})}"><i class="fas fa-star"></i></a></div>
 	          </div>
 	          <h2>
 	            <span th:text="*{univName} == '' ? '非公開' : *{univName}"></span>
@@ -69,31 +70,13 @@
 	        </div>
 	      </div>
 	      <div>
-	        <a th:unless="*{liked}" class="button button--accent" th:href="@{/experiences/{expId}?like(expId=*{id})}">
-	          <span class="button__text">お気に入りに登録</span><i class="button__icon fas fa-arrow-right"></i>
-	        </a>
-	        <a th:if="*{liked}" class="button button--secondary" th:href="@{/experiences/{expId}?dislike(expId=*{id})}">
-	          <span class="button__text">お気に入りから削除</span><i class="button__icon fas fa-arrow-right"></i>
+	        <a th:unless="*{liked}" class="button button--accent" th:href="@{/mentors}">
+	          <span class="button__text">ESが書けたらメンターに添削してもらおう！</span><i class="button__icon fas fa-arrow-right"></i>
 	        </a>
 	      </div>
 	    </article>
     </div>
   </main>
   <footer th:replace="common/footer :: footer"></footer>
-  <script>
-  $(() => {
-	 const $likes = $('.likes'),
-	 $heart = $likes.children().children('.fa-heart');
-	 if ($heart.hasClass('far')) {
-		 $likes.children('span').css({
-			color: '#888888',		 
-		 });
-	 } else if ($heart.hasClass('fas')) {
-		 $likes.children('span').css({
-			 color: '#e64552',
-		 });
-	 }
-  });
-  </script>
 </body>
 </html>

@@ -37,6 +37,10 @@ nav.container ul {
   font-size: 14px;
 }
 
+a.exp-container:hover {
+  opacity: .7;
+}
+
 .exp-container h2 {
   margin: 0;
   text-align: left;
@@ -59,10 +63,11 @@ nav.container ul {
   content: ' / ';
 }
 
-.likes {
+.liked {
   min-width: 4em;
   text-align: right;
   font-size: 18px;
+  color: #fcc800;
 }
 
 @media (min-width: 480px) {

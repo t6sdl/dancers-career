@@ -20,8 +20,8 @@
 	      <div class="exp-container">
 	        <div class="exp-info">
 	          <div style="display:flex; justify-content:space-between">
-	         	<div><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></div>
-	            <div class="likes"><span th:text="*{likes}"></span> <span><i class="far fa-heart"></i></span></div>
+	            <div><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></div>
+	            <div class="disliked"><span th:text="*{likes}"></span> <span><i class="far fa-star"></i></span></div>
 	          </div>
 	          <h2>
 	            <span th:text="*{univName} == '' ? '非公開' : *{univName}"></span>
@@ -100,24 +100,14 @@
 	          </div>
 	        </div>
 	      </div>
+        <div>
+          <a th:unless="*{liked}" class="button button--accent" th:href="@{/mentors}">
+            <span class="button__text">ESが書けたらメンターに添削してもらおう！</span><i class="button__icon fas fa-arrow-right"></i>
+          </a>
+        </div>
 	    </article>
     </div>
   </main>
   <footer th:replace="common/footer :: footer"></footer>
-  <script>
-  $(() => {
-	 const $likes = $('.likes'),
-	 $heart = $likes.children().children('.fa-heart');
-	 if ($heart.hasClass('far')) {
-		 $likes.children('span').css({
-			color: '#888888',		 
-		 });
-	 } else if ($heart.hasClass('fas')) {
-		 $likes.children('span').css({
-			 color: '#e64552',
-		 });
-	 }
-  });
-  </script>
 </body>
 </html>
