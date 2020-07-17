@@ -202,33 +202,33 @@ section::before {
 }
 
 .mentor.mentor1 {
-	bottom: 25%;
-	left: 5%;
+  top: 10%;
+  right: 5%;
 }
 
 .mentor.mentor2 {
-	top: 10%;
-	right: 5%;
+	bottom: 5%;
+	left: 5%;
 }
 
 .mentor.mentor3 {
-	top: 5%;
-	right: 10%;
+	bottom: 2%;
+	left: 10%;
 }
 
 .mentor.mentor4 {
-	bottom: 35%;
+	top: 0%;
 	left: 5%;
 }
 
 .mentor.mentor5 {
 	bottom: 5%;
-	left: 5%;
+	right: 15%;
 }
 
 .mentor.mentor6 {
-	top: 25%;
-	right: 5%;
+	top: 5%;
+	right: 0%;
 }
 
 .mentor.mentor7 {
@@ -237,8 +237,13 @@ section::before {
 }
 
 .mentor.mentor8 {
-	bottom: 10%;
-	right: 5%;
+  bottom: 10%;
+  right: 5%;
+}
+
+.mentor.mentor9 {
+  bottom: 30%;
+  left: 10%;
 }
 
 .mentor__img {
@@ -451,7 +456,7 @@ section::before {
 	}
 
 	.quadrant:hover .mentor:hover {
-	  transform: scale(1.5);
+	  transform: scale(1.2);
 	  z-index: 100;
 	}
 	
@@ -460,7 +465,7 @@ section::before {
 	}
 
 	.quadrant:hover .mentor:hover .mentor__img {
-	  transform: scale(2.4) translateY(-2px);
+	  transform: scale(2) translateY(-2px);
 	  z-index: 101;
 	}
 }
