@@ -237,13 +237,18 @@ section::before {
 }
 
 .mentor.mentor8 {
-  bottom: 10%;
+  bottom: 0%;
   right: 5%;
 }
 
 .mentor.mentor9 {
   bottom: 30%;
   left: 10%;
+}
+
+.mentor.mentor10 {
+  top: 0%;
+  right: 15%;
 }
 
 .mentor__img {
