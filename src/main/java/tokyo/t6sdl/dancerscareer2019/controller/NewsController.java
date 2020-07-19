@@ -124,7 +124,7 @@ public class NewsController {
 				"「就活を終えた今だから思うダンサー人材の売込み方」日本最大規模のダンスサークル代表とジャンルリーダーが語る偽りのない就活談〜後編〜",
 				"ダンスの経験で超難関企業リクルートに内定！飲食店・美容室向けIT新規事業、外資就活ドットコムの経営まで手がけるビジネスマンは元ダンサーだった！"
 			);
-		List<LocalDate> dates = Arrays.asList(LocalDate.of(2018, 12, 6), LocalDate.of(2019, 12, 21), LocalDate.of(2019, 12, 28), LocalDate.of(2020, 1, 4), LocalDate.of(2019, 2, 15), LocalDate.of(2019, 2, 22), LocalDate.of(2020, 7, 19));
+		List<LocalDate> dates = Arrays.asList(LocalDate.of(2018, 12, 6), LocalDate.of(2019, 12, 21), LocalDate.of(2019, 12, 28), LocalDate.of(2020, 1, 4), LocalDate.of(2020, 2, 15), LocalDate.of(2020, 2, 22), LocalDate.of(2020, 7, 19));
 		for (int i = 0; i < ids.size(); i++) {
 			Map<String, Object> news = new HashMap<String, Object>();
 			news.put("id", ids.get(i));
