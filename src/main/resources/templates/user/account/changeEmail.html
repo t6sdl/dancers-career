@@ -6,38 +6,34 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <th:block th:replace="common/favicons :: favicons"></th:block>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20190206}" href="../../../static/css/main.css">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/window.css?update=20181110-2}" href="../../../static/css/window.css">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/form.css?update=20190206}" href="../../../static/css/form.css">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/user.css?update=20190206}" href="../../../static/css/user.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20200718}" href="../../../static/css/main.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/form.css?update=20200718}" href="../../../static/css/form.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/user.css?update=20200718}" href="../../../static/css/user.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../../static/js/openclose.js"></script>
 </head>
-<body class="formbg8">
+<body>
   <header th:replace="common/header :: for-user"></header>
   <main>
-    <article>
-      <div id="formdef">
-        <h1>メールアドレスの変更</h1>
-        <form th:action="@{/user/account/change/email}" method="post" th:object="${newEmailForm}">
-          <div>
-            <p th:if="${param.error}" class="hazard"><i class="fas fa-exclamation-circle"></i>パスワードが異なります</p>
-            <div>
-              <label></label>
-              <input type="password" th:field="*{currentPassword}" placeholder="現在のパスワード">
-            </div>
-            <div>
-              <label for="newEmail"></label>
-              <input type="email" th:field="*{newEmail}" th:errorclass="error" placeholder="新しいメールアドレス">
-              <p th:if="${#fields.hasErrors('newEmail')}" th:errors="*{newEmail}"></p>
-            </div>
-            <div>
-              <button type="submit" class="button">変更</button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </article>
+    <div class="container window--sm">
+      <h1>メールアドレスの変更</h1>
+      <form th:action="@{/user/account/change/email}" method="post" th:object="${newEmailForm}">
+        <div class="form-item">
+          <label class="form-item__label">現在のパスワード</label>
+          <input class="form-item__input input--short-text" type="password" th:field="*{currentPassword}" th:classappend="${param.keySet().contains('error') ? 'invalid' : ''}" placeholder="パスワード" required>
+          <p th:if="${param.error}" class="invalid">パスワードが異なります</p>
+        </div>
+        <div class="form-item">
+          <label class="form-item__label" for="newEmail">新しいメールアドレス</label>
+          <input class="form-item__input input--short-text" type="email" th:field="*{newEmail}" th:errorclass="invalid" placeholder="メールアドレス" required>
+          <p th:if="${#fields.hasErrors('newEmail')}" th:errors="*{newEmail}" class="invalid"></p>
+        </div>
+        <div class="form-item">
+          <button type="submit" class="button button--primary form-item__submit">
+            <span class="button__text">変更</span><i class="button__icon fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </form>
+    </div>
     <nav th:replace="user/common/tab :: tab"></nav>
   </main>
   <footer th:replace="common/footer :: footer"></footer>

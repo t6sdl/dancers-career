@@ -1,196 +1,267 @@
-  @font-face('utf-8'){}
+@font-face('utf-8'){}
+
+/* ----- common ----- */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+section {
+  padding: 3em 0;
+}
+
+/* ----- top ----- */
+#top .concept {
+  margin: 18vh auto 1em;
+  font-size: 9vw;
+}
+
+#top .description {
+  margin: 0 auto 16vh;
+  font-size: .9em;
+}
+
+/* ----- procedure ----- */
+#procedure h2 {
+  margin: 0;
+  padding: .5em 0;
+  background: #ffffff;
+  text-align: center;
+}
+
+#procedure .spots {
+  margin: 1em 0;
+}
+
+#procedure .spots > span {
+  display: block;
+  margin: .4rem auto;
+  background: #ffffff;
+  border-radius: 50%;
+}
+
+#procedure .spots > span.spot-s {
+  width: .6rem;
+  height: .6rem;
+}
+
+#procedure .spots > span.spot-m {
+  width: .8rem;
+  height: .8rem;
+}
+
+#procedure .spots > span.spot-l {
+  width: 1rem;
+  height: 1rem;
+}
+
+#procedure .steps {
+  margin: 3em 0;
+}
+
+#procedure .step {
+  margin: 3em 0;
+}
+
+#procedure .step .index {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+#procedure .step .index__marker {
+  display: inline-block;
+  margin-right: .4em;
+  width: 1.6em;
+  height: 1.6em;
+  vertical-align: text-bottom;
+}
+
+#procedure .step .content {
+  padding-left: 3rem;
+}
+
+#procedure .step .content .remark {
+  display: inline;
+	font-size: .8em;
+  color: #4169e1;
+  border-bottom: 1px solid;
+}
+
+#procedure .step .content .remark:hover {
+	color: #808080;
+}
+
+#procedure .step .content .remark::after {
+	content: ' >';
+}
+
+#procedure .step .img {
+  padding: 0 2.5rem;
+}
+
+/* ----- motive ----- */
+#motive .container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#motive .container::before {
+  content: 'MESSAGE';
+  position: absolute;
+  top: 10%;
+  left: 0;
+  font-size: 12vw;
+  font-weight: bold;
+  color: #ffffff;
+  z-index: -999;
+}
+
+#motive .concept {
+  margin-left: 0;
+  font-size: 1.8em;
+  word-break: keep-all;
+  writing-mode: vertical-rl;
+  -ms-writing-mode: tb-rl;
+}
+
+#motive p {
+  margin: 1.5em 0;
+  font-size: .9em;
+}
+
+/* ----- clients ----- */
+#clients .logos {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin: 0 auto;
+	width: 100%;
+	max-width: 1000px;
+}
+
+#clients .logo {
+	margin: 1em;
+	width: 6em;
+}
+
+#clients .pretentious {
+	font-size: .8em;
+	text-align: center;
+}
+
+/* ----- search ----- */
+#search {
+  display: none;
+  position: fixed;
+  bottom: 5%;
+  right: 7.7%;
+  width: 2rem;
+  height: 2rem;
+  filter: drop-shadow(0 2px 2px #808080);
+  background-image: url('/img/index/magnifier.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  transition: ease-out .2s;
+  animation: 4s linear 0s infinite normal search;
+}
+
+#search:hover {
+  width: 260px;
+  height: 260px;
+  animation: none;
+}
+
+#search a {
+  display: block;
+  position: absolute;
+  top: -1.5rem;
+  left: -3rem;
+  padding: .5rem 1rem;
+  border-radius: 2rem;
+  box-shadow: 0 2px 2px #696969;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  background: #ffffff;
+  opacity: 0;
+  transition: ease-out .2s;
+  transform: scale(0);
+}
+
+#search:hover a {
+  top: 68px;
+  left: 40px;
+  opacity: 1;
+  transform: scale(1);
+}
+
+#search a span {
+  display: block;
+  font-size: .8rem;
+  font-weight: normal;
+}
+
+#search:hover a:hover {
+	transform: scale(1.2);
+}
+
+@keyframes search {
+  0% {
+    transform: translate(0, 0);
+  }
+  5% {
+    transform: translate(0, -1rem);
+  }
+  10% {
+    transform: translate(0, 0);
+  }
+  15% {
+    transform: translate(0, -1rem);
+  }
+  20% {
+    transform: translate(0, 0);
+  }
+}
+
+/* ----- in case that width > 480px ----- */
+@media (min-width: 480px) {
+  #top .description {
+    font-size: 1em;
+  }
+}
+
+/* ----- in case that width > 800px ----- */
+@media (min-width: 800px) {
+  #top .concept {
+    font-size: 4vw;
+  }
+    
+  #procedure .step {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
   
-  /* ----- common ----- */
-  body {
-    margin: 0;
+  #procedure .step:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+  
+  #procedure .step > * {
+   width: 46%;
+    max-width: 26em;
+  }
+  
+  #procedure .step .txt {
+    padding: 1em 0;
+  }
+  
+  #procedure .step .img {
     padding: 0;
   }
-  main {
-    margin: 0;
-    padding: 0;
-  }
-  section {
-    padding: 1px;
-    width: 100%;
-  }
-  br.show-m {
-    display: none;
-  }
-
-  /* ----- sections ----- */
-  #top {
-    background-image: url('https://dancers-career.t6sdl.tokyo/img/top_s.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    color: #ffffff;
-    text-align: center;
-  }
-  #topics, #flow {
-    background: #ffffff;
-    text-align: center;
-  }
-  #motive {
-    background-image: url('https://dancers-career.t6sdl.tokyo/img/motive_s.png');
-    background-position: top;
-    background-repeat: no-repeat;
-    background-size: cover;
-    color: #ffffff;
-    text-align: justify;
-  }
-
-  /* ----- top ----- */
-  #catchphrase {
-    margin: 20vh auto 10vh;
-    font-size: 9vw;
-    font-family: Georgia, "\6E38\660E\671D\4F53", "YuMincho", "\6E38\660E\671D", "Yu Mincho", "\30D2\30E9\30AE\30CE\660E\671D  ProN W3", "Hiragino Mincho ProN W3", HiraMinProN-W3, "\30D2\30E9\30AE\30CE\660E\671D  ProN", "Hiragino Mincho ProN", "\30D2\30E9\30AE\30CE\660E\671D  Pro", "Hiragino Mincho Pro", "HGS \660E\671D E", "\FF2D\FF33\a0\FF30\660E\671D", "MS PMincho", serif;
-  }
-  #desc {
-    margin: 10vh auto 15vh;
-    font-size: .9em;
-  }
   
-  /* ----- cta-sec ----- */
-  .cta-box {
-    margin: 1.5em auto;
-    text-align: center;
+  #motive .container > * {
+    width: 48%;
   }
-  .cta-box div {
-    display: flex;
-    justify-content: center;
-    margin: 1em 0;
-  }
-  .cta-box .button {
-    margin: 0 1em;
-  }
-  
-  /* ----- topics ----- */
-  #topics .topics-box div a {
-    display: block;
-    margin: 0 auto;
-    width: 92vw;
-    height: 28vw;
-    max-width: 360px;
-    max-height: 108px;
-  }
-  
-  #topics .topics-box div:first-of-type a {
-    background-image: url('https://dancers-career.t6sdl.tokyo/img/topics/20181206/banner.jpg');
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-  }
-  
-  #topics .topics-box div:last-of-type a {
-    background-image: url('https://dancers-career.t6sdl.tokyo/img/topics/20190206/1.jpg');
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-  }
-  
-  #topics .topics-box > div {
-    margin-bottom: 1em;
-  }
-
-  /* ----- flow ----- */
-  #topics h2, #flow h2 {
-    font-size: 1.8em;
-  }
-  #flow p {
-    margin: 0;
-  }
-  #flow .steps {
-    margin: 3em 0;
-  }
-  #flow .step {
-    display: flex;
-    min-height: 80px;
-  }
-  #flow .step .index {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    width: 30%;
-    background: #426579;
-    color: #ffffff;
-    font-size: 1.5em;
-    font-weight: bold;
-    border-radius: 8px 0 0 8px;
-  }
-  #flow .step .content {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    padding: 1em;
-    width: 70%;
-    background: #ffffff;
-    border: 3px solid #426579;
-    border-left: none;
-    border-radius: 0 8px 8px 0;
-  }
-  #flow .down-arrow {
-    font-size: 2em;
-  }
-  #flow .goal {
-    color: #426579;
-    font-size: 2em;
-    font-weight: bold;
-  }
-
-  /* ----- motive ----- */
-  #motive h2 {
-    font-size: 1.8em;
-  }
-  #motive p {
-    font-size: .9em;
-  }
-
-  /* ----- in case that width > 480px ----- */
-  @media (min-width: 480px) {
-    br.hide-m {
-      display: none;
-    }
-    br.show-m {
-      display: block;
-    }
-    #catchphrase {
-      font-size: 2.4em;
-    }
-    #desc {
-      font-size: 1em;
-    }
-  }
-
-  /* ----- in case that width > 800px ----- */
-  @media (min-width: 800px) {
-    #top {
-      background-image: url('https://dancers-career.t6sdl.tokyo/img/top_l.png');
-    }
-    br.hide-l {
-      display: none;
-    }
-    #topics .topics-box {
-      display: flex;
-      justify-content: space-around;
-    }
-    #topics .topics-box > div {
-      width: 48%;
-    }
-    #how a.link-button {
-      margin: .5em auto;
-    }
-    #motive {
-      background-image: url('https://dancers-career.t6sdl.tokyo/img/motive_l.png');
-      text-align: center;
-    }
-  }
-  
-  /* ----- in case that width > 1200px -----  */
-  @media (min-width: 1200px) {
-    #top {
-      background-image: url('https://dancers-career.t6sdl.tokyo/img/top_xl.png');
-    }
-    #motive {
-      background-image: url('https://dancers-career.t6sdl.tokyo/img/motive_xl.png');
-    }
-  }
+}

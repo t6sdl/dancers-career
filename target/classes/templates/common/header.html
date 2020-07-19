@@ -7,7 +7,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" href="../../static/css/main.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../static/js/openclose.js"></script>
 </head>
 <body>
 <!-- 普通のユーザー用のヘッダー -->
@@ -15,41 +14,58 @@
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-54PS66M" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
-  <header id="for-user">
-    <div class="container">
-      <h1 id="logo"><a th:href="@{/}"><img alt="ダンサーのための就活サイト" th:src="@{/img/logo.png}" src="../../static/img/logo.png"></a></h1>
-      <nav id="menubar">
-        <ul>
-          <li><a th:href="@{/}"><span>トップ</span><br>Top</a></li>
-          <li><a th:href="@{/experiences?all&sort=0}"><span>ES/体験記を探す</span><br>Find ES/Experiences</a></li>
-          <li id="lastli"><a th:href="@{/user}"><span>マイページ</span><br>My Page</a></li>
-        </ul>
-      </nav>
-      <div id="logout">
-        <a th:href="@{/logout}">ログアウト</a>
+  <header id="for-user" ontouchstart="">
+    <div class="upper">
+      <div class="container">
+        <div class="header-logo">
+          <h1>
+            <a th:href="@{/}">
+              <img alt="ダンサーのための就活サイト" th:src="@{/img/common/logo.png}" src="../../static/img/common/logo.png">
+            </a>
+          </h1>
+        </div>
+        <div class="certification">
+          <div class="links">
+            <a th:href="@{/logout}" class="logout">Logout</a>
+          </div>
+          <div class="icon"><i class="far fa-user"></i></div>
+        </div>
       </div>
     </div>
-    <div id="menubar_hdr" class="close"></div>
-    <nav id="menubar-s">
-      <ul>
-        <li><a th:href="@{/}">トップ<br><span>Top</span></a></li>
-        <li><a th:href="@{/experiences?all&sort=0}">ES/体験記を探す<br><span>Find ES/Experiences</span></a></li>
-        <li><a th:href="@{/user}">マイページ<br><span>My Page</span></a></li>
-        <li id="lastli"><a th:href="@{/logout}">ログアウト<br><span>Logout</span></a></li>
-      </ul>
-    </nav>
-    <script type="text/javascript">
-    if (OCwindowWidth() <= 800) {
-      open_close("menubar_hdr", "menubar-s");
-    };
-    $(function(){
-      $(window).resize(function(){
-        if (OCwindowWidth() <= 800) {
-          open_close("menubar_hdr", "menubar-s");
-        }
-      });
-    });
-    </script>
+    <div class="lower">
+      <div class="container">
+        <nav>
+          <ul>
+            <li>
+              <a th:href="@{/news}" class="nav-link">News</a>
+            </li>
+            <li>
+              <a class="nav-link">Services</a>
+              <ul>
+                <li>
+                  <a th:href="@{/experiences?all&sort=0}" class="nav-sublink">
+                    Search ES/Experience
+                    <span>ES/体験記 検索</span>
+                  </a>
+                </li>
+                <li>
+                  <a th:href="@{/mentors}" class="nav-sublink">
+                    Career Support System
+                    <span>メンター制度</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a th:href="@{/about/contact}" class="nav-link">Contact</a>
+            </li>
+            <li>
+              <a th:href="@{/user}" class="nav-link">My Page</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
   </header>
 </th:block>
 
@@ -60,7 +76,7 @@
   <!-- End Google Tag Manager (noscript) -->
   <header id="for-admin" style="line-height:1.5;" class="sticky-top">
     <nav class="navbar navbar-expand-lg navbar-light bg-light align-items-lg-center align-items-stretch">
-      <h1 id="logo"><a th:href="@{/admin}" class="navbar-brand h-100 d-flex align-items-center"><img alt="ダンサーのための就活サイト" th:src="@{/img/logo.png}" src="../../static/img/logo.png"></a></h1>
+      <h1 id="logo"><a th:href="@{/admin}" class="navbar-brand h-100 d-flex align-items-center"><img alt="ダンサーのための就活サイト" th:src="@{/img/common/logo.png}" src="../../static/img/common/logo.png"></a></h1>
       <div class="d-lg-none ml-auto mr-3 mr-lg-0">
         <a class="btn btn-sm btn-success" style="line-height:1;" th:href="@{/logout}">
           <div class="lead"><i class="fas fa-sign-out-alt"></i></div>
@@ -113,12 +129,54 @@
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-54PS66M" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
-  <header id="for-stranger">
-    <div class="container">
-      <h1 id="logo"><a th:href="@{/}"><img alt="ダンサーのための就活サイト" th:src="@{/img/logo.png}" src="../../static/img/logo.png" class="header-logo"></a></h1>
-      <div id="login">
-        <a th:href="@{/signup}">新規登録</a>
-        <a th:href="@{/signin}">ログイン</a>
+  <header id="for-stranger" ontouchstart="">
+    <div class="upper">
+      <div class="container">
+        <div class="header-logo">
+          <h1>
+            <a th:href="@{/}">
+              <img alt="ダンサーのための就活サイト" th:src="@{/img/common/logo.png}" src="../../static/img/common/logo.png">
+            </a>
+          </h1>
+        </div>
+        <div class="certification">
+          <div class="links">
+            <a th:href="@{/signin}">Login</a>
+            <a th:href="@{/signup}">Create New Account</a>
+          </div>
+          <div class="icon"><i class="far fa-user"></i></div>
+        </div>
+      </div>
+    </div>
+    <div class="lower">
+      <div class="container">
+        <nav>
+          <ul>
+            <li>
+              <a th:href="@{/news}" class="nav-link">News</a>
+            </li>
+            <li>
+              <a class="nav-link">Services</a>
+              <ul>
+                <li>
+                  <a th:href="@{/experiences?all&sort=0}" class="nav-sublink">
+                    Search ES/Experience
+                    <span>ES/体験記 検索</span>
+                  </a>
+                </li>
+                <li>
+                  <a th:href="@{/mentors}" class="nav-sublink">
+                    Career Support System
+                    <span>メンター制度</span>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a th:href="@{/about/contact}" class="nav-link">Contact</a>
+            </li>
+          </ul>
+        </nav>
       </div>
     </div>
   </header>

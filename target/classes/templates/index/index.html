@@ -17,94 +17,133 @@
 	<meta name="twitter:card" content="summary">
 	<meta name="twitter:site" content="@T6SDL">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20190206}" href="../../static/css/main.css">
-	<link rel="stylesheet" type="text/css" th:href="@{/css/index.css?update=20190303}" href="../../static/css/index.css">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20200718}" href="../../static/css/main.css">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/index.css?update=20200718}" href="../../static/css/index.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-	<script type="text/javascript" th:src="@{/js/openclose.js}" src="../../static/js/openclose.js"></script>
 </head>
 <body>
 	<header th:replace="common/header :: ${header}"></header>
 	<main>
 		<section id="top">
 			<div class="container">
-				<h2 id="catchphrase">人事がナットクする<br class="hide-l">ダンスの伝え方。</h2>
-				<p id="desc">ダンサーズキャリアは、ダンサーの先輩たちが実際に就職活動で使った<br class="show-m">エントリーシート・面接体験記を公開するサービスです。</p>
+				<h2 class="concept">人事がナットクする<br class="hide-l">ダンスの伝え方。</h2>
+				<p class="description">ダンサーズキャリアは、ダンサーの先輩たちが実際に就職活動で使った<br class="show-m">エントリーシート・面接体験記を公開するサービスです。</p>
 			</div>
 		</section>
-		<section class="cta-sec">
-			<div class="container cta-box">
-				<div><a th:href="@{/experiences?all&sort=0}" class="button attract search">ES/体験記を探す</a></div>
-				<div th:if="${header == 'for-stranger'}"><a th:href="@{/signup}" class="button">新規登録</a><a th:href="@{/signin}" class="button">ログイン</a></div>
-			</div>
-		</section>
-		<section id="topics">
-			<div class="container">
-				<h2>TOPICS</h2>
-				<div class="topics-box">
-				  <div>
-		   	        <span>ダンサー向け就活セミナーが開催されます！</span>
-				    <a th:href="@{/topics/1}"></a>
-			      </div>
-				  <div>
-			        <span>セミナーレポート</span>
-				    <a th:href="@{/topics/11}"></a>
-				  </div>
-				</div>
-			</div>
-		</section>
-		<section id="flow">
+		<section id="procedure">
 			<div class="container">
 				<h2>面接に向けて準備しよう</h2>
+				<div class="spots">
+					<span class="spot-l"></span>
+					<span class="spot-m"></span>
+					<span class="spot-s"></span>
+				</div>
 				<div class="steps">
 					<div class="step">
-						<div class="index"><p>Step1</p></div>
-						<div class="content"><p>ダンサーズキャリアで自分の興味のあるES/体験記を探す</p></div>
+						<div class="txt">
+							<div class="index"><img class="index__marker" alt="step1" th:src="@{/img/index/step1-marker.png}" src="../../static/img/index/step1-marker.png">SEARCH</div>
+							<div class="content"><p>ダンサーズキャリアで<br>自分の興味のあるES/体験記を探す<br><a class="remark" th:href="@{/experiences?all&sort=0}">ES/体験記を探してみよう</a></p></div>
+						</div>
+						<div class="img">
+							<img alt="SPEAK" th:src="@{/img/index/step1.png}" src="../../static/img/index/step1.png">
+						</div>
 					</div>
-					<div class="down-arrow"><i class="fas fa-angle-down"></i></div>
 					<div class="step">
-						<div class="index"><p>Step2</p></div>
-						<div class="content"><p>見つけたESを参考にして自分の経験を言葉にする<br class="show-m">（ESには現役人事の方からのアドバイスも載っています）</p></div>
+						<div class="txt">
+							<div class="index"><img class="index__marker" alt="step2" th:src="@{/img/index/step2-marker.png}" src="../../static/img/index/step2-marker.png">ANALYSE</div>
+							<div class="content"><p>見つけたESを参考にして<br>自分の経験を言葉にする<br><a class="remark" th:href="@{/experiences?all&sort=0}">現役人事によるES添削も参考にしよう</a></p></div>
+						</div>
+						<div class="img">
+							<img alt="SPEAK" th:src="@{/img/index/step2.png}" src="../../static/img/index/step2.png">
+						</div>
 					</div>
-					<div class="down-arrow"><i class="fas fa-angle-down"></i></div>
 					<div class="step">
-						<div class="index"><p>Step3</p></div>
-						<div class="content"><p>ダンスを知らない人事への伝わりやすさを意識してESに書く</p></div>
+						<div class="txt">
+							<div class="index"><img class="index__marker" alt="step3" th:src="@{/img/index/step3-marker.png}" src="../../static/img/index/step3-marker.png">WRITE</div>
+							<div class="content"><p>ダンスを知らない人事への<br>伝わりやすさを意識してESを書く<br><a class="remark" th:href="@{/mentors}">メンター制度を利用して内定者に添削してもらおう</a></p></div>
+						</div>
+						<div class="img">
+							<img alt="SPEAK" th:src="@{/img/index/step3.png}" src="../../static/img/index/step3.png">
+						</div>
 					</div>
-					<div class="down-arrow"><i class="fas fa-angle-down"></i></div>
 					<div class="step">
-						<div class="index"><p>Step4</p></div>
-						<div class="content"><p>面接でどのように話すかを体験記を参考にしながら考える</p></div>
-					</div>
-					<div class="down-arrow"><i class="fas fa-angle-down"></i></div>
-					<div class="goal">
-						<p>いざ面接！</p>
+						<div class="txt">
+							<div class="index"><img class="index__marker" alt="step4" th:src="@{/img/index/step4-marker.png}" src="../../static/img/index/step4-marker.png">SPEAK</div>
+							<div class="content"><p>体験記を参考にしながら<br>面接で話す練習をする<br><a class="remark" th:href="@{/mentors}">メンター制度を利用して内定者に面接練習をしてもらおう</a></p></div>
+						</div>
+						<div class="img">
+							<img alt="SPEAK" th:src="@{/img/index/step4.png}" src="../../static/img/index/step4.png">
+						</div>
 					</div>
 				</div>
-				<div class="cta-box">
-					<div><a th:href="@{/experiences?all&sort=0}" class="button attract search">ES/体験記を探す</a></div>
-					<div th:if="${header == 'for-stranger'}"><a th:href="@{/signup}" class="button">新規登録</a><a th:href="@{/signin}" class="button">ログイン</a></div>
+				<div class="spots">
+					<span class="spot-s"></span>
+					<span class="spot-m"></span>
+					<span class="spot-l"></span>
 				</div>
+				<h2>いざ面接！！</h2>
 			</div>
 		</section>
 		<section id="motive">
 			<div class="container">
-				<h2>ダンスの話は簡単には伝わらない</h2>
-				<p>ダンスの経験を、準備せずにそのまま話してしまうと</p>
-				<p>「歴代最高のショーを作った、と言ってるけどそれはどうやって測ったの？何をもって歴代最高だと言えるの？」<br>「というかショー作りってそんなに大変なものなの？」</p>
-				<p>などと深堀りされた時に、答えられず落ちてしまうケースは珍しくありません。</p>
-				<p>ダンスをやっていない人に、ダンスの話を面接という短時間の場で伝え切るには準備が必要です。</p>
-				<p>体育会に負けず劣らずダンスに打ち込んだみなさんが就職活動でその経験をきちんと伝え、評価されて欲しい。</p>
-				<p>そんな世界を創るために私たちはこのメディアを立ち上げました。</p>
-				<p>本サイトを通して、1人でも多くのダンサーが就職活動を成功させることを願っています。</p>
+				<h2 class="concept">ダンスの話は簡単には伝わらない</h2>
+				<div class="description">
+					<p>ダンスの経験を、準備せずにそのまま話してしまうと</p>
+					<p>「歴代最高のショーを作った、と言ってるけどそれはどうやって測ったの？何をもって歴代最高だと言えるの？」<br>「というかショー作りってそんなに大変なものなの？」</p>
+					<p>などと深堀りされた時に、答えられず落ちてしまうケースは珍しくありません。</p>
+					<p>ダンスをやっていない人に、ダンスの話を面接という短時間の場で伝え切るには準備が必要です。</p>
+					<p>体育会に負けず劣らずダンスに打ち込んだみなさんが就職活動でその経験をきちんと伝え、評価されて欲しい。</p>
+					<p>そんな世界を創るために私たちはこのメディアを立ち上げました。</p>
+					<p>本サイトを通して、1人でも多くのダンサーが就職活動を成功させることを願っています。</p>
+				</div>
 			</div>
 		</section>
-		<section class="cta-sec">
-			<div class="container cta-box">
-				<div><a th:href="@{/experiences?all&sort=0}" class="button attract search">ES/体験記を探す</a></div>
-				<div th:if="${header == 'for-stranger'}"><a th:href="@{/signup}" class="button">新規登録</a><a th:href="@{/signin}" class="button">ログイン</a></div>
-			</div>
+		<section id="clients">
+		  <div class="container">
+		    <h2>＜取引先企業様＞</h2>
+		    <div class="logos">
+          <div class="logo"><img alt="MicroAd" th:src="@{/img/index/logos/2.png}"></div>
+          <div class="logo"><img alt="freee" th:src="@{/img/index/logos/3.png}"></div>
+          <div class="logo"><img alt="CCC" th:src="@{/img/index/logos/4.png}"></div>
+          <div class="logo"><img alt="Hajimari" th:src="@{/img/index/logos/5.png}"></div>
+          <div class="logo"><img alt="Gaiax" th:src="@{/img/index/logos/6.png}"></div>
+          <div class="logo"><img alt="Tsujikawa" th:src="@{/img/index/logos/7.png}"></div>
+          <div class="logo"><img alt="DearsBRAIN" th:src="@{/img/index/logos/9.png}"></div>
+          <div class="logo"><img alt="Leverages" th:src="@{/img/index/logos/10.png}"></div>
+          <div class="logo"><img alt="AGEHA" th:src="@{/img/index/logos/11.png}"></div>
+		    </div>
+		    <div class="pretentious">他多数の企業様とお取引させていただいております</div>
+		  </div>
 		</section>
+		<div id="search">
+		  <a th:href="@{/experiences?all&sort=0}">
+		    Search<br>ES/Experience
+		    <span>ES/体験記を探す</span>
+		  </a>
+		</div>
 	</main>
 	<footer th:replace="common/footer :: footer"></footer>
+	<script>
+		$(function() {
+			const $procedure = $('#procedure'),
+			$motive = $('#motive'),
+			$search = $('#search');
+			const magnifier = () => {
+				let scroll = $(window).scrollTop(),
+				procOffset = $procedure.offset().top,
+				motiveOffset = $motive.offset().top,
+				windowHeight = $(window).height();
+				if (procOffset - scroll <= windowHeight / 2 && motiveOffset - scroll >= windowHeight / 2) {
+					$search.fadeIn(200);
+				} else {
+					$search.fadeOut(200);
+				}
+			}
+			magnifier();
+			$(window).on('scroll', () => {
+				magnifier();
+			});
+		});
+	</script>
 </body>
 </html>

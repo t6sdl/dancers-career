@@ -24,6 +24,7 @@ public class MailMagazineService {
 	
 	@Scheduled(cron="0 0 18 * * 5", zone="Asia/Tokyo")
 	public void announceNewEs() {
+		if (System.getProperty("env", "development").equals("staging")) return;
 		List<Account> accounts = accountRepository.findForMassMailBy(1);
 		if (Objects.equals(accounts, null) || accounts.isEmpty()) return;
 		Map<String, Object> results = experienceRepository.findByCreatedAt();

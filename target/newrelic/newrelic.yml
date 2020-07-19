@@ -1,6 +1,6 @@
 # This file configures the New Relic Agent.  New Relic monitors
 # Java applications with deep visibility and low overhead.  For more details and additional
-# configuration options visit https://docs.newrelic.com/docs/java/java-agent-configuration.
+# configuration options visit https://docs.newrelic.com/docs/agents/java-agent/configuration/java-agent-configuration-config-file.
 #
 # <%= generated_for_user %>
 #
@@ -207,7 +207,7 @@ common: &default_settings
 
   # Distributed tracing lets you see the path that a request takes through your distributed system.
   # Enabling distributed tracing changes the behavior of some New Relic features, so carefully consult the transition
-  # guide before you enable this feature: https://docs.newrelic.com/docs/transition-guide-distributed-tracing
+  # guide before you enable this feature: https://docs.newrelic.com/docs/apm/distributed-tracing/getting-started/transition-guide-distributed-tracing
   # Default is false.
   distributed_tracing:
     enabled: false
@@ -238,7 +238,7 @@ common: &default_settings
 
     # By default the agent automatically inserts API calls in compiled JSPs to
     # inject the monitoring JavaScript into web pages. Not all rendering engines are supported.
-    # See https://docs.newrelic.com/docs/java/real-user-monitoring-in-java#manual_instrumentation
+    # See https://docs.newrelic.com/docs/agents/java-agent/instrumentation/new-relic-browser-java-agent#manual_instrumentation
     # for instructions to add these manually to your pages.
     # Set this attribute to false to turn off this behavior.
     auto_instrument: true
@@ -250,6 +250,10 @@ common: &default_settings
       enabled: false
 
     com.newrelic.instrumentation.spring-aop-2:
+      enabled: false
+
+    # This instrumentation reports metrics for resultset operations.
+    com.newrelic.instrumentation.jdbc-resultset:
       enabled: false
 
     # Classes loaded by classloaders in this list will not be instrumented.

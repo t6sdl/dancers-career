@@ -5,20 +5,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <th:block th:replace="common/favicons :: favicons"></th:block>
-  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20190206}" href="../../static/css/main.css">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/user.css?update=20190206}" href="../../static/css/user.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20200718}" href="../../static/css/main.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/user.css?update=20200718}" href="../../static/css/user.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../static/js/openclose.js"></script>
 </head>
 <body>
   <header th:replace="common/header :: for-user"></header>
   <main>
-    <h1 class="title">マイページ</h1>
-    <section class="container">
-      <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
-        <p th:text="|こんにちは ${familyName == null ? '名無しさん' : familyName + 'さん'}|"></p>
-      </div>
-    </section>
+    <div class="container">
+	    <h1 class="title">マイページ</h1>
+	    <section>
+	      <div style="display:flex; justify-content:space-between; flex-wrap:wrap;">
+	        <p th:text="|こんにちは ${familyName == null ? '名無しさん' : familyName + 'さん'}|"></p>
+	      </div>
+	    </section>
+    </div>
     <nav th:replace="user/common/tab :: tab"></nav>
   </main>
   <footer th:replace="common/footer :: footer"></footer>

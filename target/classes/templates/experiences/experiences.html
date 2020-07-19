@@ -7,77 +7,66 @@
   <meta name="description" content="ダンサーズキャリアは、ダンサーの先輩たちが実際に就職活動で使ったエントリーシート・面接体験記を公開するサービスです。ダンスをやっていない人に、ダンスの話を面接という短時間の場で伝え切るには準備が必要です。体育会に負けず劣らずダンスに打ち込んだみなさんが就職活動でその経験をきちんと伝え、評価されて欲しい。そんな世界を創るために私たちはこのメディアを立ち上げました。本サイトを通して、1人でも多くのダンサーが就職活動を成功させることを願っています。">
   <th:block th:replace="common/favicons :: favicons"></th:block>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20190206}" href="../../static/css/main.css">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/form.css?update=20190206}" href="../../static/css/form.css">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/experience.css?update=20190206}" href="../../static/css/experience.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20200718}" href="../../static/css/main.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/form.css?update=20200718}" href="../../static/css/form.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/experience.css?update=20200718}" href="../../static/css/experience.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../static/js/openclose.js"></script>
 </head>
 <body>
   <header th:replace="common/header :: ${header}"></header>
-  <main id="find-es">
-    <h1 class="title">ES/体験記 検索</h1>
-  	<div class="container">
-    <form th:action="@{/experiences}" method="get" th:object="${searchForm}" id="exp-form">
-      <div id="position-search">
-        <div class="how-to-search">役職検索</div>
-        <div class="items">
-          <div th:each="pos : ${positionList}" class="item">
-            <input type="checkbox" th:field="*{position}" th:value="${pos}">
-            <label th:for="${#ids.prev('position')}" th:text="${pos}"></label>
-          </div>
-        </div>
-      </div>
-      <div>
-        <button type="submit" name="by-position" value="by-position" class="button attract search">検索</button>
-      </div>
-      <input type="hidden" name="sort" value="0">
-    </form>
-    <section>
-      <div>
-        <p style="font-size:12px; color:#606468;"><i class="fas fa-search fa-fw"></i> 検索結果： <span th:text="${count}"></span> 件</p>
-      </div>
-      <article th:each="experience : ${experiences}" th:object="${experience}">
-        <a class="exp-container" th:href="@{/experiences/{experienceId}(experienceId=*{id})}">
-          <div class="exp-info">
-          	<div style="display:flex; justify-content:space-between">
-         	  <div><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></div>
-              <div class="likes"><span th:text="*{likes}"></span> <span th:if="*{liked}"><i class="fas fa-heart"></i></span><span th:unless="*{liked}"><i class="far fa-heart"></i></span></div>
-         	</div>
-            <h2 th:text="*{univName}"></h2>
-            <div><span th:text="*{graduatedIn} == '' ? '非公開' : *{graduatedIn} + ' 年卒'"></span>｜<span th:text="*{degree} == '' ? '非公開' : *{degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></div>
-            <hr>
-            <div class="table">
-              <div><strong>内定先</strong></div>
-              <div><span class="divide-slash" th:each="ofr : *{offer}" th:text="${ofr} == '' ? '非公開' : ${ofr}"></span></div>
-            </div>
-          </div>
-        </a>
-      </article>
-      <article th:if="${count == 0}">
-        <p style="text-align:center;">お探しのES/体験記は見つかりません</p>
-      </article>
-    </section>
+  <main>
+    <div class="container">
+	    <h1 class="title">Search ES/Experience<span class="subtitle">ES/体験記 検索</span></h1>
+	  	<div class="exp-index">
+	  	  <div>
+			    <form class="exp-search" th:action="@{/experiences}" method="get" th:object="${searchForm}">
+			      <div class="filter-set">
+			        <label class="filtered-by">役職検索</label>
+			        <div class="filters">
+	              <div class="form-item__checkbox filter" th:each="pos : ${positionList}">
+	                <input type="checkbox" th:field="*{position}" th:value="${pos}">
+	                <label th:for="${#ids.prev('position')}" th:text="${pos}"></label>
+	              </div>
+			        </div>
+			      </div>
+			      <div>
+			        <button type="submit" name="by-position" value="by-position" class="button button--accent form-item__submit">
+			          <span class="button__text">検索</span><i class="button__icon fas fa-arrow-right"></i>
+			        </button>
+			      </div>
+			      <input type="hidden" name="sort" value="0">
+			    </form>
+			  </div>
+		    <section>
+		      <div>
+		        <p style="font-size:12px; color:#606468;"><i class="fas fa-search fa-fw"></i> 検索結果： <span th:text="${count}"></span> 件</p>
+		      </div>
+		      <article th:each="experience : ${experiences}" th:object="${experience}">
+		        <a class="exp-container" th:href="@{/experiences/{experienceId}(experienceId=*{id})}">
+		          <div class="exp-info">
+		          	<div style="display:flex; justify-content:space-between">
+		         	    <div><span th:each="pos : *{position}" th:text="${pos}" class="position-tag"></span></div>
+                  <div th:unless="*{liked}" class="disliked"><span th:text="*{likes}"></span> <span><i class="far fa-star"></i></span></div>
+                  <div th:if="*{liked}" class="liked"><span th:text="*{likes}"></span> <span><i class="fas fa-star"></i></span></div>
+		         	  </div>
+		            <h2 th:text="*{univName}"></h2>
+		            <div><span th:text="*{graduatedIn} == '' ? '非公開' : *{graduatedIn} + ' 年卒'"></span>｜<span th:text="*{degree} == '' ? '非公開' : *{degree}"></span>｜<span th:text="*{major} == '' ? '非公開' : *{major}"></span>｜<span th:text="*{sex} == '' ? '非公開' : *{sex}"></span></div>
+		            <hr>
+		            <div class="table">
+		              <div><strong>内定先</strong></div>
+		              <div><span class="divide-slash" th:each="ofr : *{offer}" th:text="${ofr} == '' ? '非公開' : ${ofr}"></span></div>
+		            </div>
+		          </div>
+		        </a>
+		      </article>
+		      <article th:if="${count == 0}">
+		        <p style="text-align:center;">お探しのES/体験記は見つかりません</p>
+		      </article>
+		    </section>
+	    </div>
     </div>
   </main>
   <footer th:replace="common/footer :: footer"></footer>
   <script th:src="@{/js/submit.js}"></script>
-  <script>
-  $(() => {
-	 const $likes = $('.likes');
-	 $likes.each(function () {
-		 const $heart = $(this).children().children('.fa-heart');
-		 if ($heart.hasClass('far')) {
-			 $(this).children('span').css({
-				 color: '#888888',		 
-			 });
-		 } else if ($heart.hasClass('fas')) {
-			 $(this).children('span').css({
-				 color: '#e64552',
-			 });
-		 }
-	 });
-  });
-  </script>
 </body>
 </html>

@@ -94,6 +94,7 @@ public class UserPageController {
 		}
 		model.addAttribute("email", account.getEmail());
 		model.addAttribute("validEmail", account.isValidEmail());
+		model.addAttribute("needsMail", account.isEsUpdateNotification());
 		return "user/account/account";
 	}
 	

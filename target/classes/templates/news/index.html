@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>News｜ダンサーズキャリア</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="description" content="ダンサーズキャリアは、ダンサーの先輩たちが実際に就職活動で使ったエントリーシート・面接体験記を公開するサービスです。ダンスをやっていない人に、ダンスの話を面接という短時間の場で伝え切るには準備が必要です。体育会に負けず劣らずダンスに打ち込んだみなさんが就職活動でその経験をきちんと伝え、評価されて欲しい。そんな世界を創るために私たちはこのメディアを立ち上げました。本サイトを通して、1人でも多くのダンサーが就職活動を成功させることを願っています。">
+	<meta name="google-site-verification" content="3aUVQIxa6KWFhIIqUkhCgaCFWgEhyxoD_xpMe3Spw2w">
+	<th:block th:replace="common/favicons :: favicons"></th:block>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20200718}" href="../../static/css/main.css">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/news.css?update=20200718}" href="../../static/css/news.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+</head>
+<body>
+	<header th:replace="common/header :: ${header}"></header>
+	<main>
+		<div class="container">
+			<h1 class="title">News</h1>
+			<div class="articles">
+				<article th:each="news : ${newsList}">
+					<a th:href="@{/news/__${news.get('id')}__}">
+						<div class="article__img" th:style="'background-image: url(/img/news/' + ${news.get('id')} + '/card.jpg)'"></div>
+						<div class="article__body">
+							<h2 class="article__title" th:text="${news.get('shortTitle')}"></h2>
+							<div class="article__footer">
+								<div class="article__datetime" th:object="${news.get('updatedAt')}">[[*{year}]]年[[*{monthValue}]]月[[*{dayOfMonth}]]日</div>
+								<div class="article__direction"><i class="fas fa-arrow-right"></i></div>
+							</div>
+						</div>
+					</a>
+				</article>
+			</div>
+		</div>
+	</main>
+	<footer th:replace="common/footer :: footer"></footer>
+</body>
+</html>

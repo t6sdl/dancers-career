@@ -6,22 +6,30 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <th:block th:replace="common/favicons :: favicons"></th:block>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20190206}" href="../../static/css/main.css">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/window.css?update=20181110-2}" href="../../static/css/window.css">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/form.css?update=20190206}" href="../../static/css/form.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20200718}" href="../../static/css/main.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/form.css?update=20200718}" href="../../static/css/form.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../static/js/openclose.js"></script>
 </head>
-<body class="formbg3">
+<body>
   <header th:replace="common/header :: for-stranger"></header>
   <main>
-    <div id="formdef">
+    <div class="container window--sm">
       <h1>パスワードの再設定</h1>
       <form th:action="@{/signin/forget-pwd}" method="post" th:object="${emailForm}">
-        <p th:if="${error}"><span class="hazard"><i class="fas fa-exclamation-circle"></i>メールの送信に失敗しました</span><br>下のボタンより再度お試しください<br>解決しない場合はお問い合わせください</p>
-        <p th:unless="${error}"><span class="fins"><i class="fas fa-check-circle"></i>メールを送信しました</span><br>再設定用のURLの有効期限は30分です<br><span class="caption">10分以上経ってもメールが届かない場合は再度送信ボタンを押してください<br>解決しない場合はお問い合わせください</span></p>
+        <div th:if="${error}">
+          <p class="hazard"><i class="fas fa-exclamation-circle"></i>メールの送信に失敗しました</p>
+          <p>下のボタンより再度お試しください。それでも解決しない場合はお問い合わせください。</p>
+        </div>
+        <div th:unless="${error}">
+          <p class="safety"><i class="fas fa-check-circle"></i>メールを送信しました</p>
+          <p>再設定用のURLの有効期限は30分です。10分以上経ってもメールが届かない場合は再度送信ボタンを押してください。それでも解決しない場合はお問い合わせください。</p>
+        </div>
         <input type="hidden" th:field="*{email}">
-        <button type="submit" class="button">再送信する</button>
+        <div class="form-item">
+          <button type="submit" class="button button--primary form-item__submit">
+            <span class="button__text">再送信する</span><i class="button__icon fas fa-arrow-right"></i>
+          </button>
+        </div>
       </form>
     </div>
   </main>

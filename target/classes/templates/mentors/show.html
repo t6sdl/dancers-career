@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Career Support System｜ダンサーズキャリア</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="description" content="ダンサーズキャリアは、ダンサーの先輩たちが実際に就職活動で使ったエントリーシート・面接体験記を公開するサービスです。ダンスをやっていない人に、ダンスの話を面接という短時間の場で伝え切るには準備が必要です。体育会に負けず劣らずダンスに打ち込んだみなさんが就職活動でその経験をきちんと伝え、評価されて欲しい。そんな世界を創るために私たちはこのメディアを立ち上げました。本サイトを通して、1人でも多くのダンサーが就職活動を成功させることを願っています。">
+	<meta name="google-site-verification" content="3aUVQIxa6KWFhIIqUkhCgaCFWgEhyxoD_xpMe3Spw2w">
+	<th:block th:replace="common/favicons :: favicons"></th:block>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20200718}" href="../../static/css/main.css">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/mentors.css?update=20200718}" href="../../static/css/mentors.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<style>
+	</style>
+</head>
+<body>
+	<header th:replace="common/header :: ${header}"></header>
+	<main>
+		<div class="container">
+			<h1 class="title">Mentor Profile<span class="subtitle">メンタープロフィール</span></h1>
+			<div class="profile">
+				<div class="profile__img">
+					<h2 class="headline hide-l">[[${name}]]<span class="subheadline">[[${nameEn}]]</span></h2>
+					<div><img alt="mentor" th:src="@{/img/mentors/mentor__${mentorId}__.jpg?update=20200718}"></div>
+					<div>
+						<img style="width: 3.2em; padding-right: .3em; vertical-align: text-bottom;" alt="type" th:src="@{/img/mentors/type__${typeNum}__.png}" src="../../static/img/mentors/type1.png">
+						... [[${type}]]
+					</div>
+				</div>
+				<div class="profile__text">
+					<h2 class="headline show-l">[[${name}]]<span class="subheadline">[[${nameEn}]]</span></h2>
+					<ul class="ul--none">
+						<li class="li--company" th:text="${company}"></li>
+						<li class="li--university" th:text="${university}"></li>
+						<li class="li--club" th:text="${club}"></li>
+					</ul>
+					<div>
+					  ＜自分の就活＞
+					  <p th:utext="${action}"></p>
+					</div>
+					<div>
+						＜面談への思い＞
+						<p th:utext="${wish}"></p>
+					</div>
+				</div>
+			</div>
+			<div class="navs">
+				<a class="navs__appointment" href="https://select-type.com/rsv/?id=Pnd-WEDywrI&c_id=24224" target="_blank">このメンターに相談したい</a>
+				<a class="navs__back" th:href="@{/mentors#how}">戻る</a>
+			</div>
+		</div>
+	</main>
+	<footer th:replace="common/footer :: footer"></footer>
+</body>
+</html>
