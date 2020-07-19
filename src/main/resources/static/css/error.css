@@ -1,43 +1,21 @@
 @font-face('utf-8'){}
 
 main {
-  margin: 0;
-  padding: 0;
-}
-
-#error {
-  padding-top: 3em;
-  background-image: url('https://dancers-career.t6sdl.tokyo/img/error.jpg');
-  background-position: top;
-  background-size: cover;
-  background-repeat: no-repeat;
-  color: #333333;
-}
-
-#error #message {
-  padding: 3em 3%;
   text-align: center;
 }
 
-#error #message h2 span {
-  font-size: 1.4em;
+h1 {
+  margin: .1em 0;
+  font-size: 5em;
+  color: #426579;
 }
 
-#error #message p {
-  margin: 2em 0;
+h1 > i {
+  font-size: 3em;
 }
 
-@media (min-width: 480px) {
-  #error {
-    padding-top: 9%;
-  }
-  br.hide-m {
-    display: none;
-  }
-}
-
-@media (min-width: 800px) {
-  #error #message h2 span {
-    font-size: 2em;
-  }
+.redirection {
+	margin: 0 auto;
+	max-width: 480px;
+	width: 100%;
 }

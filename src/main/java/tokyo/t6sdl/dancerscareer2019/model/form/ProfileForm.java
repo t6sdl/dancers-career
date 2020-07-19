@@ -21,13 +21,13 @@ public class ProfileForm {
 	@Pattern(message="カタカナで入力してください", regexp="^[\u30A1-\u30F6ー]+$")
 	private String kanaGivenName;
 	@NotEmpty
-	@Pattern(regexp="^[0-9]+$")
+	@Pattern(message="選択してください", regexp="^[0-9]+$")
 	private String birthYear;
 	@NotEmpty
-	@Pattern(regexp="^[0-9]+$")
+	@Pattern(message="選択してください", regexp="^[0-9]+$")
 	private String birthMonth;
 	@NotEmpty
-	@Pattern(regexp="^[0-9]+$")
+	@Pattern(message="選択してください", regexp="^[0-9]+$")
 	private String birthDay;
 	@NotEmpty
 	private String sex;

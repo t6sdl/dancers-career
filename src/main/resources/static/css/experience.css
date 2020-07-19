@@ -9,6 +9,10 @@
   font-size: 14px;
 }
 
+a.exp-container:hover {
+  opacity: .7;
+}
+
 .exp-container h2 {
   margin: 0;
   text-align: left;
@@ -88,15 +92,23 @@
   font-size: .9em;
 }
 
-.secret a {
-  display: block;
+.secret .button {
   margin: .5em 0;
+  width: 100%;
 }
 
-.likes {
+.liked, .disliked {
   min-width: 4em;
   text-align: right;
   font-size: 18px;
+}
+
+.liked, .liked a, .disliked a:hover {
+	color: #fcc800;
+}
+
+.disliked, .disliked a, .liked a:hover {
+	color: #808080;
 }
 
 @media (min-width: 600px) {
@@ -113,7 +125,7 @@
     content: '\FF5C';
     padding: 0 .5em;
   }
-  a.exp-container:hover {
-    opacity: .7;
+  .secret .button {
+    width: 50%;
   }
 }

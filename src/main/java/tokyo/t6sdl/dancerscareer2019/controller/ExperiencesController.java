@@ -152,7 +152,7 @@ public class ExperiencesController {
 			experience = experienceService.getALittleExperienceById(id);
 			experience.setLiked(isLiked);
 			model.addAttribute("title", experience.getUnivName() + experience.getUnivFac() + experience.getUnivDep());
-			model.addAttribute("description", (experience.getEs().size() == 0 ? "" : experience.getEs().get(0).getQuestion().get(0)) + (experience.getEs().size() == 0 ? "" : experience.getEs().get(0).getAnswer().get(0)) + experience.getInterview().get(0).getQuestion() + experience.getInterview().get(0).getAnswer());
+			model.addAttribute("description", (experience.getEs().size() == 0 ? "" : experience.getEs().get(0).getQuestion().get(0) + experience.getEs().get(0).getAnswer().get(0)) + (experience.getInterview().size() == 0 ? "" : experience.getInterview().get(0).getQuestion() + experience.getInterview().get(0).getAnswer()));
 			model.addAttribute("experience", experience);
 			return "experiences/aLittleArticle";
 		}
@@ -165,7 +165,7 @@ public class ExperiencesController {
 			experience = experienceService.getALittleExperienceById(id);
 			experience.setLiked(isLiked);
 			model.addAttribute("title", experience.getUnivName() + experience.getUnivFac() + experience.getUnivDep());
-			model.addAttribute("description", (experience.getEs().size() == 0 ? "" : experience.getEs().get(0).getQuestion().get(0)) + (experience.getEs().size() == 0 ? "" : experience.getEs().get(0).getAnswer().get(0)) + experience.getInterview().get(0).getQuestion() + experience.getInterview().get(0).getAnswer());
+			model.addAttribute("description", (experience.getEs().size() == 0 ? "" : experience.getEs().get(0).getQuestion().get(0) + experience.getEs().get(0).getAnswer().get(0)) + (experience.getInterview().size() == 0 ? "" : experience.getInterview().get(0).getQuestion() + experience.getInterview().get(0).getAnswer()));
 			model.addAttribute("experience", experience);
 			return "experiences/aLittleArticle";
 		} else if (!(account.isValidEmail()) || !(perfect)) {

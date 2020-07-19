@@ -7,40 +7,50 @@
   <meta name="description" content="ダンサーズキャリアは、ダンサーの先輩たちが実際に就職活動で使ったエントリーシート・面接体験記を公開するサービスです。ダンスをやっていない人に、ダンスの話を面接という短時間の場で伝え切るには準備が必要です。体育会に負けず劣らずダンスに打ち込んだみなさんが就職活動でその経験をきちんと伝え、評価されて欲しい。そんな世界を創るために私たちはこのメディアを立ち上げました。本サイトを通して、1人でも多くのダンサーが就職活動を成功させることを願っています。">
   <th:block th:replace="common/favicons :: favicons"></th:block>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20190206}" href="../../static/css/main.css">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/window.css?update=20181110-2}" href="../../static/css/window.css">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/form.css?update=20190206}" href="../../static/css/form.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20200718}" href="../../static/css/main.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/form.css?update=20200718}" href="../../static/css/form.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../static/js/openclose.js"></script>
 </head>
-<body class="formbg2">
-
+<body>
   <header th:replace="common/header :: for-stranger"></header>
   <main>
-  <div id="formdef">
-    <h1>ログイン</h1>
-    <form th:action="@{/login(from=${from})}" method="post">
-      <p class="hazard" th:if="${param.error}"><i class="fas fa-exclamation-circle"></i>メールアドレスまたはパスワードに誤りがあります</p>
-      <input type="email" placeholder="Email" name="email"><br><input type="password" placeholder="Password" name="password">
-
-      <div>
-        <input type="checkbox" id="remember-me" name="remember-me">
-        <label for="remember-me">ログインしたままにする</label>
+	  <div class="container window--sm">
+	    <h1>ログイン</h1>
+	    <form th:action="@{/login(from=${from})}" method="post">
+        <p class="hazard" th:if="${param.error}"><i class="fas fa-exclamation-circle"></i>メールアドレスまたはパスワードに誤りがあります</p>
+	      <div class="form-item">
+          <label class="form-item__label" for="email">メールアドレス</label>
+          <input class="form-item__input input--short-text" id="email" type="email" placeholder="メールアドレス" name="email">
+        </div>
+        <div class="form-item">
+          <label class="form-item__label" for="password">パスワード</label>
+          <input class="form-item__input input--short-text" id="password" type="password" placeholder="パスワード" name="password">
+	      </div>
+	      <div class="form-item">
+	        <div class="form-item__checkbox">
+		        <input type="checkbox" id="remember-me" name="remember-me">
+		        <label for="remember-me">ログインしたままにする</label>
+	        </div>
+	      </div>
+	      <div class="form-item">
+	        <button type="submit" class="button button--primary form-item__submit">
+            <span class="button__text">ログイン</span><i class="button__icon fas fa-arrow-right"></i>
+          </button>
+	      </div>
+	    </form>
+      <div class="form-item">
+        <p><a th:href="@{/signin/forget-pwd}" class="internal-link">パスワードをお忘れですか？</a></p>
       </div>
-
+      <hr>
+      <h2>はじめてのご利用ですか？</h2>
       <div>
-        <button type="submit" class="button">ログイン</button>
+        <p>
+          <a th:href="@{/signup}" class="button button--secondary">
+            <span class="button__text">新規会員登録</span><i class="button__icon fas fa-arrow-right"></i>
+          </a>
+        </p>
       </div>
-
-      <div>
-        <p><a th:href="@{/signin/forget-pwd}">パスワードをお忘れですか？</a></p>
-      </div>
-
-      <div>
-        <p><a th:href="@{/signup}">アカウントをお持ちでない方はこちら</a></p>
-      </div>
-    </form>
-  </div>
+	  </div>
   </main>
   <footer th:replace="common/footer :: footer"></footer>
   <script th:src="@{/js/submit.js}"></script>

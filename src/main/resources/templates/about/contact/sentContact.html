@@ -6,29 +6,24 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <th:block th:replace="common/favicons :: favicons"></th:block>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20190206}" href="../../../static/css/main.css">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/window.css?update=20181110-2}" href="../../../static/css/window.css">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/form.css?update=20190206}" href="../../../static/css/form.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20200718}" href="../../../static/css/main.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/form.css?update=20200718}" href="../../../static/css/form.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script type="text/javascript" th:src="@{/js/openclose.js}" src="../../../static/js/openclose.js"></script>
 </head>
-<body class="formbg2">
+<body>
   <header th:replace="common/header :: ${header}"></header>
   <main>
-    <div id="formdefw">
+    <div class="container window--lg">
     <h1>お問い合わせ</h1>
+    <p class="safety">お問い合わせいただきありがとうございます。後ほどダンサーズキャリア事務局からご連絡いたします。ご連絡には数日程度かかる場合がございます。ご了承ください。</p>
     <form th:action="@{/about/contact}" method="post" th:object="${contactForm}">
-      <div>
-        <label for="from">ご自身のメールアドレス</label><br>
-        <input type="text" th:field="*{from}" disabled>
+      <div class="form-item">
+        <label class="form-item__label" for="from">ご自身のメールアドレス</label>
+        <input class="form-item__input input--short-text" type="text" th:field="*{from}" disabled>
       </div>
-      <div>
-        <label for="content">お問い合わせ内容</label><br>
-        <textarea th:field="*{content}" cols="100" rows="10" disabled></textarea>
-      </div>
-      <div>
-        <p>お問い合わせいただきありがとうございます。
-        <br>後ほどダンサーズキャリア事務局からご連絡いたします。ご連絡には数日程度かかる場合がございます。ご了承ください。</p>
+      <div class="form-item">
+        <label class="form-item__label" for="content">お問い合わせ内容</label>
+        <textarea class="form-item__textarea" th:field="*{content}" cols="100" rows="10" disabled></textarea>
       </div>
     </form>
     </div>

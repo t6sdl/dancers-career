@@ -10,10 +10,28 @@
 <body>
   <footer th:fragment="footer">
     <div class="container">
-      <a th:href="@{/}" class="footer-logo">Dancer's Career</a>
-      <a th:href="@{/about/terms-of-use}" class="footer-link">利用規約</a>
-      <a th:href="@{/about/contact}" class="footer-link">お問い合わせ</a>
-      <small class="copy">&copy; 2018 （一社）東京六大学ストリートダンス連盟</small>
+      <div class="footer-logo">
+        <a th:href="@{/}">
+          <img alt="ダンサーのための就活サイト" th:src="@{/img/common/logo.png}" src="../../static/img/common/logo.png">
+        </a>
+      </div>
+      <div class="footer-link">
+        <a th:href="@{/about/terms-of-use}">
+          <i class="far fa-file-alt"></i>
+          Terms of Service
+          <span>/ 利用規約</span>
+        </a>
+      </div>
+      <div class="footer-link">
+        <a th:href="@{/about/contact}">
+          <i class="far fa-envelope"></i>
+          Contact
+          <span>/ お問い合わせ</span>
+        </a>
+      </div>
+      <div class="copy">
+        <small>&copy; 2018 （一社）東京六大学ストリートダンス連盟</small>
+      </div>
     </div>
   </footer>
 </body>
