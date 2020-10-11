@@ -202,13 +202,18 @@ section::before {
 }
 
 .mentor.mentor1 {
-  top: 10%;
-  right: 5%;
+  top: 5%;
+  left: 30%;
 }
 
 .mentor.mentor8 {
-	bottom: 5%;
-	left: 5%;
+  bottom: 5%;
+  left: 5%;
+}
+
+.mentor.mentor11 {
+  bottom: 5%;
+  right: 10%;
 }
 
 .mentor.mentor3 {
@@ -456,7 +461,7 @@ section::before {
 	}
 	
 	.quadrant:hover .mentor .mentor__img {
-	 transform: none;
+	  transform: none;
 	}
 
 	.quadrant:hover .mentor:hover .mentor__img {
