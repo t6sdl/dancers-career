@@ -126,6 +126,7 @@
 								<li>ゆったり人生楽しみたいタイプ</li>
 								<li>丁寧に教えてもらいながら<br>仕事を楽しみたいタイプ</li>
 							</ol>
+							<p><span class="internal-link" id="strayer" style="cursor: pointer;">どのタイプかわからない人へ</span></p>
 						</div>
 					</div>
 				</section>
@@ -168,16 +169,26 @@
       <div class="mentor__img--mobile"><img alt="mentor10" th:src="@{/img/mentors/mentor10-thumbnail.jpg?update=20200718}" src="../../static/img/mentors/mentor10-thumbnail.jpg"></div>
     </a>
   </div>
+  <div class="mentors--mobile" id="mask5">
+    <a class="mentor--mobile" th:href="@{/mentors/9}">
+      <div class="mentor__img--mobile"><img alt="mentor9" th:src="@{/img/mentors/mentor9-thumbnail.jpg?update=20200718}" src="../../static/img/mentors/mentor9-thumbnail.jpg"></div>
+    </a>
+    <a class="mentor--mobile" th:href="@{/mentors/11}">
+      <div class="mentor__img--mobile"><img alt="mentor11" th:src="@{/img/mentors/mentor11-thumbnail.jpg?update=20200718}" src="../../static/img/mentors/mentor11-thumbnail.jpg"></div>
+    </a>
+  </div>
 <script type="text/javascript">
 	$(() => {
 		const $quad1 = $('#quadrant1'),
 		$quad2 = $('#quadrant2'),
 		$quad3 = $('#quadrant3'),
 		$quad4 = $('#quadrant4'),
+		$strayer = $('#strayer'),
 		$mask1 = $('#mask1'),
 		$mask2 = $('#mask2'),
-		$mask3 = $('#mask3'),
-		$mask4 = $('#mask4');
+	  $mask3 = $('#mask3'),
+	  $mask4 = $('#mask4'),
+		$mask5 = $('#mask5');
 	  $quad1.on('click', () => {
 	    if ($(window).width() < 800) {
 	      $mask1.addClass('active');
@@ -210,6 +221,12 @@
 	  $mask4.on('click', () => {
 		  $mask4.removeClass('active');
 		});
+	  $strayer.on('click', () => {
+		  $mask5.addClass('active');
+	  });
+	  $mask5.on('click', () => {
+		  $mask5.removeClass('active');
+	  });
 	});
 	</script>
 </body>
