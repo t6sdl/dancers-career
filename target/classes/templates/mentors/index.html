@@ -78,9 +78,9 @@
 					</p>
 					<p><strong>それでは、現時点での自分の仕事への志向性からメンターを選んでみましょう！！</strong></p>
 					<p>4つのグループから選択し、クリックするとメンター紹介ページに移ります！</p>
-					<div class="map">
-						<div style="position: relative;" class="map__graph">
-							<div class="graph__quadrants">
+					<div class="mentors">
+						<div style="position: relative;" class="map">
+							<div class="quadrants">
 								<div class="quadrant quadrant--topleft" id="quadrant1">
 									<a class="mentor mentor3" th:href="@{/mentors/3}">
 										<div class="mentor__img"><img alt="mentor3" th:src="@{/img/mentors/mentor3-thumbnail.jpg?update=20200718}" src="../../static/img/mentors/mentor3-thumbnail.jpg"></div>
@@ -118,15 +118,27 @@
 								</div>
 							</div>
 						</div>
-						<div class="map__legend">
-							<h3>Select your type</h3>
-							<ol class="ol--types">
-								<li>大企業バリバリタイプ</li>
-								<li>ベンチャー上昇志向タイプ</li>
-								<li>ゆったり人生楽しみたいタイプ</li>
-								<li>丁寧に教えてもらいながら<br>仕事を楽しみたいタイプ</li>
-							</ol>
-							<p><span class="internal-link" id="strayer" style="cursor: pointer;">どのタイプかわからない人へ</span></p>
+						<div class="supplements">
+              <div class="strayer">
+                <h3>どのタイプか決まっていない人は</h3>
+                <div class="strayer__mentors">
+                  <a class="strayer__mentor mentor9" th:href="@{/mentors/9}">
+                    <div class="mentor__info"><strong>大澤 奈々子</strong><br>立教大学 / 立教大学D-mc</div>
+                  </a>
+                  <a class="strayer__mentor mentor11" th:href="@{/mentors/11}">
+                    <div class="mentor__info"><strong>上谷 魁斗</strong><br>青山学院大学 / NACK</div>
+                  </a>
+                </div>
+              </div>
+	            <div class="legend">
+	              <h3>Select your type</h3>
+	              <ol class="ol--types">
+	                <li>大企業バリバリタイプ</li>
+	                <li>ベンチャー上昇志向タイプ</li>
+	                <li>ゆったり人生楽しみたいタイプ</li>
+	                <li>丁寧に教えてもらいながら<br>仕事を楽しみたいタイプ</li>
+	              </ol>
+	            </div>
 						</div>
 					</div>
 				</section>
@@ -169,26 +181,16 @@
       <div class="mentor__img--mobile"><img alt="mentor10" th:src="@{/img/mentors/mentor10-thumbnail.jpg?update=20200718}" src="../../static/img/mentors/mentor10-thumbnail.jpg"></div>
     </a>
   </div>
-  <div class="mentors--mobile" id="mask5">
-    <a class="mentor--mobile" th:href="@{/mentors/9}">
-      <div class="mentor__img--mobile"><img alt="mentor9" th:src="@{/img/mentors/mentor9-thumbnail.jpg?update=20200718}" src="../../static/img/mentors/mentor9-thumbnail.jpg"></div>
-    </a>
-    <a class="mentor--mobile" th:href="@{/mentors/11}">
-      <div class="mentor__img--mobile"><img alt="mentor11" th:src="@{/img/mentors/mentor11-thumbnail.jpg?update=20200718}" src="../../static/img/mentors/mentor11-thumbnail.jpg"></div>
-    </a>
-  </div>
 <script type="text/javascript">
 	$(() => {
 		const $quad1 = $('#quadrant1'),
 		$quad2 = $('#quadrant2'),
 		$quad3 = $('#quadrant3'),
 		$quad4 = $('#quadrant4'),
-		$strayer = $('#strayer'),
 		$mask1 = $('#mask1'),
 		$mask2 = $('#mask2'),
 	  $mask3 = $('#mask3'),
-	  $mask4 = $('#mask4'),
-		$mask5 = $('#mask5');
+	  $mask4 = $('#mask4');
 	  $quad1.on('click', () => {
 	    if ($(window).width() < 800) {
 	      $mask1.addClass('active');
@@ -221,12 +223,6 @@
 	  $mask4.on('click', () => {
 		  $mask4.removeClass('active');
 		});
-	  $strayer.on('click', () => {
-		  $mask5.addClass('active');
-	  });
-	  $mask5.on('click', () => {
-		  $mask5.removeClass('active');
-	  });
 	});
 	</script>
 </body>
