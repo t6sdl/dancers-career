@@ -296,6 +296,7 @@ section::before {
 	padding: 0.2em 0.5em;
 	background: #ffffff;
 	font-size: .8em;
+	white-space: nowrap;
 }
 
 .strayer__mentor.mentor11 .mentor__info {
