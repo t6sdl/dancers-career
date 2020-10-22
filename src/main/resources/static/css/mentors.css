@@ -131,18 +131,18 @@ section::before {
 
 
 /* ----- map ----- */
-.map {
+.mentors {
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
 }
 
-.map__graph, .map__legend {
+.map, .supplements {
 	margin: 0 auto;
 	width: 100%;
 }
 
-.map__graph {
+.map {
 	padding: 9% 5% 20% 24%;
 	line-height: 0;
 	background-image: url('/img/mentors/axis.png');
@@ -150,7 +150,7 @@ section::before {
 	background-size: contain;
 }
 
-.graph__quadrants {
+.quadrants {
 	display: flex;
 	flex-wrap: wrap;
 	background-image: url('/img/mentors/graph.jpg');
@@ -202,13 +202,18 @@ section::before {
 }
 
 .mentor.mentor1 {
-  top: 10%;
-  right: 5%;
+  top: 5%;
+  left: 30%;
 }
 
-.mentor.mentor2 {
-	bottom: 5%;
-	left: 5%;
+.mentor.mentor8 {
+  bottom: 5%;
+  left: 5%;
+}
+
+.mentor.mentor11 {
+  bottom: 5%;
+  right: 10%;
 }
 
 .mentor.mentor3 {
@@ -221,11 +226,6 @@ section::before {
 	left: 5%;
 }
 
-.mentor.mentor5 {
-	bottom: 5%;
-	right: 15%;
-}
-
 .mentor.mentor6 {
 	top: 5%;
 	right: 0%;
@@ -234,11 +234,6 @@ section::before {
 .mentor.mentor7 {
 	bottom: 30%;
 	left: 10%;
-}
-
-.mentor.mentor8 {
-  bottom: 0%;
-  right: 5%;
 }
 
 .mentor.mentor9 {
@@ -260,6 +255,53 @@ section::before {
 	opacity: 0;
 	transform-origin: bottom center;
 	transition: .1s ease-in-out;
+}
+
+.supplements > div {
+	margin-bottom: 2em;
+}
+
+.strayer h3 {
+	margin: 0;
+}
+
+.strayer__mentor {
+	display: flex;
+	align-items: flex-end;
+	margin: 0.5em 0;
+	padding-top: 25%;
+	width: 100%;
+	height: 0;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position-x: center;
+  transition: .2s;
+}
+
+.strayer__mentor:hover {
+	background-size: 110%;
+}
+
+.strayer__mentor.mentor9 {
+	background-image: url('/img/mentors/mentor9.jpg');
+	background-position-y: 48%;
+}
+
+.strayer__mentor.mentor11 {
+	background-image: url('/img/mentors/mentor11.jpg');
+	background-position-y: 28%;
+}
+
+.mentor__info {
+	padding: 0.2em 0.5em;
+	background: #ffffff;
+	font-size: .8em;
+	white-space: nowrap;
+}
+
+.strayer__mentor.mentor11 .mentor__info {
+	margin-left: auto;
+	text-align: right;
 }
 
 .mentors--mobile {
@@ -410,16 +452,12 @@ section::before {
 
 /* ----- in case that width > 800px ----- */
 @media (min-width: 800px) {
-	.map__graph, .map__legend {
+	.map, .supplements {
 		width: 45%;
 	}
 
-	.map__graph {
+	.map {
 		padding: 3% 1.5% 9% 10.5%;
-	}
-
-	.map__legend {
-		padding: 2% 0;
 	}
 
 	.quadrant:hover {
@@ -466,7 +504,7 @@ section::before {
 	}
 	
 	.quadrant:hover .mentor .mentor__img {
-	 transform: none;
+	  transform: none;
 	}
 
 	.quadrant:hover .mentor:hover .mentor__img {
