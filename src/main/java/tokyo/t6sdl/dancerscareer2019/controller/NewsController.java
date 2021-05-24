@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +43,34 @@ import tokyo.t6sdl.dancerscareer2019.service.SecurityService;
 public class NewsController {
 	private final SecurityService securityService;
 	private final AccountService accountService;
-	private final List<Map<String, Object>> newsList = generateNewsList();
+	private final List<Integer> newsIds = Arrays.asList(1, 21, 31, 41, 51, 61, 71); // NOTE: 10刻みの数値
+	private final List<String> newsShortTitles = Arrays.asList(
+			"ダンサー向け就活セミナーが開催されます！",
+			"【19卒ダンキャリ利用者インタビュー第1弾】〜就活ダルいと言っていた僕が今、仕事を楽しんでいる理由〜",
+			"【19卒ダンキャリ利用者インタビュー第2弾】〜化粧品メーカーはただの憧れでしかなかった〜",
+			"【19卒ダンキャリ利用者インタビュー第3弾】〜何にもわからない状態からベストマッチな会社へ〜",
+			"「ダンスの良さを伝えたら大手メーカーの面接落ちた」日本最大規模のダンスサークル代表とジャンルリーダーが語る偽りのない就活談〜前編〜",
+			"「就活を終えた今だから思うダンサー人材の売込み方」日本最大規模のダンスサークル代表とジャンルリーダーが語る偽りのない就活談〜後編〜",
+			"ダンスの経験で超難関企業リクルートに内定！IT新規事業、外資就活ドットコムの経営まで手がけるビジネスマンは元ダンサーだった！"
+		); // NOTE: 記事一覧ページで表示する短めの記事タイトル。65文字まで。
+	private final List<String> newsTitles = Arrays.asList(
+			"ダンサー向け就活セミナーが開催されます！",
+			"【19卒ダンキャリ利用者インタビュー第1弾】〜就活ダルいと言っていた僕が今、仕事を楽しんでいる理由〜",
+			"【19卒ダンキャリ利用者インタビュー第2弾】〜化粧品メーカーはただの憧れでしかなかった〜 「好きを仕事にすることは違う」に気づけた本質的な就活の思考法。",
+			"【19卒ダンキャリ利用者インタビュー第3弾】〜何にもわからない状態からベストマッチな会社へ〜",
+			"「ダンスの良さを伝えたら大手メーカーの面接落ちた」日本最大規模のダンスサークル代表とジャンルリーダーが語る偽りのない就活談〜前編〜",
+			"「就活を終えた今だから思うダンサー人材の売込み方」日本最大規模のダンスサークル代表とジャンルリーダーが語る偽りのない就活談〜後編〜",
+			"ダンスの経験で超難関企業リクルートに内定！飲食店・美容室向けIT新規事業、外資就活ドットコムの経営まで手がけるビジネスマンは元ダンサーだった！"
+		); // NOTE: 記事最上部に表示する正式な記事タイトル。文字数制限なし。
+	private final List<String> newsUpdatedDates = Arrays.asList(
+			"2018-12-06",
+			"2019-12-21",
+			"2019-12-28",
+			"2020-01-04",
+			"2020-02-15",
+			"2020-02-22",
+			"2020-07-19"
+		); // NOTE: 記事アップロード日。
 	private final Map<Integer, Map<String, Object>> newsMap = generateNewsMap();
 
 	@RequestMapping()
@@ -57,6 +83,12 @@ public class NewsController {
 		} else {
 			model.addAttribute("header", "for-user");
 		}
+		List<Map<String, Object>> newsList = newsMap.values().stream().sorted((n1, n2) -> {
+			LocalDate updatedAt1 = (LocalDate) n1.get("updatedAt");
+			LocalDate updatedAt2 = (LocalDate) n2.get("updatedAt");
+			int ret = updatedAt2.compareTo(updatedAt1);
+			return ret == 0 ? -1 : ret;
+		}).collect(Collectors.toList());
 		model.addAttribute("newsList", newsList);
 		return "news/index";
 	}
@@ -103,49 +135,16 @@ public class NewsController {
 		return "news/show";
 	}
 	
-	private List<Map<String, Object>> generateNewsList() {
-		List<Map<String, Object>> newsList = new ArrayList<Map<String, Object>>();
-		List<Integer> ids = Arrays.asList(1, 21, 31, 41, 51, 61, 71);
-		List<String> shortTitles = Arrays.asList(
-				"ダンサー向け就活セミナーが開催されます！",
-				"【19卒ダンキャリ利用者インタビュー第1弾】〜就活ダルいと言っていた僕が今、仕事を楽しんでいる理由〜",
-				"【19卒ダンキャリ利用者インタビュー第2弾】〜化粧品メーカーはただの憧れでしかなかった〜",
-				"【19卒ダンキャリ利用者インタビュー第3弾】〜何にもわからない状態からベストマッチな会社へ〜",
-				"「ダンスの良さを伝えたら大手メーカーの面接落ちた」日本最大規模のダンスサークル代表とジャンルリーダーが語る偽りのない就活談〜前編〜",
-				"「就活を終えた今だから思うダンサー人材の売込み方」日本最大規模のダンスサークル代表とジャンルリーダーが語る偽りのない就活談〜後編〜",
-				"ダンスの経験で超難関企業リクルートに内定！IT新規事業、外資就活ドットコムの経営まで手がけるビジネスマンは元ダンサーだった！"
-			);
-		List<String> titles = Arrays.asList(
-				"ダンサー向け就活セミナーが開催されます！",
-				"【19卒ダンキャリ利用者インタビュー第1弾】〜就活ダルいと言っていた僕が今、仕事を楽しんでいる理由〜",
-				"【19卒ダンキャリ利用者インタビュー第2弾】〜化粧品メーカーはただの憧れでしかなかった〜 「好きを仕事にすることは違う」に気づけた本質的な就活の思考法。",
-				"【19卒ダンキャリ利用者インタビュー第3弾】〜何にもわからない状態からベストマッチな会社へ〜",
-				"「ダンスの良さを伝えたら大手メーカーの面接落ちた」日本最大規模のダンスサークル代表とジャンルリーダーが語る偽りのない就活談〜前編〜",
-				"「就活を終えた今だから思うダンサー人材の売込み方」日本最大規模のダンスサークル代表とジャンルリーダーが語る偽りのない就活談〜後編〜",
-				"ダンスの経験で超難関企業リクルートに内定！飲食店・美容室向けIT新規事業、外資就活ドットコムの経営まで手がけるビジネスマンは元ダンサーだった！"
-			);
-		List<LocalDate> dates = Arrays.asList(LocalDate.of(2018, 12, 6), LocalDate.of(2019, 12, 21), LocalDate.of(2019, 12, 28), LocalDate.of(2020, 1, 4), LocalDate.of(2020, 2, 15), LocalDate.of(2020, 2, 22), LocalDate.of(2020, 7, 19));
-		for (int i = 0; i < ids.size(); i++) {
-			Map<String, Object> news = new HashMap<String, Object>();
-			news.put("id", ids.get(i));
-			news.put("title", titles.get(i));
-			news.put("shortTitle", shortTitles.get(i));
-			news.put("updatedAt", dates.get(i));
-			newsList.add(news);
-		}
-		Map<Integer, Map<String, Object>> newsMap = new HashMap<Integer, Map<String, Object>>();
-		newsList.forEach((n) -> { newsMap.put((Integer) n.get("id"), n); });
-		return newsList.stream().sorted((n1, n2) -> {
-			LocalDate updatedAt1 = (LocalDate) n1.get("updatedAt");
-			LocalDate updatedAt2 = (LocalDate) n2.get("updatedAt");
-			int ret = updatedAt2.compareTo(updatedAt1);
-			return ret == 0 ? -1 : ret;
-		}).collect(Collectors.toList());
-	}
-	
 	private Map<Integer, Map<String, Object>> generateNewsMap() {
 		Map<Integer, Map<String, Object>> newsMap = new HashMap<Integer, Map<String, Object>>();
-		newsList.forEach((n) -> { newsMap.put((Integer) n.get("id"), n); });
+		for (int i = 0; i < newsIds.size(); i++) {
+			Map<String, Object> news = new HashMap<String, Object>();
+			news.put("id", newsIds.get(i));
+			news.put("title", newsTitles.get(i));
+			news.put("shortTitle", newsShortTitles.get(i));
+			news.put("updatedAt", LocalDate.parse(newsUpdatedDates.get(i)));
+			newsMap.put(newsIds.get(i), news);
+		}
 		return newsMap;
 	}
 }
