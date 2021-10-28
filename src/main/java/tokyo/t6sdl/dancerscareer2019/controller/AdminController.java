@@ -32,12 +32,15 @@ import tokyo.t6sdl.dancerscareer2019.io.ExcelBuilder;
 import tokyo.t6sdl.dancerscareer2019.model.Es;
 import tokyo.t6sdl.dancerscareer2019.model.Experience;
 import tokyo.t6sdl.dancerscareer2019.model.Interview;
+import tokyo.t6sdl.dancerscareer2019.model.Mentor;
 import tokyo.t6sdl.dancerscareer2019.model.Profile;
 import tokyo.t6sdl.dancerscareer2019.model.Student;
 import tokyo.t6sdl.dancerscareer2019.model.form.EsForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.ExperienceForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.InterviewForm;
+import tokyo.t6sdl.dancerscareer2019.model.form.MentorForm;
 import tokyo.t6sdl.dancerscareer2019.service.ExperienceService;
+import tokyo.t6sdl.dancerscareer2019.service.MentorService;
 import tokyo.t6sdl.dancerscareer2019.service.ProfileService;
 
 @RequiredArgsConstructor
@@ -46,6 +49,7 @@ import tokyo.t6sdl.dancerscareer2019.service.ProfileService;
 public class AdminController {
 	private final ProfileService profileService;
 	private final ExperienceService experienceService;
+	private final MentorService mentorService;
 	
 	@GetMapping()
 	public String index() {
@@ -541,6 +545,39 @@ public class AdminController {
 	public String interviewDestroy(@PathVariable("expId") Integer expId, @PathVariable("itvId") Integer itvId, Model model) {
 		experienceService.deleteInterview(expId, itvId);
 		return "redirect:/admin/experiences/" + expId;
+	}
+	
+	@GetMapping("/mentors")
+	public String showMentors(Model model) {
+		List<Mentor> mentors = mentorService.getAll();
+		model.addAttribute("mentors", mentors);
+		return "admin/mentors/index";
+	}
+	
+	@GetMapping("/mentors/new")
+	public String newMentor(Model model) {
+		MentorForm form = new MentorForm();
+		model.addAttribute(form);
+		return "admin/mentors/new";
+	}
+	
+	@PostMapping("/mentors")
+	public String createMentor(@Validated MentorForm form, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute(form);
+			return "admin/mentors/new";
+		} else {
+			Mentor mentor = new Mentor();
+			mentor.buildFromForm(form);
+			mentorService.create(mentor);
+			return "redirect:/admin/mentors";
+		}
+	}
+	
+	@DeleteMapping("/mentors/{id}")
+	public String destroyMentor(@PathVariable("id") Integer id, Model model) {
+		mentorService.destroy(id);
+		return "redirect:/admin/mentors";
 	}
 	
 	private <T> List<T> cleanUp(List<T> list, T empty) {
