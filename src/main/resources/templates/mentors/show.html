@@ -8,8 +8,8 @@
 	<meta name="google-site-verification" content="3aUVQIxa6KWFhIIqUkhCgaCFWgEhyxoD_xpMe3Spw2w">
 	<th:block th:replace="common/favicons :: favicons"></th:block>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20201022}" href="../../static/css/main.css">
-	<link rel="stylesheet" type="text/css" th:href="@{/css/mentors.css?update=20201022}" href="../../static/css/mentors.css">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20211031}" href="../../static/css/main.css">
+	<link rel="stylesheet" type="text/css" th:href="@{/css/mentors.css?update=20211031}" href="../../static/css/mentors.css">
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 	<style>
 	</style>
@@ -19,29 +19,21 @@
 	<main>
 		<div class="container">
 			<h1 class="title">Mentor Profile<span class="subtitle">メンタープロフィール</span></h1>
-			<div class="profile">
+			<div class="profile" th:object="${mentor}">
 				<div class="profile__img">
-					<h2 class="headline hide-l">[[${name}]]<span class="subheadline">[[${nameEn}]]</span></h2>
-					<div><img alt="mentor" th:src="@{/img/mentors/mentor__${mentorId}__.jpg?update=20201022}"></div>
-					<div>
-						<img style="width: 3.2em; padding-right: .3em; vertical-align: text-bottom;" alt="type" th:src="@{/img/mentors/type__${typeNum}__.png}" src="../../static/img/mentors/type1.png">
-						... [[${type}]]
-					</div>
+					<h2 class="headline hide-l">[[|__*{familyNameJa}__ __*{givenNameJa}__|]]<span class="subheadline">[[|__*{familyNameEn}__ __*{givenNameEn}__|]]</span></h2>
+					<div><img alt="mentor photo" th:src="|data:image/jpeg;base64,__*{base64Image}__|"></div>
 				</div>
 				<div class="profile__text">
-					<h2 class="headline show-l">[[${name}]]<span class="subheadline">[[${nameEn}]]</span></h2>
+					<h2 class="headline show-l">[[|__*{familyNameJa}__ __*{givenNameJa}__|]]<span class="subheadline">[[|__*{familyNameEn}__ __*{givenNameEn}__|]]</span></h2>
 					<ul class="ul--none">
-						<li class="li--company" th:text="${company}"></li>
-						<li class="li--university" th:text="${university}"></li>
-						<li class="li--club" th:text="${club}"></li>
+						<li class="li--company" th:text="*{worksAt}"></li>
+						<li class="li--university" th:text="*{graduatedFrom}"></li>
+						<li class="li--club" th:text="*{danceClub}"></li>
 					</ul>
-					<div>
-					  ＜自分の就活＞
-					  <p th:utext="${action}"></p>
-					</div>
-					<div>
-						＜面談への思い＞
-						<p th:utext="${wish}"></p>
+					<div class="additional-info" th:each="additionalMentorInfo : *{additionalMentorInfos}">
+				    <div th:text="${additionalMentorInfo.title}"></div>
+				    <p class="additional-info__content" th:text="${additionalMentorInfo.content}"></p>
 					</div>
 				</div>
 			</div>
