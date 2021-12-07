@@ -58,6 +58,11 @@ section::before {
 .ol--bracketed {
 	list-style: none;
 	counter-reset: bracketed;
+	font-weight: bold;
+}
+
+.ol--bracketed.desc {
+	font-weight: normal;
 }
 
 .ol--bracketed li {

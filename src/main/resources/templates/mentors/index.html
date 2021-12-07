@@ -71,11 +71,16 @@
 						</ol>
 					</section>
 					<section id="how">
-						<h3>自分に合うメンターを探そう！</h3>
+						<h3>実際にメンターに相談してみよう！</h3>
 						<p>
-							メンター選びはとても重要です。自分と志向性が異なる人との面談の場合、お互いに伝わりにくくなり面談の質にも影響します。
-							<br>その反面、自分の志向性と合う人との面談だと、話の伝わりやすさや信頼度が格段に上がります。
+							ダンスの経験や志望業界をもとにあなたに合うメンターをアサインします。また、メンターは一人ではなくチームでサポートしますので、希望に応じて沢山の先輩のお話を聞くことができます。
 						</p>
+						<div>
+              <a class="button button--accent" href="https://forms.gle/rcpdGKcURS3pryKJ6" target="_blank">
+                <span class="button__text">面談予約はコチラから！</span><i class="button__icon fas fa-arrow-right"></i>
+              </a>
+            </div>
+						<h4>メンター紹介</h4>
 						<div class="mentor-table">
 						  <a class="mentor-card" th:href="@{/mentors/{id}(id=*{id})}" th:object="${mentor}" th:each="mentor : ${mentors}">
 						    <img class="mentor-image" th:src="|data:image/jpeg;base64,__*{base64Image}__|" alt="mentor photo">
