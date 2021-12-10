@@ -5,12 +5,14 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,12 +32,15 @@ import tokyo.t6sdl.dancerscareer2019.io.ExcelBuilder;
 import tokyo.t6sdl.dancerscareer2019.model.Es;
 import tokyo.t6sdl.dancerscareer2019.model.Experience;
 import tokyo.t6sdl.dancerscareer2019.model.Interview;
+import tokyo.t6sdl.dancerscareer2019.model.Mentor;
 import tokyo.t6sdl.dancerscareer2019.model.Profile;
 import tokyo.t6sdl.dancerscareer2019.model.Student;
 import tokyo.t6sdl.dancerscareer2019.model.form.EsForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.ExperienceForm;
 import tokyo.t6sdl.dancerscareer2019.model.form.InterviewForm;
+import tokyo.t6sdl.dancerscareer2019.model.form.MentorForm;
 import tokyo.t6sdl.dancerscareer2019.service.ExperienceService;
+import tokyo.t6sdl.dancerscareer2019.service.MentorService;
 import tokyo.t6sdl.dancerscareer2019.service.ProfileService;
 
 @RequiredArgsConstructor
@@ -44,6 +49,7 @@ import tokyo.t6sdl.dancerscareer2019.service.ProfileService;
 public class AdminController {
 	private final ProfileService profileService;
 	private final ExperienceService experienceService;
+	private final MentorService mentorService;
 	
 	@GetMapping()
 	public String index() {
@@ -324,7 +330,10 @@ public class AdminController {
 	public String expsNew(Model model) {
 		ExperienceForm form = new ExperienceForm();
 		form.init();
+		int thisYear = Calendar.getInstance().get(Calendar.YEAR);
+		int[] graduationYears = IntStream.rangeClosed(thisYear - 20, thisYear + 20).toArray();
 		model.addAttribute(form);
+		model.addAttribute("graduationYears", graduationYears);
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		return "admin/experiences/new";
 	}
@@ -336,6 +345,9 @@ public class AdminController {
 		form.setEs(this.cleanUp(form.getEs(), new EsForm()));
 		form.setInterview(this.cleanUp(form.getInterview(), new InterviewForm()));
 		if (result.hasErrors()) {
+			int thisYear = Calendar.getInstance().get(Calendar.YEAR);
+			int[] graduationYears = IntStream.rangeClosed(thisYear - 20, thisYear + 20).toArray();
+			model.addAttribute("graduationYears", graduationYears);
 			model.addAttribute("positionList", Profile.POSITION_LIST);
 			model.addAttribute("hiddenUnivLoc", form.getUnivLoc());
 			model.addAttribute("hiddenUnivName", form.getUnivName());
@@ -354,7 +366,10 @@ public class AdminController {
 	
 	@PostMapping(value = "/experiences/new", params = "edit")
 	public String expsNewEdit(@Validated ExperienceForm form, BindingResult result, Model model) {
+		int thisYear = Calendar.getInstance().get(Calendar.YEAR);
+		int[] graduationYears = IntStream.rangeClosed(thisYear - 20, thisYear + 20).toArray();
 		model.addAttribute("experienceId", "new");
+		model.addAttribute("graduationYears", graduationYears);
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		model.addAttribute("hiddenUnivLoc", form.getUnivLoc());
 		model.addAttribute("hiddenUnivName", form.getUnivName());
@@ -378,6 +393,8 @@ public class AdminController {
 	@GetMapping("/experiences/{expId}/edit")
 	public String expsEdit(@PathVariable("expId") Integer expId, Model model) {
 		ExperienceForm form = experienceService.convertExperienceIntoExperienceForm(experienceService.getExperienceById(expId, false, false));
+		int thisYear = Calendar.getInstance().get(Calendar.YEAR);
+		int[] graduationYears = IntStream.rangeClosed(thisYear - 20, thisYear + 20).toArray();		model.addAttribute(form);
 		model.addAttribute("expId", expId);
 		model.addAttribute("hiddenUnivLoc", form.getUnivLoc());
 		model.addAttribute("hiddenUnivName", form.getUnivName());
@@ -387,6 +404,7 @@ public class AdminController {
 		model.addAttribute("hiddenGradName", form.getGradName());
 		model.addAttribute("hiddenGradSchool", form.getGradSchool());
 		model.addAttribute("hiddenGradDiv", form.getGradDiv());
+		model.addAttribute("graduationYears", graduationYears);
 		model.addAttribute("positionList", Profile.POSITION_LIST);
 		model.addAttribute(form);
 		return "admin/experiences/edit";
@@ -397,7 +415,10 @@ public class AdminController {
 		form.setClub(this.cleanUp(form.getClub(), ""));
 		form.setOffer(this.cleanUp(form.getOffer(), ""));
 		if (result.hasErrors()) {
+			int thisYear = Calendar.getInstance().get(Calendar.YEAR);
+			int[] graduationYears = IntStream.rangeClosed(thisYear - 20, thisYear + 20).toArray();		model.addAttribute(form);
 			model.addAttribute("expId", expId);
+			model.addAttribute("graduationYears", graduationYears);
 			model.addAttribute("positionList", Profile.POSITION_LIST);
 			model.addAttribute("hiddenUnivLoc", form.getUnivLoc());
 			model.addAttribute("hiddenUnivName", form.getUnivName());
@@ -524,6 +545,39 @@ public class AdminController {
 	public String interviewDestroy(@PathVariable("expId") Integer expId, @PathVariable("itvId") Integer itvId, Model model) {
 		experienceService.deleteInterview(expId, itvId);
 		return "redirect:/admin/experiences/" + expId;
+	}
+	
+	@GetMapping("/mentors")
+	public String showMentors(Model model) {
+		List<Mentor> mentors = mentorService.getAll();
+		model.addAttribute("mentors", mentors);
+		return "admin/mentors/index";
+	}
+	
+	@GetMapping("/mentors/new")
+	public String newMentor(Model model) {
+		MentorForm form = new MentorForm();
+		model.addAttribute(form);
+		return "admin/mentors/new";
+	}
+	
+	@PostMapping("/mentors")
+	public String createMentor(@Validated MentorForm form, BindingResult result, Model model) {
+		if (result.hasErrors()) {
+			model.addAttribute(form);
+			return "admin/mentors/new";
+		} else {
+			Mentor mentor = new Mentor();
+			mentor.buildFromForm(form);
+			mentorService.create(mentor);
+			return "redirect:/admin/mentors";
+		}
+	}
+	
+	@DeleteMapping("/mentors/{id}")
+	public String destroyMentor(@PathVariable("id") Integer id, Model model) {
+		mentorService.destroy(id);
+		return "redirect:/admin/mentors";
 	}
 	
 	private <T> List<T> cleanUp(List<T> list, T empty) {

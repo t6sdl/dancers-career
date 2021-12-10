@@ -58,6 +58,11 @@ section::before {
 .ol--bracketed {
 	list-style: none;
 	counter-reset: bracketed;
+	font-weight: bold;
+}
+
+.ol--bracketed.desc {
+	font-weight: normal;
 }
 
 .ol--bracketed li {
@@ -130,225 +135,41 @@ section::before {
 }
 
 
-/* ----- map ----- */
-.mentors {
-	display: flex;
-	justify-content: space-between;
-	flex-wrap: wrap;
-}
-
-.map, .supplements {
-	margin: 0 auto;
-	width: 100%;
-}
-
-.map {
-	padding: 9% 5% 20% 24%;
-	line-height: 0;
-	background-image: url('/img/mentors/axis.png');
-	background-repeat: no-repeat;
-	background-size: contain;
-}
-
-.quadrants {
+/* ----- mentors ----- */
+.mentor-table {
 	display: flex;
 	flex-wrap: wrap;
-	background-image: url('/img/mentors/graph.jpg');
-	background-repeat: no-repeat;
-	background-size: contain;
+	margin: 0
 }
 
-.quadrant {
+.mentor-card {
 	position: relative;
-	padding-top: 50%;
-	width: 50%;
-	opacity: 0;
-	background-repeat: no-repeat;
-	background-size: contain;
-	transition: .2s;
-	z-index: 98;
-}
-
-.quadrant.quadrant--topleft {
-	transform-origin: top left;
-	background-image: url('/img/mentors/graph-type2.png');
-}
-
-.quadrant.quadrant--topright {
-	transform-origin: top right;
-	background-image: url('/img/mentors/graph-type1.png');
-}
-
-.quadrant.quadrant--bottomleft {
-	transform-origin: bottom left;
-	background-image: url('/img/mentors/graph-type3.png');
-}
-
-.quadrant.quadrant--bottomright {
-	transform-origin: bottom right;
-	background-image: url('/img/mentors/graph-type4.png');
-}
-
-.mentor {
 	display: block;
+	margin: 0 0 1%;
+	width: 100%;
+	height: 75vw;
+	overflow: hidden;
+}
+
+.mentor-image {
 	position: absolute;
-	width: 36%;
-	background-image: url('/img/mentors/pin.png');
-	background-repeat: no-repeat;
-	background-size: contain;
-	transform: scaleY(0);
-	transform-origin: bottom center;
-	transition: .1s ease-in-out;
+  width: 100%;
+  height: 75vw;
+  object-fit: cover;
 }
 
-.mentor.mentor1 {
-  top: 5%;
-  left: 30%;
-}
-
-.mentor.mentor8 {
-  bottom: 5%;
-  left: 5%;
-}
-
-.mentor.mentor11 {
-  bottom: 5%;
-  right: 10%;
-}
-
-.mentor.mentor3 {
-	bottom: 2%;
-	left: 10%;
-}
-
-.mentor.mentor4 {
-	top: 0%;
-	left: 5%;
-}
-
-.mentor.mentor6 {
-	top: 5%;
-	right: 0%;
-}
-
-.mentor.mentor7 {
-	bottom: 30%;
-	left: 10%;
-}
-
-.mentor.mentor9 {
-  bottom: 30%;
-  left: 10%;
-}
-
-.mentor.mentor10 {
-  top: 0%;
-  right: 15%;
-}
-
-.mentor__img {
-	margin: 14% auto 48%;
-	width: 72%;
-	border: 1px solid #000000;
-	border-radius: 50%;
-	overflow: hidden;
-	opacity: 0;
-	transform-origin: bottom center;
-	transition: .1s ease-in-out;
-}
-
-.supplements > div {
-	margin-bottom: 2em;
-}
-
-.strayer h3 {
-	margin: 0;
-}
-
-.strayer__mentor {
-	display: flex;
-	align-items: flex-end;
-	margin: 0.5em 0;
-	padding-top: 25%;
-	width: 100%;
-	height: 0;
-  background-repeat: no-repeat;
-  background-size: 100%;
-  background-position-x: center;
-  transition: .2s;
-}
-
-.strayer__mentor:hover {
-	background-size: 110%;
-}
-
-.strayer__mentor.mentor9 {
-	background-image: url('/img/mentors/mentor9.jpg');
-	background-position-y: 48%;
-}
-
-.strayer__mentor.mentor11 {
-	background-image: url('/img/mentors/mentor11.jpg');
-	background-position-y: 28%;
-}
-
-.mentor__info {
-	padding: 0.2em 0.5em;
-	background: #ffffff;
-	font-size: .8em;
-	white-space: nowrap;
-}
-
-.strayer__mentor.mentor11 .mentor__info {
-	margin-left: auto;
-	text-align: right;
-}
-
-.mentors--mobile {
-	position: fixed;
-	top: 0;
+.mentor-info {
+	position: absolute;
 	bottom: 0;
-	left: 200%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: space-around;
+	padding: .5em 0;
 	width: 100%;
-	height: 100%;
-	background: rgba(100, 100, 100, .6);
-	z-index: 9999;
-	opacity: 0;
-	transition: opacity .4s;
+	text-align: center;
+	line-height: 1.2;
+	background: #ffffff;
 }
 
-.mentors--mobile.active {
-	left: 0;
-	opacity: 1;
-}
-
-.mentor--mobile {
-	display: block;
-	width: 16em;
-	height: 16em;
-	overflow: hidden;
-	border: 5px solid #000000;
-	border-radius: 50%;
-	transition: .2s;
-}
-
-.mentors--mobile > .mentor--mobile:first-of-type {
-	opacity: 0;
-	transform: scale(.6) translateY(16em);
-}
-
-.mentors--mobile > .mentor--mobile:last-of-type {
-	opacity: 0;
-	transform: scale(.6) translateY(-16em);
-}
-
-.mentors--mobile.active > .mentor--mobile {
-	opacity: 1;
-	transform: none;
+.mentor-name {
+	font-weight: bold;
 }
 
 /* ----- profile ----- */
@@ -369,6 +190,7 @@ section::before {
 
 .ul--none li {
 	position: relative;
+	line-height: 1.5;
 }
 
 .ul--none li::before {
@@ -393,6 +215,16 @@ section::before {
 
 .li--club::before {
 	content: '\30FB\30B5\30FC\30AF\30EB';
+}
+
+.additional-info {
+	margin: 1em 0;
+}
+
+.additional-info__content {
+	margin-top: .3em;
+	font-size: .8em;
+	white-space: pre-line;
 }
 
 .navs {
@@ -450,69 +282,6 @@ section::before {
 	height: 3em;
 }
 
-/* ----- in case that width > 800px ----- */
-@media (min-width: 800px) {
-	.map, .supplements {
-		width: 45%;
-	}
-
-	.map {
-		padding: 3% 1.5% 9% 10.5%;
-	}
-
-	.quadrant:hover {
-	  transform: scale(1.5);
-	  opacity: 1;
-	  z-index: 99;
-	}
-
-	.quadrant.quadrant--topleft {
-		transform-origin: bottom right;
-	}
-	
-	.quadrant.quadrant--topright {
-		transform-origin: bottom left;
-	}
-	
-	.quadrant.quadrant--bottomleft {
-		transform-origin: top right;
-	}
-	
-	.quadrant.quadrant--bottomright {
-		transform-origin: top left;
-	}
-
-	.profile__img {
-		width: 40%;
-	}
-
-	.profile__text {
-		width: 56%;
-	}
-	
-	.mentor__img {
-	  opacity: 1;
-	}
-
-	.quadrant:hover .mentor {
-	  transform: scaleY(1);
-	}
-
-	.quadrant:hover .mentor:hover {
-	  transform: scale(1.2);
-	  z-index: 100;
-	}
-	
-	.quadrant:hover .mentor .mentor__img {
-	  transform: none;
-	}
-
-	.quadrant:hover .mentor:hover .mentor__img {
-	  transform: scale(2) translateY(-2px);
-	  z-index: 101;
-	}
-}
-
 /* ----- in case that width > 480px ----- */
 @media (min-width: 480px) {
 	.navs {
@@ -523,4 +292,43 @@ section::before {
 		top: -3em;
 		margin-top: 0;
 	}
+	
+	.mentor-table {
+    margin: 0 -1%;
+	}
+	
+	.mentor-card {
+    margin: 0 1% 1%;
+    width: 48%;
+    height:36vw;
+	}
+	
+	.mentor-image {
+    height: 36vw;
+	}
+}
+
+/* ----- in case that width > 800px ----- */
+@media (min-width: 800px) {
+  .mentor-table {
+    margin: 0 -1%;
+  }
+  
+  .mentor-card {
+    margin: 0 1% 1%;
+    width: 31%;
+    height: 24vw;
+  }
+  
+  .mentor-image {
+    height: 24vw;
+  }
+
+  .profile__img {
+    width: 40%;
+  }
+
+  .profile__text {
+    width: 56%;
+  }
 }
