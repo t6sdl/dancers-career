@@ -14,7 +14,7 @@
     <main class="container-fluid">
       <h1>メンター一覧</h1>
       <a class="btn btn-info" th:href="@{/admin/mentors/new}">メンター登録</a>
-      <table class="table table-sm table-bordered" th:object="${mentor}" th:each="mentor : ${mentors}">
+      <table class="table table-sm table-bordered bg-white shadow-sm" th:object="${mentor}" th:each="mentor : ${mentors}">
         <tbody>
           <tr>
             <th>姓</th>
@@ -54,7 +54,7 @@
               <td th:text="${additionalInfo.title}"></td>
             </tr>
             <tr>
-              <td th:utext="${additionalInfo.content}"></td>
+              <td th:text="${additionalInfo.content}" style="white-space: pre-line;"></td>
             </tr>
           </th:block>
         </tbody>
