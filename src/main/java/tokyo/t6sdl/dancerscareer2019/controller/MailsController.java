@@ -19,38 +19,39 @@ import tokyo.t6sdl.dancerscareer2019.service.ExperienceService;
 public class MailsController {
 	private final AccountService accountService;
 	private final ExperienceService experienceService;
-	
+
 	@ModelAttribute
 	public void setUp(Model model) {
 		model.addAttribute("logo", Mail.CONTEXT_PATH + "/img/mails/logo.jpg");
 		model.addAttribute("twitter", Mail.CONTEXT_PATH + "/img/mails/twitter.jpg");
 		model.addAttribute("instagram", Mail.CONTEXT_PATH + "/img/mails/instagram.jpg");
+		model.addAttribute("line", Mail.CONTEXT_PATH + "/img/mails/line.jpg"); 
 		model.addAttribute("contact", Mail.CONTEXT_PATH + "/about/contact");
 	}
-	
+
 	@RequestMapping("/welcome-to-us")
 	public String getWelcomeToUs(@RequestParam("to") String to, Model model) {
 		model.addAttribute("button", Mail.URI_VERIFY_EMAIL + accountService.getEmailTokenByEmail(to));
 		return "mails/welcome-to-us";
 	}
-	
+
 	@RequestMapping("/verify-email")
 	public String getVerifyEmail(@RequestParam("to") String to, Model model) {
 		model.addAttribute("button", Mail.URI_VERIFY_EMAIL + accountService.getEmailTokenByEmail(to));
 		return "mails/verify-email";
 	}
-	
+
 	@RequestMapping("/forget-pwd")
 	public String getResetPWD(@RequestParam("to") String to, Model model) {
 		model.addAttribute("button", Mail.URI_RESET_PWD + accountService.getPasswordTokenByEmail(to));
 		return "mails/forget-pwd";
 	}
-	
+
 	@RequestMapping("/reply-to-contact")
 	public String getReplyToContact() {
 		return "mails/reply-to-contact";
 	}
-	
+
 	@RequestMapping("/new-es-mail")
 	public String getAnnouncementAboutNewEs(Model model) {
 		Map<String, Object> results = experienceService.getExperiencesByCreatedAt();
@@ -61,7 +62,7 @@ public class MailsController {
 		model.addAttribute("mailSetting", Mail.URI_MAIL_SETTING);
 		return "mails/new-es-mail";
 	}
-	
+
 	@RequestMapping("/survey")
 	public String getSurvey(Model model) {
 		model.addAttribute("top", Mail.CONTEXT_PATH);
