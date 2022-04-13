@@ -19,7 +19,7 @@
 				<h1 class="title">Career Support System<span class="subtitle">メンター制度</span></h1>
 				<div>
 					<h2 class="headline">メンター制度</h2>
-					<p style="padding-left: 1.2rem;">ダンサーの就活はダンサーが1番わかってくれるはず。<br>ダンサー内定者に1:1で就活相談ができる"メンター制度"を利用しよう！</p>
+					<p style="padding-left: 1.2rem;">ダンサーの就活はダンサーが1番わかってくれるはず。<br>ダンスサークル出身者に1:1で就活相談ができる"メンター制度"を利用しよう！</p>
 					<div>
 						<h3>Page Contents</h3>
 						<div class="index">
@@ -73,14 +73,14 @@
 					<section id="how">
 						<h3>実際にメンターに相談してみよう！</h3>
 						<p>
-							ダンスの経験や志望業界をもとにあなたに合うメンターをアサインします。また、メンターは一人ではなくチームでサポートしますので、希望に応じて沢山の先輩のお話を聞くことができます。
+							気になった方は早速ご予約をしてみてください！
+							<br>もちろん面談は無料！まずは気軽にお話ししましょう！
 						</p>
 						<div>
               <a class="button button--accent" href="https://forms.gle/qhP5niosnTpNrw4D6" target="_blank">
                 <span class="button__text">面談予約はコチラから！</span><i class="button__icon fas fa-arrow-right"></i>
               </a>
             </div>
-						<h4>メンター紹介</h4>
 						<div class="mentor-table">
 						  <a class="mentor-card" th:href="@{/mentors/{id}(id=*{id})}" th:object="${mentor}" th:each="mentor : ${mentors}">
 						    <img class="mentor-image" th:src="|data:image/jpeg;base64,__*{base64Image}__|" alt="mentor photo">
