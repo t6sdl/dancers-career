@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
-import tokyo.t6sdl.dancerscareer2019.model.form.AdditionalMentorInfoForm;
 
 @Data
 public class MentorForm {

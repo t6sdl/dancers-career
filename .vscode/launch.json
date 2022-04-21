@@ -1,0 +1,15 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-DancersCareer2019Application<dancers-career-2019>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "mainClass": "tokyo.t6sdl.dancerscareer2019.DancersCareer2019Application",
+      "projectName": "dancers-career-2019",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
