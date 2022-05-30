@@ -3,13 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>tokyo.t6sdl.dancerscareer2019</groupId>
-	<artifactId>dancers-career-2019</artifactId>
+	<groupId>tokyo.t6sdl.dancerscareer</groupId>
+	<artifactId>dancers-career</artifactId>
 	<version>1.0.1</version>
 	<packaging>jar</packaging>
 
-	<name>dancersCareer2019</name>
-	<description>Product of dancers-career in 2019</description>
+	<name>dancersCareer</name>
+	<description>Product of dancers-career</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -137,7 +137,7 @@
 	        </plugin>
 		</plugins>
 	</build>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
