@@ -3,25 +3,25 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>tokyo.t6sdl.dancerscareer2019</groupId>
-	<artifactId>dancers-career-2019</artifactId>
+	<groupId>tokyo.t6sdl.dancerscareer</groupId>
+	<artifactId>dancers-career</artifactId>
 	<version>1.0.1</version>
 	<packaging>jar</packaging>
 
-	<name>dancersCareer2019</name>
-	<description>Product of dancers-career in 2019</description>
+	<name>dancersCareer</name>
+	<description>Product of dancers-career</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.4.RELEASE</version>
+		<version>2.4.13</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>10</java.version>
+		<maven.compiler.release>11</maven.compiler.release>
 	</properties>
 
 	<dependencies>
@@ -45,6 +45,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>mysql</groupId>
@@ -64,6 +68,7 @@
 		<dependency>
 			<groupId>org.flywaydb</groupId>
 			<artifactId>flyway-core</artifactId>
+			<version>5.2.4</version>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -132,7 +137,7 @@
 	        </plugin>
 		</plugins>
 	</build>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -148,7 +153,7 @@
 			<dependency>
 				<groupId>org.apache.poi</groupId>
 				<artifactId>poi-ooxml</artifactId>
-				<version>3.15</version>
+				<version>5.2.2</version>
 			</dependency>
 			<dependency>
 				<groupId>com.github.ulisesbocchio</groupId>
