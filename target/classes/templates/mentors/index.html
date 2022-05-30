@@ -81,7 +81,6 @@
                 <span class="button__text">面談予約はコチラから！</span><i class="button__icon fas fa-arrow-right"></i>
               </a>
             </div>
-						<h4>メンター紹介</h4>
 						<div class="mentor-table">
 						  <a class="mentor-card" th:href="@{/mentors/{id}(id=*{id})}" th:object="${mentor}" th:each="mentor : ${mentors}">
 						    <img class="mentor-image" th:src="|data:image/jpeg;base64,__*{base64Image}__|" alt="mentor photo">
