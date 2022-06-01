@@ -1,1 +1,1 @@
-web: java -Denv=${SPRING_PROFILES_ACTIVE} -Dserver.port=$PORT -Djava.security.egd=file:/dev/urandom -javaagent:target/newrelic/newrelic.jar -jar target/dancers-career-2019-1.0.1.jar --spring.profiles.active=${SPRING_PROFILES_ACTIVE}
+web: java -Denv=${SPRING_PROFILES_ACTIVE} -Dserver.port=$PORT -Djava.security.egd=file:/dev/urandom -javaagent:target/newrelic/newrelic.jar -jar target/dancers-career-1.0.1.jar --spring.profiles.active=${SPRING_PROFILES_ACTIVE}
