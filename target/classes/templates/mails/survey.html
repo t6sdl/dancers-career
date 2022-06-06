@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="ja" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta name="viewport" content="width=device-width" />
-  <style type="text/css">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width" />
+    <style type="text/css">
     body {
       font-family: "メイリオ", Meiryo, Osaka, "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", "ＭＳ Ｐゴシック", "MS PGothic", sans-serif;
       font-size: 16px;
@@ -103,12 +103,21 @@
       line-height: 0;
     }
     .sns a {
+      position: relative;
       display: block;
       width: 100%;
       height: 100%;
       border-radius: 50%;
       background: #999;
       overflow: hidden;
+    }
+    .sns a img {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto;
     }
     .contact {
       text-align: center;
@@ -163,116 +172,116 @@
 	  font-size: 100% !important;
 	}
   </style>
-</head>
-<body>
-  <table class="body">
-    <thead id="header">
+  </head>
+  <body>
+    <table class="body">
+      <thead id="header">
+        <tr>
+          <td class="container">
+            <table>
+              <tr>
+                <td>
+                  <img class="service" th:src="${logo}" />
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </thead>
       <tr>
-        <td class="container">
-          <table>
-            <tr>
-              <td>
-                <img class="service" th:src="${logo}" />
-              </td>
-            </tr>
-          </table>
+        <td>
+          <span class="hr"></span>
         </td>
       </tr>
-    </thead>
-    <tr>
-      <td>
-        <span class="hr"></span>
-      </td>
-    </tr>
-    <tbody id="main">
-      <tr>
-        <td class="container">
-          <table>
-            <tr>
-              <td>
-                <h1 class="title">アンケートへのご協力をお願いします！</h1>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <p>いつもダンサーズキャリアをご利用いただきありがとうございます。</p>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <p>改めて、深夜に誤ってメールが配信されてしまったことをお詫び申し上げます。誠に申し訳ございませんでした。</p>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <p>ただいまサービス向上のため、ダンサーズキャリアをご利用の皆様にアンケート調査を実施しております。<br>5分程度で完了いたしますので、お時間のあるときにぜひご回答ください。</p>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <p>なお、アンケートの回答により個人が特定されることはありません。</p>
-              </td>
-            </tr>
-            <tr>
-              <td style="text-align:center;">
-                <div class="button-container">
-                  <a class="button" href="https://goo.gl/forms/p3ax5dBmmPipB9J23">アンケートに回答する</a>
-                </div>
-                <span>Googleフォームに遷移します</span>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <p>今後の更なるサービス向上のため、1人でも多くの方にご回答いただけることを願っております。</p>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <p>今後ともダンサーズキャリアをよろしくお願いいたします。</p>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </tbody>
-    <tfoot id="footer">
-      <tr>
-        <td class="container">
-          <table>
-            <tr>
-              <td colspan="2">
-                <p class="contact">ダンサーズキャリア</p>
-                <p class="contact"><a th:href="${top}" th:text="${top}"></a></p>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div class="sns" style="margin: 0 1rem 0 auto;">
-                  <a href="https://www.instagram.com/dancerscareer/"><img th:src="${instagram}" /></a>
-                </div>
-              </td>
-              <td>
-                <div class="sns" style="margin: 0 auto 0 1rem;">
-                  <a href="https://lin.ee/hYSemUIP"><img th:src="${line}" /></a>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2">
-                <p class="contact"><a th:href="${contact}">お問い合わせ</a></p>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2">
-                <div class="copy">
-                  <small>&copy; 2018（一社）全日本大学ストリートダンス連盟</small>
-                </div>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </tfoot>
-  </table>
-</body>
+      <tbody id="main">
+        <tr>
+          <td class="container">
+            <table>
+              <tr>
+                <td>
+                  <h1 class="title">アンケートへのご協力をお願いします！</h1>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>いつもダンサーズキャリアをご利用いただきありがとうございます。</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>改めて、深夜に誤ってメールが配信されてしまったことをお詫び申し上げます。誠に申し訳ございませんでした。</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>ただいまサービス向上のため、ダンサーズキャリアをご利用の皆様にアンケート調査を実施しております。<br>5分程度で完了いたしますので、お時間のあるときにぜひご回答ください。</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>なお、アンケートの回答により個人が特定されることはありません。</p>
+                </td>
+              </tr>
+              <tr>
+                <td style="text-align:center;">
+                  <div class="button-container">
+                    <a class="button" href="https://goo.gl/forms/p3ax5dBmmPipB9J23">アンケートに回答する</a>
+                  </div>
+                  <span>Googleフォームに遷移します</span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>今後の更なるサービス向上のため、1人でも多くの方にご回答いただけることを願っております。</p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>今後ともダンサーズキャリアをよろしくお願いいたします。</p>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot id="footer">
+        <tr>
+          <td class="container">
+            <table>
+              <tr>
+                <td colspan="2">
+                  <p class="contact">ダンサーズキャリア</p>
+                  <p class="contact"><a th:href="${top}" th:text="${top}"></a></p>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="sns" style="margin: 0 1rem 0 auto;">
+                    <a href="https://www.instagram.com/dancerscareer/"><img th:src="${instagram}" /></a>
+                  </div>
+                </td>
+                <td>
+                  <div class="sns" style="margin: 0 auto 0 1rem;">
+                    <a href="https://lin.ee/hYSemUIP"><img th:src="${line}" /></a>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <p class="contact"><a th:href="${contact}">お問い合わせ</a></p>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <div class="copy">
+                    <small>&copy; 2018（一社）全日本大学ストリートダンス連盟</small>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </body>
 </html>
