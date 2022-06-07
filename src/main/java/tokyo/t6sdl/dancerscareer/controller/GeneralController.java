@@ -5,6 +5,8 @@ import java.util.Objects;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,15 +61,14 @@ public class GeneralController {
 	@GetMapping("/about/contact")
 	public String getContact(Model model) {
 		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
+		setHeader(account, model);
+		if (!Objects.equals(account, null) && account.isAdmin()) {
+			return "redirect:/admin";
+		}
 		if (Objects.equals(account, null)) {
-			model.addAttribute("header", "for-stranger");
 			model.addAttribute(new ContactForm());
 			model.addAttribute("isLoggedIn", false);
-		} else if (account.isAdmin()) {
-			model.addAttribute("header", "for-admin");
-			return "redirect:/admin";
 		} else {
-			model.addAttribute("header", "for-user");
 			model.addAttribute(new ContactForm(account.getEmail()));
 			model.addAttribute("isLoggedIn", true);
 		}
@@ -75,20 +76,16 @@ public class GeneralController {
 	}
 
 	@PostMapping("/about/contact")
-	public String postContact(ContactForm contactForm, Model model) {
+	public String postContact(@Validated ContactForm contactForm, BindingResult result, Model model) {
+		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
+		setHeader(account, model);
+		if (result.hasErrors()) {
+			return "about/contact/contact";
+		}
+		Mail reply = new Mail(contactForm.getFrom(), Mail.SUB_REPLY_TO_CONTACT);
 		Mail ask = new Mail(Mail.TO_SUPPORT, Mail.SUB_CONTACT);
 		ask.setContent("[Email: " + contactForm.getFrom() + "]\n" + contactForm.getContent());
-		emailSender.receiveMail(ask);
-		Mail reply = new Mail(contactForm.getFrom(), Mail.SUB_REPLY_TO_CONTACT);
-		emailSender.sendMail(reply);
-		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
-		if (Objects.equals(account, null)) {
-			model.addAttribute("header", "for-stranger");
-		} else if (account.isAdmin()) {
-			model.addAttribute("header", "for-admin");
-		} else {
-			model.addAttribute("header", "for-user");
-		}
+		emailSender.sendContactForm(reply, ask);
 		model.addAttribute(contactForm);
 		return "about/contact/sentContact";
 	}
@@ -142,5 +139,15 @@ public class GeneralController {
 	@RequestMapping("/help/get-email")
 	public String getHowToGetEmail() {
 		return "help/howToGetEmail";
+	}
+
+	private void setHeader(Account account, Model model) {
+		if (Objects.equals(account, null)) {
+			model.addAttribute("header", "for-stranger");
+		} else if (account.isAdmin()) {
+			model.addAttribute("header", "for-admin");
+		} else {
+			model.addAttribute("header", "for-user");
+		}
 	}
 }
