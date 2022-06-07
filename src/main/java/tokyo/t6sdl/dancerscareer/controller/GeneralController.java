@@ -82,11 +82,10 @@ public class GeneralController {
 		if (result.hasErrors()) {
 			return "about/contact/contact";
 		}
+		Mail reply = new Mail(contactForm.getFrom(), Mail.SUB_REPLY_TO_CONTACT);
 		Mail ask = new Mail(Mail.TO_SUPPORT, Mail.SUB_CONTACT);
 		ask.setContent("[Email: " + contactForm.getFrom() + "]\n" + contactForm.getContent());
-		emailSender.receiveMail(ask);
-		Mail reply = new Mail(contactForm.getFrom(), Mail.SUB_REPLY_TO_CONTACT);
-		emailSender.sendMail(reply);
+		emailSender.sendContactForm(reply, ask);
 		model.addAttribute(contactForm);
 		return "about/contact/sentContact";
 	}

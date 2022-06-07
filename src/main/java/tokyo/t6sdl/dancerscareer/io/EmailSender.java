@@ -29,26 +29,10 @@ public class EmailSender {
 	private final AccountService accountService;
 	private final LineNotifyManager lineNotify;
 
-	public void sendMail(Mail mail) {
-		try {
-			MimeMessage message = mailSender.createMimeMessage();
-			message.setHeader("Content-type", "text/html");
-			message.setHeader("Errors-To", Mail.TO_ERROR);
-			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-			helper.setFrom(Mail.TO_SUPPORT, Mail.NAME_OF_SUPPORT);
-			helper.setTo(mail.getTo());
-			helper.setSubject(mail.getSubject());
-			this.readContent(mail);
-			helper.setText(mail.getContent(), true);
-			mailSender.send(message);
-			String accessToken = accountService.getLineAccessTokenByEmail(mail.getTo());
-			if (!(Objects.equals(accessToken, null)) && !(accessToken.isEmpty())) {
-				lineNotify.notifyMessage(accessToken, lineNotify.getMessage(mail));
-			}
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+	public void sendContactForm(Mail reply, Mail ask) {
+		boolean isSent = sendMail(reply);
+		if (isSent) {
+			receiveMail(ask);
 		}
 	}
 
@@ -138,24 +122,6 @@ public class EmailSender {
 		}
 	}
 
-	public void receiveMail(Mail mail) {
-		try {
-			MimeMessage message = mailSender.createMimeMessage();
-			message.setHeader("Content-type", "text/html");
-			message.setHeader("Errors-To", Mail.TO_ERROR);
-			MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
-			helper.setFrom(Mail.TO_SUPPORT, Mail.NAME_OF_SUPPORT);
-			helper.setTo(mail.getTo());
-			helper.setSubject(mail.getSubject());
-			helper.setText(mail.getContent(), false);
-			mailSender.send(message);
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-	}
-
 	protected void readContent(Mail mail) {
 		StringBuffer draft = new StringBuffer();
 		URL url = null;
@@ -183,6 +149,47 @@ public class EmailSender {
 			}
 		}
 		mail.setContent(draft.toString());
+	}
+
+	private boolean sendMail(Mail mail) {
+		try {
+			MimeMessage message = mailSender.createMimeMessage();
+			message.setHeader("Content-type", "text/html");
+			message.setHeader("Errors-To", Mail.TO_ERROR);
+			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+			helper.setFrom(Mail.TO_SUPPORT, Mail.NAME_OF_SUPPORT);
+			helper.setTo(mail.getTo());
+			helper.setSubject(mail.getSubject());
+			this.readContent(mail);
+			helper.setText(mail.getContent(), true);
+			mailSender.send(message);
+			String accessToken = accountService.getLineAccessTokenByEmail(mail.getTo());
+			if (!(Objects.equals(accessToken, null)) && !(accessToken.isEmpty())) {
+				lineNotify.notifyMessage(accessToken, lineNotify.getMessage(mail));
+			}
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	private void receiveMail(Mail mail) {
+		try {
+			MimeMessage message = mailSender.createMimeMessage();
+			message.setHeader("Content-type", "text/html");
+			message.setHeader("Errors-To", Mail.TO_ERROR);
+			MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
+			helper.setFrom(Mail.TO_SUPPORT, Mail.NAME_OF_SUPPORT);
+			helper.setTo(mail.getTo());
+			helper.setSubject(mail.getSubject());
+			helper.setText(mail.getContent(), false);
+			mailSender.send(message);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private String getHtmlSource(Mail mail) {
