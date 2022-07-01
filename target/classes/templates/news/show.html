@@ -1,77 +1,84 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
-<head>
-	<title>ダンサーズキャリア｜ダンスの話を使ったES・就活体験談を公開</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<meta name="description" th:content="${title}">
-	<meta name="google-site-verification" content="3aUVQIxa6KWFhIIqUkhCgaCFWgEhyxoD_xpMe3Spw2w">
-	<th:block th:replace="common/favicons :: favicons"></th:block>
-	<meta property="og:title" content="News｜ダンスの話を使ったES・就活体験談を公開">
-	<meta property="og:type" content="website">
-	<meta property="og:url" th:content="${#httpServletRequest.requestURL}">
-	<meta property="og:image" th:content="'https://dancers-career.t6sdl.tokyo/img/news/' + ${id} + '/card.jpg'">
-	<meta property="og:description" th:content="${title}">
-	<meta property="og:site_name" content="ダンサーズキャリア">
-	<meta property="fb:app_id" content="547642575658499">
-	<meta name="twitter:card" content="summary">
-	<meta name="twitter:site" content="@T6SDL">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20211031}" href="../../static/css/main.css">
-	<link rel="stylesheet" type="text/css" th:href="@{/css/news.css?update=20211031}" href="../../static/css/news.css">
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-</head>
-<body>
-	<header th:replace="common/header :: ${header}"></header>
-	<main>
-		<div class="container">
-			<h1 class="title">News</h1>
-			<article class="news">
-				<div>
-					<div class="header">
-						<time th:datetime="${updatedAt}" th:object="${updatedAt}">[[*{year}]]年[[*{monthValue}]]月[[*{dayOfMonth}]]日</time><br>
-						<h1 th:text="${title}"></h1>
-						<ul class="share">
-							<li class="share__button facebook"><a th:href="'http://www.facebook.com/share.php?u=' + @{__${#httpServletRequest.requestURL}__}" rel="nofollow" target="_blank"><i class="fab fa-facebook-f"></i> シェア</a></li>
-							<li class="share__button twitter"><a th:href="'https://twitter.com/share?url=' + @{__${#httpServletRequest.requestURL}__}"><i class="fab fa-twitter"></i> ツイート</a></li>
-						</ul>
+	<head>
+		<title>ダンサーズキャリア｜ダンスの話を使ったES・就活体験談を公開</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="description" th:content="${title}">
+		<meta name="google-site-verification" content="3aUVQIxa6KWFhIIqUkhCgaCFWgEhyxoD_xpMe3Spw2w">
+		<th:block th:replace="common/favicons :: favicons"></th:block>
+		<meta property="og:title" content="News｜ダンスの話を使ったES・就活体験談を公開">
+		<meta property="og:type" content="website">
+		<meta property="og:url" th:content="${#httpServletRequest.requestURL}">
+		<meta property="og:image" th:content="'https://dancers-career.t6sdl.tokyo/img/news/' + ${id} + '/card.jpg'">
+		<meta property="og:description" th:content="${title}">
+		<meta property="og:site_name" content="ダンサーズキャリア">
+		<meta property="fb:app_id" content="547642575658499">
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:site" content="@T6SDL">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+			integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20211031}" href="../../static/css/main.css">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/news.css?update=20211031}" href="../../static/css/news.css">
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+			integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<header th:replace="common/header :: ${header}"></header>
+		<main>
+			<div class="container">
+				<h1 class="title">News</h1>
+				<article class="news">
+					<div>
+						<div class="header">
+							<time th:datetime="${updatedAt}"
+								th:object="${updatedAt}">[[*{year}]]年[[*{monthValue}]]月[[*{dayOfMonth}]]日</time><br>
+							<h1 th:text="${title}"></h1>
+							<ul class="share">
+								<li class="share__button facebook"><a
+										th:href="'http://www.facebook.com/share.php?u=' + @{__${#httpServletRequest.requestURL}__}"
+										rel="nofollow" target="_blank"><i class="fab fa-facebook-f"></i> シェア</a></li>
+								<li class="share__button twitter"><a
+										th:href="'https://twitter.com/share?url=' + @{__${#httpServletRequest.requestURL}__}"><i
+											class="fab fa-twitter"></i> ツイート</a></li>
+							</ul>
+						</div>
+						<hr>
+						<div class="markdown" th:utext="${md}"></div>
 					</div>
+				</article>
+				<div class="ads">
+					<h2>ダンサーズキャリアではダンサーの就活を応援しています</h2>
 					<hr>
-					<div class="markdown" th:utext="${md}"></div>
+					<div class="ads__links">
+						<div class="ads__link">
+							<div class="ads__description">
+								<h3>ES/体験記</h3>
+								<hr style="width:1.8em;margin-top:.2em;margin-bottom:.5em;border-width:1.5px;border-color:#426579;">
+								<p>ダンサーの先輩たちのESを公開しています</p>
+							</div>
+							<div>
+								<a class="button button--accent" th:href="@{/experiences?all&sort=0}">
+									<span class="button__text">ESを見てみる</span><i class="button__icon fas fa-arrow-right"></i>
+								</a>
+							</div>
+						</div>
+						<div class="ads__link">
+							<div class="ads__description">
+								<h3>メンター制度</h3>
+								<hr style="width:1.8em;margin-top:.2em;margin-bottom:.5em;border-width:1.5px;border-color:#426579;">
+								<p>ダンスサークル出身者がメンターとなって就活相談に乗ります</p>
+							</div>
+							<div>
+								<a class="button button--accent" th:href="@{/mentors}">
+									<span class="button__text">就活相談をしてみる</span><i class="button__icon fas fa-arrow-right"></i>
+								</a>
+							</div>
+						</div>
+					</div>
 				</div>
-			</article>
-			<div class="ads">
-			  <h2>ダンサーズキャリアではダンサーの就活を応援しています</h2>
-			  <hr>
-			  <div class="ads__links">
-			    <div class="ads__link">
-			      <div class="ads__description">
-			        <h3>ES/体験記</h3>
-			        <hr style="width:1.8em;margin-top:.2em;margin-bottom:.5em;border-width:1.5px;border-color:#426579;">
-			        <p>ダンサーの先輩たちのESを公開しています</p>
-			      </div>
-			      <div>
-			        <a class="button button--accent" th:href="@{/experiences?all&sort=0}">
-			          <span class="button__text">ESを見てみる</span><i class="button__icon fas fa-arrow-right"></i>
-			        </a>
-			      </div>
-			    </div>
-			    <div class="ads__link">
-			      <div class="ads__description">
-			        <h3>メンター制度</h3>
-              <hr style="width:1.8em;margin-top:.2em;margin-bottom:.5em;border-width:1.5px;border-color:#426579;">
-			        <p>ダンサーの内定者たちがメンターとなって就活相談に乗ります</p>
-			      </div>
-            <div>
-              <a class="button button--accent" th:href="@{/mentors}">
-                <span class="button__text">就活相談をしてみる</span><i class="button__icon fas fa-arrow-right"></i>
-              </a>
-            </div>
-			    </div>
-			  </div>
 			</div>
-		</div>
-	</main>
-	<footer th:replace="common/footer :: footer"></footer>
-</body>
+		</main>
+		<footer th:replace="common/footer :: footer"></footer>
+	</body>
 </html>
