@@ -1,145 +1,167 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
-<head>
-	<title>ダンサーズキャリア｜ダンスの話を使ったES・就活体験談を公開</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<meta name="description" content="ダンサーズキャリアは、ダンサーの先輩たちが実際に就職活動で使ったエントリーシート・面接体験記を公開するサービスです。ダンスをやっていない人に、ダンスの話を面接という短時間の場で伝え切るには準備が必要です。体育会に負けず劣らずダンスに打ち込んだみなさんが就職活動でその経験をきちんと伝え、評価されて欲しい。そんな世界を創るために私たちはこのメディアを立ち上げました。本サイトを通して、1人でも多くのダンサーが就職活動を成功させることを願っています。">
-	<meta name="google-site-verification" content="3aUVQIxa6KWFhIIqUkhCgaCFWgEhyxoD_xpMe3Spw2w">
-	<th:block th:replace="common/favicons :: favicons"></th:block>
-	<meta property="og:title" content="ダンサーズキャリア｜ダンスの話を使ったES・就活体験談を公開">
-	<meta property="og:type" content="website">
-	<meta property="og:url" content="https://dancers-career.t6sdl.tokyo/">
-	<meta property="og:image" content="https://dancers-career.t6sdl.tokyo/img/ogp.jpg">
-	<meta property="og:description" content="ダンサーズキャリアは、ダンサーの先輩たちが実際に就職活動で使ったエントリーシート・面接体験記を公開するサービスです。ダンスをやっていない人に、ダンスの話を面接という短時間の場で伝え切るには準備が必要です。体育会に負けず劣らずダンスに打ち込んだみなさんが就職活動でその経験をきちんと伝え、評価されて欲しい。そんな世界を創るために私たちはこのメディアを立ち上げました。本サイトを通して、1人でも多くのダンサーが就職活動を成功させることを願っています。">
-	<meta property="og:site_name" content="ダンサーズキャリア">
-	<meta property="fb:app_id" content="547642575658499">
-	<meta name="twitter:card" content="summary">
-	<meta name="twitter:site" content="@T6SDL">
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20211031}" href="../../static/css/main.css">
-	<link rel="stylesheet" type="text/css" th:href="@{/css/index.css?update=20211031}" href="../../static/css/index.css">
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-</head>
-<body>
-	<header th:replace="common/header :: ${header}"></header>
-	<main>
-		<section id="top">
-			<div class="container">
-				<h2 class="concept">人事がナットクする<br class="hide-l">ダンスの伝え方。</h2>
-				<p class="description">ダンサーズキャリアは、ダンサーの先輩たちが実際に就職活動で使った<br class="show-m">エントリーシート・面接体験記を公開するサービスです。</p>
+	<head>
+		<title>ダンサーズキャリア｜ダンスの話を使ったES・就活体験談を公開</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="description"
+			content="ダンサーズキャリアは、ダンサーの先輩たちが実際に就職活動で使ったエントリーシート・面接体験記を公開するサービスです。ダンスをやっていない人に、ダンスの話を面接という短時間の場で伝え切るには準備が必要です。体育会に負けず劣らずダンスに打ち込んだみなさんが就職活動でその経験をきちんと伝え、評価されて欲しい。そんな世界を創るために私たちはこのメディアを立ち上げました。本サイトを通して、1人でも多くのダンサーが就職活動を成功させることを願っています。">
+		<meta name="google-site-verification" content="3aUVQIxa6KWFhIIqUkhCgaCFWgEhyxoD_xpMe3Spw2w">
+		<th:block th:replace="common/favicons :: favicons"></th:block>
+		<meta property="og:title" content="ダンサーズキャリア｜ダンスの話を使ったES・就活体験談を公開">
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="https://dancers-career.t6sdl.tokyo/">
+		<meta property="og:image" content="https://dancers-career.t6sdl.tokyo/img/ogp.jpg">
+		<meta property="og:description"
+			content="ダンサーズキャリアは、ダンサーの先輩たちが実際に就職活動で使ったエントリーシート・面接体験記を公開するサービスです。ダンスをやっていない人に、ダンスの話を面接という短時間の場で伝え切るには準備が必要です。体育会に負けず劣らずダンスに打ち込んだみなさんが就職活動でその経験をきちんと伝え、評価されて欲しい。そんな世界を創るために私たちはこのメディアを立ち上げました。本サイトを通して、1人でも多くのダンサーが就職活動を成功させることを願っています。">
+		<meta property="og:site_name" content="ダンサーズキャリア">
+		<meta property="fb:app_id" content="547642575658499">
+		<meta name="twitter:card" content="summary">
+		<meta name="twitter:site" content="@T6SDL">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+			integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20211031}">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/index.css?update=20211031}">
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+			integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		<header th:replace="common/header :: ${header}"></header>
+		<main>
+			<section id="top">
+				<div class="container">
+					<h2 class="concept">人事がナットクする<br class="hide-l">ダンスの伝え方。</h2>
+					<p class="description">ダンサーズキャリアは、ダンサーの先輩たちが実際に就職活動で使った<br class="show-m">エントリーシート・面接体験記を公開するサービスです。</p>
+				</div>
+			</section>
+			<section id="procedure">
+				<div class="container">
+					<h2>面接に向けて準備しよう</h2>
+					<div class="spots">
+						<span class="spot-l"></span>
+						<span class="spot-m"></span>
+						<span class="spot-s"></span>
+					</div>
+					<div class="steps">
+						<div class="step">
+							<div class="txt">
+								<div class="index"><img class="index__marker" alt="step1" th:src="@{/img/index/step1-marker.png}">SEARCH
+								</div>
+								<div class="content">
+									<p>ダンサーズキャリアで<br>自分の興味のあるES/体験記を探す<br><a class="remark"
+											th:href="@{/experiences?all&sort=0}">ES/体験記を探してみよう</a></p>
+								</div>
+							</div>
+							<div class="img">
+								<img alt="SPEAK" th:src="@{/img/index/step1.png}">
+							</div>
+						</div>
+						<div class="step">
+							<div class="txt">
+								<div class="index"><img class="index__marker" alt="step2"
+										th:src="@{/img/index/step2-marker.png}">ANALYSE</div>
+								<div class="content">
+									<p>見つけたESを参考にして<br>自分の経験を言葉にする<br><a class="remark"
+											th:href="@{/experiences?all&sort=0}">現役人事によるES添削も参考にしよう</a></p>
+								</div>
+							</div>
+							<div class="img">
+								<img alt="SPEAK" th:src="@{/img/index/step2.png}">
+							</div>
+						</div>
+						<div class="step">
+							<div class="txt">
+								<div class="index"><img class="index__marker" alt="step3" th:src="@{/img/index/step3-marker.png}">WRITE
+								</div>
+								<div class="content">
+									<p>ダンスを知らない人事への<br>伝わりやすさを意識してESを書く<br><a class="remark"
+											th:href="@{/mentors}">メンター制度を利用して内定者に添削してもらおう</a></p>
+								</div>
+							</div>
+							<div class="img">
+								<img alt="SPEAK" th:src="@{/img/index/step3.png}">
+							</div>
+						</div>
+						<div class="step">
+							<div class="txt">
+								<div class="index"><img class="index__marker" alt="step4" th:src="@{/img/index/step4-marker.png}">SPEAK
+								</div>
+								<div class="content">
+									<p>体験記を参考にしながら<br>面接で話す練習をする<br><a class="remark" th:href="@{/mentors}">メンター制度を利用して内定者に面接練習をしてもらおう</a>
+									</p>
+								</div>
+							</div>
+							<div class="img">
+								<img alt="SPEAK" th:src="@{/img/index/step4.png}">
+							</div>
+						</div>
+					</div>
+					<div class="spots">
+						<span class="spot-s"></span>
+						<span class="spot-m"></span>
+						<span class="spot-l"></span>
+					</div>
+					<h2>いざ面接！！</h2>
+				</div>
+			</section>
+			<section id="motive">
+				<div class="container">
+					<h2 class="concept">ダンスの話は簡単には伝わらない</h2>
+					<div class="description">
+						<p>ダンスの経験を、準備せずにそのまま話してしまうと</p>
+						<p>「歴代最高のショーを作った、と言ってるけどそれはどうやって測ったの？何をもって歴代最高だと言えるの？」<br>「というかショー作りってそんなに大変なものなの？」</p>
+						<p>などと深堀りされた時に、答えられず落ちてしまうケースは珍しくありません。</p>
+						<p>ダンスをやっていない人に、ダンスの話を面接という短時間の場で伝え切るには準備が必要です。</p>
+						<p>体育会に負けず劣らずダンスに打ち込んだみなさんが就職活動でその経験をきちんと伝え、評価されて欲しい。</p>
+						<p>そんな世界を創るために私たちはこのメディアを立ち上げました。</p>
+						<p>本サイトを通して、1人でも多くのダンサーが就職活動を成功させることを願っています。</p>
+					</div>
+				</div>
+			</section>
+			<section id="clients">
+				<div class="container">
+					<h2>＜取引先企業様＞</h2>
+					<div class="logos">
+						<div class="logo"><img alt="Leverages" th:src="@{/img/index/logos/10.png}"></div>
+						<div class="logo"><img alt="MicroAd" th:src="@{/img/index/logos/2.png}"></div>
+						<div class="logo"><img alt="Zeals" th:src="@{/img/index/logos/12.png}"></div>
+						<div class="logo"><img alt="AGEHA" th:src="@{/img/index/logos/11.png}"></div>
+						<div class="logo"><img alt="DearsBRAIN" th:src="@{/img/index/logos/9.png}"></div>
+						<div class="logo"><img alt="Tsujikawa" th:src="@{/img/index/logos/7.png}"></div>
+					</div>
+					<div class="pretentious">他にも多くの『ダンサーを応援してくれる企業様』とお取引させていただいております<br>会員の皆様には、これらの企業様からも就職活動に関するご案内をさせていただきます
+					</div>
+				</div>
+			</section>
+			<div id="search">
+				<a th:href="@{/experiences?all&sort=0}">
+					Search<br>ES/Experience
+					<span>ES/体験記を探す</span>
+				</a>
 			</div>
-		</section>
-		<section id="procedure">
-			<div class="container">
-				<h2>面接に向けて準備しよう</h2>
-				<div class="spots">
-					<span class="spot-l"></span>
-					<span class="spot-m"></span>
-					<span class="spot-s"></span>
-				</div>
-				<div class="steps">
-					<div class="step">
-						<div class="txt">
-							<div class="index"><img class="index__marker" alt="step1" th:src="@{/img/index/step1-marker.png}" src="../../static/img/index/step1-marker.png">SEARCH</div>
-							<div class="content"><p>ダンサーズキャリアで<br>自分の興味のあるES/体験記を探す<br><a class="remark" th:href="@{/experiences?all&sort=0}">ES/体験記を探してみよう</a></p></div>
-						</div>
-						<div class="img">
-							<img alt="SPEAK" th:src="@{/img/index/step1.png}" src="../../static/img/index/step1.png">
-						</div>
-					</div>
-					<div class="step">
-						<div class="txt">
-							<div class="index"><img class="index__marker" alt="step2" th:src="@{/img/index/step2-marker.png}" src="../../static/img/index/step2-marker.png">ANALYSE</div>
-							<div class="content"><p>見つけたESを参考にして<br>自分の経験を言葉にする<br><a class="remark" th:href="@{/experiences?all&sort=0}">現役人事によるES添削も参考にしよう</a></p></div>
-						</div>
-						<div class="img">
-							<img alt="SPEAK" th:src="@{/img/index/step2.png}" src="../../static/img/index/step2.png">
-						</div>
-					</div>
-					<div class="step">
-						<div class="txt">
-							<div class="index"><img class="index__marker" alt="step3" th:src="@{/img/index/step3-marker.png}" src="../../static/img/index/step3-marker.png">WRITE</div>
-							<div class="content"><p>ダンスを知らない人事への<br>伝わりやすさを意識してESを書く<br><a class="remark" th:href="@{/mentors}">メンター制度を利用して内定者に添削してもらおう</a></p></div>
-						</div>
-						<div class="img">
-							<img alt="SPEAK" th:src="@{/img/index/step3.png}" src="../../static/img/index/step3.png">
-						</div>
-					</div>
-					<div class="step">
-						<div class="txt">
-							<div class="index"><img class="index__marker" alt="step4" th:src="@{/img/index/step4-marker.png}" src="../../static/img/index/step4-marker.png">SPEAK</div>
-							<div class="content"><p>体験記を参考にしながら<br>面接で話す練習をする<br><a class="remark" th:href="@{/mentors}">メンター制度を利用して内定者に面接練習をしてもらおう</a></p></div>
-						</div>
-						<div class="img">
-							<img alt="SPEAK" th:src="@{/img/index/step4.png}" src="../../static/img/index/step4.png">
-						</div>
-					</div>
-				</div>
-				<div class="spots">
-					<span class="spot-s"></span>
-					<span class="spot-m"></span>
-					<span class="spot-l"></span>
-				</div>
-				<h2>いざ面接！！</h2>
-			</div>
-		</section>
-		<section id="motive">
-			<div class="container">
-				<h2 class="concept">ダンスの話は簡単には伝わらない</h2>
-				<div class="description">
-					<p>ダンスの経験を、準備せずにそのまま話してしまうと</p>
-					<p>「歴代最高のショーを作った、と言ってるけどそれはどうやって測ったの？何をもって歴代最高だと言えるの？」<br>「というかショー作りってそんなに大変なものなの？」</p>
-					<p>などと深堀りされた時に、答えられず落ちてしまうケースは珍しくありません。</p>
-					<p>ダンスをやっていない人に、ダンスの話を面接という短時間の場で伝え切るには準備が必要です。</p>
-					<p>体育会に負けず劣らずダンスに打ち込んだみなさんが就職活動でその経験をきちんと伝え、評価されて欲しい。</p>
-					<p>そんな世界を創るために私たちはこのメディアを立ち上げました。</p>
-					<p>本サイトを通して、1人でも多くのダンサーが就職活動を成功させることを願っています。</p>
-				</div>
-			</div>
-		</section>
-		<section id="clients">
-		  <div class="container">
-		    <h2>＜取引先企業様＞</h2>
-		    <div class="logos">
-					<div class="logo"><img alt="Leverages" th:src="@{/img/index/logos/10.png}"></div>
-          <div class="logo"><img alt="AGEHA" th:src="@{/img/index/logos/11.png}"></div>
-          <div class="logo"><img alt="MicroAd" th:src="@{/img/index/logos/2.png}"></div>
-          <div class="logo"><img alt="DearsBRAIN" th:src="@{/img/index/logos/9.png}"></div>
-          <div class="logo"><img alt="Tsujikawa" th:src="@{/img/index/logos/7.png}"></div>
-		    </div>
-		    <div class="pretentious">他にも多くの『ダンサーを応援してくれる企業様』とお取引させていただいております<br>会員の皆様には、これらの企業様からも就職活動に関するご案内をさせていただきます</div>
-		  </div>
-		</section>
-		<div id="search">
-		  <a th:href="@{/experiences?all&sort=0}">
-		    Search<br>ES/Experience
-		    <span>ES/体験記を探す</span>
-		  </a>
-		</div>
-	</main>
-	<footer th:replace="common/footer :: footer"></footer>
-	<script>
-		$(function() {
-			const $procedure = $('#procedure'),
-			$motive = $('#motive'),
-			$search = $('#search');
-			const magnifier = () => {
-				let scroll = $(window).scrollTop(),
-				procOffset = $procedure.offset().top,
-				motiveOffset = $motive.offset().top,
-				windowHeight = $(window).height();
-				if (procOffset - scroll <= windowHeight / 2 && motiveOffset - scroll >= windowHeight / 2) {
-					$search.fadeIn(200);
-				} else {
-					$search.fadeOut(200);
+		</main>
+		<footer th:replace="common/footer :: footer"></footer>
+		<script>
+			$(function () {
+				const $procedure = $('#procedure'),
+					$motive = $('#motive'),
+					$search = $('#search');
+				const magnifier = () => {
+					let scroll = $(window).scrollTop(),
+						procOffset = $procedure.offset().top,
+						motiveOffset = $motive.offset().top,
+						windowHeight = $(window).height();
+					if (procOffset - scroll <= windowHeight / 2 && motiveOffset - scroll >= windowHeight / 2) {
+						$search.fadeIn(200);
+					} else {
+						$search.fadeOut(200);
+					}
 				}
-			}
-			magnifier();
-			$(window).on('scroll', () => {
 				magnifier();
+				$(window).on('scroll', () => {
+					magnifier();
+				});
 			});
-		});
-	</script>
-</body>
+		</script>
+	</body>
 </html>
