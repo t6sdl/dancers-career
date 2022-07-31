@@ -43,7 +43,7 @@ import tokyo.t6sdl.dancerscareer.service.SecurityService;
 public class NewsController {
 	private final SecurityService securityService;
 	private final AccountService accountService;
-	private final List<Integer> newsIds = Arrays.asList(1, 21, 31, 41, 51, 61, 71, 81, 91, 101); // NOTE: 10刻みの数値
+	private final List<Integer> newsIds = Arrays.asList(1, 21, 31, 41, 51, 61, 71, 81, 91, 101, 121); // NOTE: 10刻みの数値
 	private final List<String> newsShortTitles = Arrays.asList(
 			"ダンサー向け就活セミナーが開催されます！",
 			"【19卒ダンキャリ利用者インタビュー第1弾】〜就活ダルいと言っていた僕が今、仕事を楽しんでいる理由〜",
@@ -54,7 +54,8 @@ public class NewsController {
 			"ダンスの経験で超難関企業リクルートに内定！IT新規事業、外資就活ドットコムの経営まで手がけるビジネスマンは元ダンサーだった！",
 			"【21卒ダンキャリ利用者インタビュー第1弾】〜キャリア面談を通して身につけた自分の見つめ方、イメージと現実の違いとは〜",
 			"【21卒ダンキャリ利用者インタビュー第2弾】”代表”だけでは通過しない！人事がダンスの話で注目するポイントとは！？",
-			"これで就活は怖くない！〜ダンキャリ活用アドバイス〜"
+			"これで就活は怖くない！〜ダンキャリ活用アドバイス〜",
+			"【24卒向けセミナー vol.1】 ダンスサークル出身社会人から学ぶ納得内定への最短ルート"
 		); // NOTE: 記事一覧ページで表示する短めの記事タイトル。65文字まで。
 	private final List<String> newsTitles = Arrays.asList(
 			"ダンサー向け就活セミナーが開催されます！",
@@ -66,7 +67,8 @@ public class NewsController {
 			"ダンスの経験で超難関企業リクルートに内定！飲食店・美容室向けIT新規事業、外資就活ドットコムの経営まで手がけるビジネスマンは元ダンサーだった！",
 			"【21卒ダンキャリ利用者インタビュー第1弾】〜キャリア面談を通して身につけた自分の見つめ方、イメージと現実の違いとは〜",
 			"【21卒ダンキャリ利用者インタビュー第2弾】”代表”だけでは通過しない！人事がダンスの話で注目するポイントとは！？",
-			"これで就活は怖くない！〜ダンキャリ活用アドバイス〜"
+			"これで就活は怖くない！〜ダンキャリ活用アドバイス〜",
+			"【24卒向けセミナー vol.1】 ダンスサークル出身社会人から学ぶ納得内定への最短ルート"
 		); // NOTE: 記事最上部に表示する正式な記事タイトル。文字数制限なし。
 	private final List<String> newsUpdatedDates = Arrays.asList(
 			"2018-12-06",
@@ -78,7 +80,8 @@ public class NewsController {
 			"2020-07-19",
 			"2021-05-25",
 			"2021-09-20",
-			"2022-06-01"
+			"2022-06-01",
+			"2022-08-01"
 		); // NOTE: 記事アップロード日。
 	private final Map<Integer, Map<String, Object>> newsMap = generateNewsMap();
 
