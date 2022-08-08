@@ -44,7 +44,7 @@ public class NewsController {
 	private final SecurityService securityService;
 	private final AccountService accountService;
 	// NOTE: 10刻みの数値
-	private final List<Integer> newsIds = Arrays.asList(1, 21, 31, 41, 51, 61, 71, 81, 91, 101, 111, 121);
+	private final List<Integer> newsIds = Arrays.asList(1, 21, 31, 41, 51, 61, 71, 81, 91, 101, 111, 121, 131);
 	// NOTE: 記事一覧ページで表示する短めの記事タイトル。65文字まで。
 	private final List<String> newsShortTitles = Arrays.asList(
 			"ダンサー向け就活セミナーが開催されます！",
@@ -58,7 +58,8 @@ public class NewsController {
 			"【21卒ダンキャリ利用者インタビュー第2弾】”代表”だけでは通過しない！人事がダンスの話で注目するポイントとは！？",
 			"これで就活は怖くない！〜ダンキャリ活用アドバイス〜",
 			"23卒 就活無双×就活苦労 〜同じサークル、同じ役職、同じ志望業界 この二人の間あった”圧倒的差”から見出す”就活の近道”〜",
-			"【24卒向けセミナー vol.1】 ダンスサークル出身社会人から学ぶ納得内定への最短ルート"
+			"【24卒向けセミナー vol.1】 ダンスサークル出身社会人から学ぶ納得内定への最短ルート",
+			"就活とは何なのか 〜”何故就活をするのか”あなたは説明できますか！？〜"
 		);
 	// NOTE: 記事最上部に表示する正式な記事タイトル。文字数制限なし。
 	private final List<String> newsTitles = Arrays.asList(
@@ -73,7 +74,8 @@ public class NewsController {
 			"【21卒ダンキャリ利用者インタビュー第2弾】”代表”だけでは通過しない！人事がダンスの話で注目するポイントとは！？",
 			"これで就活は怖くない！〜ダンキャリ活用アドバイス〜",
 			"23卒 就活無双×就活苦労 〜同じサークル、同じ役職、同じ志望業界 この二人の間あった”圧倒的差”から見出す”就活の近道”〜",
-			"【24卒向けセミナー vol.1】 ダンスサークル出身社会人から学ぶ納得内定への最短ルート"
+			"【24卒向けセミナー vol.1】 ダンスサークル出身社会人から学ぶ納得内定への最短ルート",
+			"就活とは何なのか 〜”何故就活をするのか”あなたは説明できますか！？〜"
 		);
 	// NOTE: 記事アップロード日。
 	private final List<String> newsUpdatedDates = Arrays.asList(
@@ -88,7 +90,8 @@ public class NewsController {
 			"2021-09-20",
 			"2022-06-01",
 			"2022-07-15",
-			"2022-08-01"
+			"2022-08-01",
+			"2022-08-15"
 		);
 	private final Map<Integer, Map<String, Object>> newsMap = generateNewsMap();
 
