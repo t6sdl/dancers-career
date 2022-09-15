@@ -12,8 +12,8 @@ public class Mail {
 	public static final String URI_EXPERIENCES = Mail.CONTEXT_PATH + "/experiences";
 	public static final String URI_MAIL_SETTING = Mail.CONTEXT_PATH + "/user/account/change/mail-setting";
 	public static final String NAME_OF_SUPPORT = "ダンサーズキャリア";
-	public static final String TO_SUPPORT = "dancerscareer_support@t6sdl.tokyo";
-	public static final String TO_ERROR = "dancerscareer_error@t6sdl.tokyo";
+	public static final String TO_SUPPORT = "dancerscareer@jusdl.or.jp";
+	public static final String TO_ERROR = "dancerscareer@jusdl.or.jp";
 	public static final String SUB_WELCOME_TO_US = "ダンサーズキャリアへようこそ！";
 	public static final String SUB_VERIFY_EMAIL = "メールアドレスの確認";
 	public static final String SUB_RESET_PWD = "パスワードの再設定";
