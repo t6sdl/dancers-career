@@ -1,443 +1,460 @@
 <!DOCTYPE html>
 <html lang="ja" xmlns:th="http://www.thymeleaf.org">
-<head>
-  <title>プロフィール登録｜ダンサーズキャリア</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <th:block th:replace="common/favicons :: favicons"></th:block>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20211031}" href="../../static/css/main.css">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/form.css?update=20211031}" href="../../static/css/form.css">
-  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-</head>
-<body>
-  <header th:replace="common/header :: for-user"></header>
-  <main>
-    <div class="container window--lg">
-      <form th:action="@{/signup/profile}" method="post" th:object="${profileForm}">
-        <h1>プロフィール登録</h1>
-        <div th:unless="${param.revisit}">
-          <p>「メールアドレスの確認」と「プロフィールの登録」をしていただくことでES/体験記を全てご覧いただけます。</p>
-          <p class="note">メールアドレスの確認はダンサーズキャリアから届くメールの「メールアドレスの確認」ボタンを押すことで完了します。dancerscareer_support@t6sdl.tokyoからのメールが届くように設定ください。</p>
-          <p class="note"><a class="internal-link" th:href="@{/help/get-email}" target="_blank"><i class="far fa-question-circle"></i>メールが届かない</a></p>
-        </div>
-        <div class="form-item">
-          <label>氏名</label>
-          <div class="form-2-items">
-            <div class="form-item">
-              <label class="form-item__label" for="familyName">姓</label>
-              <input type="text" th:field="*{familyName}" th:errorclass="invalid" class="form-item__input input--short-text " placeholder="姓" required>
-              <p th:if="${#fields.hasErrors('familyName')}" th:errors="*{familyName}" class="invalid"></p>
-            </div>
-            <div class="form-item">
-              <label class="form-item__label" for="givenName">名</label>
-              <input type="text" th:field="*{givenName}" th:errorclass="invalid" class="form-item__input input--short-text" placeholder="名" required>
-              <p th:if="${#fields.hasErrors('givenName')}" th:errors="*{givenName}" class="invalid"></p>
+  <head>
+    <title>プロフィール登録｜ダンサーズキャリア</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <th:block th:replace="common/favicons :: favicons"></th:block>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+      integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css?update=20211031}" href="../../static/css/main.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/form.css?update=20211031}" href="../../static/css/form.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <header th:replace="common/header :: for-user"></header>
+    <main>
+      <div class="container window--lg">
+        <form th:action="@{/signup/profile}" method="post" th:object="${profileForm}">
+          <h1>プロフィール登録</h1>
+          <div th:unless="${param.revisit}">
+            <p>「メールアドレスの確認」と「プロフィールの登録」をしていただくことでES/体験記を全てご覧いただけます。</p>
+            <p class="note">
+              メールアドレスの確認はダンサーズキャリアから届くメールの「メールアドレスの確認」ボタンを押すことで完了します。dancerscareer@jusdl.or.jpからのメールが届くように設定ください。</p>
+            <p class="note"><a class="internal-link" th:href="@{/help/get-email}" target="_blank"><i
+                  class="far fa-question-circle"></i>メールが届かない</a></p>
+          </div>
+          <div class="form-item">
+            <label>氏名</label>
+            <div class="form-2-items">
+              <div class="form-item">
+                <label class="form-item__label" for="familyName">姓</label>
+                <input type="text" th:field="*{familyName}" th:errorclass="invalid"
+                  class="form-item__input input--short-text " placeholder="姓" required>
+                <p th:if="${#fields.hasErrors('familyName')}" th:errors="*{familyName}" class="invalid"></p>
+              </div>
+              <div class="form-item">
+                <label class="form-item__label" for="givenName">名</label>
+                <input type="text" th:field="*{givenName}" th:errorclass="invalid"
+                  class="form-item__input input--short-text" placeholder="名" required>
+                <p th:if="${#fields.hasErrors('givenName')}" th:errors="*{givenName}" class="invalid"></p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="form-item">
-          <label>氏名(カナ)</label>
-          <div class="form-2-items">
-            <div class="form-item">
-              <label class="form-item__label" for="kanaFamilyName">セイ</label>
-              <input type="text" th:field="*{kanaFamilyName}" th:errorclass="invalid" class="form-item__input input--short-text" placeholder="セイ" required>
-              <p th:if="${#fields.hasErrors('kanaFamilyName')}" th:errors="*{kanaFamilyName}" class="invalid"></p>
-            </div>
-            <div class="form-item">
-	            <label class="form-item__label" for="kanaGivenName">メイ</label>
-	            <input type="text" th:field="*{kanaGivenName}" th:errorclass="invalid" class="form-item__input input--short-text" placeholder="メイ" required>
-	            <p th:if="${#fields.hasErrors('kanaGivenName')}" th:errors="*{kanaGivenName}" class="invalid"></p>
-            </div>
-          </div>
-        </div>
-        <div class="form-item">
-          <label>生年月日</label>
-          <div class="form-3-items">
-            <div class="form-item">
-              <label class="form-item__label" for="birthYear">年</label>
-              <select class="form-item__select" th:field="*{birthYear}" th:errorclass="invalid" th:with="thisYear=${#dates.year(#dates.createNow())}" required>
-                <option value="default">選択してください</option>
-                <option th:each="year : ${#numbers.sequence(thisYear - 30, thisYear - 15)}" th:value="${year}" th:text="${year}"></option>
-              </select>
-              <p th:if="${#fields.hasErrors('birthYear')}" th:errors="*{birthYear}" class="invalid"></p>
-            </div>
-            <div class="form-item">
-              <label class="form-item__label" for="birthMonth">月</label>
-              <select class="form-item__select" th:field="*{birthMonth}" th:errorclass="invalid" required>
-                <option value="default">選択してください</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-              </select>
-              <p th:if="${#fields.hasErrors('birthMonth')}" th:errors="*{birthMonth}" class="invalid"></p>
-            </div>
-            <div class="form-item">
-              <label class="form-item__label" for="birthDay">日</label>
-              <select class="form-item__select" th:field="*{birthDay}" th:errorclass="invalid" required>
-                <option value="default">選択してください</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-                <option value="13">13</option>
-                <option value="14">14</option>
-                <option value="15">15</option>
-                <option value="16">16</option>
-                <option value="17">17</option>
-                <option value="18">18</option>
-                <option value="19">19</option>
-                <option value="20">20</option>
-                <option value="21">21</option>
-                <option value="22">22</option>
-                <option value="23">23</option>
-                <option value="24">24</option>
-                <option value="25">25</option>
-                <option value="26">26</option>
-                <option value="27">27</option>
-                <option value="28">28</option>
-                <option value="29">29</option>
-                <option value="30">30</option>
-                <option value="31">31</option>
-              </select>
-              <p th:if="${#fields.hasErrors('birthDay')}" th:errors="*{birthDay}" class="invalid"></p>
+          <div class="form-item">
+            <label>氏名(カナ)</label>
+            <div class="form-2-items">
+              <div class="form-item">
+                <label class="form-item__label" for="kanaFamilyName">セイ</label>
+                <input type="text" th:field="*{kanaFamilyName}" th:errorclass="invalid"
+                  class="form-item__input input--short-text" placeholder="セイ" required>
+                <p th:if="${#fields.hasErrors('kanaFamilyName')}" th:errors="*{kanaFamilyName}" class="invalid"></p>
+              </div>
+              <div class="form-item">
+                <label class="form-item__label" for="kanaGivenName">メイ</label>
+                <input type="text" th:field="*{kanaGivenName}" th:errorclass="invalid"
+                  class="form-item__input input--short-text" placeholder="メイ" required>
+                <p th:if="${#fields.hasErrors('kanaGivenName')}" th:errors="*{kanaGivenName}" class="invalid"></p>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="form-item">
-          <label>性別</label>
-          <div class="form-buttons">
-            <label class="form-item__button"><input type="radio" th:field="*{sex}" value="男性" required>男性</label>
-            <label class="form-item__button"><input type="radio" th:field="*{sex}" value="女性" required>女性</label>
-          </div>
-          <p th:if="${#fields.hasErrors('sex')}" th:errors="*{sex}" class="invalid"></p>
-        </div>
-        <div class="form-item">
-          <label>電話番号</label>
-          <input class="form-item__input input--short-text" type="tel" th:field="*{phone}" th:errorclass="invalid" placeholder="電話番号(ハイフン不要)" required>
-          <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="invalid"></p>
-        </div>
-        <div class="form-item">
-          <label>卒業予定</label>
-          <div class="form-2-items">
-            <div class="form-item">
-              <label class="form-item__label" for="graduationYear">年</label>
-              <select class="form-item__select" th:field="*{graduationYear}" th:errorclass="invalid" th:with="thisYear=${#dates.year(#dates.createNow())}" required>
-                <option value="default">選択してください</option>
-                <option th:each="year : ${#numbers.sequence(thisYear - 5, thisYear + 10)}" th:value="${year}" th:text="${year}"></option>
-              </select>
-              <p th:if="${#fields.hasErrors('graduationYear')}" th:errors="*{graduationYear}" class="invalid"></p>
-            </div>
-            <div class="form-item">
-              <label class="form-item__label" for="graduationMonth">月</label>
-              <select class="form-item__select" th:field="*{graduationMonth}" th:errorclass="invalid" required>
-                <option value="default">選択してください</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
-                <option value="11">11</option>
-                <option value="12">12</option>
-              </select>
-              <p th:if="${#fields.hasErrors('graduationMonth')}" th:errors="*{graduationMonth}" class="invalid"></p>
-            </div>
-          </div>
-        </div>
-        <div class="form-item">
-          <label>最終学歴</label>
-          <div class="form-buttons">
-            <label class="form-item__button"><input type="radio" th:field="*{degree}" value="学部卒" required>学部卒</label>
-            <label class="form-item__button"><input type="radio" th:field="*{degree}" value="修士卒" required>修士卒</label>
-            <label class="form-item__button"><input type="radio" th:field="*{degree}" value="博士卒" required>博士卒</label>
-          </div>
-          <p th:if="${#fields.hasErrors('degree')}" th:errors="*{degree}" class="invalid"></p>
-        </div>
-        <div class="form-item">
-          <label>文理</label>
-          <div class="form-buttons">
-            <label class="form-item__button"><input type="radio" th:field="*{major}" value="文系" required>文系</label>
-            <label class="form-item__button"><input type="radio" th:field="*{major}" value="理系" required>理系</label>
-          </div>
-          <p th:if="${#fields.hasErrors('major')}" th:errors="*{major}" class="invalid"></p>
-        </div>
-        <div class="form-item">
-          <label>大学・学部・学科</label>
-          <p class="note">ご自身の学部や学科が見当たらない場合は<a class="internal-link" th:href="@{/about/contact}">こちら</a>よりお問い合わせください</p>
-          <div class="form-2-items">
-            <div class="form-item">
-              <label class="form-item__label" for="univLoc">大学所在地</label>
-              <select class="form-item__select" th:field="*{univLoc}" th:errorclass="invalid" required>
-                <option value="default">選択してください</option>
-                <option value="北海道">北海道</option>
-                <option value="青森県">青森県</option>
-                <option value="岩手県">岩手県</option>
-                <option value="宮城県">宮城県</option>
-                <option value="秋田県">秋田県</option>
-                <option value="山形県">山形県</option>
-                <option value="福島県">福島県</option>
-                <option value="茨城県">茨城県</option>
-                <option value="栃木県">栃木県</option>
-                <option value="群馬県">群馬県</option>
-                <option value="埼玉県">埼玉県</option>
-                <option value="千葉県">千葉県</option>
-                <option value="東京都">東京都</option>
-                <option value="神奈川県">神奈川県</option>
-                <option value="新潟県">新潟県</option>
-                <option value="富山県">富山県</option>
-                <option value="石川県">石川県</option>
-                <option value="福井県">福井県</option>
-                <option value="山梨県">山梨県</option>
-                <option value="長野県">長野県</option>
-                <option value="岐阜県">岐阜県</option>
-                <option value="静岡県">静岡県</option>
-                <option value="愛知県">愛知県</option>
-                <option value="三重県">三重県</option>
-                <option value="滋賀県">滋賀県</option>
-                <option value="京都府">京都府</option>
-                <option value="大阪府">大阪府</option>
-                <option value="兵庫県">兵庫県</option>
-                <option value="奈良県">奈良県</option>
-                <option value="和歌山県">和歌山県</option>
-                <option value="鳥取県">鳥取県</option>
-                <option value="島根県">島根県</option>
-                <option value="岡山県">岡山県</option>
-                <option value="広島県">広島県</option>
-                <option value="山口県">山口県</option>
-                <option value="徳島県">徳島県</option>
-                <option value="香川県">香川県</option>
-                <option value="愛媛県">愛媛県</option>
-                <option value="高知県">高知県</option>
-                <option value="福岡県">福岡県</option>
-                <option value="佐賀県">佐賀県</option>
-                <option value="長崎県">長崎県</option>
-                <option value="熊本県">熊本県</option>
-                <option value="大分県">大分県</option>
-                <option value="宮崎県">宮崎県</option>
-                <option value="鹿児島県">鹿児島県</option>
-                <option value="沖縄県">沖縄県</option>
-              </select>
-              <p th:if="${#fields.hasErrors('univLoc')}" th:errors="*{univLoc}" class="invalid"></p>
-            </div>
-            <div class="form-item">
-              <label class="form-item__label" for="univType">大学種別</label>
-              <select class="form-item__select" th:field="*{univType}" th:errorclass="invalid" required>
-                <option value="default">選択してください</option>
-                <option value="国立">国立</option>
-                <option value="公立">公立</option>
-                <option value="私立">私立</option>
-                <option value="短期">短期</option>
-              </select>
-              <p th:if="${#fields.hasErrors('univType')}" th:errors="*{univType}" class="invalid"></p>
+          <div class="form-item">
+            <label>生年月日</label>
+            <div class="form-3-items">
+              <div class="form-item">
+                <label class="form-item__label" for="birthYear">年</label>
+                <select class="form-item__select" th:field="*{birthYear}" th:errorclass="invalid"
+                  th:with="thisYear=${#dates.year(#dates.createNow())}" required>
+                  <option value="default">選択してください</option>
+                  <option th:each="year : ${#numbers.sequence(thisYear - 30, thisYear - 15)}" th:value="${year}"
+                    th:text="${year}"></option>
+                </select>
+                <p th:if="${#fields.hasErrors('birthYear')}" th:errors="*{birthYear}" class="invalid"></p>
+              </div>
+              <div class="form-item">
+                <label class="form-item__label" for="birthMonth">月</label>
+                <select class="form-item__select" th:field="*{birthMonth}" th:errorclass="invalid" required>
+                  <option value="default">選択してください</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+                <p th:if="${#fields.hasErrors('birthMonth')}" th:errors="*{birthMonth}" class="invalid"></p>
+              </div>
+              <div class="form-item">
+                <label class="form-item__label" for="birthDay">日</label>
+                <select class="form-item__select" th:field="*{birthDay}" th:errorclass="invalid" required>
+                  <option value="default">選択してください</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                  <option value="13">13</option>
+                  <option value="14">14</option>
+                  <option value="15">15</option>
+                  <option value="16">16</option>
+                  <option value="17">17</option>
+                  <option value="18">18</option>
+                  <option value="19">19</option>
+                  <option value="20">20</option>
+                  <option value="21">21</option>
+                  <option value="22">22</option>
+                  <option value="23">23</option>
+                  <option value="24">24</option>
+                  <option value="25">25</option>
+                  <option value="26">26</option>
+                  <option value="27">27</option>
+                  <option value="28">28</option>
+                  <option value="29">29</option>
+                  <option value="30">30</option>
+                  <option value="31">31</option>
+                </select>
+                <p th:if="${#fields.hasErrors('birthDay')}" th:errors="*{birthDay}" class="invalid"></p>
+              </div>
             </div>
           </div>
-          <div class="form-3-items">
-            <div class="form-item">
-              <label class="form-item__label" for="univName">大学</label>
-              <select class="form-item__select" th:field="*{univName}" th:errorclass="invalid" required>
-                <option value="default">選択してください</option>
-              </select>
-              <p th:if="${#fields.hasErrors('univName')}" th:errors="*{univName}" class="invalid"></p>
+          <div class="form-item">
+            <label>性別</label>
+            <div class="form-buttons">
+              <label class="form-item__button"><input type="radio" th:field="*{sex}" value="男性" required>男性</label>
+              <label class="form-item__button"><input type="radio" th:field="*{sex}" value="女性" required>女性</label>
             </div>
-            <div class="form-item">
-              <label class="form-item__label" for="univFac">学部</label>
-              <select class="form-item__select" th:field="*{univFac}" th:errorclass="invalid" required>
-                <option value="default">選択してください</option>
-              </select>
-              <p th:if="${#fields.hasErrors('univFac')}" th:errors="*{univFac}" class="invalid"></p>
-            </div>
-            <div class="form-item">
-              <label class="form-item__label" for="univDep">学科</label>
-              <select class="form-item__select" th:field="*{univDep}" th:errorclass="invalid" required>
-                <option value="default">選択してください</option>
-              </select>
-              <p th:if="${#fields.hasErrors('univDep')}" th:errors="*{univDep}" class="invalid"></p>
+            <p th:if="${#fields.hasErrors('sex')}" th:errors="*{sex}" class="invalid"></p>
+          </div>
+          <div class="form-item">
+            <label>電話番号</label>
+            <input class="form-item__input input--short-text" type="tel" th:field="*{phone}" th:errorclass="invalid"
+              placeholder="電話番号(ハイフン不要)" required>
+            <p th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="invalid"></p>
+          </div>
+          <div class="form-item">
+            <label>卒業予定</label>
+            <div class="form-2-items">
+              <div class="form-item">
+                <label class="form-item__label" for="graduationYear">年</label>
+                <select class="form-item__select" th:field="*{graduationYear}" th:errorclass="invalid"
+                  th:with="thisYear=${#dates.year(#dates.createNow())}" required>
+                  <option value="default">選択してください</option>
+                  <option th:each="year : ${#numbers.sequence(thisYear - 5, thisYear + 10)}" th:value="${year}"
+                    th:text="${year}"></option>
+                </select>
+                <p th:if="${#fields.hasErrors('graduationYear')}" th:errors="*{graduationYear}" class="invalid"></p>
+              </div>
+              <div class="form-item">
+                <label class="form-item__label" for="graduationMonth">月</label>
+                <select class="form-item__select" th:field="*{graduationMonth}" th:errorclass="invalid" required>
+                  <option value="default">選択してください</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+                <p th:if="${#fields.hasErrors('graduationMonth')}" th:errors="*{graduationMonth}" class="invalid"></p>
+              </div>
             </div>
           </div>
-          <input type="hidden" id="hiddenUnivType" th:value="${hiddenUnivType}">
-          <input type="hidden" id="hiddenUnivName" th:value="${hiddenUnivName}">
-          <input type="hidden" id="hiddenUnivFac" th:value="${hiddenUnivFac}">
-          <input type="hidden" id="hiddenUnivDep" th:value="${hiddenUnivDep}">
-        </div>
-        <div class="form-item" id="grad">
-          <label>大学院・研究科・専攻</label>
-          <p class="note">ご自身の研究科や専攻が見当たらない場合は<a class="internal-link" th:href="@{/about/contact}">こちら</a>よりお問い合わせください</p>
-          <div class="form-2-items">
-            <div class="form-item">
-              <label class="form-item__label" for="gradLoc">大学院所在地</label>
-              <select class="form-item__select" th:field="*{gradLoc}">
-                <option value="">選択してください</option>
-                <option value="北海道">北海道</option>
-                <option value="青森県">青森県</option>
-                <option value="岩手県">岩手県</option>
-                <option value="宮城県">宮城県</option>
-                <option value="秋田県">秋田県</option>
-                <option value="山形県">山形県</option>
-                <option value="福島県">福島県</option>
-                <option value="茨城県">茨城県</option>
-                <option value="栃木県">栃木県</option>
-                <option value="群馬県">群馬県</option>
-                <option value="埼玉県">埼玉県</option>
-                <option value="千葉県">千葉県</option>
-                <option value="東京都">東京都</option>
-                <option value="神奈川県">神奈川県</option>
-                <option value="新潟県">新潟県</option>
-                <option value="富山県">富山県</option>
-                <option value="石川県">石川県</option>
-                <option value="福井県">福井県</option>
-                <option value="山梨県">山梨県</option>
-                <option value="長野県">長野県</option>
-                <option value="岐阜県">岐阜県</option>
-                <option value="静岡県">静岡県</option>
-                <option value="愛知県">愛知県</option>
-                <option value="三重県">三重県</option>
-                <option value="滋賀県">滋賀県</option>
-                <option value="京都府">京都府</option>
-                <option value="大阪府">大阪府</option>
-                <option value="兵庫県">兵庫県</option>
-                <option value="奈良県">奈良県</option>
-                <option value="和歌山県">和歌山県</option>
-                <option value="鳥取県">鳥取県</option>
-                <option value="島根県">島根県</option>
-                <option value="岡山県">岡山県</option>
-                <option value="広島県">広島県</option>
-                <option value="山口県">山口県</option>
-                <option value="徳島県">徳島県</option>
-                <option value="香川県">香川県</option>
-                <option value="愛媛県">愛媛県</option>
-                <option value="高知県">高知県</option>
-                <option value="福岡県">福岡県</option>
-                <option value="佐賀県">佐賀県</option>
-                <option value="長崎県">長崎県</option>
-                <option value="熊本県">熊本県</option>
-                <option value="大分県">大分県</option>
-                <option value="宮崎県">宮崎県</option>
-                <option value="鹿児島県">鹿児島県</option>
-                <option value="沖縄県">沖縄県</option>
-              </select>
+          <div class="form-item">
+            <label>最終学歴</label>
+            <div class="form-buttons">
+              <label class="form-item__button"><input type="radio" th:field="*{degree}" value="学部卒" required>学部卒</label>
+              <label class="form-item__button"><input type="radio" th:field="*{degree}" value="修士卒" required>修士卒</label>
+              <label class="form-item__button"><input type="radio" th:field="*{degree}" value="博士卒" required>博士卒</label>
             </div>
-            <div class="form-item">
-              <label class="form-item__label" for="gradType">大学院種別</label>
-              <select class="form-item__select" th:field="*{gradType}">
-                <option value="">選択してください</option>
-                <option value="国立">国立</option>
-                <option value="公立">公立</option>
-                <option value="私立">私立</option>
-              </select>
+            <p th:if="${#fields.hasErrors('degree')}" th:errors="*{degree}" class="invalid"></p>
+          </div>
+          <div class="form-item">
+            <label>文理</label>
+            <div class="form-buttons">
+              <label class="form-item__button"><input type="radio" th:field="*{major}" value="文系" required>文系</label>
+              <label class="form-item__button"><input type="radio" th:field="*{major}" value="理系" required>理系</label>
+            </div>
+            <p th:if="${#fields.hasErrors('major')}" th:errors="*{major}" class="invalid"></p>
+          </div>
+          <div class="form-item">
+            <label>大学・学部・学科</label>
+            <p class="note">ご自身の学部や学科が見当たらない場合は<a class="internal-link" th:href="@{/about/contact}">こちら</a>よりお問い合わせください
+            </p>
+            <div class="form-2-items">
+              <div class="form-item">
+                <label class="form-item__label" for="univLoc">大学所在地</label>
+                <select class="form-item__select" th:field="*{univLoc}" th:errorclass="invalid" required>
+                  <option value="default">選択してください</option>
+                  <option value="北海道">北海道</option>
+                  <option value="青森県">青森県</option>
+                  <option value="岩手県">岩手県</option>
+                  <option value="宮城県">宮城県</option>
+                  <option value="秋田県">秋田県</option>
+                  <option value="山形県">山形県</option>
+                  <option value="福島県">福島県</option>
+                  <option value="茨城県">茨城県</option>
+                  <option value="栃木県">栃木県</option>
+                  <option value="群馬県">群馬県</option>
+                  <option value="埼玉県">埼玉県</option>
+                  <option value="千葉県">千葉県</option>
+                  <option value="東京都">東京都</option>
+                  <option value="神奈川県">神奈川県</option>
+                  <option value="新潟県">新潟県</option>
+                  <option value="富山県">富山県</option>
+                  <option value="石川県">石川県</option>
+                  <option value="福井県">福井県</option>
+                  <option value="山梨県">山梨県</option>
+                  <option value="長野県">長野県</option>
+                  <option value="岐阜県">岐阜県</option>
+                  <option value="静岡県">静岡県</option>
+                  <option value="愛知県">愛知県</option>
+                  <option value="三重県">三重県</option>
+                  <option value="滋賀県">滋賀県</option>
+                  <option value="京都府">京都府</option>
+                  <option value="大阪府">大阪府</option>
+                  <option value="兵庫県">兵庫県</option>
+                  <option value="奈良県">奈良県</option>
+                  <option value="和歌山県">和歌山県</option>
+                  <option value="鳥取県">鳥取県</option>
+                  <option value="島根県">島根県</option>
+                  <option value="岡山県">岡山県</option>
+                  <option value="広島県">広島県</option>
+                  <option value="山口県">山口県</option>
+                  <option value="徳島県">徳島県</option>
+                  <option value="香川県">香川県</option>
+                  <option value="愛媛県">愛媛県</option>
+                  <option value="高知県">高知県</option>
+                  <option value="福岡県">福岡県</option>
+                  <option value="佐賀県">佐賀県</option>
+                  <option value="長崎県">長崎県</option>
+                  <option value="熊本県">熊本県</option>
+                  <option value="大分県">大分県</option>
+                  <option value="宮崎県">宮崎県</option>
+                  <option value="鹿児島県">鹿児島県</option>
+                  <option value="沖縄県">沖縄県</option>
+                </select>
+                <p th:if="${#fields.hasErrors('univLoc')}" th:errors="*{univLoc}" class="invalid"></p>
+              </div>
+              <div class="form-item">
+                <label class="form-item__label" for="univType">大学種別</label>
+                <select class="form-item__select" th:field="*{univType}" th:errorclass="invalid" required>
+                  <option value="default">選択してください</option>
+                  <option value="国立">国立</option>
+                  <option value="公立">公立</option>
+                  <option value="私立">私立</option>
+                  <option value="短期">短期</option>
+                </select>
+                <p th:if="${#fields.hasErrors('univType')}" th:errors="*{univType}" class="invalid"></p>
+              </div>
+            </div>
+            <div class="form-3-items">
+              <div class="form-item">
+                <label class="form-item__label" for="univName">大学</label>
+                <select class="form-item__select" th:field="*{univName}" th:errorclass="invalid" required>
+                  <option value="default">選択してください</option>
+                </select>
+                <p th:if="${#fields.hasErrors('univName')}" th:errors="*{univName}" class="invalid"></p>
+              </div>
+              <div class="form-item">
+                <label class="form-item__label" for="univFac">学部</label>
+                <select class="form-item__select" th:field="*{univFac}" th:errorclass="invalid" required>
+                  <option value="default">選択してください</option>
+                </select>
+                <p th:if="${#fields.hasErrors('univFac')}" th:errors="*{univFac}" class="invalid"></p>
+              </div>
+              <div class="form-item">
+                <label class="form-item__label" for="univDep">学科</label>
+                <select class="form-item__select" th:field="*{univDep}" th:errorclass="invalid" required>
+                  <option value="default">選択してください</option>
+                </select>
+                <p th:if="${#fields.hasErrors('univDep')}" th:errors="*{univDep}" class="invalid"></p>
+              </div>
+            </div>
+            <input type="hidden" id="hiddenUnivType" th:value="${hiddenUnivType}">
+            <input type="hidden" id="hiddenUnivName" th:value="${hiddenUnivName}">
+            <input type="hidden" id="hiddenUnivFac" th:value="${hiddenUnivFac}">
+            <input type="hidden" id="hiddenUnivDep" th:value="${hiddenUnivDep}">
+          </div>
+          <div class="form-item" id="grad">
+            <label>大学院・研究科・専攻</label>
+            <p class="note">ご自身の研究科や専攻が見当たらない場合は<a class="internal-link" th:href="@{/about/contact}">こちら</a>よりお問い合わせください
+            </p>
+            <div class="form-2-items">
+              <div class="form-item">
+                <label class="form-item__label" for="gradLoc">大学院所在地</label>
+                <select class="form-item__select" th:field="*{gradLoc}">
+                  <option value="">選択してください</option>
+                  <option value="北海道">北海道</option>
+                  <option value="青森県">青森県</option>
+                  <option value="岩手県">岩手県</option>
+                  <option value="宮城県">宮城県</option>
+                  <option value="秋田県">秋田県</option>
+                  <option value="山形県">山形県</option>
+                  <option value="福島県">福島県</option>
+                  <option value="茨城県">茨城県</option>
+                  <option value="栃木県">栃木県</option>
+                  <option value="群馬県">群馬県</option>
+                  <option value="埼玉県">埼玉県</option>
+                  <option value="千葉県">千葉県</option>
+                  <option value="東京都">東京都</option>
+                  <option value="神奈川県">神奈川県</option>
+                  <option value="新潟県">新潟県</option>
+                  <option value="富山県">富山県</option>
+                  <option value="石川県">石川県</option>
+                  <option value="福井県">福井県</option>
+                  <option value="山梨県">山梨県</option>
+                  <option value="長野県">長野県</option>
+                  <option value="岐阜県">岐阜県</option>
+                  <option value="静岡県">静岡県</option>
+                  <option value="愛知県">愛知県</option>
+                  <option value="三重県">三重県</option>
+                  <option value="滋賀県">滋賀県</option>
+                  <option value="京都府">京都府</option>
+                  <option value="大阪府">大阪府</option>
+                  <option value="兵庫県">兵庫県</option>
+                  <option value="奈良県">奈良県</option>
+                  <option value="和歌山県">和歌山県</option>
+                  <option value="鳥取県">鳥取県</option>
+                  <option value="島根県">島根県</option>
+                  <option value="岡山県">岡山県</option>
+                  <option value="広島県">広島県</option>
+                  <option value="山口県">山口県</option>
+                  <option value="徳島県">徳島県</option>
+                  <option value="香川県">香川県</option>
+                  <option value="愛媛県">愛媛県</option>
+                  <option value="高知県">高知県</option>
+                  <option value="福岡県">福岡県</option>
+                  <option value="佐賀県">佐賀県</option>
+                  <option value="長崎県">長崎県</option>
+                  <option value="熊本県">熊本県</option>
+                  <option value="大分県">大分県</option>
+                  <option value="宮崎県">宮崎県</option>
+                  <option value="鹿児島県">鹿児島県</option>
+                  <option value="沖縄県">沖縄県</option>
+                </select>
+              </div>
+              <div class="form-item">
+                <label class="form-item__label" for="gradType">大学院種別</label>
+                <select class="form-item__select" th:field="*{gradType}">
+                  <option value="">選択してください</option>
+                  <option value="国立">国立</option>
+                  <option value="公立">公立</option>
+                  <option value="私立">私立</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-3-items">
+              <div class="form-item">
+                <label class="form-item__label" for="gradName">大学院</label>
+                <select class="form-item__select" th:field="*{gradName}">
+                  <option value="">選択してください</option>
+                </select>
+              </div>
+              <div class="form-item">
+                <label class="form-item__label" for="gradSchool">研究科等</label>
+                <select class="form-item__select" th:field="*{gradSchool}">
+                  <option value="">選択してください</option>
+                </select>
+              </div>
+              <div class="form-item">
+                <label class="form-item__label" for="gradDiv">専攻等</label>
+                <select class="form-item__select" th:field="*{gradDiv}">
+                  <option value="">選択してください</option>
+                </select>
+              </div>
+            </div>
+            <input type="hidden" id="hiddenGradType" th:value="${hiddenGradType}">
+            <input type="hidden" id="hiddenGradName" th:value="${hiddenGradName}">
+            <input type="hidden" id="hiddenGradSchool" th:value="${hiddenGradSchool}">
+            <input type="hidden" id="hiddenGradDiv" th:value="${hiddenGradDiv}">
+          </div>
+          <div class="form-item">
+            <label>所属サークル</label>
+            <input class="form-item__input input--short-text" type="text" th:field="*{club}" th:errorclass="invalid"
+              placeholder="所属サークル" required>
+            <p th:if="${#fields.hasErrors('club')}" th:errors="*{club}" class="invalid"></p>
+          </div>
+          <div class="form-item">
+            <label>サークル等での役職(複数選択)</label>
+            <div class="form-buttons">
+              <label class="form-item__button" th:each="pos : ${positionList}"><input type="checkbox"
+                  th:field="*{position}" th:value="${pos}">[[${pos}]]</label>
+            </div>
+            <p th:if="${#fields.hasErrors('position')}" th:errors="*{position}" class="invalid"></p>
+          </div>
+          <div class="form-item">
+            <label>LINE通知</label>
+            <p class="note">ダンサーズキャリアからのメールを受信した際にLINEにも同じ内容が通知されます</p>
+            <div class="form-item__checkbox">
+              <input type="checkbox" th:field="*{applyLineNotify}">
+              <label th:for="${#ids.prev('applyLineNotify')}">LINE通知を受け取る</label>
             </div>
           </div>
-          <div class="form-3-items">
-            <div class="form-item">
-              <label class="form-item__label" for="gradName">大学院</label>
-              <select class="form-item__select" th:field="*{gradName}">
-                <option value="">選択してください</option>
-              </select>
-            </div>
-            <div class="form-item">
-              <label class="form-item__label" for="gradSchool">研究科等</label>
-              <select class="form-item__select" th:field="*{gradSchool}">
-                <option value="">選択してください</option>
-              </select>
-            </div>
-            <div class="form-item">
-              <label class="form-item__label" for="gradDiv">専攻等</label>
-              <select class="form-item__select" th:field="*{gradDiv}">
-                <option value="">選択してください</option>
-              </select>
-            </div>
+          <div class="form-item">
+            <button type="submit" class="button button--primary form-item__submit">
+              <span class="button__text">利用規約に同意して登録を完了する</span><i class="button__icon fas fa-arrow-right"></i>
+            </button>
+            <input type="hidden" id="contextPath" th:value="@{/}">
           </div>
-          <input type="hidden" id="hiddenGradType" th:value="${hiddenGradType}">
-          <input type="hidden" id="hiddenGradName" th:value="${hiddenGradName}">
-          <input type="hidden" id="hiddenGradSchool" th:value="${hiddenGradSchool}">
-          <input type="hidden" id="hiddenGradDiv" th:value="${hiddenGradDiv}">
-        </div>
-        <div class="form-item">
-          <label>所属サークル</label>
-          <input class="form-item__input input--short-text" type="text" th:field="*{club}" th:errorclass="invalid" placeholder="所属サークル" required>
-          <p th:if="${#fields.hasErrors('club')}" th:errors="*{club}" class="invalid"></p>
-        </div>
-        <div class="form-item">
-          <label>サークル等での役職(複数選択)</label>
-          <div class="form-buttons">
-            <label class="form-item__button" th:each="pos : ${positionList}"><input type="checkbox" th:field="*{position}" th:value="${pos}">[[${pos}]]</label>
-          </div>
-          <p th:if="${#fields.hasErrors('position')}" th:errors="*{position}" class="invalid"></p>
-        </div>
-        <div class="form-item">
-          <label>LINE通知</label>
-          <p class="note">ダンサーズキャリアからのメールを受信した際にLINEにも同じ内容が通知されます</p>
-          <div class="form-item__checkbox">
-            <input type="checkbox" th:field="*{applyLineNotify}">
-            <label th:for="${#ids.prev('applyLineNotify')}">LINE通知を受け取る</label>
-          </div>
-        </div>
-        <div class="form-item">
-	        <button type="submit" class="button button--primary form-item__submit">
-	          <span class="button__text">利用規約に同意して登録を完了する</span><i class="button__icon fas fa-arrow-right"></i>
-	        </button>
-          <input type="hidden" id="contextPath" th:value="@{/}">
-        </div>
-      </form>
-    </div>
-  </main>
-  <footer th:replace="common/footer :: footer"></footer>
-  <script th:src="@{/js/set-university-and-birth.js?update=20191211}"></script>
-  <script th:src="@{/js/submit.js}"></script>
-  <script>
-  $(function() {
-	  const scrollingShadow = function($obj) {
-	    if ($obj.scrollLeft() > 0 && $obj.get(0).scrollWidth - $obj.innerWidth() - $obj.scrollLeft() > 0) {
-	      $obj.css({
-	        'box-shadow': '20px 0px 20px -20px #808080 inset, -20px 0px 20px -20px #808080 inset'
-	      });
-	    } else if ($obj.scrollLeft() > 0) {
-	      $obj.css({
-	        'box-shadow': '20px 0px 20px -20px #808080 inset'
-	      });
-	    } else if ($obj.get(0).scrollWidth - $obj.innerWidth() - $obj.scrollLeft() > 0) {
-	      $obj.css({
-	        'box-shadow': '-20px 0px 20px -20px #808080 inset'
-	      });
-	    }
-	  }
-	  $('.form-item__button:has(input:checked)').addClass('checked');
-	  $('.form-item__button > input').on('change', function() {
-		  $(this).closest('.form-buttons').children('.form-item__button:has(input[type="radio"]:checked)').addClass('checked');
-	    $(this).closest('.form-buttons').children('.form-item__button:has(input[type="radio"]:not(:checked))').removeClass('checked');
-	    $(this).closest('.form-buttons').children('.form-item__button:has(input[type="checkbox"]:checked)').addClass('checked');
-	    $(this).closest('.form-buttons').children('.form-item__button:has(input[type="checkbox"]:not(:checked))').removeClass('checked');
-	  });
-	  $('.form-buttons').each(function() {
-		  if ($(this).innerWidth() < $(this).get(0).scrollWidth) {
-			  scrollingShadow($(this));
-		  }
-	  });
-	  $('.form-buttons').on('scroll', function() {
-		  scrollingShadow($(this));
-	  });
-  });
-  </script>
-</body>
+        </form>
+      </div>
+    </main>
+    <footer th:replace="common/footer :: footer"></footer>
+    <script th:src="@{/js/set-university-and-birth.js?update=20191211}"></script>
+    <script th:src="@{/js/submit.js}"></script>
+    <script>
+      $(function () {
+        const scrollingShadow = function ($obj) {
+          if ($obj.scrollLeft() > 0 && $obj.get(0).scrollWidth - $obj.innerWidth() - $obj.scrollLeft() > 0) {
+            $obj.css({
+              'box-shadow': '20px 0px 20px -20px #808080 inset, -20px 0px 20px -20px #808080 inset'
+            });
+          } else if ($obj.scrollLeft() > 0) {
+            $obj.css({
+              'box-shadow': '20px 0px 20px -20px #808080 inset'
+            });
+          } else if ($obj.get(0).scrollWidth - $obj.innerWidth() - $obj.scrollLeft() > 0) {
+            $obj.css({
+              'box-shadow': '-20px 0px 20px -20px #808080 inset'
+            });
+          }
+        }
+        $('.form-item__button:has(input:checked)').addClass('checked');
+        $('.form-item__button > input').on('change', function () {
+          $(this).closest('.form-buttons').children('.form-item__button:has(input[type="radio"]:checked)').addClass('checked');
+          $(this).closest('.form-buttons').children('.form-item__button:has(input[type="radio"]:not(:checked))').removeClass('checked');
+          $(this).closest('.form-buttons').children('.form-item__button:has(input[type="checkbox"]:checked)').addClass('checked');
+          $(this).closest('.form-buttons').children('.form-item__button:has(input[type="checkbox"]:not(:checked))').removeClass('checked');
+        });
+        $('.form-buttons').each(function () {
+          if ($(this).innerWidth() < $(this).get(0).scrollWidth) {
+            scrollingShadow($(this));
+          }
+        });
+        $('.form-buttons').on('scroll', function () {
+          scrollingShadow($(this));
+        });
+      });
+    </script>
+  </body>
 </html>
