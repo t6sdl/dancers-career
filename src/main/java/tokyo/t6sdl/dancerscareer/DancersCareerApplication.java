@@ -17,27 +17,16 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class DancersCareerApplication {
 
 	public static void main(String[] args) throws URISyntaxException {
-//		if (System.getenv("SPRING_PROFILES_ACTIVE").equals("staging")) {
-//			Flyway flyway = new Flyway();
-//			flyway.setDataSource(System.getenv("DB_URL_JDBC"), System.getenv("DB_USERNAME"), System.getenv("DB_PASSWORD"));
-//			flyway.repair();
-//			flyway.clean();
-//		}
-		if (System.getProperty("env", "development").equals("development")) {
-			ResourceBundle rb = ResourceBundle.getBundle("application-development");
-			System.setProperty("db.url.jdbc", rb.getString("db.url.jdbc"));
-			System.setProperty("db.username", rb.getString("db.username"));
-			System.setProperty("db.password", rb.getString("db.password"));
-		} else {
-			URI uri = new URI(System.getenv("CLEARDB_DATABASE_URL"));
-			String url = "jdbc:mysql://" + uri.getHost() + uri.getPath();
-			String username = uri.getUserInfo().split(":")[0];
-			String password = uri.getUserInfo().split(":")[1];
-			System.setProperty("db.url.jdbc", url);
-			System.setProperty("db.username", username);
-			System.setProperty("db.password", password);
-			System.setProperty("domain", System.getenv("DOMAIN"));
-		}
+		// if (System.getenv("SPRING_PROFILES_ACTIVE").equals("staging")) {
+		// 	Flyway flyway = new Flyway();
+		// 	flyway.setDataSource(System.getenv("DB_URL_JDBC"), System.getenv("DB_USERNAME"), System.getenv("DB_PASSWORD"));
+		// 	flyway.repair();
+		// 	flyway.clean();
+		// }
+		setDBConnectionInfo();
+		ResourceBundle bundle = environmentBundle();
+		System.setProperty("domain", bundle.getString("domain"));
+		System.setProperty("spring.datasource.hikari.maximum-pool-size", bundle.getString("spring.datasource.hikari.maximum-pool-size"));
 		SpringApplication.run(DancersCareerApplication.class, args);
 	}
 
@@ -47,5 +36,20 @@ public class DancersCareerApplication {
 		messageSource.setBasename("messages/validation-errors");
 		messageSource.setDefaultEncoding("utf-8");
 		return messageSource;
+	}
+
+	private static void setDBConnectionInfo() throws URISyntaxException {
+		URI uri = new URI(System.getenv("CLEARDB_DATABASE_URL"));
+		String url = "jdbc:mysql://" + uri.getHost() + uri.getPath();
+		String username = uri.getUserInfo().split(":")[0];
+		String password = uri.getUserInfo().split(":")[1];
+		System.setProperty("db.url.jdbc", url);
+		System.setProperty("db.username", username);
+		System.setProperty("db.password", password);
+	}
+
+	private static ResourceBundle environmentBundle() {
+		String env = System.getProperty("env", "development");
+		return ResourceBundle.getBundle("application-" + env);
 	}
 }

@@ -109,6 +109,6 @@ public class SignupController {
 		} catch (Exception e) {
 			return "redirect:/user/error";
 		}
-		return "redirect:/help/howToGetEmail";
+		return "redirect:/help/get-email";
 	}
 }
