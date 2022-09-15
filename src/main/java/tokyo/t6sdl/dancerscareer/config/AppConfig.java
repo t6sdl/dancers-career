@@ -44,7 +44,7 @@ public class AppConfig implements WebMvcConfigurer {
 		config.setJdbcUrl(System.getProperty("db.url.jdbc"));
 		config.setUsername(System.getProperty("db.username"));
 		config.setPassword(System.getProperty("db.password"));
-		config.setMaximumPoolSize(5);
+		config.setMaximumPoolSize(Integer.parseInt(System.getProperty("spring.datasource.hikari.maximum-pool-size")));
 		config.setMaxLifetime(30000);
 		config.setIdleTimeout(15000);
 		config.setLeakDetectionThreshold(30000);
