@@ -44,7 +44,7 @@ public class NewsController {
 	private final SecurityService securityService;
 	private final AccountService accountService;
 	// NOTE: 10刻みの数値
-	private final List<Integer> newsIds = Arrays.asList(1, 21, 31, 41, 51, 61, 71, 81, 91, 101, 111, 121, 131, 141, 151);
+	private final List<Integer> newsIds = Arrays.asList(1, 21, 31, 41, 51, 61, 71, 81, 91, 101, 111, 121, 131, 141, 151, 161);
 	// NOTE: 記事一覧ページで表示する短めの記事タイトル。65文字まで。
 	private final List<String> newsShortTitles = Arrays.asList(
 			"ダンサー向け就活セミナーが開催されます！",
@@ -61,7 +61,8 @@ public class NewsController {
 			"【24卒向けセミナー vol.1】 ダンスサークル出身社会人から学ぶ納得内定への最短ルート",
 			"【就活バイブル 第1弾】就活とは何なのか 〜”何故就活をするのか”あなたは説明できますか！？〜",
 			"【就活バイブル 第2弾】就活のゴールとは 〜”ワクワクする将来”を考えたことがありますか！？〜",
-			"【就活バイブル 第3弾】就活の流れとは 〜何からやればいいの？サークルを引退してからでも遅くない！？〜"
+			"【就活バイブル 第3弾】就活の流れとは 〜何からやればいいの？サークルを引退してからでも遅くない！？〜",
+			"【就活バイブル 第4弾】就活でやることとは 〜やることは3つだけ！シンプルに考えよう！〜"
 		);
 	// NOTE: 記事最上部に表示する正式な記事タイトル。文字数制限なし。
 	private final List<String> newsTitles = Arrays.asList(
@@ -79,7 +80,8 @@ public class NewsController {
 			"【24卒向けセミナー vol.1】 ダンスサークル出身社会人から学ぶ納得内定への最短ルート",
 			"【就活バイブル 第1弾】就活とは何なのか 〜”何故就活をするのか”あなたは説明できますか！？〜",
 			"【就活バイブル 第2弾】就活のゴールとは 〜”ワクワクする将来”を考えたことがありますか！？〜",
-			"【就活バイブル 第3弾】就活の流れとは 〜何からやればいいの？サークルを引退してからでも遅くない！？"
+			"【就活バイブル 第3弾】就活の流れとは 〜何からやればいいの？サークルを引退してからでも遅くない！？",
+			"【就活バイブル 第4弾】就活でやることとは 〜やることは3つだけ！シンプルに考えよう！〜"
 		);
 	// NOTE: 記事アップロード日。
 	private final List<String> newsUpdatedDates = Arrays.asList(
@@ -97,7 +99,8 @@ public class NewsController {
 			"2022-08-01",
 			"2022-08-15",
 			"2022-09-01",
-			"2022-10-10"
+			"2022-10-10",
+			"2022-11-01"
 		);
 	private final Map<Integer, Map<String, Object>> newsMap = generateNewsMap();
 
