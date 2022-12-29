@@ -161,7 +161,7 @@ public class NewsController {
 		options.set(HtmlRenderer.SOFT_BREAK, "<br />\n");
 		Parser parser = Parser.builder(options).build();
 		HtmlRenderer renderer = HtmlRenderer.builder(options).build();
-		Path path = Paths.get("src/main/resources/static/md/" + newsId + ".md");
+		Path path = Paths.get("src/main/resources/static/md/news" + newsId + ".md");
 		List<String> lines;
 		try {
 			lines = Files.readAllLines(path, StandardCharsets.UTF_8);
