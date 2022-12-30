@@ -31,8 +31,8 @@
 				<article class="news">
 					<div>
 						<div class="header">
-							<time th:datetime="${updatedAt}"
-								th:object="${updatedAt}">[[*{year}]]年[[*{monthValue}]]月[[*{dayOfMonth}]]日</time><br>
+							<time th:datetime="${createdDate}"
+								th:object="${createdDate}">[[*{year}]]年[[*{monthValue}]]月[[*{dayOfMonth}]]日</time><br>
 							<h1 th:text="${title}"></h1>
 							<ul class="share">
 								<li class="share__button facebook"><a
@@ -44,7 +44,7 @@
 							</ul>
 						</div>
 						<hr>
-						<div class="markdown" th:utext="${md}"></div>
+						<div class="markdown" th:utext="${article}"></div>
 					</div>
 				</article>
 				<div class="ads">
