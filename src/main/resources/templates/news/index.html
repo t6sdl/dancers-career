@@ -28,7 +28,7 @@
 							<div class="article__body">
 								<h2 class="article__title" th:text="${news.get('shortTitle')}"></h2>
 								<div class="article__footer">
-									<div class="article__datetime" th:object="${news.get('updatedAt')}">
+									<div class="article__datetime" th:object="${news.get('createdDate')}">
 										[[*{year}]]年[[*{monthValue}]]月[[*{dayOfMonth}]]日</div>
 									<div class="article__direction"><i class="fas fa-arrow-right"></i></div>
 								</div>
