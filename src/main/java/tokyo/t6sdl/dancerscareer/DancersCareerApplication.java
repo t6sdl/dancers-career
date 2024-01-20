@@ -39,10 +39,9 @@ public class DancersCareerApplication {
 	}
 
 	private static void setDBConnectionInfo() throws URISyntaxException {
-		URI uri = new URI(System.getenv("CLEARDB_DATABASE_URL"));
-		String url = "jdbc:mysql://" + uri.getHost() + uri.getPath();
-		String username = uri.getUserInfo().split(":")[0];
-		String password = uri.getUserInfo().split(":")[1];
+		String url = System.getenv("DB_URL");
+		String username = System.getenv("DB_USERNAME");
+		String password = System.getenv("DB_PASSWORD");
 		System.setProperty("db.url.jdbc", url);
 		System.setProperty("db.username", username);
 		System.setProperty("db.password", password);
