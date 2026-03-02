@@ -68,5 +68,4 @@ public class ProfileForm {
 	private String club;
 	@NotEmpty
 	private List<String> position;
-	private boolean applyLineNotify;
 }

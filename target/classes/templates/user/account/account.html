@@ -47,19 +47,6 @@
         </div>
       </div>
       <div class="form-item">
-        <label class="form-item__label">LINE連携</label>
-        <div class="form-2-items">
-           <div class="form-item form-item--wide">
-             <p th:text="${isConnected ? '連携済' : '未連携'}"></p>
-           </div>
-           <div class="form-item form-item--narrow">
-             <a class="button button--primary" th:href="${isConnected} ? @{/line-notify/revoke} : @{/line-notify/apply?from=mypage}" th:with="buttonText=${isConnected ? '解除' : '連携'}">
-               <span class="button__text" th:text="${buttonText}"></span><i class="button__icon fas fa-arrow-right"></i>
-             </a>
-           </div>
-        </div>
-      </div>
-      <div class="form-item">
         <label class="form-item__label">メール配信設定</label>
         <div class="form-2-items">
            <div class="form-item form-item--wide">

@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Objects;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -27,7 +26,6 @@ import tokyo.t6sdl.dancerscareer.service.AccountService;
 public class EmailSender {
 	private final JavaMailSender mailSender;
 	private final AccountService accountService;
-	private final LineNotifyManager lineNotify;
 
 	public void sendContactForm(Mail reply, Mail ask) {
 		boolean isSent = sendMail(reply);
@@ -63,10 +61,6 @@ public class EmailSender {
 			this.readContent(mail);
 			helper.setText(mail.getContent(), true);
 			mailSender.send(message);
-			String accessToken = accountService.getLineAccessTokenByEmail(mail.getTo());
-			if (!(Objects.equals(accessToken, null)) && !(accessToken.isEmpty())) {
-				lineNotify.notifyMessage(accessToken, lineNotify.getMessage(mail));
-			}
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
@@ -84,13 +78,9 @@ public class EmailSender {
 			helper.setSubject(mail.getSubject());
 			this.readContent(mail);
 			helper.setText(mail.getContent(), true);
-			String lineText = lineNotify.getMessage(mail);
 			for (Account account : mail.getAccounts()) {
 				helper.setTo(account.getEmail());
 				mailSender.send(message);
-				if (!(Objects.equals(account.getLineAccessToken(), null)) && !(account.getLineAccessToken().isEmpty())) {
-					lineNotify.notifyMessage(account.getLineAccessToken(), lineText);
-				}
 			}
 		} catch (MessagingException e) {
 			e.printStackTrace();
@@ -111,9 +101,6 @@ public class EmailSender {
 			for (Account account : mail.getAccounts()) {
 				helper.setTo(account.getEmail());
 				mailSender.send(message);
-				if (!(Objects.equals(account.getLineAccessToken(), null)) && !(account.getLineAccessToken().isEmpty())) {
-					lineNotify.notifyMessage(account.getLineAccessToken(), mail.getContent());
-				}
 			}
 		} catch (MessagingException e) {
 			e.printStackTrace();
@@ -163,10 +150,6 @@ public class EmailSender {
 			this.readContent(mail);
 			helper.setText(mail.getContent(), true);
 			mailSender.send(message);
-			String accessToken = accountService.getLineAccessTokenByEmail(mail.getTo());
-			if (!(Objects.equals(accessToken, null)) && !(accessToken.isEmpty())) {
-				lineNotify.notifyMessage(accessToken, lineNotify.getMessage(mail));
-			}
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

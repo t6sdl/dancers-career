@@ -11,7 +11,6 @@ public interface AccountRepository {
 	Account findOneByPasswordToken(String passwordToken);
 	String findEmailTokenByEmail(String email);
 	String findPasswordTokenByEmail(String email);
-	String findLineAccessTokenByEmail(String email);
 	List<Account> findForMassMailBy(int by);
 	void insert(Account newAccount);
 	void delete(String email);
@@ -19,7 +18,6 @@ public interface AccountRepository {
 	void updatePassword(String loggedInEmail, String newPassword);
 	void updateValidEmail(String loggedInEmail, boolean validEmail);
 	void updateLastLogin(String loggedInEmail);
-	void updateLineAccessToken(String loggedInEmail, String lineAccessToken);
 	void updateNewEsMail(String loggedInEmail, boolean newEsMail);
 	void recordEmailToken(String loggedEmail, String emailToken);
 	void refreshEmailToken(String loggedInEmail);

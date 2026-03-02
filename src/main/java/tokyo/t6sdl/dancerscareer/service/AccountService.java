@@ -36,10 +36,6 @@ public class AccountService implements UserDetailsService {
 		return accountRepository.findPasswordTokenByEmail(email);
 	}
 
-	public String getLineAccessTokenByEmail(String email) {
-		return accountRepository.findLineAccessTokenByEmail(email);
-	}
-
 	public void create(Account newAccount, String rawPassword) {
 		String encodedPassword = passwordEncoder.encode(rawPassword);
 		newAccount.setPassword(encodedPassword);
@@ -65,10 +61,6 @@ public class AccountService implements UserDetailsService {
 
 	public void changeLastLogin(String loggedInEmail) {
 		accountRepository.updateLastLogin(loggedInEmail);
-	}
-
-	public void changeLineAccessToken(String loggedInEmail, String lineAccessToken) {
-		accountRepository.updateLineAccessToken(loggedInEmail, lineAccessToken);
 	}
 
 	public void changeNewEsMail(String loggedInEmail, boolean newEsMail) {

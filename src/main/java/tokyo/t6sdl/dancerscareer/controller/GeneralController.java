@@ -2,7 +2,6 @@ package tokyo.t6sdl.dancerscareer.controller;
 
 import java.util.Objects;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,11 +9,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
-import tokyo.t6sdl.dancerscareer.httpresponse.NotFound404;
-import tokyo.t6sdl.dancerscareer.io.LineNotifyManager;
 import tokyo.t6sdl.dancerscareer.io.EmailSender;
 import tokyo.t6sdl.dancerscareer.model.Account;
 import tokyo.t6sdl.dancerscareer.model.Mail;
@@ -27,10 +23,7 @@ import tokyo.t6sdl.dancerscareer.service.SecurityService;
 public class GeneralController {
 	private final SecurityService securityService;
 	private final EmailSender emailSender;
-	private final PasswordEncoder passwordEncoder;
 	private final AccountService accountService;
-	private final LineNotifyManager lineNotify;
-	private final String CONTEXT_PATH = Mail.CONTEXT_PATH;
 
 	@RequestMapping("")
 	public String index(Model model) {
@@ -88,52 +81,6 @@ public class GeneralController {
 		emailSender.sendContactForm(reply, ask);
 		model.addAttribute(contactForm);
 		return "about/contact/sentContact";
-	}
-
-	@RequestMapping("/line-notify/apply")
-	public String applyLineNotify(@RequestParam(name="from") String from) {
-		if (from.equals("mypage")) {
-			String uri = lineNotify.generateRedirectUriToGetCode(this.CONTEXT_PATH + "/line-notify/oauth/to-mypage");
-			return "redirect:" + uri;
-		} else {
-			String uri = lineNotify.generateRedirectUriToGetCode(this.CONTEXT_PATH + "/line-notify/oauth/to-index");
-			return "redirect:" + uri;
-		}
-	}
-
-	@RequestMapping("/line-notify/oauth/to-index")
-	public String postCode(@RequestParam(name="code", required=false) String code, @RequestParam(name="state", required=false) String state, @RequestParam(name="error", required=false) String error, @RequestParam(name="error_description", required=false) String error_description, Model model) {
-		if (Objects.equals(code, null) || !(passwordEncoder.matches(securityService.findLoggedInEmail(), state))) {
-			throw new NotFound404();
-		} else {
-			String loggedInEmail = securityService.findLoggedInEmail();
-			String accessToken = lineNotify.getAccessToken(code, this.CONTEXT_PATH + "/line-notify/oauth/to-index");
-			accountService.changeLineAccessToken(loggedInEmail, accessToken);
-			lineNotify.notifyMessage(accessToken, lineNotify.getMessage(new Mail(loggedInEmail, Mail.SUB_WELCOME_TO_US)));
-			return "redirect:/";
-		}
-	}
-
-	@RequestMapping("/line-notify/oauth/to-mypage")
-	public String postCodeFromMypage(@RequestParam(name="code", required=false) String code, @RequestParam(name="state", required=false) String state, @RequestParam(name="error", required=false) String error, @RequestParam(name="error_description", required=false) String error_description, Model model) {
-		if (Objects.equals(code, null) || !(passwordEncoder.matches(securityService.findLoggedInEmail(), state))) {
-			throw new NotFound404();
-		} else {
-			String loggedInEmail = securityService.findLoggedInEmail();
-			String accessToken = lineNotify.getAccessToken(code, this.CONTEXT_PATH + "/line-notify/oauth/to-mypage");
-			accountService.changeLineAccessToken(loggedInEmail, accessToken);
-			lineNotify.notifyMessage(accessToken, lineNotify.getMessage(new Mail(loggedInEmail, Mail.SUB_WELCOME_TO_US)));
-			return "redirect:/user/account";
-		}
-	}
-
-	@RequestMapping("/line-notify/revoke")
-	public String revokeLineNotify() {
-		String loggedInEmail = securityService.findLoggedInEmail();
-		String accessToken = accountService.getLineAccessTokenByEmail(loggedInEmail);
-		lineNotify.revoke(accessToken);
-		accountService.changeLineAccessToken(loggedInEmail, null);
-		return "redirect:/user/account";
 	}
 
 	@RequestMapping("/help/get-email")
