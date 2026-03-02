@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
-import tokyo.t6sdl.dancerscareer.io.LineNotifyManager;
 import tokyo.t6sdl.dancerscareer.httpresponse.NotFound404;
 import tokyo.t6sdl.dancerscareer.io.EmailSender;
 import tokyo.t6sdl.dancerscareer.model.Account;
@@ -43,7 +42,6 @@ public class UserPageController {
 	private final ExperienceService experienceService;
 	private final EmailSender emailSender;
 	private final PasswordEncoder passwordEncoder;
-	private final LineNotifyManager lineNotify;
 
 	@RequestMapping()
 	public String getMypage(Model model) {
@@ -81,17 +79,6 @@ public class UserPageController {
 	@RequestMapping("/account")
 	public String getAccountInfo(Model model) {
 		Account account = accountService.getAccountByEmail(securityService.findLoggedInEmail());
-		String accessToken = accountService.getLineAccessTokenByEmail(account.getEmail());
-		if (!(Objects.equals(accessToken, null))) {
-			int tokenStatus = lineNotify.getTokenStatus(accessToken);
-			if (tokenStatus == 200) {
-				model.addAttribute("isConnected", true);
-			} else {
-				model.addAttribute("isConnected", false);
-			}
-		} else {
-			model.addAttribute("isConnected", false);
-		}
 		model.addAttribute("email", account.getEmail());
 		model.addAttribute("validEmail", account.isValidEmail());
 		model.addAttribute("needsMail", account.isEsUpdateNotification());

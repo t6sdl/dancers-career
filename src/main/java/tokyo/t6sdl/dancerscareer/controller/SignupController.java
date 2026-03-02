@@ -62,9 +62,7 @@ public class SignupController {
 	@GetMapping("/profile")
 	public String getSignupProfile(Model model) {
 		model.addAttribute("positionList", Profile.POSITION_LIST);
-		ProfileForm form = new ProfileForm();
-		form.setApplyLineNotify(true);
-		model.addAttribute(form);
+		model.addAttribute(new ProfileForm());
 		return "signup/profileForm";
 	}
 
@@ -84,11 +82,7 @@ public class SignupController {
 		}
 		Profile newProfile = profileService.convertProfileFormIntoProfile(form);
 		profileService.register(newProfile, securityService.findLoggedInEmail());
-		if (form.isApplyLineNotify()) {
-			return "redirect:/line-notify/apply?from=profile";
-		} else {
-			return "redirect:/";
-		}
+		return "redirect:/";
 	}
 
 	@RequestMapping("/verify-email")

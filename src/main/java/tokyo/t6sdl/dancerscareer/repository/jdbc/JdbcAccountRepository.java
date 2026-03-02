@@ -64,10 +64,10 @@ public class JdbcAccountRepository implements AccountRepository {
 		String sql;
 		switch (by) {
 		case 0:
-			sql = "SELECT email, line_access_token FROM accounts WHERE authority = 'ROLE_USER'";
+			sql = "SELECT email FROM accounts WHERE authority = 'ROLE_USER'";
 			break;
 		case 1:
-			sql = "SELECT email, line_access_token FROM accounts WHERE new_es_mail = true";
+			sql = "SELECT email FROM accounts WHERE new_es_mail = true";
 			break;
 		default:
 			return null;
@@ -75,7 +75,6 @@ public class JdbcAccountRepository implements AccountRepository {
 		return jdbcTemplate.query(sql, (resultSet, i) -> {
 			Account account = new Account();
 			account.setEmail(resultSet.getString("email"));
-			account.setLineAccessToken(resultSet.getString("line_access_token"));
 			return account;
 		});
 	}
@@ -97,17 +96,6 @@ public class JdbcAccountRepository implements AccountRepository {
 		params.put("em", email);
 		try {
 			return jdbcTemplate.queryForObject("SELECT password_token FROM accounts WHERE email = :em", params, String.class);
-		} catch (EmptyResultDataAccessException e) {
-			return null;
-		}
-	}
-
-	@Override
-	public String findLineAccessTokenByEmail(String email) {
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("em", email);
-		try {
-			return jdbcTemplate.queryForObject("SELECT line_access_token FROM accounts WHERE email = :em", params, String.class);
 		} catch (EmptyResultDataAccessException e) {
 			return null;
 		}
@@ -163,14 +151,6 @@ public class JdbcAccountRepository implements AccountRepository {
 	}
 
 	@Override
-	public void updateLineAccessToken(String loggedInEmail, String lineAccessToken) {
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("lAT", lineAccessToken);
-		params.put("em", loggedInEmail);
-		jdbcTemplate.update("UPDATE accounts SET line_access_token = :lAT, updated_at = CURRENT_TIMESTAMP WHERE email = :em", params);
-	}
-
-	@Override
 	public void updateNewEsMail(String loggedInEmail, boolean esUpdateNotification) {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("nEM", esUpdateNotification);
@@ -221,7 +201,6 @@ public class JdbcAccountRepository implements AccountRepository {
 		account.setLastLogin(LocalDateTime.ofInstant(lastLogin.toInstant(), ZoneId.of("Asia/Tokyo")));
 		account.setEmailToken(resultSet.getString("email_token"));
 		account.setPasswordToken(resultSet.getString("password_token"));
-		account.setLineAccessToken(resultSet.getString("line_access_token"));
 		account.setEsUpdateNotification(resultSet.getBoolean("new_es_mail"));
 		return account;
 	}

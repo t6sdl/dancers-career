@@ -23,7 +23,6 @@ public class Account implements UserDetails {
 	private LocalDateTime createdAt;
 	private String emailToken;
 	private String passwordToken;
-	private String lineAccessToken;
 	private boolean esUpdateNotification;
 
 	public boolean isAdmin() {
