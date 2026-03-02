@@ -22,6 +22,8 @@ public class SignupForm {
 	private String newPassword = "";
 	@NotBlank
 	private String confirmPassword = "";
+	@AssertTrue(message="利用規約への同意が必要です")
+	private boolean agreedToTerms;
 
 	@AssertTrue(message="パスワードが異なります")
 	public boolean isSamePassword() {

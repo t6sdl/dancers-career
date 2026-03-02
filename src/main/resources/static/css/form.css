@@ -162,6 +162,24 @@ input:disabled, select:disabled, textarea:disabled {
 	width: 100%;
 }
 
+.form-item__submit:disabled {
+	background: #d3d3d3;
+	color: #696969;
+	border-color: #d3d3d3;
+	cursor: not-allowed;
+}
+
+.form-item__submit:disabled:hover {
+	background: #d3d3d3;
+	border-color: #d3d3d3;
+}
+
+.form-item__submit:disabled .button__icon,
+.form-item__submit:disabled:hover .button__icon {
+	opacity: .5;
+	transform: none;
+}
+
 .input--short-text {
   margin: .5em 0;
   padding: 0 1em;
