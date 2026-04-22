@@ -21,7 +21,7 @@
           <div th:unless="${param.revisit}">
             <p>「メールアドレスの確認」と「プロフィールの登録」をしていただくことでES/体験記を全てご覧いただけます。</p>
             <p class="note">
-              メールアドレスの確認はダンサーズキャリアから届くメールの「メールアドレスの確認」ボタンを押すことで完了します。dancerscareer@jusdl.or.jpからのメールが届くように設定ください。</p>
+              メールアドレスの確認はダンサーズキャリアから届くメールの「メールアドレスの確認」ボタンを押すことで完了します。<span th:text="${@mailSettings.fromAddress}">dancerscareer@jusdl.or.jp</span>からのメールが届くように設定ください。</p>
             <p class="note"><a class="internal-link" th:href="@{/help/get-email}" target="_blank"><i
                   class="far fa-question-circle"></i>メールが届かない</a></p>
           </div>

@@ -3,19 +3,22 @@ package tokyo.t6sdl.dancerscareer.io;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 import lombok.RequiredArgsConstructor;
+import tokyo.t6sdl.dancerscareer.config.MailSettings;
 import tokyo.t6sdl.dancerscareer.model.Account;
 import tokyo.t6sdl.dancerscareer.model.Mail;
 import tokyo.t6sdl.dancerscareer.service.AccountService;
@@ -24,8 +27,9 @@ import tokyo.t6sdl.dancerscareer.service.AccountService;
 @RequiredArgsConstructor
 @Component
 public class EmailSender {
-	private final JavaMailSender mailSender;
 	private final AccountService accountService;
+	private final MailSettings mailSettings;
+	private final RestTemplate restTemplate = new RestTemplate();
 
 	public void sendContactForm(Mail reply, Mail ask) {
 		boolean isSent = sendMail(reply);
@@ -51,60 +55,30 @@ public class EmailSender {
 			if (token.isEmpty()) {
 				throw new Exception();
 			}
-			MimeMessage message = mailSender.createMimeMessage();
-			message.setHeader("Content-type", "text/html");
-			message.setHeader("Errors-To", Mail.TO_ERROR);
-			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-			helper.setFrom(Mail.TO_SUPPORT, Mail.NAME_OF_SUPPORT);
-			helper.setTo(mail.getTo());
-			helper.setSubject(mail.getSubject());
 			this.readContent(mail);
-			helper.setText(mail.getContent(), true);
-			mailSender.send(message);
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
+			sendHtmlMessage(mail.getTo(), mail.getSubject(), mail.getContent());
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void sendMassMail(Mail mail) {
 		try {
-			MimeMessage message = mailSender.createMimeMessage();
-			message.setHeader("Content-type", "text/html");
-			message.setHeader("Errors-To", Mail.TO_ERROR);
-			MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
-			helper.setFrom(Mail.TO_SUPPORT, Mail.NAME_OF_SUPPORT);
-			helper.setSubject(mail.getSubject());
 			this.readContent(mail);
-			helper.setText(mail.getContent(), true);
 			for (Account account : mail.getAccounts()) {
-				helper.setTo(account.getEmail());
-				mailSender.send(message);
+				sendHtmlMessage(account.getEmail(), mail.getSubject(), mail.getContent());
 			}
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void sendMassTextMail(Mail mail) {
 		try {
-			MimeMessage message = mailSender.createMimeMessage();
-			message.setHeader("Content-type", "text/html");
-			message.setHeader("Errors-To", Mail.TO_ERROR);
-			MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
-			helper.setFrom(Mail.TO_SUPPORT, Mail.NAME_OF_SUPPORT);
-			helper.setSubject(mail.getSubject());
-			helper.setText(mail.getContent(), false);
 			for (Account account : mail.getAccounts()) {
-				helper.setTo(account.getEmail());
-				mailSender.send(message);
+				sendTextMessage(account.getEmail(), mail.getSubject(), mail.getContent());
 			}
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 	}
@@ -130,7 +104,9 @@ public class EmailSender {
 			e.printStackTrace();
 		} finally {
 			try {
-				isr.close();
+				if (isr != null) {
+					isr.close();
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -140,16 +116,8 @@ public class EmailSender {
 
 	private boolean sendMail(Mail mail) {
 		try {
-			MimeMessage message = mailSender.createMimeMessage();
-			message.setHeader("Content-type", "text/html");
-			message.setHeader("Errors-To", Mail.TO_ERROR);
-			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-			helper.setFrom(Mail.TO_SUPPORT, Mail.NAME_OF_SUPPORT);
-			helper.setTo(mail.getTo());
-			helper.setSubject(mail.getSubject());
 			this.readContent(mail);
-			helper.setText(mail.getContent(), true);
-			mailSender.send(message);
+			sendHtmlMessage(mail.getTo(), mail.getSubject(), mail.getContent());
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -159,18 +127,8 @@ public class EmailSender {
 
 	private void receiveMail(Mail mail) {
 		try {
-			MimeMessage message = mailSender.createMimeMessage();
-			message.setHeader("Content-type", "text/html");
-			message.setHeader("Errors-To", Mail.TO_ERROR);
-			MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
-			helper.setFrom(Mail.TO_SUPPORT, Mail.NAME_OF_SUPPORT);
-			helper.setTo(mail.getTo());
-			helper.setSubject(mail.getSubject());
-			helper.setText(mail.getContent(), false);
-			mailSender.send(message);
-		} catch (MessagingException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
+			sendTextMessage(mail.getTo(), mail.getSubject(), mail.getContent());
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
 	}
@@ -191,6 +149,45 @@ public class EmailSender {
 			return "/mails/survey";
 		default:
 			throw new IllegalArgumentException();
+		}
+	}
+
+	private void sendHtmlMessage(String to, String subject, String html) {
+		sendViaMailgunApi(to, subject, html, true);
+	}
+
+	private void sendTextMessage(String to, String subject, String text) {
+		sendViaMailgunApi(to, subject, text, false);
+	}
+
+	private void sendViaMailgunApi(String to, String subject, String content, boolean html) {
+		if (!mailSettings.isMailgunApiEnabled()) {
+			throw new IllegalStateException("MAILGUN_SENDING_KEY and MAILGUN_DOMAIN must be set");
+		}
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBasicAuth("api", mailSettings.getMailgunSendingKey());
+		headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+		MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+		body.add("from", mailSettings.getFormattedFrom());
+		body.add("to", to);
+		body.add("subject", subject);
+		body.add("h:Errors-To", Mail.TO_ERROR);
+		body.add("h:Reply-To", Mail.TO_SUPPORT);
+		if (html) {
+			body.add("html", content);
+		} else {
+			body.add("text", content);
+		}
+		HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(body, headers);
+		String endpoint = mailSettings.getMailgunApiBaseUrl() + "/v3/" + mailSettings.getMailgunDomain() + "/messages";
+		ResponseEntity<String> response;
+		try {
+			response = restTemplate.postForEntity(endpoint, request, String.class);
+		} catch (RestClientException e) {
+			throw new IllegalStateException("Failed to send mail via Mailgun API", e);
+		}
+		if (!response.getStatusCode().is2xxSuccessful()) {
+			throw new IllegalStateException("Mailgun API returned status " + response.getStatusCodeValue());
 		}
 	}
 }

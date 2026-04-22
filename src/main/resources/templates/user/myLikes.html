@@ -26,7 +26,7 @@
 						style="display:flex; flex-direction:column; align-items:center; text-align:center;">
 						<p><strong>お気に入りは「メールアドレスの確認」と「プロフィールの登録」が完了するとご利用になれます。</strong></p>
 						<a class="button" th:href="@{/signup/profile?revisit}">プロフィールを登録する</a>
-						<p>メールアドレスの確認は「ダンサーズキャリア（dancerscareer@jusdl.or.jp）」から届くメールの「メールアドレスの確認」ボタンを押すことで完了します。</p>
+						<p>メールアドレスの確認は「ダンサーズキャリア（<span th:text="${@mailSettings.fromAddress}">dancerscareer@jusdl.or.jp</span>）」から届くメールの「メールアドレスの確認」ボタンを押すことで完了します。</p>
 						<a th:href="@{/help/get-email}"><i class="far fa-question-circle"></i>メールが届かない</a>
 					</div>
 					<div th:if="${validEmail && !(perfect)}"
@@ -37,7 +37,7 @@
 					<div th:if="${!(validEmail) && perfect}"
 						style="display:flex; flex-direction:column; align-items:center; text-align:center;">
 						<p><strong>お気に入りの利用には「メールアドレスの確認」が必要です。</strong></p>
-						<p>メールアドレスの確認は「ダンサーズキャリア（dancerscareer@jusdl.or.jp）」から届くメールの「メールアドレスの確認」ボタンを押すことで完了します。</p>
+						<p>メールアドレスの確認は「ダンサーズキャリア（<span th:text="${@mailSettings.fromAddress}">dancerscareer@jusdl.or.jp</span>）」から届くメールの「メールアドレスの確認」ボタンを押すことで完了します。</p>
 						<a th:href="@{/help/get-email}"><i class="far fa-question-circle"></i>メールが届かない</a>
 					</div>
 					<article th:each="experience : ${experiences}" th:object="${experience}">
